@@ -46,17 +46,32 @@ module.exports = {
                 '@typescript-eslint/explicit-function-return-type': 'off',
             },
         },
+        {
+            "files": ["**/*.ts", "**/*.tsx"],
+            "rules": {
+                "camelcase": ["off"]
+            }
+        }
     ],
     rules: {
+
+        "@typescript-eslint/no-this-alias": [
+            "error",
+            {
+                "allowDestructuring": true,
+                "allowedNames": ["self"]
+            }
+        ],
         '@typescript-eslint/no-unused-vars': 'error',
-        'prettier/prettier': ['error', prettierConfig],
+        'prettier/prettier': ['warn', prettierConfig],
         'quote-props': ['error', 'consistent-as-needed'],
+
         'react/prop-types': 'off',
         'react/destructuring-assignment': 'off',
-        'react/jsx-filename-extension': ['error', {extensions: ['.jsx', '.tsx']}],
+        'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
         'react/jsx-props-no-spreading': 'off',
         'react/jsx-wrap-multilines': [
-            'error',
+            'warn',
             {
                 declaration: 'parens-new-line',
                 assignment: 'parens-new-line',
@@ -64,11 +79,16 @@ module.exports = {
                 arrow: 'parens-new-line',
                 condition: 'parens-new-line',
                 logical: 'parens-new-line',
-                prop: 'parens-new-line',
+                prop: 'ignore',
             },
         ],
         'sort-imports': 'off',
+        "no-param-reassign": [2, {
+            "props": false
+        }],
         'import/order': 'off',
+        'import/no-cycle': 'warn',
+        "no-debugger": "off",
         'import/first': 'error',
         'import/newline-after-import': 'error',
         'import/no-duplicates': 'error',
@@ -84,10 +104,10 @@ module.exports = {
                 tsx: 'never',
             },
         ],
-        'no-confusing-arrow': ['error', {allowParens: false}],
-        'no-underscore-dangle': ['error', {allow: ['__typename']}],
+        'no-confusing-arrow': ['error', { allowParens: false }],
+        'no-underscore-dangle': ['error', { allow: ['__typename'] }],
         'simple-import-sort/sort': [
-            'error',
+            'warn',
             {
                 // https://github.com/lydell/eslint-plugin-simple-import-sort/blob/master/examples/.eslintrc.js#L71
                 groups: [
@@ -125,7 +145,7 @@ module.exports = {
     settings: {
         'import/resolver': {
             alias: {
-                map: [['@', './src/']],
+                map: [['@', './src/', './node_modules/']],
                 extensions: ['.ts', '.tsx', '.json', 'js', 'jsx'],
             },
         },
