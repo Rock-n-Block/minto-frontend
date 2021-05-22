@@ -5,7 +5,7 @@ import './Home.scss';
 const Home: React.FC = () => {
   return (
     <div className="home">
-      <main>home</main>
+      <main>home1</main>
     </div>
   );
 };
