@@ -10,7 +10,7 @@ HomePreview,
   HomeSubscribe,
   HomePartners,
   HomeRoadmap,
-  HomeLinks
+  HomeLinks,
 } from '../../components/sections';
 
 const Home: React.FC = () => {

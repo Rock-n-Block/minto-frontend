@@ -12,7 +12,7 @@ export interface ISize {
 }
 
 export interface ButtonProps extends IColorScheme, ISize {
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
   className?: string;
   disabled?: boolean;
   loading?: boolean;
