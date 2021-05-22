@@ -11,6 +11,10 @@
     font-size: 44px;
     line-height: 60px;
   }
+  &-lg {
+    font-size: 46px;
+    line-height: 63px;
+  }
 }
 .h3 {
   font-size: 36px;
@@ -51,5 +55,11 @@
   }
   &-bold {
     font-weight: bold;
+  }
+  &-gray {
+    color: $gray;
+  }
+  &-gray-l {
+    color: $gray-l;
   }
 }
