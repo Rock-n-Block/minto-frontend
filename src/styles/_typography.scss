@@ -69,7 +69,7 @@
   &-upper {
     text-transform: uppercase;
   }
-  &-center{
+  &-center {
     text-align: center;
   }
   &-medium {
@@ -95,5 +95,8 @@
   }
   &-green {
     color: $green;
+  }
+  &-black {
+    color: $black;
   }
 }

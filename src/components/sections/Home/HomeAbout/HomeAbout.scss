@@ -1,5 +1,5 @@
-@import "src/styles/vars";
-@import "src/styles/mixins/media";
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
 
 .home-about {
   padding: 160px 0 120px;
@@ -7,7 +7,7 @@
   background: $black;
   background-image: url(../../../../assets/img/sections/home/about.svg);
   background-position: center;
-  background-size:104.8% auto;
+  background-size: 104.8% auto;
   background-repeat: no-repeat;
   @include b('tablet') {
     background-image: url(../../../../assets/img/sections/home/about-m.svg);
@@ -21,7 +21,7 @@
     margin-top: 33px;
     max-width: 574px;
 
-    @include b('tablet'){
+    @include b('tablet') {
       margin-top: 30px;
       font-size: 18px !important;
       line-height: 25px !important;
@@ -29,7 +29,7 @@
     &-secondary {
       margin-top: 80px;
       max-width: 399px;
-      @include b('tablet'){
+      @include b('tablet') {
         margin-top: 30px;
       }
     }
@@ -37,7 +37,7 @@
 
   &__whitepaper-btn {
     margin-top: 50px;
-    @include b('tablet'){
+    @include b('tablet') {
       margin-top: 30px;
     }
   }
@@ -45,16 +45,16 @@
   &__btns {
     display: flex;
     flex-wrap: wrap;
-    .btn{
+    .btn {
       margin-top: 40px;
-      @include b('tablet'){
+      @include b('tablet') {
         margin-top: 30px;
         width: 100%;
       }
     }
     .btn:first-child {
       margin-right: 22px;
-      @include b('tablet'){
+      @include b('tablet') {
         margin-right: 0;
       }
     }
@@ -68,13 +68,12 @@
     &-text {
       max-width: 378px;
     }
-    @include b('desktop'){
+    @include b('desktop') {
       right: 10px;
     }
-    @include b('tablet'){
+    @include b('tablet') {
       position: initial;
       margin-top: 30px;
     }
   }
-
 }
