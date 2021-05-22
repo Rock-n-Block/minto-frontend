@@ -1,5 +1,5 @@
 .btn {
-  display: block;
+  display: flex;
 
   height: auto;
   border: 1.4386px solid $green;
@@ -31,5 +31,8 @@
   &-lg {
     padding: 19.5px 90px;
     border-radius: 40px;
+    .btn-icon{
+      margin-right: 12px;
+    }
   }
 }
