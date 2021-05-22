@@ -1,4 +1,6 @@
 @import '../../../styles/vars';
+@import '../../../styles/mixins/media';
+
 .info {
   padding-bottom: 10px;
   border-bottom: 3px solid $green;
@@ -11,6 +13,9 @@
     left: 0;
     &-bottom {
       top: calc(100% + 10px);
+      @include b('tablet') {
+        position: relative;
+      }
     }
   }
 }

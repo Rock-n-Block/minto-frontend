@@ -13,7 +13,7 @@ const HomePreview: React.FC = () => {
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
           consequat duis enim velit mollit.
         </div>
-        <div className="box-f box-f-ai-c">
+        <div className="box-f box-f-ai-c home__preview-box">
           <Button size="lmd" className="home__preview-btn">
             <div className="text-upper text-slg">Stake</div>
           </Button>

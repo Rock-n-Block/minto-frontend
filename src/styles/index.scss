@@ -1,10 +1,10 @@
 @import './reset';
+@import 'mixins/media';
 @import './fonts';
 @import './vars';
 @import './typography';
 @import '~antd/dist/antd.css';
 @import './components/index.scss';
-@import 'mixins/media';
 
 html,
 body {
