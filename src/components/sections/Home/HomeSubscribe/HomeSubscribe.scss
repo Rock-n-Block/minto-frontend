@@ -1,0 +1,37 @@
+@import "src/styles/mixins/media";
+
+.home-subscribe{
+  padding: 100px 0;
+  background: $black;
+  background-image: url(../../../../assets/img/sections/home/subscribe.svg);
+  background-position: center;
+  background-size:104.6% auto ;
+  background-repeat: no-repeat;
+  @include b('tablet') {
+    background-image: url(../../../../assets/img/sections/home/subscribe-m.svg);
+    padding: 50px 0 50px;
+    background-size: 162% auto;
+  }
+  .row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__icon{
+    width: 74px;
+    height: 74px;
+  }
+  &__title{
+    margin-top: 45px;
+    max-width: 800px;
+    @include b('tablet') {
+      margin-top: 20px;
+    }
+  }
+  &__e-mail{
+    margin: 40px 0 23px;
+    @include b('tablet') {
+      margin: 20px 0 23px;
+    }
+  }
+}

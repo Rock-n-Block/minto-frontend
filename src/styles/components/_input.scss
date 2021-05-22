@@ -1,0 +1,36 @@
+.input {
+  font-size: 17px;
+  line-height: 23px;
+  border-radius: 60px;
+  text-align: center;
+  width: 100%;
+  &-container{
+    text-align: center;
+    width: 100%;
+  }
+  &-white {
+    background-color: white;
+  }
+
+  &-outline {
+    background: transparent;
+    color: $green;
+  }
+
+  &-sm {
+    padding: 25px;
+    max-width: 300px;
+  }
+
+  &-md {
+    padding: 25px;
+    max-width: 438px;
+  }
+
+  &-lg {
+    font-size: 38px;
+    line-height: 52px;
+    padding: 29px;
+    max-width: 500px;
+  }
+}

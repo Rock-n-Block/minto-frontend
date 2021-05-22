@@ -1,0 +1,25 @@
+@import "src/styles/mixins/media";
+
+.home-partners{
+  padding: 150px 0;
+  @include b('tablet') {
+    padding: 40px 0 60px;
+  }
+  &__container{
+    margin-top: 72px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(5,1fr);
+    row-gap: 86px;
+    @include b('tablet') {
+      grid-template-rows: repeat(5, 1fr);
+      grid-template-columns: repeat(2,1fr);
+      row-gap: 20px;
+    }
+  }
+  &__partner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

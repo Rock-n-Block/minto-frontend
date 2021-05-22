@@ -12,6 +12,11 @@
   &-md {
     font-size: 44px;
     line-height: 60px;
+
+    @include b('tablet') {
+      font-size: 30px;
+      line-height: 41px;
+    }
   }
   &-lg {
     font-size: 46px;
@@ -63,6 +68,15 @@
   }
   &-upper {
     text-transform: uppercase;
+  }
+  &-center{
+    text-align: center;
+  }
+  &-medium {
+    font-weight: 500;
+  }
+  &-bold-semi {
+    font-weight: 600;
   }
   &-bold-e {
     font-weight: 800;
