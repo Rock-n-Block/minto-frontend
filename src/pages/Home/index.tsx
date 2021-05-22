@@ -6,11 +6,9 @@ import { HomePreview } from '../../components/sections';
 
 const Home: React.FC = () => {
   return (
-    <div className="home">
-      <main>
-        <HomePreview />
-      </main>
-    </div>
+    <main className="home">
+      <HomePreview />
+    </main>
   );
 };
 
