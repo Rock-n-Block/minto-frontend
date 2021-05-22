@@ -3,7 +3,7 @@ import React from 'react';
 import './Home.scss';
 import 'swiper/swiper.scss';
 
-import { HomeAbout, HomePreview, HomeDataCentres,HomeSubscribe } from '../../components/sections';
+import { HomeAbout, HomePreview, HomeDataCentres,HomeSubscribe,HomePartners } from '../../components/sections';
 
 const Home: React.FC = () => {
   return (
@@ -12,6 +12,7 @@ const Home: React.FC = () => {
       <HomeAbout />
       <HomeDataCentres />
       <HomeSubscribe/>
+      <HomePartners/>
     </main>
   );
 };
