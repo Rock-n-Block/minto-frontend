@@ -1,5 +1,7 @@
 .btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   height: auto;
   border: 1.4386px solid $green;
@@ -12,9 +14,17 @@
     background: transparent;
     color: $green;
   }
+
+  .btn-icon{
+    margin-right: 17.5px;
+  }
   &-sm {
     padding: 12px 24px;
     border-radius: 30px;
+  }
+  &-lsm {
+    padding: 22px 26.5px;
+    border-radius: 40px;
   }
   &-md {
     padding: 18px 50px;
@@ -31,5 +41,8 @@
   &-lg {
     padding: 19.5px 90px;
     border-radius: 40px;
+    .btn-icon{
+      margin-right: 12px;
+    }
   }
 }

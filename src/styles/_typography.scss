@@ -25,6 +25,10 @@
 .text {
   font-size: 22px;
   line-height: 30px;
+  @include b('tablet') {
+    font-size: 18px;
+    line-height: 25px;
+  }
   &-sm {
     font-size: 14px;
     line-height: 19px;
@@ -66,11 +70,14 @@
   &-bold {
     font-weight: bold;
   }
+  &-white {
+    color: #fff;
+  }
   &-gray {
     color: $gray;
-  }
-  &-gray-l {
-    color: $gray-l;
+    &-l {
+      color: $gray-l;
+    }
   }
   &-green {
     color: $green;
