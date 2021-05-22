@@ -61,4 +61,10 @@ a {
 
 .hidden {
   display: none !important;
+  &-desktop {
+    display: none !important;
+    @include b('tablet') {
+      display: block !important;
+    }
+  }
 }

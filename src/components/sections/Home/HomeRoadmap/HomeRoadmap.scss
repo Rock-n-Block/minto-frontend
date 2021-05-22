@@ -1,0 +1,58 @@
+@import '../../../../styles/mixins/media';
+@import '../../../../styles/vars';
+.home__roadmap {
+  background: $white-g;
+  padding: 75px 0 90px;
+  overflow: hidden;
+  position: relative;
+  @include b('tablet') {
+    padding: 40px 0;
+  }
+  &-title {
+    margin: 0 auto 60px;
+    text-align: center;
+    @include b('tablet') {
+      margin: 0 auto;
+    }
+  }
+  &-slider {
+    overflow: visible;
+    &-nav {
+      position: absolute;
+      top: 74px;
+      right: 60px;
+      @include b('tablet') {
+        width: fit-content;
+        position: static;
+        margin: 20px auto 10px;
+      }
+    }
+  }
+  &-slide {
+    width: 240px !important;
+    position: relative;
+    @include b('tablet') {
+      width: 218px !important;
+    }
+    &-arrow {
+      position: absolute;
+      right: 0;
+      top: 39px;
+    }
+    &-line {
+      margin: 6px 0px 50px;
+    }
+    &-info {
+      & + & {
+        margin-top: 25px;
+      }
+      &-text {
+        margin-left: 20px;
+        white-space: nowrap;
+        @include b('tablet') {
+          white-space: normal;
+        }
+      }
+    }
+  }
+}

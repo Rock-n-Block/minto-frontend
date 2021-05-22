@@ -5,8 +5,22 @@
   background: $white-g;
   padding: 105px 0px 70px;
   overflow: hidden;
+  background-image: url(../../../../assets/img/sections/home/home-data-bg.svg);
+  background-repeat: no-repeat;
+  background-position: -46px 77px;
+  position: relative;
   @include b('tablet') {
     padding: 30px 0px 40px;
+    background-image: none;
+  }
+  &-shadow {
+    position: absolute;
+    right: 0;
+    top: -88px;
+    &-bottom {
+      top: unset;
+      bottom: 0;
+    }
   }
   &-subtitle {
     margin: 25px 0px 45px;

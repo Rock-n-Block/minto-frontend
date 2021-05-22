@@ -13,6 +13,7 @@ import Img5 from '../../../../assets/img/sections/home/data-5.jpg';
 import Img6 from '../../../../assets/img/sections/home/data-6.jpg';
 import Img7 from '../../../../assets/img/sections/home/data-7.jpg';
 import Img8 from '../../../../assets/img/sections/home/data-8.jpg';
+import ShadowImg from '../../../../assets/img/sections/home/shadow.svg';
 import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
 
 SwiperCore.use([Navigation]);
@@ -66,6 +67,12 @@ const HomeDataCentres: React.FC = () => {
   ];
   return (
     <div className="home__data">
+      <img src={ShadowImg} alt="" className="home__data-shadow hidden-desktop" />
+      <img
+        src={ShadowImg}
+        alt=""
+        className="home__data-shadow home__data-shadow-bottom hidden-desktop"
+      />
       <div className="row">
         <h2 className="h2 text-bold home__data-title">Our data centers</h2>
         <div className="home__data-subtitle text">
@@ -115,7 +122,6 @@ const HomeDataCentres: React.FC = () => {
               swiper.params.navigation.nextEl = nextRef.current;
               swiper.navigation.update();
               setSwiperInst(swiper);
-              console.log(1);
             }}
             onSlideChangeTransitionEnd={() => {
               setActiveSlide(swiperInst.activeIndex + 1);
