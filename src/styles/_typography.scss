@@ -1,8 +1,10 @@
-@import 'src/styles/mixins/media';
-
 .h1 {
   font-size: 70px;
   line-height: 84px;
+  @include b('tablet') {
+    font-size: 50px;
+    line-height: 60px;
+  }
 }
 .h2 {
   font-size: 40px;
@@ -10,6 +12,10 @@
   &-md {
     font-size: 44px;
     line-height: 60px;
+  }
+  &-lg {
+    font-size: 46px;
+    line-height: 63px;
   }
 }
 .h3 {
@@ -38,10 +44,18 @@
   &-slg {
     font-size: 25px;
     line-height: 34px;
+    @include b('tablet') {
+      font-size: 20px;
+      line-height: 27px;
+    }
   }
   &-lg {
     font-size: 27px;
     line-height: 37px;
+    @include b('tablet') {
+      font-size: 22px;
+      line-height: 30px;
+    }
   }
   &-upper {
     text-transform: uppercase;
@@ -51,5 +65,11 @@
   }
   &-bold {
     font-weight: bold;
+  }
+  &-gray {
+    color: $gray;
+  }
+  &-gray-l {
+    color: $gray-l;
   }
 }
