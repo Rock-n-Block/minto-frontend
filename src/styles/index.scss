@@ -1,0 +1,61 @@
+@import './reset';
+@import './fonts';
+@import './vars';
+@import './typography';
+@import '~antd/dist/antd.css';
+@import './components/index.scss';
+@import 'mixins/media';
+
+html,
+body {
+  margin: 0;
+
+  height: max-content;
+
+  font-family: Manrope, sans-serif;
+  font-weight: 400;
+
+  color: #1a2121;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
+}
+
+.minto {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  font-size: 14px;
+  line-height: 17px;
+}
+
+main {
+  flex-grow: 2;
+}
+
+.row {
+  margin: 0 auto;
+  padding: 0 10px;
+
+  max-width: 1360px;
+  @include b('mobile') {
+    padding: 0 20px;
+  }
+}
+
+a {
+  &:hover {
+    color: green;
+  }
+}
+
+.hidden {
+  display: none !important;
+}

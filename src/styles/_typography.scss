@@ -1,0 +1,46 @@
+@import 'src/styles/mixins/media';
+
+.h1 {
+  font-size: 70px;
+  line-height: 84px;
+}
+.h2 {
+  font-size: 40px;
+  line-height: 48px;
+  &-md {
+    font-size: 44px;
+    line-height: 60px;
+  }
+}
+.h3 {
+  font-size: 36px;
+  line-height: 54px;
+}
+.text {
+  font-size: 22px;
+  line-height: 30px;
+  &-sm {
+    font-size: 14px;
+    line-height: 19px;
+  }
+  &-smd {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  &-md {
+    font-size: 18px;
+    line-height: 25px;
+  }
+  &-lmd {
+    font-size: 20px;
+    line-height: 27px;
+  }
+  &-slg {
+    font-size: 25px;
+    line-height: 34px;
+  }
+  &-lg {
+    font-size: 27px;
+    line-height: 37px;
+  }
+}
