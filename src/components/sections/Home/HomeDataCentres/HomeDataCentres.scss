@@ -5,9 +5,15 @@
   background: $white-g;
   padding: 105px 0px 70px;
   overflow: hidden;
+  @include b('tablet') {
+    padding: 30px 0px 40px;
+  }
   &-subtitle {
     margin: 25px 0px 45px;
     max-width: 545px;
+    @include b('tablet') {
+      margin-bottom: 15px;
+    }
   }
   &-text {
     max-width: 314px;
@@ -18,10 +24,18 @@
     margin-left: 105px;
     overflow: visible;
     width: 500px;
+    @include b('tablet') {
+      width: 100%;
+      margin-left: 0;
+    }
     &-nav {
       position: absolute;
       bottom: calc(100% + 24px);
       right: 0;
+      @include b('tablet') {
+        position: static;
+        margin: 40px auto 20px;
+      }
       &-prev {
         margin-top: 28px;
       }
@@ -35,17 +49,49 @@
   }
   &-slide {
     width: fit-content !important;
-    box-shadow: $green-sh;
+    @include b('tablet') {
+      width: 100% !important;
+    }
     &-img {
       border: 12px solid white;
       max-height: 500px;
+      box-shadow: $green-sh;
+      @include b('tablet') {
+        width: fit-content;
+        max-height: auto;
+        margin: 0 auto;
+      }
       img {
         max-height: calc(500px - 24px);
+        @include b('tablet') {
+          max-width: 100%;
+          max-height: 235px;
+        }
       }
+    }
+    &-content {
+      margin-top: 40px;
+      @include b('tablet') {
+        margin-top: 25px;
+      }
+    }
+    &-number {
+      border: 1px solid $green;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      border-radius: 50%;
+    }
+    &-text {
+      max-width: 295px;
+      margin-left: 20px;
     }
   }
   &-content {
     position: relative;
+    @include b('tablet') {
+      flex-direction: column;
+    }
   }
   .swiper-slide {
     opacity: 0;

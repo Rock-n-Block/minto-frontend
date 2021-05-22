@@ -98,7 +98,8 @@ const HomeDataCentres: React.FC = () => {
             </div>
           </div>
           <Swiper
-            slidesPerView="auto"
+            slidesPerView={1}
+            spaceBetween={20}
             navigation={{
               prevEl: prevRef.current!,
               nextEl: nextRef.current!,
@@ -121,16 +122,26 @@ const HomeDataCentres: React.FC = () => {
             }}
             className="home__data-slider"
             breakpoints={{
+              768: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
               1024: {
                 slidesPerView: 'auto',
                 spaceBetween: 20,
               },
             }}
           >
-            {slides.map((slide) => (
+            {slides.map((slide, index) => (
               <SwiperSlide className="home__data-slide" key={nextId()}>
                 <div className="home__data-slide-img">
                   <img src={slide.img} alt="" />
+                </div>
+                <div className="home__data-slide-content box-f">
+                  <div className="home__data-slide-number box-f-c text-green text-lmd">
+                    {index + 1}
+                  </div>
+                  <div className="home__data-slide-text text-smd">{slide.text}</div>
                 </div>
               </SwiperSlide>
             ))}
