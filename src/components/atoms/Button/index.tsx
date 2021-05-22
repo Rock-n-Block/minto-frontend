@@ -8,7 +8,7 @@ export interface IColorScheme {
 }
 
 export interface ISize {
-  size?: 'sm' | 'smd' | 'md' | 'lmd' | 'lg';
+  size?: 'sm'|'lsm' | 'smd' | 'md' | 'lmd' | 'lg';
 }
 
 export interface ButtonProps extends IColorScheme, ISize {
