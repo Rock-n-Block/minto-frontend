@@ -2,10 +2,15 @@
 @import "src/styles/mixins/media";
 
 .home-about {
-  background-color: $black;
   padding: 160px 0 120px;
 
-  @include b('tablet'){
+  background: $black;
+  background-image: url(../../../../assets/img/sections/about/about.svg);
+  background-position: center;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  @include b('tablet') {
+    background-image: url(../../../../assets/img/sections/about/about-m.svg);
     padding: 50px 0 40px;
   }
   .row-md {
@@ -72,41 +77,4 @@
     }
   }
 
-  .bg-img {
-    position: absolute;
-
-    &-arrows-left {
-      top: 503px;
-      left: -290px;
-    }
-
-    &-arrows-top {
-      top: -5px;
-      right: 117px;
-      @include b('tablet'){
-        display: none;
-      }
-    }
-
-    &-right {
-      top: 373px;
-      right: -114px;
-
-    }
-
-    &-top-left {
-      top: 91px;
-      left: -58px;
-    }
-
-    &-top-right {
-      top: -101px;
-      right: 35px;
-    }
-
-    &-triangle-bot {
-      bottom: -88px;
-      left: -266px;
-    }
-  }
 }

@@ -2,12 +2,6 @@ import React from 'react';
 import IconNewspaper from '../../../../assets/img/icons/newspaper-folding.svg';
 import IconDoc from '../../../../assets/img/icons/doc-detail.svg';
 import IconPowerpoint from '../../../../assets/img/icons/powerpoint.svg';
-import BgArrowsLeft from '../../../../assets/img/about-bg-arrows-left.png';
-import BgArrowsTop from '../../../../assets/img/about-bg-arrows-top.png';
-import BgRight from '../../../../assets/img/about-bg-right.svg';
-import BgTopLeft from '../../../../assets/img/about-bg-top-left.svg';
-import BgTopRight from '../../../../assets/img/about-bg-top-right.svg';
-import BgTriangleBot from '../../../../assets/img/about-bg-triangle-bot.png';
 
 import './HomeAbout.scss';
 import {Button} from "../../../atoms";
@@ -48,12 +42,6 @@ const HomeAbout: React.FC = () => {
           ><span className='text-smd text-upper text-bold-e text-white'>presentation</span></Button>
         </div>
       </section>
-      <img className='bg-img bg-img-arrows-left' src={BgArrowsLeft} alt='bg'/>
-      <img className='bg-img bg-img-arrows-top' src={BgArrowsTop} alt='bg'/>
-      <img className='bg-img bg-img-right' src={BgRight} alt='bg'/>
-      <img className='bg-img bg-img-top-left' src={BgTopLeft} alt='bg'/>
-      <img className='bg-img bg-img-top-right' src={BgTopRight} alt='bg'/>
-      <img className='bg-img bg-img-triangle-bot' src={BgTriangleBot} alt='bg'/>
     </div>
   </div>;
 };
