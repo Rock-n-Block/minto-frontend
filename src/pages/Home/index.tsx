@@ -10,6 +10,7 @@ import {
   HomeSubscribe,
   HomePartners,
   HomeRoadmap,
+  HomeLinks,
 } from '../../components/sections';
 
 const Home: React.FC = () => {
@@ -21,6 +22,7 @@ const Home: React.FC = () => {
       <HomeSubscribe />
       <HomePartners />
       <HomeRoadmap />
+      <HomeLinks />
     </main>
   );
 };
