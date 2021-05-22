@@ -1,0 +1,112 @@
+@import "src/styles/vars";
+@import "src/styles/mixins/media";
+
+.home-about {
+  background-color: $black;
+  padding: 160px 0 120px;
+
+  @include b('tablet'){
+    padding: 50px 0 40px;
+  }
+  .row-md {
+    position: relative;
+  }
+
+  &__description {
+    margin-top: 33px;
+    max-width: 574px;
+
+    @include b('tablet'){
+      margin-top: 30px;
+      font-size: 18px !important;
+      line-height: 25px !important;
+    }
+    &-secondary {
+      margin-top: 80px;
+      max-width: 399px;
+      @include b('tablet'){
+        margin-top: 30px;
+      }
+    }
+  }
+
+  &__whitepaper-btn {
+    margin-top: 50px;
+    @include b('tablet'){
+      margin-top: 30px;
+    }
+  }
+
+  &__btns {
+    display: flex;
+    flex-wrap: wrap;
+    .btn{
+      margin-top: 40px;
+      @include b('tablet'){
+        margin-top: 30px;
+        width: 100%;
+      }
+    }
+    .btn:first-child {
+      margin-right: 22px;
+      @include b('tablet'){
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__right {
+    position: absolute;
+    top: 300px;
+    right: -114px;
+
+    &-text {
+      max-width: 378px;
+    }
+    @include b('desktop'){
+      right: 10px;
+    }
+    @include b('tablet'){
+      position: initial;
+      margin-top: 30px;
+    }
+  }
+
+  .bg-img {
+    position: absolute;
+
+    &-arrows-left {
+      top: 503px;
+      left: -290px;
+    }
+
+    &-arrows-top {
+      top: -5px;
+      right: 117px;
+      @include b('tablet'){
+        display: none;
+      }
+    }
+
+    &-right {
+      top: 373px;
+      right: -114px;
+
+    }
+
+    &-top-left {
+      top: 91px;
+      left: -58px;
+    }
+
+    &-top-right {
+      top: -101px;
+      right: 35px;
+    }
+
+    &-triangle-bot {
+      bottom: -88px;
+      left: -266px;
+    }
+  }
+}

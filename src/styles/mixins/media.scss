@@ -3,7 +3,7 @@
 // breakpoints without borders
 @mixin b($point) {
   @if $point==desktop {
-    @media (max-width: $mediaWidthDesktop) {
+    @media (max-width: $mediaWidthLaptop) {
       @content;
     }
   } @else if $point==tablet {
