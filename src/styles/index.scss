@@ -67,6 +67,11 @@ a {
       display: block !important;
     }
   }
+  &-mobile {
+    @include b('tablet') {
+      display: none !important;
+    }
+  }
 }
 .circle {
   border-radius: 50%;

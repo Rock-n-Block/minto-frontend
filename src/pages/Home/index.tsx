@@ -18,9 +18,9 @@ const Home: React.FC = () => {
       <HomePreview />
       <HomeAbout />
       <HomeDataCentres />
-      <HomeRoadmap />
       <HomeSubscribe />
       <HomePartners />
+      <HomeRoadmap />
     </main>
   );
 };
