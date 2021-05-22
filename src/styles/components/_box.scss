@@ -1,0 +1,33 @@
+.box {
+  &-f {
+    display: flex;
+  }
+  &-f-c {
+    align-items: center;
+    justify-content: center;
+  }
+  &-f-jc-sb {
+    justify-content: space-between;
+  }
+  &-f-jc-sa {
+    justify-content: space-around;
+  }
+  &-f-jc-c {
+    justify-content: center;
+  }
+  &-f-jc-s {
+    justify-content: flex-start;
+  }
+  &-f-jc-e {
+    justify-content: flex-end;
+  }
+  &-f-ai-c {
+    align-items: center;
+  }
+  &-f-ai-s {
+    align-items: flex-start;
+  }
+  &-f-ai-e {
+    align-items: flex-end;
+  }
+}

@@ -48,6 +48,9 @@ main {
   @include b('mobile') {
     padding: 0 20px;
   }
+  &-md {
+    max-width: 1020px;
+  }
 }
 
 a {
