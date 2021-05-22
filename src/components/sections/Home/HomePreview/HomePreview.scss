@@ -1,8 +1,9 @@
 @import '../../../../styles/mixins/media';
+@import '../../../../styles/vars';
 
 .home__preview {
   padding: 190px 0px 140px;
-  background: #f3f8f6;
+  background: $white-g;
   background-image: url(../../../../assets/img/sections/home/preview.svg);
   background-size: 103.5% auto;
   background-repeat: no-repeat;

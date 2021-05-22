@@ -44,12 +44,12 @@ main {
   margin: 0 auto;
   padding: 0 10px;
 
-  max-width: 1360px;
+  max-width: 1020px;
   @include b('mobile') {
     padding: 0 20px;
   }
-  &-md {
-    max-width: 1020px;
+  &-lg {
+    max-width: 1360px;
   }
 }
 

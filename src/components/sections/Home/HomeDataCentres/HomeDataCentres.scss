@@ -1,0 +1,63 @@
+@import '../../../../styles/mixins/media';
+@import '../../../../styles/vars';
+
+.home__data {
+  background: $white-g;
+  padding: 105px 0px 70px;
+  overflow: hidden;
+  &-subtitle {
+    margin: 25px 0px 45px;
+    max-width: 545px;
+  }
+  &-text {
+    max-width: 314px;
+    min-width: 314px;
+    line-height: 32px !important;
+  }
+  &-slider {
+    margin-left: 105px;
+    overflow: visible;
+    width: 500px;
+    &-nav {
+      position: absolute;
+      bottom: calc(100% + 24px);
+      right: 0;
+      &-prev {
+        margin-top: 28px;
+      }
+      &-next {
+        margin-bottom: 28px;
+      }
+      &-counter {
+        margin: 0 10px;
+      }
+    }
+  }
+  &-slide {
+    width: fit-content !important;
+    box-shadow: $green-sh;
+    &-img {
+      border: 12px solid white;
+      max-height: 500px;
+      img {
+        max-height: calc(500px - 24px);
+      }
+    }
+  }
+  &-content {
+    position: relative;
+  }
+  .swiper-slide {
+    opacity: 0;
+    transition: 0.2s opacity;
+    &-active,
+    &-next {
+      opacity: 1;
+      transition: 0s opacity;
+    }
+  }
+  .swiper-slide-next + .swiper-slide {
+    opacity: 1;
+    transition: 0s opacity;
+  }
+}

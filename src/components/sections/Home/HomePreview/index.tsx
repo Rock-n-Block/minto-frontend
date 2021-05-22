@@ -7,7 +7,7 @@ import './HomePreview.scss';
 const HomePreview: React.FC = () => {
   return (
     <div className="home__preview">
-      <div className="row row-md">
+      <div className="row">
         <h1 className="h1 text-bold home__preview-title">Mine Bitcoin by staking BTCMT tokens</h1>
         <div className="text-lg home__preview-subtitle">
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia

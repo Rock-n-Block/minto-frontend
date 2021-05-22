@@ -1,0 +1,29 @@
+.swiper {
+  &-navigation {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid $green;
+    border-radius: 50%;
+    transition: 0.3s;
+    cursor: pointer;
+    svg {
+      path {
+        transition: 0.3s;
+      }
+    }
+    &:hover {
+      background: $green;
+      svg {
+        path {
+          stroke: white;
+        }
+      }
+    }
+    &-next {
+      transform: rotate(180deg);
+    }
+  }
+}
