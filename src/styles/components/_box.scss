@@ -23,6 +23,7 @@
     justify-content: flex-end;
   }
   &-f-ai-c {
+    display: flex;
     align-items: center;
   }
   &-f-ai-s {
@@ -31,7 +32,7 @@
   &-f-ai-e {
     align-items: flex-end;
   }
-  &-shadow{
+  &-shadow {
     box-shadow: 0 30px 40px rgba(109, 218, 192, 0.1);
   }
 }
