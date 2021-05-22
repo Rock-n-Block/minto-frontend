@@ -9,7 +9,7 @@ import {Button, Input} from "../../../atoms";
 const HomeLinks: React.FC = () => {
   return (
     <div className='home-links'>
-      <div className='row row-md'>
+      <div className='row '>
         <div className='home-links__link link__subscribe'>
           <h3 className='home-links__title text-center text text-white text-bold-e'>
             Subscribe

@@ -6,7 +6,7 @@ import './HomeSubscribe.scss';
 const HomeSubscribe: React.FC = () => {
   return (
     <div className='home-subscribe'>
-      <div className="row row-md">
+      <div className="row">
         <div className='home-subscribe__icon circle'>
           <img src={IconMail} alt='mail'/>
         </div>

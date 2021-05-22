@@ -8,7 +8,7 @@ import {Button} from "../../../atoms";
 
 const HomeAbout: React.FC = () => {
   return <div className='home-about'>
-    <div className='row row-md'>
+    <div className='row '>
       <section className='home-about__left'>
         <h2 className='home-about__title h2 text-white text-bold'>
           About

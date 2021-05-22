@@ -72,6 +72,9 @@
   &-center {
     text-align: center;
   }
+  &-liga-off{
+    font-feature-settings: 'liga' off;
+  }
   &-medium {
     font-weight: 500;
   }

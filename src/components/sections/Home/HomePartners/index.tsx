@@ -14,7 +14,7 @@ import LogoBancor from "../../../../assets/img/sections/home/logo-bancor.svg";
 const HomePartners:React.FC=()=>{
   return(
     <div className='home-partners'>
-      <div className='row row-md'>
+      <div className='row'>
         <h2 className='h2 text-bold text-center'>Partners</h2>
         <div className='home-partners__container'>
           <div className='home-partners__partner'>
