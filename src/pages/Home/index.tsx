@@ -2,15 +2,13 @@ import React from 'react';
 
 import './Home.scss';
 
-import { Button } from '../../components/atoms';
+import { HomePreview } from '../../components/sections';
 
 const Home: React.FC = () => {
   return (
     <div className="home">
       <main>
-        <Button>
-          <div className="text-upper text-bold text-slg">Stake</div>
-        </Button>
+        <HomePreview />
       </main>
     </div>
   );
