@@ -5,3 +5,4 @@ export { default as HomePartners } from './Home/HomePartners';
 export { default as HomeLinks } from './Home/HomeLinks';
 export { default as HomeNews } from './Home/HomeNews';
 export { default as AboutContacts } from './About/AboutContacts';
+export { default as AboutTeam } from './About/AboutTeam';

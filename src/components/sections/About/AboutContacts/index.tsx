@@ -11,7 +11,7 @@ const AboutContacts: React.FC = () => {
         <h2 className="h2 text-bold">Contacts</h2>
         <div className="about-contacts__countries">
           <div className='about-contacts__country'>
-            <h3 className='about-contacts__country-name text-bold '>
+            <h3 className='about-contacts__country-name text text-bold '>
               United Kingdom
             </h3>
             <ul className='about-contacts__country-description country-description'>
@@ -33,7 +33,7 @@ const AboutContacts: React.FC = () => {
             </ul>
           </div>
           <div className='about-contacts__country'>
-            <h3 className='about-contacts__country-name text-bold '>
+            <h3 className='about-contacts__country-name text text-bold '>
               Estonia
             </h3>
             <ul className='about-contacts__country-description country-description'>

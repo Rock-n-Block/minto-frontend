@@ -3,13 +3,14 @@ import 'swiper/swiper.scss';
 
 
 import {About, Subscribe} from "../../components/organisms";
-import {AboutContacts} from "../../components/sections";
+import {AboutContacts, AboutTeam} from "../../components/sections";
 
 const AboutPage: React.FC = ( ) => {
   return (
     <main className="about">
       <About />
       <AboutContacts/>
+      <AboutTeam/>
       <Subscribe/>
     </main>
   );
