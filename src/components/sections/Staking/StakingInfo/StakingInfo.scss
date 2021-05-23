@@ -1,0 +1,17 @@
+@import '../../../../styles/mixins/media';
+@import '../../../../styles/vars';
+.staking__info {
+  padding: 235px 0 150px;
+  @include b('tablet') {
+    padding: 122px 0 50px;
+  }
+  &-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 110px 80px;
+    @include b('tablet') {
+      grid-template-columns: 1fr;
+      grid-gap: 62px 0;
+    }
+  }
+}
