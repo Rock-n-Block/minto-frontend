@@ -4,11 +4,11 @@ import { Button as BtnAntd } from 'antd';
 import classNames from 'classnames';
 
 export interface IColorScheme {
-  colorScheme?: 'green' | 'outline'|'white';
+  colorScheme?: 'green' | 'outline' | 'white';
 }
 
 export interface ISize {
-  size?: 'sm' | 'lsm' | 'smd' | 'md' | 'lmd' | 'lg';
+  size?: 'ssm' | 'sm' | 'lsm' | 'smd' | 'md' | 'lmd' | 'lg';
 }
 
 export interface ButtonProps extends IColorScheme, ISize {

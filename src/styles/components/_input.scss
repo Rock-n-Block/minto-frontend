@@ -4,7 +4,7 @@
   border-radius: 60px;
   text-align: center;
   width: 100%;
-  &-container{
+  &-container {
     text-align: center;
     width: 100%;
   }
@@ -35,4 +35,13 @@
     padding: 29px;
     max-width: 500px;
   }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }

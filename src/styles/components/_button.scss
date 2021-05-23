@@ -14,13 +14,17 @@
     background: transparent;
     color: $green;
   }
-  &-white{
+  &-white {
     background: white;
     color: $green;
   }
 
-  .btn-icon{
+  .btn-icon {
     margin-right: 17.5px;
+  }
+  &-ssm {
+    padding: 4px 10px;
+    border-radius: 40px;
   }
   &-sm {
     padding: 12px 24px;
@@ -45,7 +49,7 @@
   &-lg {
     padding: 19.5px 90px;
     border-radius: 40px;
-    .btn-icon{
+    .btn-icon {
       margin-right: 12px;
     }
   }

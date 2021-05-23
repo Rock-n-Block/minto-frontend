@@ -1,20 +1,21 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
-import {AboutPage, HomePage} from './pages';
-import {Footer, Header} from './components/organisms';
+import { AboutPage, HomePage, StakingPage } from './pages';
+import { Footer, Header } from './components/organisms';
 
 import './styles/index.scss';
 
 export const App: React.FC = () => {
   return (
     <div className="minto">
-      <Header/>
+      <Header />
       <Switch>
-        <Route exact path="/" component={HomePage}/>
-        <Route exact path="/about" component={AboutPage}/>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/Staking" component={StakingPage} />
+        <Route exact path="/about" component={AboutPage} />
       </Switch>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './Home.scss';
 import 'swiper/swiper.scss';
 
 import {

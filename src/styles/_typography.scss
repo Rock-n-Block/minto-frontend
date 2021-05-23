@@ -5,6 +5,10 @@
     font-size: 50px;
     line-height: 60px;
   }
+  &-md {
+    font-size: 60px;
+    line-height: 72px;
+  }
 }
 .h2 {
   font-size: 40px;
@@ -68,7 +72,7 @@
   &-center {
     text-align: center;
   }
-  &-liga-off{
+  &-liga-off {
     font-feature-settings: 'liga' off;
   }
   &-medium {
