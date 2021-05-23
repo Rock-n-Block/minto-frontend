@@ -7,7 +7,6 @@ import {
   HomeDataCentres,
   HomePartners,
   HomeRoadmap,
-  HomeLinks,
   HomeNews,
 } from '../../components/sections';
 import { Subscribe, About } from '../../components/organisms';
@@ -22,7 +21,6 @@ const Home: React.FC = () => {
       <HomePartners />
       <HomeRoadmap />
       <HomeNews />
-      <HomeLinks />
     </main>
   );
 };

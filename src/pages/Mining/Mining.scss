@@ -1,0 +1,10 @@
+@import 'src/styles/mixins/media';
+.mining {
+  .procedure {
+    padding-top: 190px;
+    margin-bottom: 10px;
+    @include b('tablet') {
+      padding-top: 130px;
+    }
+  }
+}

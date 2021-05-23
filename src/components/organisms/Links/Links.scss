@@ -1,9 +1,9 @@
-@import "src/styles/mixins/media";
+@import 'src/styles/mixins/media';
 
-.home-links {
+.links {
   padding: 84px 0 87px;
   background: $black;
-  background-image: url(../../../../assets/img/sections/home/links.svg);
+  background-image: url(../../../assets/img/sections/home/links.svg);
   background-position: center;
   background-size: 104.7% auto;
   background-repeat: no-repeat;
@@ -11,7 +11,7 @@
     background-image: unset;
     padding: 40px 0 40px;
   }
-  .row{
+  .row {
     display: flex;
     justify-content: space-between;
     @include b('tablet') {
@@ -37,9 +37,8 @@
 }
 
 .link {
-
   &__subscribe {
-    &__social-networks{
+    &__social-networks {
       margin-top: 48px;
       max-width: 170px;
       display: flex;
@@ -53,14 +52,14 @@
         justify-content: space-between;
       }
     }
-    &__network{
+    &__network {
       width: 75px;
       height: 75px;
       border: 3px solid $green;
 
       @include b('tablet') {
-        &:not(:last-child){
-          margin-right:20px;
+        &:not(:last-child) {
+          margin-right: 20px;
         }
       }
     }
@@ -73,7 +72,7 @@
     padding-left: 47px;
     padding-right: 47px;
     border-left: 1px dashed $white-d;
-    border-right: 1px dashed  $white-d;
+    border-right: 1px dashed $white-d;
     @include b('tablet') {
       width: 100%;
       padding: 20px 0;
@@ -82,18 +81,18 @@
       border-top: 1px dashed $white-d;
       border-bottom: 1px dashed $white-d;
     }
-    &__e-mail{
+    &__e-mail {
       margin: 47px 0 23px;
 
       @include b('tablet') {
         margin: 20px 0;
-        .box-shadow{
+        .box-shadow {
           box-shadow: initial;
           filter: drop-shadow(0px 30px 40px rgba(109, 218, 192, 0.1));
         }
       }
     }
-    &__submit-btn{
+    &__submit-btn {
       margin: 0 auto;
     }
   }
@@ -101,12 +100,12 @@
   &__chat {
     @include b('tablet') {
       margin: 33px 0 0;
-      .box-shadow{
+      .box-shadow {
         box-shadow: initial;
         filter: drop-shadow(0px 30px 40px rgba(109, 218, 192, 0.1));
       }
     }
-    &-tg{
+    &-tg {
       margin: 52px auto 0;
       width: 102px;
       height: 102px;
