@@ -4,24 +4,23 @@ import './Home.scss';
 import 'swiper/swiper.scss';
 
 import {
-HomeAbout,
-HomePreview,
+  HomePreview,
   HomeDataCentres,
-  HomeSubscribe,
   HomePartners,
   HomeRoadmap,
   HomeLinks,
 } from '../../components/sections';
+import { Subscribe, About } from '../../components/organisms';
 
 const Home: React.FC = () => {
   return (
     <main className="home">
-       <HomePreview />
-        <HomeAbout />
-       <HomeDataCentres />
-       <HomeSubscribe />
-       <HomePartners />
-       <HomeRoadmap />
+      <HomePreview />
+      <About />
+      <HomeDataCentres />
+      <Subscribe />
+      <HomePartners />
+      <HomeRoadmap />
       <HomeLinks />
     </main>
   );
