@@ -1,0 +1,49 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+.procedure {
+  padding: 80px 0 100px;
+  &__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  &__title {
+    text-align: center;
+  }
+  &__submit {
+    margin: 20px auto 0;
+  }
+  &__info {
+    border-top: 1px solid rgba($white-g, 0.2);
+    border-bottom: 1px solid rgba($white-g, 0.2);
+    padding: 20px 0 24px;
+    margin: 50px 0 30px;
+    &-item {
+      &-title {
+        margin-bottom: 8px;
+      }
+      & + & {
+        text-align: right;
+      }
+    }
+  }
+  &__input {
+    text-align: center;
+    &-title {
+      margin-bottom: 20px;
+      span {
+        margin-right: 15px;
+      }
+    }
+  }
+}
+.procedure.ligth {
+  background-color: $white-g;
+  color: $black;
+}
+.procedure.dark {
+  background-color: $black;
+  color: white;
+  background-image: url(../../../assets/img/procedure-b.svg);
+  background-size: 105% auto;
+  background-position: center center;
+}
