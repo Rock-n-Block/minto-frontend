@@ -6,7 +6,7 @@ import { AboutContacts, AboutTeam } from '../../components/sections';
 
 const AboutPage: React.FC = () => {
   return (
-    <main className="about">
+    <main className="about-page">
       <About />
       <AboutContacts />
       <AboutTeam />
