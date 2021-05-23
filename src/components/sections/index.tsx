@@ -6,3 +6,4 @@ export { default as HomeLinks } from './Home/HomeLinks';
 export { default as HomeNews } from './Home/HomeNews';
 export { default as StakingInfo } from './Staking/StakingInfo';
 export { default as AboutContacts } from './About/AboutContacts';
+export { default as AboutTeam } from './About/AboutTeam';
