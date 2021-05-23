@@ -190,7 +190,7 @@ const Header: React.FC = () => {
               size="sm"
               onClick={() => setWalletsMenuOpen(true)}
             >
-              Connect Wallet
+              <div className="text-upper text-smd">Connect Wallet</div>
             </Button>
           )}
         </div>
