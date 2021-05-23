@@ -4,7 +4,7 @@ import { Button as BtnAntd } from 'antd';
 import classNames from 'classnames';
 
 export interface IColorScheme {
-  colorScheme?: 'green' | 'outline';
+  colorScheme?: 'green' | 'outline'|'white';
 }
 
 export interface ISize {
