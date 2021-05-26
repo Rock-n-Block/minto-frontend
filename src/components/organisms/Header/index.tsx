@@ -2,16 +2,15 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import cn from 'classnames';
 
+import CrossImg from '../../../assets/img/icons/cross.svg';
+import LogoImg from '../../../assets/img/icons/logo.svg';
+import MetamaskImg from '../../../assets/img/icons/metamask.svg';
+import NavOpenImg from '../../../assets/img/icons/nav-open.svg';
+import TokenPocketImg from '../../../assets/img/icons/token-pocket.svg';
+import ArrowImg from '../../../assets/img/sections/header/arrow.svg';
 import { Button } from '../../atoms';
 
 import './Header.scss';
-
-import LogoImg from '../../../assets/img/icons/logo.svg';
-import NavOpenImg from '../../../assets/img/icons/nav-open.svg';
-import MetamaskImg from '../../../assets/img/icons/metamask.svg';
-import TokenPocketImg from '../../../assets/img/icons/token-pocket.svg';
-import CrossImg from '../../../assets/img/icons/cross.svg';
-import ArrowImg from '../../../assets/img/sections/header/arrow.svg';
 
 const Header: React.FC = () => {
   const [isWalletsMenuOpen, setWalletsMenuOpen] = React.useState<boolean>(false);

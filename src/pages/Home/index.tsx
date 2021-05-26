@@ -1,15 +1,15 @@
 import React from 'react';
 
-import 'swiper/swiper.scss';
-
+import { About, Subscribe } from '../../components/organisms';
 import {
-  HomePreview,
   HomeDataCentres,
-  HomePartners,
-  HomeRoadmap,
   HomeNews,
+  HomePartners,
+  HomePreview,
+  HomeRoadmap,
 } from '../../components/sections';
-import { Subscribe, About } from '../../components/organisms';
+
+import 'swiper/swiper.scss';
 
 const Home: React.FC = () => {
   return (

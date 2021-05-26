@@ -1,14 +1,14 @@
 import React from 'react';
+import nextId from 'react-id-generator';
 import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import nextId from 'react-id-generator';
-
-import './HomeNews.scss';
 
 import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
 import NewsImg1 from '../../../../assets/img/sections/home/news-1.jpg';
 import NewsImg2 from '../../../../assets/img/sections/home/news-2.jpg';
 import NewsImg3 from '../../../../assets/img/sections/home/news-3.jpg';
+
+import './HomeNews.scss';
 
 SwiperCore.use([Navigation]);
 
@@ -24,43 +24,37 @@ const HomeNews: React.FC = () => {
       img: NewsImg1,
       date: 'March 24, 2021',
       title: 'CryptoUniverse spring update',
-      text:
-        'We could not wait to present you the first part of the huge transformation. CryptoUniverse',
+      text: 'We could not wait to present you the first part of the huge transformation. CryptoUniverse',
     },
     {
       img: NewsImg2,
       date: 'March 9, 2021',
       title: 'March 9th Maintenance',
-      text:
-        'Dear users,   We had update-related maintenance today. It took some time for our provider to complete',
+      text: 'Dear users,   We had update-related maintenance today. It took some time for our provider to complete',
     },
     {
       img: NewsImg3,
       date: 'February 12, 2021',
       title: 'Crypto Valentine’s Day - Happy 4 CryptoUniverse Birthday',
-      text:
-        'CryptoUniverse was born on Valentine’s day, so everything we do is filled with love with',
+      text: 'CryptoUniverse was born on Valentine’s day, so everything we do is filled with love with',
     },
     {
       img: NewsImg1,
       date: 'March 24, 2021',
       title: 'CryptoUniverse spring update',
-      text:
-        'We could not wait to present you the first part of the huge transformation. CryptoUniverse',
+      text: 'We could not wait to present you the first part of the huge transformation. CryptoUniverse',
     },
     {
       img: NewsImg2,
       date: 'March 9, 2021',
       title: 'March 9th Maintenance',
-      text:
-        'Dear users,   We had update-related maintenance today. It took some time for our provider to complete',
+      text: 'Dear users,   We had update-related maintenance today. It took some time for our provider to complete',
     },
     {
       img: NewsImg3,
       date: 'February 12, 2021',
       title: 'Crypto Valentine’s Day - Happy 4 CryptoUniverse Birthday',
-      text:
-        'CryptoUniverse was born on Valentine’s day, so everything we do is filled with love with',
+      text: 'CryptoUniverse was born on Valentine’s day, so everything we do is filled with love with',
     },
   ];
   return (

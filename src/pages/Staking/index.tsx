@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { StakingInfo } from '../../components/sections';
 import { Procedure } from '../../components/organisms';
+import { StakingInfo } from '../../components/sections';
 
 const Staking: React.FC = () => {
   return (

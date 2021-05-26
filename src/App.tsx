@@ -1,8 +1,8 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
-import { AboutPage, HomePage, StakingPage, MiningPage } from './pages';
 import { Footer, Header, Links } from './components/organisms';
+import { AboutPage, HomePage, MiningPage, StakingPage } from './pages';
 
 import './styles/index.scss';
 

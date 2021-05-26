@@ -1,5 +1,5 @@
-@import "src/styles/vars";
-@import "src/styles/mixins/media";
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
 
 .about-contacts {
   padding: 120px 0 84px;
@@ -30,7 +30,6 @@
     }
 
     &:first-child {
-
       margin-right: 60px;
     }
 
@@ -39,7 +38,6 @@
       padding-bottom: 20px;
       border-bottom: 3px solid $green;
     }
-
   }
 
   &__support-btn {
@@ -58,7 +56,6 @@
 .country-description {
   margin-top: 20px;
   &__item {
-
     font-size: 22px;
     line-height: 42px;
   }

@@ -1,8 +1,9 @@
 import React from 'react';
-import 'swiper/swiper.scss';
 
 import { About } from '../../components/organisms';
 import { AboutContacts, AboutTeam } from '../../components/sections';
+
+import 'swiper/swiper.scss';
 
 const AboutPage: React.FC = () => {
   return (

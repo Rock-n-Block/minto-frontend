@@ -1,14 +1,14 @@
 import React from 'react';
+import nextId from 'react-id-generator';
 import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import nextId from 'react-id-generator';
+
+import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
+import RoadArrowImg from '../../../../assets/img/sections/home/roadmap-arrow.svg';
+import LineBigImg from '../../../../assets/img/sections/home/roadmap-line-b.svg';
+import LineImg from '../../../../assets/img/sections/home/roadmap-line.svg';
 
 import './HomeRoadmap.scss';
-
-import LineImg from '../../../../assets/img/sections/home/roadmap-line.svg';
-import LineBigImg from '../../../../assets/img/sections/home/roadmap-line-b.svg';
-import RoadArrowImg from '../../../../assets/img/sections/home/roadmap-arrow.svg';
-import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
 
 SwiperCore.use([Navigation]);
 

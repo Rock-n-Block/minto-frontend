@@ -1,6 +1,6 @@
 import React from 'react';
-import cn from 'classnames';
 import nextId from 'react-id-generator';
+import cn from 'classnames';
 
 import { Button, Input } from '../../atoms';
 

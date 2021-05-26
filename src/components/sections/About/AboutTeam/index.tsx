@@ -1,12 +1,14 @@
-import React from "react";
-import {ITeamCard} from "../../../atoms/TeamCard";
-import {TeamCard} from "../../../atoms";
+import React from 'react';
+import nextId from 'react-id-generator';
+import SwiperCore, { Navigation } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
+import WillWarren from '../../../../assets/img/sections/about/employees/will-warren.png';
+import { TeamCard } from '../../../atoms';
+import { ITeamCard } from '../../../atoms/TeamCard';
+
 import './AboutTeam.scss';
-import nextId from "react-id-generator";
-import SwiperCore, {Navigation} from 'swiper';
-import {Swiper, SwiperSlide} from 'swiper/react';
-import {ReactComponent as ArrowImg} from '../../../../assets/img/icons/swiper-arrow.svg';
-import WillWarren from '../../../../assets/img/sections/about/employees/will-warren.png'
 
 const employees: Array<ITeamCard> = [
   {
@@ -54,7 +56,7 @@ const employees: Array<ITeamCard> = [
     name: 'Will Warren',
     position: 'Co-founder & CEO',
   },
-]
+];
 
 SwiperCore.use([Navigation]);
 
@@ -64,36 +66,44 @@ const AboutTeam: React.FC = () => {
   const [swiperInst, setSwiperInst] = React.useState<any>(null);
   const [activeSlide, setActiveSlide] = React.useState<number>(3);
   let slidesPerGroud = 1;
-  if(window.innerWidth > 869){
-    slidesPerGroud=3;
-  }else if(window.innerWidth >619){
-    slidesPerGroud=2;
+  if (window.innerWidth > 869) {
+    slidesPerGroud = 3;
+  } else if (window.innerWidth > 619) {
+    slidesPerGroud = 2;
   }
   return (
-    <div className='about-team'>
-      <div className='row'>
-        <h2 className='h2 text-bold'>Team</h2>
-        <div className='about-team__cards about-team__cards-desktop'>
+    <div className="about-team">
+      <div className="row">
+        <h2 className="h2 text-bold">Team</h2>
+        <div className="about-team__cards about-team__cards-desktop">
           {employees.map((employee) => (
-            <TeamCard photo={employee.photo} name={employee.name} position={employee.position} key={nextId()}/>
+            <TeamCard
+              photo={employee.photo}
+              name={employee.name}
+              position={employee.position}
+              key={nextId()}
+            />
           ))}
         </div>
-        <div className='about-team__cards about-team__cards-mobile'>
+        <div className="about-team__cards about-team__cards-mobile">
           <div className="about-team-slider-nav box-f box-f-c">
             <div
               ref={prevRef}
               className="about-team-slider-nav-prev swiper-navigation swiper-navigation-prev"
             >
-              <ArrowImg/>
+              <ArrowImg />
             </div>
             <div className="text-green text-smd home__data-slider-nav-counter">
-              {activeSlide===employees.length?Math.round(employees.length / slidesPerGroud): Math.floor(activeSlide / slidesPerGroud)}/{Math.round(employees.length / slidesPerGroud)}
+              {activeSlide === employees.length
+                ? Math.round(employees.length / slidesPerGroud)
+                : Math.floor(activeSlide / slidesPerGroud)}
+              /{Math.round(employees.length / slidesPerGroud)}
             </div>
             <div
               ref={nextRef}
               className="about-team-slider-nav-next swiper-navigation swiper-navigation-next"
             >
-              <ArrowImg/>
+              <ArrowImg />
             </div>
           </div>
           <Swiper
@@ -132,14 +142,19 @@ const AboutTeam: React.FC = () => {
           >
             {employees.map((employee) => (
               <SwiperSlide key={nextId()} className="about-team-slide">
-                <TeamCard photo={employee.photo} name={employee.name} position={employee.position} key={nextId()}/>
+                <TeamCard
+                  photo={employee.photo}
+                  name={employee.name}
+                  position={employee.position}
+                  key={nextId()}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AboutTeam;

@@ -1,6 +1,8 @@
 import React from 'react';
+
 import IconMail from '../../../assets/img/icons/mail-package.svg';
 import { Button, Input } from '../../atoms';
+
 import './Subscribe.scss';
 
 const Subscribe: React.FC = () => {

@@ -1,8 +1,9 @@
 import React from 'react';
-import Twitter from '../../../assets/img/icons/twitter.svg';
-import Medium from '../../../assets/img/icons/medium.svg';
+
 import Github from '../../../assets/img/icons/github.svg';
+import Medium from '../../../assets/img/icons/medium.svg';
 import Telegram from '../../../assets/img/icons/telegram.svg';
+import Twitter from '../../../assets/img/icons/twitter.svg';
 import { Button, Input } from '../../atoms';
 
 import './Links.scss';

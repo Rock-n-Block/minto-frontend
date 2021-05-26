@@ -1,10 +1,11 @@
 import React from 'react';
-import IconNewspaper from '../../../assets/img/icons/newspaper-folding.svg';
+
 import IconDoc from '../../../assets/img/icons/doc-detail.svg';
+import IconNewspaper from '../../../assets/img/icons/newspaper-folding.svg';
 import IconPowerpoint from '../../../assets/img/icons/powerpoint.svg';
+import { Button } from '../../atoms';
 
 import './About.scss';
-import { Button } from '../../atoms';
 
 const About: React.FC = () => {
   return (
