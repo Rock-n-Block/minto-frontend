@@ -55,6 +55,8 @@ module.exports = {
     },
   ],
   rules: {
+    'react/react-in-jsx-scope': 'off',
+    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
     '@typescript-eslint/no-this-alias': [
       'error',
       {
@@ -62,10 +64,11 @@ module.exports = {
         allowedNames: ['self'],
       },
     ],
+    'dot-notation': [2, { allowKeywords: true, allowPattern: '' }],
     '@typescript-eslint/no-unused-vars': 'error',
     'prettier/prettier': ['warn', prettierConfig],
     'quote-props': ['error', 'consistent-as-needed'],
-
+    'no-nested-ternary': 'off',
     'react/prop-types': 'off',
     'react/destructuring-assignment': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
@@ -96,7 +99,7 @@ module.exports = {
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
     'import/no-extraneous-dependencies': 'off',
-    'import/prefer-default-export': 'off',
+    'import/prefer-default-export': 0,
     'import/extensions': [
       'error',
       'ignorePackages',

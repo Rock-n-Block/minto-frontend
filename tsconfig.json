@@ -1,23 +1,13 @@
 {
   "shouldExtractLiteralValuesFromEnum": true,
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/dist/**/*"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "**/dist/**/*"],
   "compilerOptions": {
     "strict": true,
     "noImplicitAny": true,
     "jsx": "react-jsx",
     "module": "esnext",
-    "lib": [
-      "dom",
-      "esnext",
-      "ES2015"
-    ],
+    "lib": ["dom", "esnext", "ES2015"],
     "emitDecoratorMetadata": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
