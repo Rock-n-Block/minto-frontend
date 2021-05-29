@@ -6,6 +6,8 @@ import { Button, Input } from '../../atoms';
 
 import './Procedure.scss';
 
+// import { useStore } from '../../../store';
+
 interface IInfoItem {
   title: string;
   value: string;
@@ -18,6 +20,11 @@ interface IProcedure {
   inputTitle: string;
   btnAllText: string;
   submitBtnText: string;
+  inputType?: string;
+  inputChange?: any;
+  buttonClick?: any;
+  inputValue?: any;
+  btnClick?: any;
 }
 
 const Procedure: React.FC<IProcedure> = ({
@@ -27,7 +34,14 @@ const Procedure: React.FC<IProcedure> = ({
   inputTitle,
   btnAllText,
   submitBtnText,
+  inputType,
+  inputChange,
+  buttonClick,
+  inputValue,
+  btnClick,
 }) => {
+  // const store = useStore();
+
   return (
     <div className={cn('procedure', theme)}>
       <div className="procedure__content">
@@ -64,7 +78,7 @@ const Procedure: React.FC<IProcedure> = ({
         <div className="procedure__input">
           <div className="procedure__input-title box-f-c">
             <span className="text-sm">{inputTitle}</span>
-            <Button colorScheme="outline" size="ssm">
+            <Button colorScheme="outline" size="ssm" onClick={btnClick}>
               <div
                 className={cn('text-sm', {
                   'text-white': theme === 'dark',
@@ -81,8 +95,10 @@ const Procedure: React.FC<IProcedure> = ({
             colorScheme="outline"
             type="number"
             shadow={theme === 'light'}
+            onChange={(e) => inputChange(e.target.value)}
+            value={inputValue}
           />
-          <Button className="procedure__submit" size="lmd">
+          <Button className="procedure__submit" size="lmd" onClick={() => buttonClick(inputType)}>
             <span className="text-upper text-slg">{submitBtnText}</span>
           </Button>
         </div>

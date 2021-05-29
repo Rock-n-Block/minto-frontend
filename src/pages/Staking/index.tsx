@@ -1,8 +1,11 @@
 import React from 'react';
 
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js/bignumber';
 import { Procedure } from '../../components/organisms';
 import { StakingInfo } from '../../components/sections';
+
+import { autorun } from 'mobx';
+import CSS from 'csstype';
 
 import { useStore } from '../../store';
 import { config, contracts } from '../../config';
@@ -11,23 +14,31 @@ interface IStakingInfo {
   tokenPrize: string;
   totalSupply: string;
   alreadyStaked: string;
-  availableToStale: string;
+  availableToStake: string;
+  availableToStakeLocked: string;
+  balanceOf: string;
+  inWallet: string;
 }
 
 const Staking: React.FC = () => {
   const store = useStore();
 
-  const {
-    account: { address },
-  } = store;
-
   const [stakingInfo, setStakingInfo] = React.useState({} as IStakingInfo);
   const [firstStart, setFirstStart] = React.useState(true);
 
+  const [stakingValue, setStakingValue] = React.useState(0);
+  const [withdrawValue, setWithdrawValue] = React.useState(0);
+
   const getStakingInfo = async () => {
+    const decimals = new BigNumber(10).pow(contracts.decimals).toString();
+    store.setDecimals(decimals);
+    console.log('decimals', store.decimals);
+
     setFirstStart(false);
 
     console.log(store.contracts.Staking);
+    console.log(store.account.address);
+
     const promises = [
       // From Marketcap
       // TODO: узнать как получить данное поле
@@ -35,9 +46,19 @@ const Staking: React.FC = () => {
         .nowTotalStakers()
         .call()
         .then((value: string) => {
+          console.log(
+            // toFixed(new BigNumber(value).div(store.decimals).toNumber()),
+            new BigNumber(value)
+              .div(store.decimals)
+              .toNumber()
+              .toLocaleString('fullwide', { useGrouping: true }),
+          );
           return {
             key: 'tokenPrize',
-            value: new BigNumber(value).div(contracts.decimals).toString(),
+            value: new BigNumber(value)
+              .div(store.decimals)
+              .toNumber()
+              .toLocaleString('fullwide', { useGrouping: false }),
           };
         }),
       // From Token Contract
@@ -47,7 +68,7 @@ const Staking: React.FC = () => {
         .then((value: string) => {
           return {
             key: 'totalSupply',
-            value: new BigNumber(value).div(contracts.decimals).toString(),
+            value: new BigNumber(value).div(store.decimals).toString(),
           };
         }),
       // From Token Contract - User Has Staked
@@ -58,18 +79,53 @@ const Staking: React.FC = () => {
         .then((value: string) => {
           return {
             key: 'alreadyStaked',
-            value: new BigNumber(value).div(contracts.decimals).toString(),
+            value: new BigNumber(value).div(store.decimals).toString(),
           };
         }),
       // From Token Contract - User Current Token
       // TODO: узнать поравильно ли использовать метод balanceOfLocked
       store.contracts.Token.methods
-        .balanceOfLocked(address)
+        .balanceOfLocked(store.account.address)
         .call()
         .then((value: string) => {
+          console.log(value);
           return {
-            key: 'availableToStale',
-            value: new BigNumber(value).div(contracts.decimals).toString(),
+            key: 'availableToStakeLocked',
+            value: new BigNumber(value).div(store.decimals).toString(),
+          };
+        }),
+      // From Token Contract - User Current Token
+      // TODO: узнать поравильно ли использовать метод balanceOfLocked
+      // TODO: обновить на balancedOf
+      store.contracts.Token.methods
+        .balanceOfSum(store.account.address)
+        .call()
+        .then((value: string) => {
+          console.log(value);
+          const balance = new BigNumber(value)
+            .div(new BigNumber(10).pow(contracts.decimals))
+            .toString();
+          store.updateAccount({ balance });
+          return {
+            key: 'availableToStake',
+            value: new BigNumber(value).div(store.decimals).toString(),
+          };
+        }),
+      // From Token Contract - User Current Token
+      // TODO: узнать поравильно ли использовать метод balanceOfLocked
+      // TODO: обновить на balancedOf
+      store.contracts.Token.methods
+        .balanceOf(store.account.address)
+        .call()
+        .then((value: string) => {
+          console.log(value);
+          const balance = new BigNumber(value)
+            .div(new BigNumber(10).pow(contracts.decimals))
+            .toString();
+          store.updateAccount({ balance });
+          return {
+            key: 'balanceOf',
+            value: new BigNumber(value).div(store.decimals).toString(),
           };
         }),
     ];
@@ -77,6 +133,7 @@ const Staking: React.FC = () => {
     const nstakingInfo = await Promise.all(promises).then((results): Promise<IStakingInfo> => {
       const values: any = {};
       results.forEach((v: { key: string; value: string }) => {
+        console.log(v);
         values[v.key] = v.value;
       });
       return values;
@@ -84,6 +141,113 @@ const Staking: React.FC = () => {
 
     setStakingInfo(nstakingInfo);
   };
+
+  const getAllowance = (amount: string) => {
+    return new Promise((resolve, reject) => {
+      store.contracts.Token.methods
+        .allowance(store.account.address, contracts.params.TOKEN[contracts.type].address)
+        .call()
+        .then((allowance: string) => {
+          const allow = new BigNumber(allowance);
+          const allowed = allow.minus(amount);
+          console.log('allowance', allowance);
+          allowed.isNegative() ? reject() : resolve(1);
+        });
+    });
+  };
+
+  const stake = (resolve: any, reject: any, amount: string, lAmount: string) => {
+    return store.contracts.Staking.methods
+      .stakeStart(amount, lAmount)
+      .send({
+        from: store.account.address,
+      })
+      .then((tx: any) => {
+        const { transactionHash } = tx;
+        console.log('stake', tx, transactionHash);
+        return true;
+      })
+      .then(resolve, reject);
+  };
+
+  const startstake = (amount: string, lAmount: string) => {
+    console.log(amount, lAmount);
+
+    return new Promise((resolve, reject) => {
+      getAllowance(amount).then(
+        () => {
+          stake(resolve, reject, amount, lAmount);
+        },
+        () => {
+          store.contracts.Token.methods
+            .approve(contracts.params.STAKING[contracts.type].address, amount)
+            .send({
+              from: store.account.address,
+            })
+            .then(() => {
+              stake(resolve, reject, amount, lAmount);
+            }, reject);
+        },
+      );
+    });
+  };
+
+  const handleChangeStakingAmount = (value: any) => {
+    console.log(value);
+    setStakingValue(value);
+  };
+
+  const handleButtonStakingClick = (type?: string) => {
+    console.log(type);
+    const amount = new BigNumber(stakingValue).multipliedBy(store.decimals).toString();
+
+    startstake(amount, '0').then(
+      (data: any) => {
+        console.log('staking: ', data);
+      },
+      (err: any) => {
+        console.log('staking error: ', err);
+      },
+    );
+  };
+
+  const handleChangeWithdrawAmount = (value: any) => {
+    console.log(value);
+    setWithdrawValue(value);
+  };
+
+  const handleFullButtonStakingClick = (value: any) => {
+    console.log(value);
+    setWithdrawValue(value);
+    setStakingValue(+stakingInfo.balanceOf);
+  };
+
+  const handleFullButtonWithdrawClick = (value: any) => {
+    console.log(value);
+    setWithdrawValue(value);
+    setWithdrawValue(+stakingInfo.alreadyStaked);
+  };
+
+  const handleButtonWithdrawClick = (type?: string) => {
+    console.log(type);
+    console.log('Withdraw', withdrawValue);
+
+    store.contracts.Staking.methods
+      .stakeEnd()
+      .send({
+        from: store.account.address,
+      })
+      .then(
+        (info: any) => console.log('got withdraw', info),
+        (err: any) => console.log('withdraw err: ', err),
+      );
+  };
+
+  autorun(() => {
+    if (!store.account.address) return;
+    if (!firstStart) return;
+    getStakingInfo();
+  });
 
   React.useEffect(() => {
     if (!store.account.address) return;
@@ -97,38 +261,74 @@ const Staking: React.FC = () => {
     }
   }, [store]);
 
+  const h1Styles: CSS.Properties = {
+    bottom: '2rem',
+    padding: '0.5rem',
+    fontFamily: 'sans-serif',
+    fontSize: '1.5rem',
+    textAlign: 'center',
+    color: 'black',
+    marginTop: '250px',
+    marginBottom: '150px',
+  };
+
   return (
     <div className="staking">
-      <StakingInfo info={stakingInfo} token="BTCMT" />
-      <Procedure
-        title="Stake your tokens"
-        info={[
-          {
-            title: 'In your wallet',
-            value: '35.989.445 BTCMT',
-          },
-          {
-            title: 'You already staked',
-            value: '100.000 BTCMT',
-          },
-        ]}
-        inputTitle="Amount to stake"
-        btnAllText="All available"
-        submitBtnText="Stake"
-      />
-      <Procedure
-        title="Withdraw"
-        theme="light"
-        info={[
-          {
-            title: 'You already staked',
-            value: '100.000 BTCMT',
-          },
-        ]}
-        inputTitle="Amount to Withdraw"
-        btnAllText="All available"
-        submitBtnText="Withdraw"
-      />
+      {store.account.address ? (
+        <StakingInfo info={stakingInfo} token="BTCMT" />
+      ) : (
+        <div style={h1Styles}>
+          <span className="links__title text-center text text-black text-bold-e">
+            Please LogIn to see Information
+          </span>
+        </div>
+      )}
+
+      {store.account.address ? (
+        <div>
+          <Procedure
+            title="Stake your tokens"
+            info={[
+              {
+                title: 'In your wallet',
+                value: `${stakingInfo.balanceOf} BTCMT`,
+              },
+              {
+                title: 'You already staked',
+                value: `${stakingInfo.alreadyStaked} BTCMT`,
+              },
+            ]}
+            inputTitle="Amount to stake"
+            btnAllText="All available"
+            submitBtnText="Stake"
+            inputType="Staking"
+            inputValue={stakingValue}
+            btnClick={handleFullButtonStakingClick}
+            inputChange={handleChangeStakingAmount}
+            buttonClick={handleButtonStakingClick}
+          />
+          <Procedure
+            title="Withdraw"
+            theme="light"
+            info={[
+              {
+                title: 'You already staked',
+                value: `${stakingInfo.alreadyStaked} BTCMT`,
+              },
+            ]}
+            inputTitle="Amount to Withdraw"
+            btnAllText="All available"
+            submitBtnText="Withdraw"
+            inputType="Withdraw"
+            inputValue={withdrawValue}
+            btnClick={handleFullButtonWithdrawClick}
+            inputChange={handleChangeWithdrawAmount}
+            buttonClick={handleButtonWithdrawClick}
+          />
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

@@ -14,11 +14,21 @@ interface IContract {
   [name: string]: any;
 }
 
+interface IInputVal {
+  [name: string]: any;
+}
+
 class AppStore {
   menu: IMenu = { walletsOpen: false };
   account: IAccount = {};
   contracts: IContract = {};
   web3: any;
+  decimals = '0';
+  inputValue = {
+    staking: 0,
+    withdraw: 0,
+    mining: 0,
+  } as IInputVal;
 
   constructor() {
     makeAutoObservable(this);
@@ -28,12 +38,21 @@ class AppStore {
     this.web3 = web3;
   };
 
+  setDecimals = (value: string) => {
+    this.decimals = value;
+  };
+
+  setInputValue = (type: string, value: any) => {
+    this.inputValue[type] = value;
+  };
+
   toggleWalletMenu = (value: boolean) => {
     this.menu.walletsOpen = value;
   };
 
   updateAccount = (account: IAccount) => {
-    this.account = account;
+    if (account.address) this.account.address = account.address;
+    if (account.balance) this.account.balance = account.balance;
   };
 
   addContract = (name: string, contract: any) => {

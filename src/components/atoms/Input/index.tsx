@@ -1,6 +1,6 @@
-import React from "react";
-import {Input as InputAntd} from 'antd';
-import classNames from "classnames";
+import React from 'react';
+import { Input as InputAntd } from 'antd';
+import classNames from 'classnames';
 
 interface IColorScheme {
   colorScheme?: 'white' | 'outline';
@@ -21,19 +21,21 @@ interface InputProps extends IColorScheme, ISize, IType {
   shadow?: boolean;
   onChange?: (e: any) => void;
   onPressEnter?: (e: any) => void;
+  value?: string;
 }
 
 const Input: React.FC<InputProps> = ({
-                                       id,
-                                       className,
-                                       placeholder,
-                                       colorScheme = 'outline',
-                                       size = 'sm',
-                                       type = 'text',
-                                       shadow = false,
-                                       onChange,
-                                       onPressEnter
-                                     }) => {
+  id,
+  className,
+  placeholder,
+  colorScheme = 'outline',
+  size = 'sm',
+  type = 'text',
+  shadow = false,
+  onChange,
+  onPressEnter,
+  value,
+}) => {
   return (
     <InputAntd
       id={id}
@@ -41,15 +43,17 @@ const Input: React.FC<InputProps> = ({
         className || '',
         'text text-bold-semi input',
         `input-${size}`,
-        `input-${colorScheme}`, {
+        `input-${colorScheme}`,
+        {
           'box-shadow': shadow,
-        }
+        },
       )}
       placeholder={placeholder}
       type={type}
       onChange={onChange}
       onPressEnter={onPressEnter}
+      value={value}
     />
-  )
-}
+  );
+};
 export default Input;

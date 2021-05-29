@@ -64,6 +64,7 @@ module.exports = {
         allowedNames: ['self'],
       },
     ],
+    'no-unused-expressions': 0,
     'dot-notation': [2, { allowKeywords: true, allowPattern: '' }],
     '@typescript-eslint/no-unused-vars': 'error',
     'prettier/prettier': ['warn', prettierConfig],

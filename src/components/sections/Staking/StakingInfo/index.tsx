@@ -9,7 +9,8 @@ interface IStakingInfo {
     tokenPrize: string;
     totalSupply: string;
     alreadyStaked: string;
-    availableToStale: string;
+    availableToStake: string;
+    availableToStakeLocked: string;
   };
   token: string;
 }
@@ -21,7 +22,7 @@ const StakingInfo: React.FC<IStakingInfo> = ({ info, token }) => {
         <div className="staking__info-content">
           <Info topText="Token Price" content={info.tokenPrize} bottomText={token} />
           <Info topText="Total Supply" content={info.totalSupply} bottomText={token} />
-          <Info topText="Available to stake" content={info.availableToStale} bottomText={token} />
+          <Info topText="Available to stake" content={info.availableToStake} bottomText={token} />
           <Info topText="Already staked" content={info.alreadyStaked} bottomText={token} />
         </div>
       </div>
