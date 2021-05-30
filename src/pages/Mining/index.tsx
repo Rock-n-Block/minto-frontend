@@ -1,14 +1,13 @@
 import React from 'react';
+import BigNumber from 'bignumber.js/bignumber';
+import CSS from 'csstype';
+import { autorun } from 'mobx';
+
 import { Procedure } from '../../components/organisms';
+import { config, contracts } from '../../config';
+import { useStore } from '../../store';
 
 import './Mining.scss';
-
-import BigNumber from 'bignumber.js/bignumber';
-import { autorun } from 'mobx';
-import CSS from 'csstype';
-
-import { useStore } from '../../store';
-import { config, contracts } from '../../config';
 
 interface IMinigInfo {
   availableToClaim: string;
@@ -21,9 +20,10 @@ const Mining: React.FC = () => {
   const [firstStart, setFirstStart] = React.useState(true);
 
   const [miningValue, setMiningValue] = React.useState('0');
+  const [miningProgress, setMiningProgress] = React.useState(false);
   // const [withdrawValue, setWithdrawValue] = React.useState(0);
 
-  const getStakingInfo = async () => {
+  const getMiningInfo = async () => {
     const decimals = new BigNumber(10).pow(contracts.decimals).toString();
     store.setDecimals(decimals);
     console.log('decimals', store.decimals);
@@ -73,16 +73,22 @@ const Mining: React.FC = () => {
 
   const handleButtonClaimClick = (value: any) => {
     console.log(value);
-
+    setMiningProgress(true);
     store.contracts.Staking.methods
       .withdrawRewardAll()
       .send({
         from: store.account.address,
       })
       .then(
-        (info: any) => console.log('got claim', info),
+        (info: any) => {
+          console.log('got claim', info);
+          setTimeout(() => {
+            getMiningInfo();
+          }, 10000);
+        },
         (err: any) => console.log('claim err: ', err),
-      );
+      )
+      .finally(() => setMiningProgress(false));
   };
 
   const handleButtonClick = () => {
@@ -93,13 +99,13 @@ const Mining: React.FC = () => {
   autorun(() => {
     if (!store.account.address) return;
     if (!firstStart) return;
-    getStakingInfo();
+    getMiningInfo();
   });
 
   React.useEffect(() => {
     if (!store.account.address) return;
     if (!firstStart) return;
-    getStakingInfo();
+    getMiningInfo();
   });
 
   React.useEffect(() => {
@@ -134,10 +140,14 @@ const Mining: React.FC = () => {
               value: `${miningInfo.availableToClaim} HBTC`,
             },
           ]}
+          miniButtonShow={false}
           inputTitle="Amount"
           btnAllText="All available"
           btnClick={handleButtonClick}
           submitBtnText="Claim"
+          inputButtonShow={false}
+          btnProcessed={miningProgress}
+          btnProcessedText="Processing..."
           buttonClick={handleButtonClaimClick}
           inputChange={handleChangeClaimAmount}
           inputValue={miningValue}

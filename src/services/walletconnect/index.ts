@@ -1,4 +1,5 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
+
 import { config, contracts } from '../../config';
 
 export class WalletConnect {
@@ -31,6 +32,10 @@ export class WalletConnect {
     return Promise.all([connecting]).then((connect: any) => {
       return connect[0];
     });
+  }
+
+  public logOut(): void {
+    this.connectWallet.resetConect();
   }
 
   public getContract(name: string) {

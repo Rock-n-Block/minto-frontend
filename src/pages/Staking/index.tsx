@@ -1,14 +1,12 @@
 import React from 'react';
-
 import BigNumber from 'bignumber.js/bignumber';
+import CSS from 'csstype';
+import { autorun } from 'mobx';
+
 import { Procedure } from '../../components/organisms';
 import { StakingInfo } from '../../components/sections';
-
-import { autorun } from 'mobx';
-import CSS from 'csstype';
-
-import { useStore } from '../../store';
 import { config, contracts } from '../../config';
+import { useStore } from '../../store';
 
 interface IStakingInfo {
   tokenPrize: string;
@@ -29,6 +27,9 @@ const Staking: React.FC = () => {
 
   const [stakingValue, setStakingValue] = React.useState(0);
   const [withdrawValue, setWithdrawValue] = React.useState(0);
+
+  const [stakingProgress, setStakingProgress] = React.useState(false);
+  const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
   const getStakingInfo = async () => {
     const decimals = new BigNumber(10).pow(contracts.decimals).toString();
@@ -137,10 +138,6 @@ const Staking: React.FC = () => {
         .call()
         .then((value: string) => {
           console.log('userStakes', value);
-          // const balance = new BigNumber(value)
-          //   .div(new BigNumber(10).pow(contracts.decimals))
-          //   .toString();
-          // store.updateAccount({ balance });
           return {
             key: 'userStakes',
             value: new BigNumber(value[1]).div(store.decimals).toString(),
@@ -217,16 +214,22 @@ const Staking: React.FC = () => {
 
   const handleButtonStakingClick = (type?: string) => {
     console.log(type);
+    setStakingProgress(true);
     const amount = new BigNumber(stakingValue).multipliedBy(store.decimals).toString();
 
-    startstake(amount, '0').then(
-      (data: any) => {
-        console.log('staking: ', data);
-      },
-      (err: any) => {
-        console.log('staking error: ', err);
-      },
-    );
+    startstake(amount, '0')
+      .then(
+        (data: any) => {
+          console.log('got staking: ', data);
+          setTimeout(() => {
+            getStakingInfo();
+          }, 10000);
+        },
+        (err: any) => {
+          console.log('staking error: ', err);
+        },
+      )
+      .finally(() => setStakingProgress(false));
   };
 
   const handleChangeWithdrawAmount = (value: any) => {
@@ -249,16 +252,22 @@ const Staking: React.FC = () => {
   const handleButtonWithdrawClick = (type?: string) => {
     console.log(type);
     console.log('Withdraw', withdrawValue);
-
+    setWithdrawProgress(true);
     store.contracts.Staking.methods
       .stakeEnd()
       .send({
         from: store.account.address,
       })
       .then(
-        (info: any) => console.log('got withdraw', info),
+        (info: any) => {
+          console.log('got withdraw', info);
+          setTimeout(() => {
+            getStakingInfo();
+          }, 10000);
+        },
         (err: any) => console.log('withdraw err: ', err),
-      );
+      )
+      .finally(() => setWithdrawProgress(false));
   };
 
   autorun(() => {
@@ -321,6 +330,8 @@ const Staking: React.FC = () => {
             submitBtnText="Stake"
             inputType="Staking"
             inputValue={stakingValue}
+            btnProcessed={stakingProgress}
+            btnProcessedText="Processing..."
             btnClick={handleFullButtonStakingClick}
             inputChange={handleChangeStakingAmount}
             buttonClick={handleButtonStakingClick}
@@ -341,6 +352,8 @@ const Staking: React.FC = () => {
             inputButtonShow={false}
             inputType="Withdraw"
             inputValue={withdrawValue}
+            btnProcessed={withdrawProgress}
+            btnProcessedText="Processing..."
             btnClick={handleFullButtonWithdrawClick}
             inputChange={handleChangeWithdrawAmount}
             buttonClick={handleButtonWithdrawClick}

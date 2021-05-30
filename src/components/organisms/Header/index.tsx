@@ -1,20 +1,22 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
 
+import ArrowDownWhiteImg from '../../../assets/img/icons/arrow-down-white.svg';
 import CrossImg from '../../../assets/img/icons/cross.svg';
 import LogoImg from '../../../assets/img/icons/logo.svg';
 import MetamaskImg from '../../../assets/img/icons/metamask.svg';
 import NavOpenImg from '../../../assets/img/icons/nav-open.svg';
+import SignOutImg from '../../../assets/img/icons/sign-out.svg';
 import TokenPocketImg from '../../../assets/img/icons/token-pocket.svg';
+import UserImg from '../../../assets/img/icons/user-account.svg';
 import ArrowImg from '../../../assets/img/sections/header/arrow.svg';
+import { WalletConnect } from '../../../services/walletconnect';
+import { useStore } from '../../../store';
 import { Button } from '../../atoms';
 
 import './Header.scss';
-
-import { WalletConnect } from '../../../services/walletconnect';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../store';
 
 const connect = new WalletConnect();
 
@@ -31,6 +33,12 @@ const Header: React.FC = observer(() => {
       setWalletsMenuOpen(false);
       toggleWalletMenu(false);
     }
+  };
+
+  const handleLogOutClick = (): void => {
+    connect.logOut();
+    store.updateAccount({ address: undefined, balance: '0' });
+    console.log('logout');
   };
 
   const handleWalletClick = (name: string): void => {
@@ -67,32 +75,56 @@ const Header: React.FC = observer(() => {
       tabIndex={0}
     >
       <div className="header__row row-lg">
-        <div
-          className={cn('header__wallets hidden-mobile', {
-            open: isWalletsMenuOpen || menu.walletsOpen,
-          })}
-        >
+        {!store.account.address ? (
           <div
-            className="header__wallets-item box-f-ai-c"
-            onClick={() => handleWalletClick('MetaMask')}
-            onKeyDown={() => handleWalletClick('MetaMask')}
-            role="button"
-            tabIndex={0}
+            className={cn('header__wallets hidden-mobile', {
+              open: isWalletsMenuOpen || menu.walletsOpen,
+            })}
           >
-            <img src={MetamaskImg} alt="metamask" className="header__wallets-item-img" />
-            <span className="text-bold text-md">MetaMask</span>
+            <div
+              className="header__wallets-item box-f-ai-c"
+              onClick={() => handleWalletClick('MetaMask')}
+              onKeyDown={() => handleWalletClick('MetaMask')}
+              role="button"
+              tabIndex={0}
+            >
+              <img src={MetamaskImg} alt="metamask" className="header__wallets-item-img" />
+              <span className="text-bold text-md">MetaMask</span>
+            </div>
+            <div
+              className="header__wallets-item box-f-ai-c"
+              onClick={() => handleWalletClick('WalletConnect')}
+              onKeyDown={() => handleWalletClick('WalletConnect')}
+              role="button"
+              tabIndex={0}
+            >
+              <img src={TokenPocketImg} alt="metamask" className="header__wallets-item-img" />
+              <span className="text-bold text-md">TokenPocket</span>
+            </div>
           </div>
+        ) : (
           <div
-            className="header__wallets-item box-f-ai-c"
-            onClick={() => handleWalletClick('WalletConnect')}
-            onKeyDown={() => handleWalletClick('WalletConnect')}
-            role="button"
-            tabIndex={0}
+            className={cn('header__wallets hidden-mobile', {
+              open: isWalletsMenuOpen || menu.walletsOpen,
+            })}
           >
-            <img src={TokenPocketImg} alt="metamask" className="header__wallets-item-img" />
-            <span className="text-bold text-md">TokenPocket</span>
+            <div
+              className="header__wallets-item box-f-ai-c"
+              onClick={() => {
+                handleLogOutClick();
+              }}
+              onKeyDown={() => {
+                handleLogOutClick();
+              }}
+              role="button"
+              tabIndex={0}
+            >
+              <img src={SignOutImg} alt="metamask" className="header__wallets-item-img" />
+              <span className="text-bold text-md">LogOut</span>
+            </div>
           </div>
-        </div>
+        )}
+
         <div className="header__content box-f box-f-ai-c box-f-jc-sb hidden-desktop">
           <div className="header__wrapper">
             {!isMobileMenuOpen && !isWalletsMenuOpen && !menu.walletsOpen ? (
@@ -135,28 +167,72 @@ const Header: React.FC = observer(() => {
               <img src={LogoImg} alt="" />
             </Link>
           </div>
-
-          <div
-            className={cn('header__wallets', {
-              open: isWalletsMenuOpen || menu.walletsOpen,
-            })}
-          >
-            <div className="header__wallets-item box-f-c">
-              <img src={MetamaskImg} alt="metamask" className="header__wallets-item-img" />
-              <span className="text-bold text-lmd">MetaMask</span>
+          {!store.account.address ? (
+            <div
+              className={cn('header__wallets', {
+                open: isWalletsMenuOpen || menu.walletsOpen,
+              })}
+            >
+              <div
+                className="header__wallets-item box-f-c"
+                onClick={() => handleWalletClick('MetaMask')}
+                onKeyDown={() => handleWalletClick('MetaMask')}
+                role="button"
+                tabIndex={0}
+              >
+                <img src={MetamaskImg} alt="metamask" className="header__wallets-item-img" />
+                <span className="text-bold text-lmd">MetaMask</span>
+              </div>
+              <div
+                className="header__wallets-item box-f-c"
+                onClick={() => handleWalletClick('WalletConnect')}
+                onKeyDown={() => handleWalletClick('WalletConnect')}
+                role="button"
+                tabIndex={0}
+              >
+                <img src={TokenPocketImg} alt="metamask" className="header__wallets-item-img" />
+                <span className="text-bold text-lmd">TokenPocket</span>
+              </div>
             </div>
-            <div className="header__wallets-item box-f-c">
-              <img src={TokenPocketImg} alt="metamask" className="header__wallets-item-img" />
-              <span className="text-bold text-lmd">TokenPocket</span>
+          ) : (
+            <div
+              className={cn('header__wallets', {
+                open: isWalletsMenuOpen || menu.walletsOpen,
+              })}
+            >
+              <div
+                className="header__wallets-item box-f-c"
+                onClick={() => {
+                  handleLogOutClick();
+                }}
+                onKeyDown={() => {
+                  handleLogOutClick();
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                <img src={SignOutImg} alt="metamask" className="header__wallets-item-img" />
+                <span className="text-bold text-lmd">LogOut</span>
+              </div>
             </div>
-          </div>
+          )}
           <div
             className={cn('header__menu', {
               open: isMobileMenuOpen,
             })}
           >
             {store.account.address ? (
-              <span>{store.account.address}</span>
+              <Button
+                className="header__menu-btn"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <img src={UserImg} className="header__account-logo" alt="account" />
+                {store.account.address}
+                <img src={ArrowDownWhiteImg} className="header__account-arrow" alt="account" />
+              </Button>
             ) : (
               <Button
                 className="header__menu-btn"
@@ -245,7 +321,22 @@ const Header: React.FC = observer(() => {
               <img src={CrossImg} alt="close" />
             </div>
           ) : store.account.address ? (
-            <span>{store.account.address}</span>
+            <Button
+              className="header__wallets-open"
+              size="sm"
+              onClick={() => {
+                setWalletsMenuOpen(true);
+              }}
+            >
+              <img src={UserImg} className="header__account-logo" alt="account" />
+              <div className="text-upper text-smd">
+                {`${store.account.address.substring(0, 4)}...${store.account.address.slice(
+                  store.account.address.length - 4,
+                  store.account.address.length,
+                )}`}
+              </div>
+              <img src={ArrowDownWhiteImg} className="header__account-arrow" alt="account" />
+            </Button>
           ) : (
             <Button
               className="header__wallets-open"

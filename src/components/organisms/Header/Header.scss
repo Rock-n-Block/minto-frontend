@@ -18,6 +18,14 @@
       background: rgba(0, 0, 0, 0.5);
     }
   }
+  &__account {
+    &-logo {
+      margin-right: 10px;
+    }
+    &-arrow {
+      margin-left: 10px;
+    }
+  }
   &__menu {
     max-height: 0;
     transition: 0.3s;

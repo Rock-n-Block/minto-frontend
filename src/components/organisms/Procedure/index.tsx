@@ -27,6 +27,8 @@ interface IProcedure {
   btnClick?: any;
   miniButtonShow?: boolean;
   inputButtonShow?: boolean;
+  btnProcessed?: boolean;
+  btnProcessedText?: string;
 }
 
 const Procedure: React.FC<IProcedure> = ({
@@ -43,6 +45,8 @@ const Procedure: React.FC<IProcedure> = ({
   btnClick,
   miniButtonShow,
   inputButtonShow = true,
+  btnProcessed = false,
+  btnProcessedText = 'Please Wait...',
 }) => {
   // const store = useStore();
 
@@ -110,9 +114,15 @@ const Procedure: React.FC<IProcedure> = ({
           ) : (
             ''
           )}
-          <Button className="procedure__submit" size="lmd" onClick={() => buttonClick(inputType)}>
-            <span className="text-upper text-slg">{submitBtnText}</span>
-          </Button>
+          {btnProcessed ? (
+            <Button disabled className="procedure__submit" size="lmd">
+              <span className="text-upper text-slg">{btnProcessedText}</span>
+            </Button>
+          ) : (
+            <Button className="procedure__submit" size="lmd" onClick={() => buttonClick(inputType)}>
+              <span className="text-upper text-slg">{submitBtnText}</span>
+            </Button>
+          )}
         </div>
       </div>
     </div>
