@@ -66,6 +66,11 @@ const Mining: React.FC = () => {
     console.log(miningInfo);
   };
 
+  const handleChangeClaimAmount = (value: any) => {
+    console.log(value);
+    setMiningValue(value);
+  };
+
   const handleButtonClaimClick = (value: any) => {
     console.log(value);
 
@@ -134,6 +139,7 @@ const Mining: React.FC = () => {
           btnClick={handleButtonClick}
           submitBtnText="Claim"
           buttonClick={handleButtonClaimClick}
+          inputChange={handleChangeClaimAmount}
           inputValue={miningValue}
         />
       ) : (

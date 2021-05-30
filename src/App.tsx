@@ -12,9 +12,9 @@ export const App: React.FC = () => {
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/staking" component={StakingPage} />
-        <Route exact path="/about" component={AboutPage} />
-        <Route exact path="/mining" component={MiningPage} />
+        <Route path="/staking" component={StakingPage} />
+        <Route path="/about" component={AboutPage} />
+        <Route path="/mining" component={MiningPage} />
       </Switch>
       <Links />
       <Footer />

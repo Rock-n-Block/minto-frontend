@@ -18,6 +18,7 @@ interface IStakingInfo {
   availableToStakeLocked: string;
   balanceOf: string;
   inWallet: string;
+  userStakes: string;
 }
 
 const Staking: React.FC = () => {
@@ -128,6 +129,23 @@ const Staking: React.FC = () => {
             value: new BigNumber(value).div(store.decimals).toString(),
           };
         }),
+      // From Staring Contract - UserStakes
+      // TODO: узнать поравильно ли использовать метод balanceOfLocked
+      // TODO: обновить на balancedOf
+      store.contracts.Staking.methods
+        .userStakes(store.account.address)
+        .call()
+        .then((value: string) => {
+          console.log('userStakes', value);
+          // const balance = new BigNumber(value)
+          //   .div(new BigNumber(10).pow(contracts.decimals))
+          //   .toString();
+          // store.updateAccount({ balance });
+          return {
+            key: 'userStakes',
+            value: new BigNumber(value[1]).div(store.decimals).toString(),
+          };
+        }),
     ];
 
     const nstakingInfo = await Promise.all(promises).then((results): Promise<IStakingInfo> => {
@@ -218,14 +236,14 @@ const Staking: React.FC = () => {
 
   const handleFullButtonStakingClick = (value: any) => {
     console.log(value);
-    setWithdrawValue(value);
+    setStakingValue(value);
     setStakingValue(+stakingInfo.balanceOf);
   };
 
   const handleFullButtonWithdrawClick = (value: any) => {
     console.log(value);
     setWithdrawValue(value);
-    setWithdrawValue(+stakingInfo.alreadyStaked);
+    setWithdrawValue(+stakingInfo.userStakes);
   };
 
   const handleButtonWithdrawClick = (type?: string) => {
@@ -295,7 +313,7 @@ const Staking: React.FC = () => {
               },
               {
                 title: 'You already staked',
-                value: `${stakingInfo.alreadyStaked} BTCMT`,
+                value: `${stakingInfo.userStakes} BTCMT`,
               },
             ]}
             inputTitle="Amount to stake"
@@ -313,12 +331,14 @@ const Staking: React.FC = () => {
             info={[
               {
                 title: 'You already staked',
-                value: `${stakingInfo.alreadyStaked} BTCMT`,
+                value: `${stakingInfo.userStakes} BTCMT`,
               },
             ]}
+            miniButtonShow={false}
             inputTitle="Amount to Withdraw"
             btnAllText="All available"
             submitBtnText="Withdraw"
+            inputButtonShow={false}
             inputType="Withdraw"
             inputValue={withdrawValue}
             btnClick={handleFullButtonWithdrawClick}

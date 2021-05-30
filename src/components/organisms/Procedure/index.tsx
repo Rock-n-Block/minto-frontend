@@ -25,6 +25,8 @@ interface IProcedure {
   buttonClick?: any;
   inputValue?: any;
   btnClick?: any;
+  miniButtonShow?: boolean;
+  inputButtonShow?: boolean;
 }
 
 const Procedure: React.FC<IProcedure> = ({
@@ -39,6 +41,8 @@ const Procedure: React.FC<IProcedure> = ({
   buttonClick,
   inputValue,
   btnClick,
+  miniButtonShow,
+  inputButtonShow = true,
 }) => {
   // const store = useStore();
 
@@ -76,28 +80,36 @@ const Procedure: React.FC<IProcedure> = ({
           ))}
         </div>
         <div className="procedure__input">
-          <div className="procedure__input-title box-f-c">
-            <span className="text-sm">{inputTitle}</span>
-            <Button colorScheme="outline" size="ssm" onClick={btnClick}>
-              <div
-                className={cn('text-sm', {
-                  'text-white': theme === 'dark',
-                  'text-black': theme === 'light',
-                })}
-              >
-                {btnAllText}
-              </div>
-            </Button>
-          </div>
-          <Input
-            size="lg"
-            placeholder="0.0"
-            colorScheme="outline"
-            type="number"
-            shadow={theme === 'light'}
-            onChange={(e) => inputChange(e.target.value)}
-            value={inputValue}
-          />
+          {miniButtonShow ? (
+            <div className="procedure__input-title box-f-c">
+              <span className="text-sm">{inputTitle}</span>
+              <Button colorScheme="outline" size="ssm" onClick={btnClick}>
+                <div
+                  className={cn('text-sm', {
+                    'text-white': theme === 'dark',
+                    'text-black': theme === 'light',
+                  })}
+                >
+                  {btnAllText}
+                </div>
+              </Button>
+            </div>
+          ) : (
+            ''
+          )}
+          {inputButtonShow ? (
+            <Input
+              size="lg"
+              placeholder="0.0"
+              colorScheme="outline"
+              type="number"
+              shadow={theme === 'light'}
+              onChange={(e) => inputChange(e.target.value)}
+              value={inputValue}
+            />
+          ) : (
+            ''
+          )}
           <Button className="procedure__submit" size="lmd" onClick={() => buttonClick(inputType)}>
             <span className="text-upper text-slg">{submitBtnText}</span>
           </Button>
