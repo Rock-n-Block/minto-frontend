@@ -1,10 +1,79 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { autorun } from 'mobx';
 
 import { Button, Info } from '../../../atoms';
+import { useStore } from '../../../../store';
 
 import './HomePreview.scss';
+import BigNumber from 'bignumber.js/bignumber';
+import { contracts } from '../../../../config';
+
+interface IInfo {
+  available: string;
+  totalSupply: string;
+}
 
 const HomePreview: React.FC = () => {
+  const store = useStore();
+
+  const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IInfo);
+  const [firstStart, setFirstStart] = React.useState(true);
+
+  const getInfo = async () => {
+    setFirstStart(false);
+
+    const promises = [
+      store.contracts.Token.methods
+        .totalSupply()
+        .call()
+        .then((value: string) => {
+          console.log('totalSupply', value);
+          return {
+            key: 'totalSupply',
+            value: new BigNumber(value).div(store.decimals).toString(),
+          };
+        }),
+      store.contracts.Token.methods
+        .balanceOfSum(store.account.address)
+        .call()
+        .then((value: string) => {
+          console.log(value);
+          const balance = new BigNumber(value)
+            .div(new BigNumber(10).pow(contracts.decimals))
+            .toString();
+          store.updateAccount({ balance });
+          return {
+            key: 'availableToStake',
+            value: new BigNumber(value).div(store.decimals).toString(),
+          };
+        }),
+    ];
+
+    const uinfo = await Promise.all(promises).then((results): Promise<IInfo> => {
+      const values: any = {};
+      results.forEach((v: { key: string; value: string }) => {
+        console.log(v);
+        values[v.key] = v.value;
+      });
+      return values;
+    });
+
+    setInfo(uinfo);
+  };
+
+  autorun(() => {
+    if (!store.account.address) return;
+    if (!firstStart) return;
+    getInfo();
+  });
+
+  React.useEffect(() => {
+    if (!store.account.address) return;
+    if (!firstStart) return;
+    getInfo();
+  });
+
   return (
     <div className="home__preview">
       <div className="row">
@@ -15,7 +84,9 @@ const HomePreview: React.FC = () => {
         </div>
         <div className="box-f box-f-ai-c home__preview-box">
           <Button size="lmd" className="home__preview-btn">
-            <div className="text-upper text-slg">Stake</div>
+            <NavLink exact to="/staking" className="text-upper text-slg">
+              Stake
+            </NavLink>
           </Button>
           <Button size="md" colorScheme="outline" className="home__preview-btn">
             <div className="text-upper text-slg">Buy</div>
@@ -24,13 +95,13 @@ const HomePreview: React.FC = () => {
         <div className="home__preview-info box-f box-f-ai-c">
           <Info content="$42" topText="Token Price" className="home__preview-info-item" />
           <Info
-            content="9,2 M"
+            content={info.totalSupply}
             topText="Total Supply"
             bottomText="BTCMT"
             className="home__preview-info-item"
           />
           <Info
-            content="4,7 M"
+            content={info.available}
             topText="Available"
             bottomText="BTCMT"
             className="home__preview-info-item"

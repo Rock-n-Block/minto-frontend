@@ -21,7 +21,6 @@ const Mining: React.FC = () => {
 
   const [miningValue, setMiningValue] = React.useState('0');
   const [miningProgress, setMiningProgress] = React.useState(false);
-  // const [withdrawValue, setWithdrawValue] = React.useState(0);
 
   const getMiningInfo = async () => {
     const decimals = new BigNumber(10).pow(contracts.decimals).toString();
