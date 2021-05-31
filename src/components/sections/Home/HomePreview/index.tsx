@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import BigNumber from 'bignumber.js/bignumber';
 import { autorun } from 'mobx';
 
-import { Button, Info } from '../../../atoms';
+import { contracts } from '../../../../config';
 import { useStore } from '../../../../store';
+import { Button, Info } from '../../../atoms';
 
 import './HomePreview.scss';
-import BigNumber from 'bignumber.js/bignumber';
-import { contracts } from '../../../../config';
 
 interface IInfo {
   available: string;
@@ -97,12 +97,6 @@ const HomePreview: React.FC = () => {
           <Info
             content={info.totalSupply}
             topText="Total Supply"
-            bottomText="BTCMT"
-            className="home__preview-info-item"
-          />
-          <Info
-            content={info.available}
-            topText="Available"
             bottomText="BTCMT"
             className="home__preview-info-item"
           />

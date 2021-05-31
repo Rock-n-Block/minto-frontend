@@ -2,79 +2,103 @@
 @import '../../../../styles/vars';
 
 .home__data {
-  background: $white-g;
-  padding: 105px 0px 70px;
+  position: relative;
+
+  padding: 105px 0 70px;
+
   overflow: hidden;
+
+  background: $white-g;
   background-image: url(../../../../assets/img/sections/home/home-data-bg.svg);
   background-repeat: no-repeat;
   background-position: -46px 77px;
-  position: relative;
   @include b('tablet') {
-    padding: 30px 0px 40px;
+    padding: 30px 0 40px;
+
     background-image: none;
   }
+
   &-shadow {
     position: absolute;
-    right: 0;
     top: -88px;
+    right: 0;
+
     &-bottom {
       top: unset;
       bottom: 0;
     }
   }
+
   &-subtitle {
-    margin: 25px 0px 45px;
+    margin: 25px 0 45px;
+
     max-width: 545px;
     @include b('tablet') {
       margin-bottom: 15px;
     }
   }
+
   &-text {
-    max-width: 314px;
     min-width: 314px;
+    max-width: 314px;
+
     line-height: 32px !important;
   }
+
   &-slider {
     margin-left: 105px;
+
     overflow: visible;
+
     width: 500px;
     @include b('tablet') {
-      width: 100%;
       margin-left: 0;
+
+      width: 100%;
     }
+
     &-nav {
       position: absolute;
-      bottom: calc(100% + 24px);
       right: 0;
+      bottom: calc(100% + 24px);
       @include b('tablet') {
         position: static;
+
         margin: 40px auto 20px;
       }
+
       &-prev {
         margin-top: 28px;
       }
+
       &-next {
         margin-bottom: 28px;
       }
+
       &-counter {
         margin: 0 10px;
       }
     }
   }
+
   &-slide {
     width: fit-content !important;
     @include b('tablet') {
       width: 100% !important;
     }
+
     &-img {
-      border: 12px solid white;
       max-height: 500px;
+
+      border: 12px solid white;
       box-shadow: $green-sh;
       @include b('tablet') {
+        margin: 0 auto;
+
         width: fit-content;
         max-height: auto;
-        margin: 0 auto;
       }
+
       img {
         max-height: calc(500px - 24px);
         @include b('tablet') {
@@ -83,41 +107,53 @@
         }
       }
     }
+
     &-content {
       margin-top: 40px;
       @include b('tablet') {
         margin-top: 25px;
       }
     }
+
     &-number {
-      border: 1px solid $green;
       width: 56px;
-      height: 56px;
       min-width: 56px;
+      height: 56px;
+
+      border: 1px solid $green;
       border-radius: 50%;
     }
+
     &-text {
-      max-width: 295px;
       margin-left: 20px;
+
+      max-width: 295px;
     }
   }
+
   &-content {
     position: relative;
     @include b('tablet') {
       flex-direction: column;
     }
   }
+
   .swiper-slide {
     opacity: 0;
+
     transition: 0.2s opacity;
+
     &-active,
     &-next {
       opacity: 1;
+
       transition: 0s opacity;
     }
   }
+
   .swiper-slide-next + .swiper-slide {
     opacity: 1;
+
     transition: 0s opacity;
   }
 }

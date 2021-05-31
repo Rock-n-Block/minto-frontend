@@ -1,63 +1,82 @@
 @import 'src/styles/vars';
 @import 'src/styles/mixins/media';
+
 .procedure {
   padding: 80px 0 100px;
+
   background-repeat: no-repeat;
   @include b('tablet') {
     padding: 32px 20px 45px;
   }
+
   &__content {
-    max-width: 800px;
     margin: 0 auto;
+
+    max-width: 800px;
   }
+
   &__title {
     text-align: center;
   }
+
   &__submit {
     margin: 20px auto 0;
   }
+
   &__info {
+    margin: 50px 0 30px;
+    padding: 20px 0 24px;
+
     border-top: 1px solid rgba($white-g, 0.2);
     border-bottom: 1px solid rgba($white-g, 0.2);
-    padding: 20px 0 24px;
-    margin: 50px 0 30px;
     @include b('tablet') {
       margin: 30px 0 40px;
       padding: 20px 0;
+
       flex-direction: column;
       align-items: flex-start !important;
     }
+
     &-item {
       @include b('tablet') {
         width: 100%;
       }
+
       &-title {
         margin-bottom: 8px;
       }
+
       & + & {
         text-align: right;
         @include b('tablet') {
-          border-top: 1px solid rgba($white-g, 0.2);
           margin-top: 20px;
           padding-top: 20px;
+
           text-align-last: left;
+
+          border-top: 1px solid rgba($white-g, 0.2);
         }
       }
     }
   }
+
   &__input {
     text-align: center;
+
     &-title {
       margin-bottom: 20px;
+
       span {
         margin-right: 15px;
       }
     }
   }
 }
+
 .procedure.light {
-  background-color: $white-g;
   color: $black;
+  background-color: $white-g;
+
   .procedure {
     &__info {
       border-top: 1px solid rgba($black, 0.2);
@@ -65,12 +84,13 @@
     }
   }
 }
+
 .procedure.dark {
-  background-color: $black;
   color: white;
+  background-color: $black;
   background-image: url(../../../assets/img/procedure-b.svg);
-  background-size: 105% auto;
   background-position: center center;
+  background-size: 105% auto;
   @include b('tablet') {
     background-image: none;
   }

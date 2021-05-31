@@ -3,14 +3,16 @@
 
 .about-contacts {
   padding: 120px 0 84px;
+
   background: $white-g;
   background-image: url(../../../../assets/img/sections/about/contacts.svg);
+  background-repeat: no-repeat;
   background-position: center;
   background-size: 100% auto;
-  background-repeat: no-repeat;
   @include b('tablet') {
-    background-image: unset;
     padding: 30px 0 40px;
+
+    background-image: unset;
   }
 
   &__countries {
@@ -22,8 +24,9 @@
 
   &__country {
     margin-top: 70px;
-    max-width: 450px;
+
     width: 100%;
+    max-width: 450px;
 
     @include b('tablet') {
       margin-top: 40px;
@@ -34,8 +37,10 @@
     }
 
     &-name {
-      letter-spacing: -0.05em;
       padding-bottom: 20px;
+
+      letter-spacing: -0.05em;
+
       border-bottom: 3px solid $green;
     }
   }
@@ -55,6 +60,7 @@
 
 .country-description {
   margin-top: 20px;
+
   &__item {
     font-size: 22px;
     line-height: 42px;

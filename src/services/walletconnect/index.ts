@@ -1,4 +1,5 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
+import Web3 from 'web3';
 
 import { config, contracts } from '../../config';
 
@@ -38,11 +39,11 @@ export class WalletConnect {
     this.connectWallet.resetConect();
   }
 
-  public getContract(name: string) {
+  public getContract(name: string): any {
     return this.connectWallet.Contract(name);
   }
 
-  public Web3() {
+  public Web3(): Web3 {
     return this.connectWallet.Web3Provider;
   }
 

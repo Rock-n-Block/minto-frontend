@@ -1,44 +1,55 @@
 .input {
+  width: 100%;
+
   font-size: 17px;
   line-height: 23px;
-  border-radius: 60px;
   text-align: center;
-  width: 100%;
+
+  border-radius: 60px;
+
   &-container {
-    text-align: center;
     width: 100%;
+
+    text-align: center;
   }
+
   &-white {
     background-color: white;
   }
 
   &-outline {
-    background: transparent;
     color: $green;
+    background: transparent;
 
     border: 1px solid $green;
   }
 
   &-sm {
     padding: 25px;
+
     max-width: 300px;
   }
 
   &-md {
     padding: 25px;
+
     max-width: 438px;
   }
 
   &-lg {
+    padding: 29px;
+
+    max-width: 500px;
+
     font-size: 38px;
     line-height: 52px;
-    padding: 29px;
-    max-width: 500px;
   }
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+
   margin: 0;
 }
 

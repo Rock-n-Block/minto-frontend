@@ -6,7 +6,7 @@ import './Info.scss';
 interface IInfo {
   topText?: React.ReactElement | string;
   bottomText?: React.ReactElement | string;
-  content: React.ReactElement | string;
+  content: React.ReactElement | string | number;
   className?: string;
 }
 

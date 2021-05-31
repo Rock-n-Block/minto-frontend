@@ -48,6 +48,7 @@ main {
   @include b('mobile') {
     padding: 0 20px;
   }
+
   &-lg {
     max-width: 1360px;
   }
@@ -61,18 +62,21 @@ a {
 
 .hidden {
   display: none !important;
+
   &-desktop {
     display: none !important;
     @include b('tablet') {
       display: block !important;
     }
   }
+
   &-mobile {
     @include b('tablet') {
       display: none !important;
     }
   }
 }
+
 .circle {
   border-radius: 50%;
 }

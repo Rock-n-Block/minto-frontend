@@ -5,8 +5,10 @@
   @include b('tablet') {
     padding: 40px 0 60px;
   }
+
   &__container {
     margin-top: 72px;
+
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: repeat(5, 1fr);
@@ -17,6 +19,7 @@
       row-gap: 20px;
     }
   }
+
   &__partner {
     display: flex;
     justify-content: center;

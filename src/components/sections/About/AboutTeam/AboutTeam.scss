@@ -2,12 +2,15 @@
 
 .about-team {
   padding: 150px 0;
+
   background-color: white;
   @include b('tablet') {
     padding: 40px 0 70px;
   }
+
   &__cards-desktop {
     margin-top: 40px;
+
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -16,25 +19,32 @@
       display: none;
     }
   }
+
   &__cards-mobile {
     display: none;
     @include b('tablet') {
       display: unset;
     }
   }
+
   .swiper-slide {
     display: flex;
     justify-content: center;
   }
+
   &-slider-nav {
     //margin-top: 20px;
     //margin-bottom: 30px;
     margin: 20px auto 30px;
-    text-align: center;
+
     height: 84px;
+
+    text-align: center;
+
     &-prev {
       align-self: flex-end;
     }
+
     &-next {
       align-self: flex-start;
     }

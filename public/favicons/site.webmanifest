@@ -1,7 +1,6 @@
 {
   "name": "Mine Bitcoin by staking BTCMT tokens.",
   "short_name": "Minto",
-  "start_url": "index.html",
   "icons": [
     {
       "src": "/favicons/android-chrome-192x192.png",

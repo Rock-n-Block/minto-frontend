@@ -6,28 +6,34 @@
 
   background: $black;
   background-image: url(../../../assets/img/sections/home/about.svg);
+  background-repeat: no-repeat;
   background-position: center;
   background-size: 104.8% auto;
-  background-repeat: no-repeat;
   @include b('tablet') {
-    background-image: url(../../../assets/img/sections/home/about-m.svg);
     padding: 50px 0 40px;
+
+    background-image: url(../../../assets/img/sections/home/about-m.svg);
   }
+
   .row {
     position: relative;
   }
 
   &__description {
     margin-top: 33px;
+
     max-width: 574px;
 
     @include b('tablet') {
       margin-top: 30px;
+
       font-size: 18px !important;
       line-height: 25px !important;
     }
+
     &-secondary {
       margin-top: 80px;
+
       max-width: 399px;
       @include b('tablet') {
         margin-top: 30px;
@@ -45,13 +51,16 @@
   &__btns {
     display: flex;
     flex-wrap: wrap;
+
     .btn {
       margin-top: 40px;
       @include b('tablet') {
         margin-top: 30px;
+
         width: 100%;
       }
     }
+
     .btn:first-child {
       margin-right: 22px;
       @include b('tablet') {
@@ -73,6 +82,7 @@
     }
     @include b('tablet') {
       position: initial;
+
       margin-top: 30px;
     }
   }

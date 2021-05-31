@@ -2,15 +2,21 @@
 @import '../../../styles/mixins/media';
 
 .info {
-  padding-bottom: 10px;
-  border-bottom: 3px solid $green;
   position: relative;
+
+  padding-bottom: 10px;
+
   width: 100%;
+
+  border-bottom: 3px solid $green;
+
   &__text {
     position: absolute;
-    bottom: 100%;
-    font-weight: 600;
     left: 0;
+    bottom: 100%;
+
+    font-weight: 600;
+
     &-bottom {
       top: calc(100% + 10px);
       @include b('tablet') {

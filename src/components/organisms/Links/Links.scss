@@ -2,24 +2,29 @@
 
 .links {
   padding: 84px 0 87px;
+
   background: $black;
   background-image: url(../../../assets/img/sections/home/links.svg);
+  background-repeat: no-repeat;
   background-position: center;
   background-size: 104.7% auto;
-  background-repeat: no-repeat;
   @include b('tablet') {
-    background-image: unset;
     padding: 40px 0 40px;
+
+    background-image: unset;
   }
+
   .row {
     display: flex;
     justify-content: space-between;
     @include b('tablet') {
       padding: 0;
+
       flex-direction: column;
       align-items: center;
     }
   }
+
   &__title {
     max-width: 250px;
 
@@ -40,21 +45,27 @@
   &__subscribe {
     &__social-networks {
       margin-top: 48px;
-      max-width: 170px;
+
       display: flex;
       justify-content: space-around;
+
+      max-width: 170px;
       flex-wrap: wrap;
       @include b('tablet') {
         margin-top: 20px;
         padding-bottom: 20px;
-        max-width: 290px;
-        width: 100%;
+
         justify-content: space-between;
+
+        width: 100%;
+        max-width: 290px;
       }
     }
+
     &__network {
       width: 75px;
       height: 75px;
+
       border: 3px solid $green;
 
       @include b('tablet') {
@@ -66,32 +77,39 @@
   }
 
   &__subscribe-email {
+    padding-right: 47px;
+    padding-left: 47px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-left: 47px;
-    padding-right: 47px;
+
     border-left: 1px dashed $white-d;
     border-right: 1px dashed $white-d;
     @include b('tablet') {
-      width: 100%;
       padding: 20px 0;
+
+      width: 100%;
+
+      border-top: 1px dashed $white-d;
       border-left: unset;
       border-right: unset;
-      border-top: 1px dashed $white-d;
       border-bottom: 1px dashed $white-d;
     }
+
     &__e-mail {
       margin: 47px 0 23px;
 
       @include b('tablet') {
         margin: 20px 0;
+
         .box-shadow {
           box-shadow: initial;
-          filter: drop-shadow(0px 30px 40px rgba(109, 218, 192, 0.1));
+          filter: drop-shadow(0 30px 40px rgba(109, 218, 192, 0.1));
         }
       }
     }
+
     &__submit-btn {
       margin: 0 auto;
     }
@@ -100,18 +118,23 @@
   &__chat {
     @include b('tablet') {
       margin: 33px 0 0;
+
       .box-shadow {
         box-shadow: initial;
-        filter: drop-shadow(0px 30px 40px rgba(109, 218, 192, 0.1));
+        filter: drop-shadow(0 30px 40px rgba(109, 218, 192, 0.1));
       }
     }
+
     &-tg {
       margin: 52px auto 0;
+
       width: 102px;
       height: 102px;
+
       border: 3px solid $green;
       @include b('tablet') {
         margin-top: 20px;
+
         width: 76px;
         height: 76px;
       }

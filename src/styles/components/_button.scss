@@ -1,54 +1,73 @@
 .btn {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   height: auto;
+
   border: 1.4386px solid $green;
+
   &-green {
-    background: $green;
     color: white;
+    background: $green;
     border: none;
   }
+
   &-outline {
+    color: $green;
     background: transparent;
-    color: $green;
   }
+
   &-white {
-    background: white;
     color: $green;
+    background: white;
   }
 
   .btn-icon {
     margin-right: 17.5px;
   }
+
   &-ssm {
     padding: 4px 10px;
+
     border-radius: 40px;
   }
+
   &-sm {
     padding: 12px 24px;
+
     border-radius: 30px;
   }
+
   &-lsm {
     padding: 22px 26.5px;
+
     border-radius: 40px;
   }
+
   &-md {
     padding: 18px 50px;
+
     border-radius: 40px;
   }
+
   &-smd {
     padding: 16px 60px;
+
     border-radius: 30px;
   }
+
   &-lmd {
     padding: 18px 85px;
+
     border-radius: 40px;
   }
+
   &-lg {
     padding: 19.5px 90px;
+
     border-radius: 40px;
+
     .btn-icon {
       margin-right: 12px;
     }

@@ -1,10 +1,12 @@
 @import '../../../../styles/mixins/media';
 @import '../../../../styles/vars';
+
 .staking__info {
   padding: 235px 0 150px;
   @include b('tablet') {
     padding: 122px 0 50px;
   }
+
   &-content {
     display: grid;
     grid-template-columns: 1fr 1fr;

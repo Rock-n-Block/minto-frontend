@@ -222,7 +222,7 @@ a:hover {
 
 img {
   border: 0; /* 1 */
-  interpolation-mode: bicubic; /* 2 */
+  -ms-interpolation-mode: bicubic; /* 2 */
 }
 
 /**
@@ -391,12 +391,6 @@ input,
 select,
 textarea {
   color: #222;
-}
-
-::selection {
-  text-shadow: none;
-
-  background: #b3d4fc;
 }
 
 ::selection {

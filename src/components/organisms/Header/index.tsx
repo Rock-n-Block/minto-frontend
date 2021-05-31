@@ -36,8 +36,8 @@ const Header: React.FC = observer(() => {
   };
 
   const handleLogOutClick = (): void => {
-    connect.logOut();
     store.updateAccount({ address: undefined, balance: '0' });
+    connect.logOut();
     console.log('logout');
   };
 
@@ -110,12 +110,8 @@ const Header: React.FC = observer(() => {
           >
             <div
               className="header__wallets-item box-f-ai-c"
-              onClick={() => {
-                handleLogOutClick();
-              }}
-              onKeyDown={() => {
-                handleLogOutClick();
-              }}
+              onClick={() => handleLogOutClick()}
+              onKeyDown={() => handleLogOutClick()}
               role="button"
               tabIndex={0}
             >

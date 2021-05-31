@@ -7,7 +7,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import ScollToTop from './utils/ScollToTop';
 import { App } from './App';
-
 import { AppStore, StoreProvider } from './store';
 
 const store = new AppStore();
