@@ -37,8 +37,9 @@ const Mining: React.FC = () => {
       // From Token Contract - User Current Token
       // TODO: узнать поравильно ли использовать метод balanceOfLocked
       // TODO: обновить на balancedOf
-      store.contracts.Token.methods
-        .balanceOfSum(store.account.address)
+      // eslint-disable-next-line no-underscore-dangle
+      store.contracts.Staking.methods
+        ._calculationReward(store.account.address, '0')
         .call()
         .then((value: string) => {
           console.log(value);
@@ -48,7 +49,7 @@ const Mining: React.FC = () => {
           // store.updateAccount({ balance });
           return {
             key: 'availableToClaim',
-            value: new BigNumber(value).div(store.decimals).toString(),
+            value: new BigNumber(value[0]).div(store.decimals).toString(),
           };
         }),
     ];
