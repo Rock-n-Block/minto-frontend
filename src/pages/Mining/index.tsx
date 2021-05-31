@@ -11,6 +11,7 @@ import './Mining.scss';
 
 interface IMinigInfo {
   availableToClaim: string;
+  th: string;
 }
 
 const Mining: React.FC = () => {
@@ -49,6 +50,28 @@ const Mining: React.FC = () => {
           return {
             key: 'availableToClaim',
             value: new BigNumber(value[0]).div(store.decimals).toString(),
+          };
+        }),
+      // From Token Contract - User Current Token
+      // TODO: узнать поравильно ли использовать метод balanceOfLocked
+      // TODO: обновить на balancedOf
+      store.contracts.Token.methods
+        .balanceOf(store.account.address)
+        .call()
+        .then((value: string) => {
+          console.log(value);
+          // const balance = new BigNumber(value)
+          // .div(new BigNumber(10).pow(contracts.decimals))
+          // .div(0.01)
+          // .toString();
+
+          const th = new BigNumber(value).div(store.decimals).multipliedBy(0.01).toString();
+
+          console.log('th', th);
+
+          return {
+            key: 'th',
+            value: th,
           };
         }),
     ];
@@ -133,7 +156,7 @@ const Mining: React.FC = () => {
           info={[
             {
               title: 'Your mining power equivalent',
-              value: '300 TH/s',
+              value: `${miningInfo.th} TH/s`,
             },
             {
               title: 'Available to claim',
