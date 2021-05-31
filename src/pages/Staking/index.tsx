@@ -68,9 +68,12 @@ const Staking: React.FC = () => {
         .totalSupply()
         .call()
         .then((value: string) => {
+          console.log('totalSupply', value);
           return {
             key: 'totalSupply',
             value: new BigNumber(value).div(store.decimals).toString(),
+            // .toNumber()
+            // .toLocaleString('fullwide', { useGrouping: false }),
           };
         }),
       // From Token Contract - User Has Staked

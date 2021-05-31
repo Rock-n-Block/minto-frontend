@@ -1,19 +1,58 @@
 {
-  "name": "Minto",
+  "name": "Mine Bitcoin by staking BTCMT tokens.",
   "short_name": "Minto",
+  "start_url": "index.html",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/favicons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/favicons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "shortcuts": [
+    {
+      "name": "Staking",
+      "short_name": "Staking",
+      "url": "/staking",
+      "icons": [
+        {
+          "src": "/favicons/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Mining",
+      "short_name": "Mining",
+      "url": "/mining",
+      "icons": [
+        {
+          "src": "/favicons/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "About us",
+      "short_name": "About",
+      "url": "/about",
+      "icons": [
+        {
+          "src": "/favicons/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
 }
