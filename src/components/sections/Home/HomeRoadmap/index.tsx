@@ -32,44 +32,19 @@ const HomeRoadmap: React.FC = () => {
     {
       year: 2021,
       items: [
-        'Techincal Improvements',
-        'Websockets',
-        'SushiSwap Integration',
-        'Multiexchange Suport',
+        'NFT marketing promotion tool',
+        'Presale promotion tools',
+        'More tools (mempool, analytics...)',
+        'Improvements based on community feedback',
       ],
     },
     {
       year: 2021,
-      items: [
-        'Techincal Improvements',
-        'Websockets',
-        'SushiSwap Integration',
-        'Multiexchange Suport',
-        'Velox Bots and LimitOrders Integration',
-        'UX/UI Redesign',
-      ],
+      items: ['CEX tools', 'Advanced public API release', 'More dex integration'],
     },
     {
       year: 2021,
-      items: [
-        'Techincal Improvements',
-        'Websockets',
-        'SushiSwap Integration',
-        'Multiexchange Suport',
-        'Velox Bots and LimitOrders Integration',
-        'UX/UI Redesign',
-      ],
-    },
-    {
-      year: 2021,
-      items: [
-        'Techincal Improvements',
-        'Websockets',
-        'SushiSwap Integration',
-        'Multiexchange Suport',
-        'Velox Bots and LimitOrders Integration',
-        'UX/UI Redesign',
-      ],
+      items: ['CEX tools', 'Advanced public API release', 'More dex integration'],
     },
   ];
   return (
