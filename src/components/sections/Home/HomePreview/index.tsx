@@ -29,9 +29,16 @@ const HomePreview: React.FC = () => {
         .call()
         .then((value: string) => {
           console.log('totalSupply', value);
+          const calcV = new BigNumber(value).div(10 ** contracts.decimals).toNumber();
+          const nValue = +calcV.toFixed(4);
+          // const nValue = parseFloat(Number(calcV).toFixed(28));
+          // const nValue = calcV.toFixed(18); // .replace(/([0-9]+(\.[1-9]+)?)(\.?0+$)/, '$1');
+
+          console.log('calcV', calcV);
+          console.log('nValue', nValue);
           return {
             key: 'totalSupply',
-            value: new BigNumber(value).div(store.decimals).toString(),
+            value: nValue,
           };
         }),
       store.contracts.Token.methods

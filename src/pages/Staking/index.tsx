@@ -31,36 +31,31 @@ const Staking: React.FC = () => {
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
+  const normalizedValue = (value: string | number, fixed?: number): number => {
+    const decimals = 10 ** contracts.decimals;
+    const normalValue = new BigNumber(value).div(decimals).toNumber();
+    return +normalValue.toFixed(fixed || 4);
+  };
+
   const getStakingInfo = async () => {
     const decimals = new BigNumber(10).pow(contracts.decimals).toString();
     store.setDecimals(decimals);
-    console.log('decimals', store.decimals);
+    // console.log('decimals', store.decimals);
 
     setFirstStart(false);
 
-    console.log(store.contracts.Staking);
-    console.log(store.account.address);
+    // console.log(store.contracts.Staking);
+    // console.log(store.account.address);
 
     const promises = [
-      // From Marketcap
-      // TODO: узнать как получить данное поле
       store.contracts.Staking.methods
         .nowTotalStakers()
         .call()
         .then((value: string) => {
-          console.log(
-            // toFixed(new BigNumber(value).div(store.decimals).toNumber()),
-            new BigNumber(value)
-              .div(store.decimals)
-              .toNumber()
-              .toLocaleString('fullwide', { useGrouping: true }),
-          );
+          console.log('nowTotalStakers', value);
           return {
             key: 'tokenPrize',
-            value: new BigNumber(value)
-              .div(store.decimals)
-              .toNumber()
-              .toLocaleString('fullwide', { useGrouping: false }),
+            value: normalizedValue(value),
           };
         }),
       // From Token Contract
@@ -71,24 +66,19 @@ const Staking: React.FC = () => {
           console.log('totalSupply', value);
           return {
             key: 'totalSupply',
-            value: new BigNumber(value).div(store.decimals).toString(),
-            // .toNumber()
-            // .toLocaleString('fullwide', { useGrouping: false }),
+            value: normalizedValue(value),
           };
         }),
-      // From Token Contract - User Has Staked
-      // TODO: узнать как получить данное поле
       store.contracts.Staking.methods
         .nowTotalMined()
         .call()
         .then((value: string) => {
+          console.log('nowTotalMined', value);
           return {
             key: 'alreadyStaked',
-            value: new BigNumber(value).div(store.decimals).toString(),
+            value: normalizedValue(value),
           };
         }),
-      // From Token Contract - User Current Token
-      // TODO: узнать поравильно ли использовать метод balanceOfLocked
       store.contracts.Token.methods
         .balanceOfLocked(store.account.address)
         .call()
@@ -96,12 +86,9 @@ const Staking: React.FC = () => {
           console.log(value);
           return {
             key: 'availableToStakeLocked',
-            value: new BigNumber(value).div(store.decimals).toString(),
+            value: normalizedValue(value),
           };
         }),
-      // From Token Contract - User Current Token
-      // TODO: узнать поравильно ли использовать метод balanceOfLocked
-      // TODO: обновить на balancedOf
       store.contracts.Token.methods
         .balanceOfSum(store.account.address)
         .call()
@@ -116,9 +103,6 @@ const Staking: React.FC = () => {
             value: new BigNumber(value).div(store.decimals).toString(),
           };
         }),
-      // From Token Contract - User Current Token
-      // TODO: узнать поравильно ли использовать метод balanceOfLocked
-      // TODO: обновить на balancedOf
       store.contracts.Token.methods
         .balanceOf(store.account.address)
         .call()
@@ -130,12 +114,9 @@ const Staking: React.FC = () => {
           store.updateAccount({ balance });
           return {
             key: 'balanceOf',
-            value: new BigNumber(value).div(store.decimals).toString(),
+            value: normalizedValue(value),
           };
         }),
-      // From Staring Contract - UserStakes
-      // TODO: узнать поравильно ли использовать метод balanceOfLocked
-      // TODO: обновить на balancedOf
       store.contracts.Staking.methods
         .userStakes(store.account.address)
         .call()
@@ -143,7 +124,7 @@ const Staking: React.FC = () => {
           console.log('userStakes', value);
           return {
             key: 'userStakes',
-            value: new BigNumber(value[1]).div(store.decimals).toString(),
+            value: normalizedValue(value[1]),
           };
         }),
     ];
@@ -189,7 +170,7 @@ const Staking: React.FC = () => {
   };
 
   const startstake = (amount: string, lAmount: string) => {
-    console.log(amount, lAmount);
+    // console.log(amount, lAmount);
 
     return new Promise((resolve, reject) => {
       getAllowance(amount).then(
@@ -211,12 +192,10 @@ const Staking: React.FC = () => {
   };
 
   const handleChangeStakingAmount = (value: any) => {
-    console.log(value);
     setStakingValue(value);
   };
 
-  const handleButtonStakingClick = (type?: string) => {
-    console.log(type);
+  const handleButtonStakingClick = () => {
     setStakingProgress(true);
     const amount = new BigNumber(stakingValue).multipliedBy(store.decimals).toString();
 
@@ -236,25 +215,20 @@ const Staking: React.FC = () => {
   };
 
   const handleChangeWithdrawAmount = (value: any) => {
-    console.log(value);
     setWithdrawValue(value);
   };
 
   const handleFullButtonStakingClick = (value: any) => {
-    console.log(value);
     setStakingValue(value);
     setStakingValue(+stakingInfo.balanceOf);
   };
 
   const handleFullButtonWithdrawClick = (value: any) => {
-    console.log(value);
     setWithdrawValue(value);
     setWithdrawValue(+stakingInfo.userStakes);
   };
 
-  const handleButtonWithdrawClick = (type?: string) => {
-    console.log(type);
-    console.log('Withdraw', withdrawValue);
+  const handleButtonWithdrawClick = () => {
     setWithdrawProgress(true);
     store.contracts.Staking.methods
       .stakeEnd()
