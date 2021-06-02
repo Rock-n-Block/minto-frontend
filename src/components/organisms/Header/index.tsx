@@ -38,7 +38,7 @@ const Header: React.FC = observer(() => {
   const handleLogOutClick = (): void => {
     store.updateAccount({ address: undefined, balance: '0' });
     connect.logOut();
-    console.log('logout');
+    window.location.reload();
   };
 
   const handleWalletClick = (name: string): void => {

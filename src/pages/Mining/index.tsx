@@ -23,11 +23,11 @@ const Mining: React.FC = () => {
   const [miningValue, setMiningValue] = React.useState(0);
   const [miningProgress, setMiningProgress] = React.useState(false);
 
-  const normalizedValue = (value: string | number, fixed?: number): number => {
-    const decimals = 10 ** contracts.decimals;
-    const normalValue = new BigNumber(value).div(decimals).toNumber();
-    return +normalValue.toFixed(fixed || 4);
-  };
+  // const normalizedValue = (value: string | number, fixed?: number): number => {
+  //   const decimals = 10 ** contracts.decimals;
+  //   const normalValue = new BigNumber(value).div(decimals).toNumber();
+  //   return +normalValue.toFixed(fixed || 4);
+  // };
 
   const getMiningInfo = async () => {
     const decimals = new BigNumber(10).pow(contracts.decimals).toString();
@@ -43,7 +43,7 @@ const Mining: React.FC = () => {
           console.log(value);
           return {
             key: 'availableToClaim',
-            value: normalizedValue(value[0]),
+            value: value[0],
           };
         }),
       store.contracts.Staking.methods

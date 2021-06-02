@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { ConnectWallet } from '@amfi/connect-wallet';
 import Web3 from 'web3';
 
@@ -81,10 +82,37 @@ export class WalletConnect {
           console.log(userAccount);
           if (!account || userAccount.address !== account.address) {
             resolve(userAccount);
+            toast.success(
+              `Account connected: ${userAccount.address.substring(
+                0,
+                4,
+              )}...${userAccount.address.slice(
+                userAccount.address.length - 4,
+                userAccount.address.length,
+              )}`,
+              {
+                position: 'bottom-right',
+                autoClose: 7000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+              },
+            );
           }
         },
         (err: any) => {
           console.log(err);
+          toast.error(`⚠️ Chain error. ${err.message.text}`, {
+            position: 'bottom-right',
+            autoClose: 7000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+          });
           reject(err);
         },
       );

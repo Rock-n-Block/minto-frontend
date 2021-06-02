@@ -52,6 +52,7 @@
     "react-id-generator": "^3.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-toastify": "^7.0.4",
     "redux": "^4.1.0",
     "rxjs": "^6.6.7",
     "stylelint": "^13.3.3",

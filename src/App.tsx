@@ -1,14 +1,27 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { Footer, Header, Links } from './components/organisms';
 import { AboutPage, HomePage, MiningPage, StakingPage } from './pages';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.scss';
 
 export const App: React.FC = () => {
   return (
     <div className="minto">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+      />
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />

@@ -1,8 +1,10 @@
 import React from 'react';
+import { toast, ToastOptions } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import CSS from 'csstype';
 import { autorun } from 'mobx';
 
+import IconExternalLink from '../../assets/img/icons/external-link.svg';
 import { Procedure } from '../../components/organisms';
 import { StakingInfo } from '../../components/sections';
 import { config, contracts } from '../../config';
@@ -21,6 +23,22 @@ interface IStakingInfo {
   userStakes: string;
 }
 
+interface ITemplateNotify {
+  [index: string]: () => {};
+}
+
+interface ICustomNotifyData {
+  text: string;
+  link?: {
+    url: string;
+    text: string;
+  };
+}
+
+interface ICodeInfo {
+  [index: number]: string;
+}
+
 const Staking: React.FC = () => {
   const store = useStore();
 
@@ -32,6 +50,58 @@ const Staking: React.FC = () => {
 
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
+
+  const errCode = (code: number): string => {
+    const codeInfo = {
+      4001: 'Signature transaction denied',
+      4100: 'Unauthorized. The requested method and/or account has not been authorized by the user.',
+      4200: 'Unsupported Method. The Provider does not support the requested method.',
+      4900: 'Disconnected. The Provider is disconnected from all chains.',
+      4901: 'Chain Disconnected. The Provider is not connected to the requested chain.',
+    } as ICodeInfo;
+
+    return codeInfo[code];
+  };
+
+  const customNotify = (data: ICustomNotifyData) => {
+    return (
+      <div>
+        <p className="custom-notify-text">{data.text}</p>
+        {data.link ? (
+          <div className="custom-notify-link-wrap">
+            <a className="custom-notify-link" target="_blank" href={data.link.url} rel="noreferrer">
+              <img width="15px" height="15px" src={IconExternalLink} alt="external link" />
+              {data.link.text}
+            </a>
+          </div>
+        ) : (
+          ''
+        )}
+      </div>
+    );
+  };
+
+  const notify = (template: string | any, type?: string): void => {
+    const options = {
+      position: 'bottom-right',
+      autoClose: 10000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    } as ToastOptions;
+
+    const templateNotify = {
+      default: () => toast(template, options),
+      info: () => toast.info(template, options),
+      success: () => toast.success(template, options),
+      warning: () => toast.warning(template, options),
+      error: () => toast.error(template, options),
+    } as ITemplateNotify;
+
+    templateNotify[type || 'default']();
+  };
 
   const normalizedValue = (value: string | number, fixed?: number): number => {
     const decimals = 10 ** contracts.decimals;
@@ -60,7 +130,6 @@ const Staking: React.FC = () => {
             value: normalizedValue(value),
           };
         }),
-      // From Token Contract
       store.contracts.Token.methods
         .totalSupply()
         .call()
@@ -166,13 +235,13 @@ const Staking: React.FC = () => {
       .then((tx: any) => {
         const { transactionHash } = tx;
         console.log('stake', tx, transactionHash);
-        return true;
+        return { 0: true, 1: transactionHash };
       })
       .then(resolve, reject);
   };
 
   const startstake = (amount: string, lAmount: string) => {
-    // console.log(amount, lAmount);
+    notify('Please wait, staking is in progress.', 'info');
 
     return new Promise((resolve, reject) => {
       getAllowance(amount).then(
@@ -194,28 +263,45 @@ const Staking: React.FC = () => {
   };
 
   const handleChangeStakingAmount = (value: any) => {
-    // console.log(value, value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));
-    // setStakingValue(value.replace(/[^0-9]/g, ''));
     setStakingValue(value);
     if (value < 0) setStakingValue(0);
     if (value > +stakingInfo.balanceOf) setStakingValue(+stakingInfo.balanceOf);
   };
 
   const handleButtonStakingClick = () => {
-    if (+stakingValue === 0 || +stakingValue <= 0) return;
+    if (+stakingValue === 0 || +stakingValue <= 0) {
+      notify('Please, input value in staking field.', 'warning');
+      return;
+    }
+
     setStakingProgress(true);
     const amount = new BigNumber(stakingValue).multipliedBy(store.decimals).toString();
 
     startstake(amount, '0')
       .then(
         (data: any) => {
-          console.log('got staking: ', data);
+          console.log('got staking: ', data, data[1]);
+          notify(
+            customNotify({
+              text: 'Your stake complete!',
+              link: {
+                url: `https://testnet.hecoinfo.com/tx/${data[1]}`,
+                text: 'View tx',
+              },
+            }),
+            'success',
+          );
+
           setTimeout(() => {
             getStakingInfo();
           }, 10000);
         },
         (err: any) => {
           console.log('staking error: ', err);
+          notify(
+            `Something went wrong! ${err.code === 4001 ? 'You denied transaction signature.' : ''}`,
+            'error',
+          );
         },
       )
       .finally(() => setStakingProgress(false));
@@ -237,6 +323,7 @@ const Staking: React.FC = () => {
   };
 
   const handleButtonWithdrawClick = () => {
+    notify('Please wait, withdraw is in progress.', 'info');
     setWithdrawProgress(true);
     store.contracts.Staking.methods
       .stakeEnd()
@@ -244,13 +331,27 @@ const Staking: React.FC = () => {
         from: store.account.address,
       })
       .then(
-        (info: any) => {
-          console.log('got withdraw', info);
+        (data: any) => {
+          console.log('got withdraw', data);
+          notify(
+            customNotify({
+              text: 'Your withdraw complete!',
+              link: {
+                url: `https://testnet.hecoinfo.com/tx/${data.transactionHash}`,
+                text: 'View transaction',
+              },
+            }),
+            'success',
+          );
+
           setTimeout(() => {
             getStakingInfo();
           }, 10000);
         },
-        (err: any) => console.log('withdraw err: ', err),
+        (err: any) => {
+          console.log('withdraw err: ', err);
+          notify(`Something went wrong! ${errCode(err.code)}`, 'error');
+        },
       )
       .finally(() => setWithdrawProgress(false));
   };
