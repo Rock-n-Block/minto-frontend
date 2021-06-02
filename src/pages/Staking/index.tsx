@@ -281,6 +281,7 @@ const Staking: React.FC = () => {
       .then(
         (data: any) => {
           console.log('got staking: ', data, data[1]);
+          setStakingValue(0);
           notify(
             customNotify({
               text: 'Your stake complete!',
@@ -350,6 +351,7 @@ const Staking: React.FC = () => {
         },
         (err: any) => {
           console.log('withdraw err: ', err);
+          setWithdrawValue(0);
           notify(`Something went wrong! ${errCode(err.code)}`, 'error');
         },
       )
