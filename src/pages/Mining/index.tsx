@@ -40,10 +40,13 @@ const Mining: React.FC = () => {
         ._calculationReward(store.account.address, '0')
         .call()
         .then((value: string) => {
-          console.log(value);
+          console.log(
+            value,
+            Number('91002763963364277').toLocaleString('fullwide', { useGrouping: false }),
+          );
           return {
             key: 'availableToClaim',
-            value: value[0],
+            value: new BigNumber(value[0]).div(10 ** 18).toString(),
           };
         }),
       store.contracts.Staking.methods
