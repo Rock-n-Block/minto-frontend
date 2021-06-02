@@ -23,52 +23,36 @@ const Mining: React.FC = () => {
   const [miningValue, setMiningValue] = React.useState('0');
   const [miningProgress, setMiningProgress] = React.useState(false);
 
+  const normalizedValue = (value: string | number, fixed?: number): number => {
+    const decimals = 10 ** contracts.decimals;
+    const normalValue = new BigNumber(value).div(decimals).toNumber();
+    return +normalValue.toFixed(fixed || 4);
+  };
+
   const getMiningInfo = async () => {
     const decimals = new BigNumber(10).pow(contracts.decimals).toString();
     store.setDecimals(decimals);
-    console.log('decimals', store.decimals);
-
     setFirstStart(false);
 
-    console.log(store.contracts.Staking);
-    console.log(store.account.address);
-
     const promises = [
-      // From Token Contract - User Current Token
-      // TODO: узнать поравильно ли использовать метод balanceOfLocked
-      // TODO: обновить на balancedOf
       // eslint-disable-next-line no-underscore-dangle
       store.contracts.Staking.methods
         ._calculationReward(store.account.address, '0')
         .call()
         .then((value: string) => {
           console.log(value);
-          // const balance = new BigNumber(value)
-          //   .div(new BigNumber(10).pow(contracts.decimals))
-          //   .toString();
-          // store.updateAccount({ balance });
           return {
             key: 'availableToClaim',
-            value: new BigNumber(value[0]).div(store.decimals).toString(),
+            value: normalizedValue(value[0]),
           };
         }),
-      // From Token Contract - User Current Token
-      // TODO: узнать поравильно ли использовать метод balanceOfLocked
-      // TODO: обновить на balancedOf
-      store.contracts.Token.methods
-        .balanceOf(store.account.address)
+      store.contracts.Staking.methods
+        .userStakes(store.account.address)
         .call()
         .then((value: string) => {
           console.log(value);
-          // const balance = new BigNumber(value)
-          // .div(new BigNumber(10).pow(contracts.decimals))
-          // .div(0.01)
-          // .toString();
-
-          const th = new BigNumber(value).div(store.decimals).multipliedBy(0.01).toString();
-
+          const th = new BigNumber(value[1]).div(store.decimals).multipliedBy(0.01).toString();
           console.log('th', th);
-
           return {
             key: 'th',
             value: th,
@@ -90,12 +74,10 @@ const Mining: React.FC = () => {
   };
 
   const handleChangeClaimAmount = (value: any) => {
-    console.log(value);
     setMiningValue(value);
   };
 
-  const handleButtonClaimClick = (value: any) => {
-    console.log(value);
+  const handleButtonClaimClick = () => {
     setMiningProgress(true);
     store.contracts.Staking.methods
       .withdrawRewardAll()
@@ -115,7 +97,6 @@ const Mining: React.FC = () => {
   };
 
   const handleButtonClick = () => {
-    console.log('handleButtonClick');
     setMiningValue(miningInfo.availableToClaim);
   };
 

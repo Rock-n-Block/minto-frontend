@@ -26,19 +26,19 @@ const HomeDataCentres: React.FC = () => {
   const slides = [
     {
       img: Img1,
-      text: 'Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
+      text: 'The overall energy capacity is 64.5 MW and has been fitted with 3500 of the most advanced ASIC miners, with 50,000 THs of mining power allocated to Minto. Those figures will increase as the project grows.',
     },
     {
       img: Img2,
-      text: 'Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
+      text: 'The data center is powered by a private plant that provides it with cheap, green electricity.',
     },
     {
       img: Img3,
-      text: 'Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
+      text: "The facility's extra square footage opens up opportunities for further scaling at no additional cost.",
     },
     {
       img: Img4,
-      text: 'Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
+      text: 'The overall computing capabilities of the facility can be used for scientific calculations, processing big data, rendering and artificial intelligence.',
     },
     {
       img: Img5,
@@ -68,15 +68,20 @@ const HomeDataCentres: React.FC = () => {
       <div className="row">
         <h2 className="h2 text-bold home__data-title">Our data centers</h2>
         <div className="home__data-subtitle text">
-          Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est
-          sit aliqua dolor do amet sint.{' '}
+          We looked far and wide to find the perfect place to host our project; it had to be up to
+          the highest international technological standards and it had to be capable of expanding as
+          our project grew.{' '}
         </div>
         <div className="box-f home__data-content">
           <div className="home__data-text text-smd">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet
-            minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+            Our project is hosted in a gem we found in the Republic of Karelia. The 86,000 square
+            foot, brand new data center is in an ideal location that has enabled us to cut operation
+            costs down to a minimum, thanks to a stable 1Gbit internet connection, smooth logistics
+            and the suitable climate in the region.
+            <br />
+            <br />
+            The facility and operation are in complete compliance with local and international
+            regulations, and the site is maintained by a team of over 150 experienced technicians.
           </div>
 
           <div className="home__data-slider-nav box-f box-f-ai-c">

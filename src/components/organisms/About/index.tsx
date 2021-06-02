@@ -14,9 +14,9 @@ const About: React.FC = () => {
         <section className="about__left">
           <h2 className="about__title h2 text-white text-bold">About</h2>
           <p className="about__description text-lg text-white">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet
-            minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
+            Simply put - mining is expensive. Keeping it profitable is another part of the story.
+            Minto aims to lower both the risks and the entry threshold by tokenizing mining power in
+            the form of the BTCMT token.
           </p>
           <Button
             size="lg"
@@ -29,15 +29,14 @@ const About: React.FC = () => {
         </section>
         <section className="about__right">
           <p className="about__right-text text-gray-l text">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet
-            minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+            Receive transparent mining rewards as if you had an ASIC-setup or make profits by buying
+            and selling any amount of mining power without dealing with the problems of traditional
+            mining.
           </p>
         </section>
         <section className="about__left">
           <p className="about__description-secondary text-green text">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
+            Bitcoin mining has never been easier. Learn more about the future of the mining industry
           </p>
           <div className="about__btns">
             <Button
