@@ -19,17 +19,17 @@ const Footer: React.FC = () => {
         <nav className="footer__navigation-container">
           <ul className="footer__navigation">
             <li className="footer__navigation-item">
-              <Link to="/#" className="text-black text-smd text-liga-off">
+              <Link to="/about" className="text-black text-smd text-liga-off">
                 About
               </Link>
             </li>
             <li className="footer__navigation-item">
-              <Link to="/#" className="text-black text-smd text-liga-off">
+              <Link to="/staking" className="text-black text-smd text-liga-off">
                 Stake BTCMT
               </Link>
             </li>
             <li className="footer__navigation-item">
-              <Link to="/#" className="text-black text-smd text-liga-off">
+              <Link to="/about#contacts" className="text-black text-smd text-liga-off">
                 Contacts
               </Link>
             </li>

@@ -8,6 +8,8 @@ import { StakingInfo } from '../../components/sections';
 import { config, contracts } from '../../config';
 import { useStore } from '../../store';
 
+import './Staking.scss';
+
 interface IStakingInfo {
   tokenPrize: string;
   totalSupply: string;
@@ -333,10 +335,11 @@ const Staking: React.FC = () => {
             submitBtnText="Stake"
             inputType="Staking"
             inputValue={stakingValue}
+            inputChange={handleChangeStakingAmount}
+            inputMax={+stakingInfo.balanceOf}
             btnProcessed={stakingProgress}
             btnProcessedText="Processing..."
             btnClick={handleFullButtonStakingClick}
-            inputChange={handleChangeStakingAmount}
             buttonClick={handleButtonStakingClick}
           />
           <Procedure
@@ -354,11 +357,12 @@ const Staking: React.FC = () => {
             submitBtnText="Withdraw"
             inputButtonShow={false}
             inputType="Withdraw"
+            inputMax={+stakingInfo.userStakes}
+            inputChange={handleChangeWithdrawAmount}
             inputValue={withdrawValue}
             btnProcessed={withdrawProgress}
             btnProcessedText="Processing..."
             btnClick={handleFullButtonWithdrawClick}
-            inputChange={handleChangeWithdrawAmount}
             buttonClick={handleButtonWithdrawClick}
           />
         </div>

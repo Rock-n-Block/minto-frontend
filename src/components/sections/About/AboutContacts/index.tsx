@@ -7,7 +7,7 @@ import './AboutContacts.scss';
 
 const AboutContacts: React.FC = () => {
   return (
-    <div className="about-contacts">
+    <div id="contacts" className="about-contacts">
       <div className="row">
         <h2 className="h2 text-bold">Contacts</h2>
         <div className="about-contacts__countries">

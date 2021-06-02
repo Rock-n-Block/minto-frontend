@@ -44,11 +44,11 @@ const About: React.FC = () => {
               colorScheme="outline"
               size="lsm"
               icon={IconDoc}
-              className="text-smd text-upper text-bold-e text-white"
+              className="btn-about text-smd text-upper text-bold-e text-white"
             >
               <span className="text-smd text-upper text-bold-e text-white">press release</span>
             </Button>
-            <Button colorScheme="outline" size="lsm" icon={IconPowerpoint}>
+            <Button className="btn-about" colorScheme="outline" size="lsm" icon={IconPowerpoint}>
               <span className="text-smd text-upper text-bold-e text-white">presentation</span>
             </Button>
           </div>

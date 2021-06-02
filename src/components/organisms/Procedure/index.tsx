@@ -29,6 +29,7 @@ interface IProcedure {
   inputButtonShow?: boolean;
   btnProcessed?: boolean;
   btnProcessedText?: string;
+  inputMax?: number;
 }
 
 const Procedure: React.FC<IProcedure> = ({
@@ -47,6 +48,7 @@ const Procedure: React.FC<IProcedure> = ({
   inputButtonShow = true,
   btnProcessed = false,
   btnProcessedText = 'Please Wait...',
+  inputMax,
 }) => {
   // const store = useStore();
 
@@ -110,6 +112,7 @@ const Procedure: React.FC<IProcedure> = ({
               shadow={theme === 'light'}
               onChange={(e) => inputChange(e.target.value)}
               value={inputValue}
+              max={inputMax}
             />
           ) : (
             ''
