@@ -20,7 +20,7 @@ const Mining: React.FC = () => {
   const [miningInfo, setMiningInfo] = React.useState({} as IMinigInfo);
   const [firstStart, setFirstStart] = React.useState(true);
 
-  const [miningValue, setMiningValue] = React.useState('0');
+  const [miningValue, setMiningValue] = React.useState(0);
   const [miningProgress, setMiningProgress] = React.useState(false);
 
   const normalizedValue = (value: string | number, fixed?: number): number => {
@@ -75,6 +75,8 @@ const Mining: React.FC = () => {
 
   const handleChangeClaimAmount = (value: any) => {
     setMiningValue(value);
+    if (value < 0) setMiningValue(0);
+    if (value > +miningInfo.availableToClaim) setMiningValue(+miningInfo.availableToClaim);
   };
 
   const handleButtonClaimClick = () => {
@@ -97,7 +99,7 @@ const Mining: React.FC = () => {
   };
 
   const handleButtonClick = () => {
-    setMiningValue(miningInfo.availableToClaim);
+    setMiningValue(+miningInfo.availableToClaim);
   };
 
   autorun(() => {

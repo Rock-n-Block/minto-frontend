@@ -56,6 +56,7 @@ const Input: React.FC<InputProps> = ({
       onPressEnter={onPressEnter}
       value={value}
       max={max}
+      min="0"
     />
   );
 };

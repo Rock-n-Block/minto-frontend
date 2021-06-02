@@ -194,12 +194,11 @@ const Staking: React.FC = () => {
   };
 
   const handleChangeStakingAmount = (value: any) => {
-    console.log(value);
-    if (value > +stakingInfo.balanceOf) {
-      setStakingValue(+stakingInfo.balanceOf);
-      console.log('max');
-    }
+    console.log(value, value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));
+    // setStakingValue(value.replace(/[^0-9]/g, ''));
     setStakingValue(value);
+    if (value < 0) setStakingValue(0);
+    if (value > +stakingInfo.balanceOf) setStakingValue(+stakingInfo.balanceOf);
   };
 
   const handleButtonStakingClick = () => {
@@ -224,6 +223,8 @@ const Staking: React.FC = () => {
   const handleChangeWithdrawAmount = (value: any) => {
     console.log(value);
     setWithdrawValue(value);
+    if (value < 0) setWithdrawValue(0);
+    if (value > +stakingInfo.userStakes) setWithdrawValue(+stakingInfo.userStakes);
   };
 
   const handleFullButtonStakingClick = (value: any) => {
@@ -231,8 +232,7 @@ const Staking: React.FC = () => {
     setStakingValue(+stakingInfo.balanceOf);
   };
 
-  const handleFullButtonWithdrawClick = (value: any) => {
-    setWithdrawValue(value);
+  const handleFullButtonWithdrawClick = () => {
     setWithdrawValue(+stakingInfo.userStakes);
   };
 
