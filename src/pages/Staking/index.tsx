@@ -202,6 +202,7 @@ const Staking: React.FC = () => {
   };
 
   const handleButtonStakingClick = () => {
+    if (+stakingValue === 0 || +stakingValue <= 0) return;
     setStakingProgress(true);
     const amount = new BigNumber(stakingValue).multipliedBy(store.decimals).toString();
 

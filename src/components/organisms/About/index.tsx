@@ -18,14 +18,16 @@ const About: React.FC = () => {
             Minto aims to lower both the risks and the entry threshold by tokenizing mining power in
             the form of the BTCMT token.
           </p>
-          <Button
-            size="lg"
-            colorScheme="green"
-            className="about__whitepaper-btn text-upper text-bold-e text-lmd"
-            icon={IconNewspaper}
-          >
-            whitepaper
-          </Button>
+          <a href="/resources/Whitepaper.pdf" target="_blank">
+            <Button
+              size="lg"
+              colorScheme="green"
+              className="about__whitepaper-btn text-upper text-bold-e text-lmd"
+              icon={IconNewspaper}
+            >
+              whitepaper
+            </Button>
+          </a>
         </section>
         <section className="about__right">
           <p className="about__right-text text-gray-l text">
@@ -47,9 +49,11 @@ const About: React.FC = () => {
             >
               <span className="text-smd text-upper text-bold-e text-white">press release</span>
             </Button>
-            <Button className="btn-about" colorScheme="outline" size="lsm" icon={IconPowerpoint}>
-              <span className="text-smd text-upper text-bold-e text-white">presentation</span>
-            </Button>
+            <a href="/resources/Minto Presentation.pdf" target="_blank">
+              <Button className="btn-about" colorScheme="outline" size="lsm" icon={IconPowerpoint}>
+                <span className="text-smd text-upper text-bold-e text-white">presentation</span>
+              </Button>
+            </a>
           </div>
         </section>
       </div>
