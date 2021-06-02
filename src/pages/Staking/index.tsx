@@ -194,7 +194,7 @@ const Staking: React.FC = () => {
   };
 
   const handleChangeStakingAmount = (value: any) => {
-    console.log(value, value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));
+    // console.log(value, value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));
     // setStakingValue(value.replace(/[^0-9]/g, ''));
     setStakingValue(value);
     if (value < 0) setStakingValue(0);
@@ -221,7 +221,6 @@ const Staking: React.FC = () => {
   };
 
   const handleChangeWithdrawAmount = (value: any) => {
-    console.log(value);
     setWithdrawValue(value);
     if (value < 0) setWithdrawValue(0);
     if (value > +stakingInfo.userStakes) setWithdrawValue(+stakingInfo.userStakes);
