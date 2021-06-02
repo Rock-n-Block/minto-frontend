@@ -194,6 +194,11 @@ const Staking: React.FC = () => {
   };
 
   const handleChangeStakingAmount = (value: any) => {
+    console.log(value);
+    if (value > +stakingInfo.balanceOf) {
+      setStakingValue(+stakingInfo.balanceOf);
+      console.log('max');
+    }
     setStakingValue(value);
   };
 
@@ -217,6 +222,7 @@ const Staking: React.FC = () => {
   };
 
   const handleChangeWithdrawAmount = (value: any) => {
+    console.log(value);
     setWithdrawValue(value);
   };
 
@@ -308,9 +314,9 @@ const Staking: React.FC = () => {
             btnAllText="All available"
             submitBtnText="Stake"
             inputType="Staking"
-            inputValue={stakingValue}
             inputChange={handleChangeStakingAmount}
             inputMax={+stakingInfo.balanceOf}
+            inputValue={stakingValue}
             btnProcessed={stakingProgress}
             btnProcessedText="Processing..."
             btnClick={handleFullButtonStakingClick}
