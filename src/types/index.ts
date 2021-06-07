@@ -52,6 +52,11 @@ export interface IContracts {
   };
 }
 
+export interface IMinigInfo {
+  availableToClaim: string;
+  th: string;
+}
+
 export interface IStakingInfo {
   tokenPrize: string;
   totalSupply: string;

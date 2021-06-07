@@ -4,15 +4,12 @@ import CSS from 'csstype';
 import { autorun } from 'mobx';
 
 import { Procedure } from '../../components/organisms';
+
 import { config, contracts } from '../../config';
+import { IMinigInfo } from '../../types';
 import { useStore } from '../../store';
 
 import './Mining.scss';
-
-interface IMinigInfo {
-  availableToClaim: string;
-  th: string;
-}
 
 const Mining: React.FC = () => {
   const store = useStore();
@@ -23,57 +20,18 @@ const Mining: React.FC = () => {
   const [miningValue, setMiningValue] = React.useState(0);
   const [miningProgress, setMiningProgress] = React.useState(false);
 
-  // const normalizedValue = (value: string | number, fixed?: number): number => {
-  //   const decimals = 10 ** contracts.decimals;
-  //   const normalValue = new BigNumber(value).div(decimals).toNumber();
-  //   return +normalValue.toFixed(fixed || 4);
-  // };
-
   const getMiningInfo = async () => {
     const decimals = new BigNumber(10).pow(contracts.decimals).toString();
     store.setDecimals(decimals);
     setFirstStart(false);
 
-    const promises = [
-      // eslint-disable-next-line no-underscore-dangle
-      store.contracts.Staking.methods
-        ._calculationReward(store.account.address, '0')
-        .call()
-        .then((value: string) => {
-          console.log(
-            value,
-            Number('91002763963364277').toLocaleString('fullwide', { useGrouping: false }),
-          );
-          return {
-            key: 'availableToClaim',
-            value: new BigNumber(value[0]).div(10 ** 18).toString(),
-          };
-        }),
-      store.contracts.Staking.methods
-        .userStakes(store.account.address)
-        .call()
-        .then((value: string) => {
-          console.log(value);
-          const th = new BigNumber(value[1]).div(store.decimals).multipliedBy(0.01).toString();
-          console.log('th', th);
-          return {
-            key: 'th',
-            value: th,
-          };
-        }),
-    ];
+    if (!store.is_contractService) {
+      store.setContractService();
+      console.log('info', store.contractService);
+    }
 
-    const nminingInfo = await Promise.all(promises).then((results): Promise<IMinigInfo> => {
-      const values: any = {};
-      results.forEach((v: { key: string; value: string }) => {
-        console.log(v);
-        values[v.key] = v.value;
-      });
-      return values;
-    });
-
-    setMiningInfo(nminingInfo);
-    console.log(miningInfo);
+    const info = await store.contractService.miningInfo();
+    setMiningInfo(info);
   };
 
   const handleChangeClaimAmount = (value: any) => {

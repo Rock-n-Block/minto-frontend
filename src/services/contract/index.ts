@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { contracts } from '../../config';
 import { AppStore } from '../../store';
-import { IStakingInfo } from '../../types';
+import { IMinigInfo, IStakingInfo } from '../../types';
 import { normalizedValue, clog } from '../../utils';
 
 export class ContractService {
@@ -99,6 +99,49 @@ export class ContractService {
     return Promise.all(promises).then((results): Promise<IStakingInfo> => {
       const values: any = {};
       console.group('Staking load');
+      results.forEach((v: { key: string; value: string }) => {
+        clog(`${v.key}: ${v.value}`);
+        values[v.key] = v.value;
+      });
+      console.groupEnd();
+      return values;
+    });
+  };
+
+  public miningInfo = async (): Promise<IMinigInfo> => {
+    const promises = [
+      // eslint-disable-next-line no-underscore-dangle
+      this.store.contracts.Staking.methods
+        ._calculationReward(this.store.account.address, '0')
+        .call()
+        .then((value: string) => {
+          clog(
+            `_calculationReward (availableToClaim): ${value} (${Number(
+              '91002763963364277',
+            ).toLocaleString('fullwide', { useGrouping: false })})`,
+          );
+          return {
+            key: 'availableToClaim',
+            value: new BigNumber(value[0]).div(10 ** 18).toString(),
+          };
+        }),
+      this.store.contracts.Staking.methods
+        .userStakes(this.store.account.address)
+        .call()
+        .then((value: string) => {
+          const th = new BigNumber(value[1]).div(this.store.decimals).multipliedBy(0.01).toString();
+          clog(`userStakes (availableToClaim): ${value[1]}`);
+          clog(`th: ${th}`);
+          return {
+            key: 'th',
+            value: th,
+          };
+        }),
+    ];
+
+    return Promise.all(promises).then((results): Promise<IMinigInfo> => {
+      const values: any = {};
+      console.group('Mining load');
       results.forEach((v: { key: string; value: string }) => {
         clog(`${v.key}: ${v.value}`);
         values[v.key] = v.value;
