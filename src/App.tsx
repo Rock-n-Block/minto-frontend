@@ -12,7 +12,7 @@ export const App: React.FC = () => {
   return (
     <div className="minto">
       <ToastContainer
-        position="top-right"
+        position="bottom-right"
         autoClose={5000}
         hideProgressBar
         newestOnTop={false}

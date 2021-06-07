@@ -1,41 +1,11 @@
-interface IConfig {
-  menu: {
-    open: {
-      openConnectModal: boolean;
-    };
-    onlyForAuth: boolean;
-  };
-  network?: {
-    name: string;
-    chainID: number;
-  };
-  connectWallet: {
-    type?: string[];
-    provider: {
-      [index: string]: {};
-    };
-    settings?: {
-      providerType?: boolean;
-    };
-  };
-}
-interface IContracts {
-  decimals: number;
-  names: string[];
-  type: string;
-  params: {
-    [index: string]: {
-      [index: string]: {
-        address: string;
-        abi: any[];
-      };
-    };
-  };
-}
+import { IConfig, IContracts } from '../types';
 
 export const is_production = false;
 
 export const config: IConfig = {
+  tx: {
+    link: is_production ? ' https://hecoinfo.com/tx' : ' https://testnet.hecoinfo.com/tx',
+  },
   menu: {
     open: {
       openConnectModal: true,

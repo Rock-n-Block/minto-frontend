@@ -1,22 +1,7 @@
 import { createContext, FC, useContext } from 'react';
 import { makeAutoObservable } from 'mobx';
-
-interface IMenu {
-  walletsOpen: boolean;
-}
-
-interface IAccount {
-  address?: string;
-  balance?: string;
-}
-
-interface IContract {
-  [name: string]: any;
-}
-
-interface IInputVal {
-  [name: string]: any;
-}
+import { IMenu, IAccount, IContract, IInputVal } from '../types';
+import { ContractService } from '../services/contract';
 
 class AppStore {
   menu: IMenu = { walletsOpen: false };
@@ -24,6 +9,8 @@ class AppStore {
   contracts: IContract = {};
   web3: any;
   decimals = '0';
+  contractService: any;
+  is_contractService = false;
   inputValue = {
     staking: 0,
     withdraw: 0,
@@ -33,6 +20,11 @@ class AppStore {
   constructor() {
     makeAutoObservable(this);
   }
+
+  setContractService = (): void => {
+    this.contractService = new ContractService(this);
+    this.is_contractService = true;
+  };
 
   setWeb3 = (web3: Array<any>): void => {
     this.web3 = web3;

@@ -1,43 +1,18 @@
 import React from 'react';
-import { toast, ToastOptions } from 'react-toastify';
 import BigNumber from 'bignumber.js/bignumber';
 import CSS from 'csstype';
 import { autorun } from 'mobx';
 
-import IconExternalLink from '../../assets/img/icons/external-link.svg';
 import { Procedure } from '../../components/organisms';
 import { StakingInfo } from '../../components/sections';
-import { config, contracts } from '../../config';
+
 import { useStore } from '../../store';
+import { config, contracts } from '../../config';
+import { ICustomNotifyData, IStakingInfo } from '../../types';
+import { errCode, notify, clog } from '../../utils';
 
+import IconExternalLink from '../../assets/img/icons/external-link.svg';
 import './Staking.scss';
-
-interface IStakingInfo {
-  tokenPrize: string;
-  totalSupply: string;
-  alreadyStaked: string;
-  availableToStake: string;
-  availableToStakeLocked: string;
-  balanceOf: string;
-  inWallet: string;
-  userStakes: string;
-}
-
-interface ITemplateNotify {
-  [index: string]: () => {};
-}
-
-interface ICustomNotifyData {
-  text: string;
-  link?: {
-    url: string;
-    text: string;
-  };
-}
-
-interface ICodeInfo {
-  [index: number]: string;
-}
 
 const Staking: React.FC = () => {
   const store = useStore();
@@ -50,18 +25,6 @@ const Staking: React.FC = () => {
 
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
-
-  const errCode = (code: number): string => {
-    const codeInfo = {
-      4001: 'Signature transaction denied',
-      4100: 'Unauthorized. The requested method and/or account has not been authorized by the user.',
-      4200: 'Unsupported Method. The Provider does not support the requested method.',
-      4900: 'Disconnected. The Provider is disconnected from all chains.',
-      4901: 'Chain Disconnected. The Provider is not connected to the requested chain.',
-    } as ICodeInfo;
-
-    return codeInfo[code];
-  };
 
   const customNotify = (data: ICustomNotifyData) => {
     return (
@@ -81,135 +44,116 @@ const Staking: React.FC = () => {
     );
   };
 
-  const notify = (template: string | any, type?: string): void => {
-    const options = {
-      position: 'bottom-right',
-      autoClose: 10000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-    } as ToastOptions;
-
-    const templateNotify = {
-      default: () => toast(template, options),
-      info: () => toast.info(template, options),
-      success: () => toast.success(template, options),
-      warning: () => toast.warning(template, options),
-      error: () => toast.error(template, options),
-    } as ITemplateNotify;
-
-    templateNotify[type || 'default']();
-  };
-
-  const normalizedValue = (value: string | number, fixed?: number): number => {
-    const decimals = 10 ** contracts.decimals;
-    const normalValue = new BigNumber(value).div(decimals).toNumber();
-    return +normalValue.toFixed(fixed || 4);
-  };
-
   const getStakingInfo = async () => {
     const decimals = new BigNumber(10).pow(contracts.decimals).toString();
     store.setDecimals(decimals);
-    // console.log('decimals', store.decimals);
 
     setFirstStart(false);
 
-    // console.log(store.contracts.Staking);
-    // console.log(store.account.address);
+    if (!store.is_contractService) {
+      store.setContractService();
+      console.log('info', store.contractService);
+    }
 
-    const promises = [
-      store.contracts.Staking.methods
-        .nowTotalStakers()
-        .call()
-        .then((value: string) => {
-          console.log('nowTotalStakers', value);
-          return {
-            key: 'tokenPrize',
-            value: normalizedValue(value),
-          };
-        }),
-      store.contracts.Token.methods
-        .totalSupply()
-        .call()
-        .then((value: string) => {
-          console.log('totalSupply', value);
-          return {
-            key: 'totalSupply',
-            value: normalizedValue(value),
-          };
-        }),
-      store.contracts.Staking.methods
-        .nowTotalMined()
-        .call()
-        .then((value: string) => {
-          console.log('nowTotalMined', value);
-          return {
-            key: 'alreadyStaked',
-            value: normalizedValue(value),
-          };
-        }),
-      store.contracts.Token.methods
-        .balanceOfLocked(store.account.address)
-        .call()
-        .then((value: string) => {
-          console.log(value);
-          return {
-            key: 'availableToStakeLocked',
-            value: normalizedValue(value),
-          };
-        }),
-      store.contracts.Token.methods
-        .balanceOfSum(store.account.address)
-        .call()
-        .then((value: string) => {
-          console.log(value);
-          const balance = new BigNumber(value)
-            .div(new BigNumber(10).pow(contracts.decimals))
-            .toString();
-          store.updateAccount({ balance });
-          return {
-            key: 'availableToStake',
-            value: new BigNumber(value).div(store.decimals).toString(),
-          };
-        }),
-      store.contracts.Token.methods
-        .balanceOf(store.account.address)
-        .call()
-        .then((value: string) => {
-          console.log(value);
-          const balance = new BigNumber(value)
-            .div(new BigNumber(10).pow(contracts.decimals))
-            .toString();
-          store.updateAccount({ balance });
-          return {
-            key: 'balanceOf',
-            value: normalizedValue(value),
-          };
-        }),
-      store.contracts.Staking.methods
-        .userStakes(store.account.address)
-        .call()
-        .then((value: string) => {
-          console.log('userStakes', value);
-          return {
-            key: 'userStakes',
-            value: normalizedValue(value[1]),
-          };
-        }),
-    ];
+    // clog(`decimals: ${store.decimals}`);
+    // clog(`${store.contracts.Staking}`);
+    // clog(`${store.account.address}`);
 
-    const nstakingInfo = await Promise.all(promises).then((results): Promise<IStakingInfo> => {
-      const values: any = {};
-      results.forEach((v: { key: string; value: string }) => {
-        console.log(v);
-        values[v.key] = v.value;
-      });
-      return values;
-    });
+    // const promises = [
+    //   store.contracts.Staking.methods
+    //     .nowTotalStakers()
+    //     .call()
+    //     .then((value: string) => {
+    //       clog(`nowTotalStakers (tokenPrize): ${value}`);
+    //       return {
+    //         key: 'tokenPrize',
+    //         value: normalizedValue(value),
+    //       };
+    //     }),
+    //   store.contracts.Token.methods
+    //     .totalSupply()
+    //     .call()
+    //     .then((value: string) => {
+    //       clog(`totalSupply (totalSupply): ${value}`);
+    //       return {
+    //         key: 'totalSupply',
+    //         value: normalizedValue(value),
+    //       };
+    //     }),
+    //   store.contracts.Staking.methods
+    //     .nowTotalMined()
+    //     .call()
+    //     .then((value: string) => {
+    //       clog(`nowTotalMined (alreadyStaked): ${value}`);
+    //       return {
+    //         key: 'alreadyStaked',
+    //         value: normalizedValue(value),
+    //       };
+    //     }),
+    //   store.contracts.Token.methods
+    //     .balanceOfLocked(store.account.address)
+    //     .call()
+    //     .then((value: string) => {
+    //       clog(`balanceOfLocked (availableToStakeLocked): ${value}`);
+    //       return {
+    //         key: 'availableToStakeLocked',
+    //         value: normalizedValue(value),
+    //       };
+    //     }),
+    //   store.contracts.Token.methods
+    //     .balanceOfSum(store.account.address)
+    //     .call()
+    //     .then((value: string) => {
+    //       clog(`balanceOfSum (availableToStake): ${value}`);
+    //       const balance = new BigNumber(value)
+    //         .div(new BigNumber(10).pow(contracts.decimals))
+    //         .toString();
+    //       store.updateAccount({ balance });
+    //       return {
+    //         key: 'availableToStake',
+    //         value: new BigNumber(value).div(store.decimals).toString(),
+    //       };
+    //     }),
+    //   store.contracts.Token.methods
+    //     .balanceOf(store.account.address)
+    //     .call()
+    //     .then((value: string) => {
+    //       clog(`balanceOf (balanceOf): ${value}`);
+    //       const balance = new BigNumber(value)
+    //         .div(new BigNumber(10).pow(contracts.decimals))
+    //         .toString();
+    //       store.updateAccount({ balance });
+    //       return {
+    //         key: 'balanceOf',
+    //         value: normalizedValue(value),
+    //       };
+    //     }),
+    //   store.contracts.Staking.methods
+    //     .userStakes(store.account.address)
+    //     .call()
+    //     .then((value: string) => {
+    //       clog(`userStakes (userStakes): ${value}`);
+    //       return {
+    //         key: 'userStakes',
+    //         value: normalizedValue(value[1]),
+    //       };
+    //     }),
+    // ];
 
-    setStakingInfo(nstakingInfo);
+    // const info = await Promise.all(promises).then((results): Promise<IStakingInfo> => {
+    //   const values: any = {};
+    //   console.group('Staking load');
+    //   results.forEach((v: { key: string; value: string }) => {
+    //     clog(`${v.key}: ${v.value}`);
+    //     values[v.key] = v.value;
+    //   });
+    //   console.groupEnd();
+    //   return values;
+    // });
+
+    const info = await store.contractService.stakingInfo();
+
+    setStakingInfo(info);
   };
 
   const getAllowance = (amount: string) => {
@@ -220,7 +164,7 @@ const Staking: React.FC = () => {
         .then((allowance: string) => {
           const allow = new BigNumber(allowance);
           const allowed = allow.minus(amount);
-          console.log('allowance', allowance);
+          clog(`allowance: ${allowance}`);
           allowed.isNegative() ? reject() : resolve(1);
         });
     });
@@ -234,7 +178,7 @@ const Staking: React.FC = () => {
       })
       .then((tx: any) => {
         const { transactionHash } = tx;
-        console.log('stake', tx, transactionHash);
+        clog(`stake: ${tx} ${transactionHash}`);
         return { 0: true, 1: transactionHash };
       })
       .then(resolve, reject);
@@ -280,13 +224,13 @@ const Staking: React.FC = () => {
     startstake(amount, '0')
       .then(
         (data: any) => {
-          console.log('got staking: ', data, data[1]);
+          clog(`got staking: ${data} ${data[1]}`);
           setStakingValue(0);
           notify(
             customNotify({
               text: 'Your stake complete!',
               link: {
-                url: `https://testnet.hecoinfo.com/tx/${data[1]}`,
+                url: `${config.tx.link}/${data[1]}`,
                 text: 'View tx',
               },
             }),
@@ -298,7 +242,7 @@ const Staking: React.FC = () => {
           }, 10000);
         },
         (err: any) => {
-          console.log('staking error: ', err);
+          clog(`staking error: ${err}`);
           notify(
             `Something went wrong! ${err.code === 4001 ? 'You denied transaction signature.' : ''}`,
             'error',
@@ -333,7 +277,7 @@ const Staking: React.FC = () => {
       })
       .then(
         (data: any) => {
-          console.log('got withdraw', data);
+          clog(`got withdraw: ${data}`);
           notify(
             customNotify({
               text: 'Your withdraw complete!',
@@ -350,7 +294,7 @@ const Staking: React.FC = () => {
           }, 10000);
         },
         (err: any) => {
-          console.log('withdraw err: ', err);
+          clog(`withdraw err: ${err}`);
           setWithdrawValue(0);
           notify(`Something went wrong! ${errCode(err.code)}`, 'error');
         },
