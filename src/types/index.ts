@@ -63,21 +63,11 @@ export interface IData {
   [index: string]: string | number;
 }
 
-// export interface IMinigInfo {
-//   availableToClaim: string;
-//   th: string;
-// }
-
-// export interface IStakingInfo {
-//   tokenPrize: string;
-//   totalSupply: string;
-//   alreadyStaked: string;
-//   availableToStake: string;
-//   availableToStakeLocked: string;
-//   balanceOf: string;
-//   inWallet: string;
-//   userStakes: string;
-// }
+export interface ITableData {
+  date: string;
+  reward: number;
+  status: boolean;
+}
 
 export interface ITemplateNotify {
   [index: string]: () => {};
