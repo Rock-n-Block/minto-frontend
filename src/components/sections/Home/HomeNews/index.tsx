@@ -83,8 +83,8 @@ const HomeNews: React.FC = () => {
           slidesPerGroup={1}
           spaceBetween={20}
           navigation={{
-            prevEl: prevRef.current!,
-            nextEl: nextRef.current!,
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
           }}
           onInit={(swiper) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

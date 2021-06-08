@@ -1,3 +1,5 @@
+import { BigNumber } from 'bignumber.js/bignumber';
+
 export interface IMenu {
   walletsOpen: boolean;
 }
@@ -13,6 +15,11 @@ export interface IContract {
 
 export interface IInputVal {
   [name: string]: any;
+}
+
+export interface IDataContract {
+  key: string;
+  value: string | number | BigNumber;
 }
 
 export interface IConfig {
@@ -52,21 +59,25 @@ export interface IContracts {
   };
 }
 
-export interface IMinigInfo {
-  availableToClaim: string;
-  th: string;
+export interface IData {
+  [index: string]: string | number;
 }
 
-export interface IStakingInfo {
-  tokenPrize: string;
-  totalSupply: string;
-  alreadyStaked: string;
-  availableToStake: string;
-  availableToStakeLocked: string;
-  balanceOf: string;
-  inWallet: string;
-  userStakes: string;
-}
+// export interface IMinigInfo {
+//   availableToClaim: string;
+//   th: string;
+// }
+
+// export interface IStakingInfo {
+//   tokenPrize: string;
+//   totalSupply: string;
+//   alreadyStaked: string;
+//   availableToStake: string;
+//   availableToStakeLocked: string;
+//   balanceOf: string;
+//   inWallet: string;
+//   userStakes: string;
+// }
 
 export interface ITemplateNotify {
   [index: string]: () => {};

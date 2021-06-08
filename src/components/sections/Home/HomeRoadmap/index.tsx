@@ -72,8 +72,8 @@ const HomeRoadmap: React.FC = () => {
           slidesPerView="auto"
           spaceBetween={90}
           navigation={{
-            prevEl: prevRef.current!,
-            nextEl: nextRef.current!,
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
           }}
           onInit={(swiper) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

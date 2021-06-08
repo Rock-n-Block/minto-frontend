@@ -1,4 +1,5 @@
 import { toast, ToastOptions } from 'react-toastify';
+
 import { ICodeInfo, ITemplateNotify } from '../../types';
 
 export const errCode = (code: number): string => {
@@ -34,3 +35,5 @@ export const notify = (template: string | any, type?: string): void => {
 
   templateNotify[type || 'default']();
 };
+
+export * from './templates';

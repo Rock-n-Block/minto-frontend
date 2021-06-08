@@ -1,23 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import BigNumber from 'bignumber.js/bignumber';
 import { autorun } from 'mobx';
 
-import { contracts } from '../../../../config';
 import { useStore } from '../../../../store';
+import { IData } from '../../../../types';
+import { clogData, dataToObject, normalizedValue } from '../../../../utils';
 import { Button, Info } from '../../../atoms';
 
 import './HomePreview.scss';
 
-interface IInfo {
-  available: string;
-  totalSupply: string;
-}
-
 const HomePreview: React.FC = () => {
   const store = useStore();
 
-  const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IInfo);
+  const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IData);
   const [firstStart, setFirstStart] = React.useState(true);
 
   const getInfo = async () => {
@@ -28,42 +23,26 @@ const HomePreview: React.FC = () => {
         .totalSupply()
         .call()
         .then((value: string) => {
-          console.log('totalSupply', value);
-          const calcV = new BigNumber(value).div(10 ** contracts.decimals).toNumber();
-          const nValue = +calcV.toFixed(4);
-          // const nValue = parseFloat(Number(calcV).toFixed(28));
-          // const nValue = calcV.toFixed(18); // .replace(/([0-9]+(\.[1-9]+)?)(\.?0+$)/, '$1');
-
-          console.log('calcV', calcV);
-          console.log('nValue', nValue);
+          clogData('totalSupply (totalSupply): ', value);
           return {
             key: 'totalSupply',
-            value: nValue,
+            value: normalizedValue(value),
           };
         }),
       store.contracts.Token.methods
         .balanceOfSum(store.account.address)
         .call()
         .then((value: string) => {
-          console.log(value);
-          const balance = new BigNumber(value)
-            .div(new BigNumber(10).pow(contracts.decimals))
-            .toString();
-          store.updateAccount({ balance });
+          clogData('balanceOfSum (availableToStake): ', value);
           return {
             key: 'availableToStake',
-            value: new BigNumber(value).div(store.decimals).toString(),
+            value: normalizedValue(value),
           };
         }),
     ];
 
-    const uinfo = await Promise.all(promises).then((results): Promise<IInfo> => {
-      const values: any = {};
-      results.forEach((v: { key: string; value: string }) => {
-        console.log(v);
-        values[v.key] = v.value;
-      });
-      return values;
+    const uinfo = await Promise.all(promises).then((results): IData => {
+      return dataToObject(results, true, 'Main page normilized values');
     });
 
     setInfo(uinfo);
@@ -104,6 +83,12 @@ const HomePreview: React.FC = () => {
           <Info
             content={info.totalSupply}
             topText="Total Supply"
+            bottomText="BTCMT"
+            className="home__preview-info-item"
+          />
+          <Info
+            content={info.available}
+            topText="Available"
             bottomText="BTCMT"
             className="home__preview-info-item"
           />

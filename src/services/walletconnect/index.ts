@@ -3,6 +3,7 @@ import { ConnectWallet } from '@amfi/connect-wallet';
 import Web3 from 'web3';
 
 import { config, contracts } from '../../config';
+import { clogData } from '../../utils';
 
 export class WalletConnect {
   private connectWallet: any;
@@ -17,7 +18,7 @@ export class WalletConnect {
       network,
     } = config;
 
-    console.log(network);
+    clogData('network: ', network);
 
     const connecting = this.connectWallet
       .connect(provider[name], network, settings)
@@ -28,7 +29,7 @@ export class WalletConnect {
         return connected;
       })
       .catch((err: any) => {
-        console.log('initWalletConnect providerWallet err', err);
+        clogData('initWalletConnect providerWallet err: ', err);
       });
 
     return Promise.all([connecting]).then((connect: any) => {
@@ -58,9 +59,7 @@ export class WalletConnect {
           abi: contract.abi,
           address: contract.address,
         })
-        .then((status: boolean) =>
-          console.log(`Contract ${name} added`, status, this.connectWallet.Contract(name)),
-        );
+        .then(() => clogData(`Contract ${name} added`, this.connectWallet.Contract(name)));
     });
   }
 
@@ -70,7 +69,7 @@ export class WalletConnect {
       .methods.balanceOf(address)
       .call()
       .then((balance: string | number) => {
-        console.log(address, balance);
+        clogData('user data: ', { address, balance });
         return balance;
       });
   }
@@ -79,7 +78,7 @@ export class WalletConnect {
     return new Promise((resolve: any, reject) => {
       this.connectWallet.getAccounts().subscribe(
         (userAccount: any) => {
-          console.log(userAccount);
+          clogData('user account: ', userAccount);
           if (!account || userAccount.address !== account.address) {
             resolve(userAccount);
             toast.success(
@@ -103,7 +102,7 @@ export class WalletConnect {
           }
         },
         (err: any) => {
-          console.log(err);
+          clogData('wallet connect - get user account: ', err);
           toast.error(`⚠️ Chain error. ${err.message.text}`, {
             position: 'bottom-right',
             autoClose: 7000,

@@ -110,8 +110,8 @@ const AboutTeam: React.FC = () => {
             slidesPerView={1}
             slidesPerGroup={1}
             navigation={{
-              prevEl: prevRef.current!,
-              nextEl: nextRef.current!,
+              prevEl: prevRef.current,
+              nextEl: nextRef.current,
             }}
             onInit={(swiper) => {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment

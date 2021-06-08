@@ -1,65 +1,69 @@
 import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
-import CSS from 'csstype';
 import { autorun } from 'mobx';
 
 import { Procedure } from '../../components/organisms';
-
-import { config, contracts } from '../../config';
-import { IMinigInfo } from '../../types';
+import { config, contracts, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
+import { IData } from '../../types';
+import { clogData, customNotify, notify } from '../../utils';
 
 import './Mining.scss';
 
 const Mining: React.FC = () => {
   const store = useStore();
 
-  const [miningInfo, setMiningInfo] = React.useState({} as IMinigInfo);
+  const [miningInfo, setMiningInfo] = React.useState({} as IData);
   const [firstStart, setFirstStart] = React.useState(true);
 
   const [miningValue, setMiningValue] = React.useState(0);
   const [miningProgress, setMiningProgress] = React.useState(false);
 
   const getMiningInfo = async () => {
-    const decimals = new BigNumber(10).pow(contracts.decimals).toString();
-    store.setDecimals(decimals);
     setFirstStart(false);
 
-    if (!store.is_contractService) {
-      store.setContractService();
-      console.log('info', store.contractService);
-    }
+    if (!store.is_contractService) store.setContractService();
+    store.setDecimals(new BigNumber(10).pow(contracts.decimals).toString());
 
-    const info = await store.contractService.miningInfo();
-    setMiningInfo(info);
+    setMiningInfo(await store.contractService.miningInfo());
   };
 
-  const handleChangeClaimAmount = (value: any) => {
+  const handleChangeClaimAmount = (value: any): void => {
     setMiningValue(value);
     if (value < 0) setMiningValue(0);
     if (value > +miningInfo.availableToClaim) setMiningValue(+miningInfo.availableToClaim);
   };
 
-  const handleButtonClaimClick = () => {
+  const handleButtonClaimClick = (): void => {
     setMiningProgress(true);
-    store.contracts.Staking.methods
-      .withdrawRewardAll()
-      .send({
-        from: store.account.address,
-      })
+
+    store.contractService
+      .withdrowAllReward()
       .then(
-        (info: any) => {
-          console.log('got claim', info);
+        (data: any) => {
+          notify(
+            customNotify({
+              text: 'Your claim complete!',
+              link: {
+                url: `${config.tx.link}/${data[1]}`,
+                text: 'View tx',
+              },
+            }),
+            'success',
+          );
           setTimeout(() => {
             getMiningInfo();
-          }, 10000);
+          }, update_after_tx_timeout);
         },
-        (err: any) => console.log('claim err: ', err),
+        (err: any) => clogData('claim err: ', err),
       )
-      .finally(() => setMiningProgress(false));
+      .finally(() => {
+        setMiningProgress(false);
+        setMiningValue(0);
+      });
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (): void => {
     setMiningValue(+miningInfo.availableToClaim);
   };
 
@@ -80,17 +84,6 @@ const Mining: React.FC = () => {
       store.toggleWalletMenu(true);
     }
   }, [store]);
-
-  const h1Styles: CSS.Properties = {
-    bottom: '2rem',
-    padding: '0.5rem',
-    fontFamily: 'sans-serif',
-    fontSize: '1.5rem',
-    textAlign: 'center',
-    color: 'black',
-    marginTop: '250px',
-    marginBottom: '150px',
-  };
 
   return (
     <div className="mining">
@@ -120,7 +113,7 @@ const Mining: React.FC = () => {
           inputValue={miningValue}
         />
       ) : (
-        <div style={h1Styles}>
+        <div className="no_login_data">
           <span className="links__title text-center text text-black text-bold-e">
             Please LogIn to see Information
           </span>

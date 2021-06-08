@@ -1,158 +1,39 @@
 import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
-import CSS from 'csstype';
 import { autorun } from 'mobx';
 
 import { Procedure } from '../../components/organisms';
 import { StakingInfo } from '../../components/sections';
-
+import { config, contracts, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
-import { config, contracts } from '../../config';
-import { ICustomNotifyData, IStakingInfo } from '../../types';
-import { errCode, notify, clog } from '../../utils';
+import { IData } from '../../types';
+import { clogData, customNotify, errCode, notify } from '../../utils';
 
-import IconExternalLink from '../../assets/img/icons/external-link.svg';
 import './Staking.scss';
 
 const Staking: React.FC = () => {
   const store = useStore();
 
-  const [stakingInfo, setStakingInfo] = React.useState({} as IStakingInfo);
+  const [stakingInfo, setStakingInfo] = React.useState({} as IData);
   const [firstStart, setFirstStart] = React.useState(true);
-
   const [stakingValue, setStakingValue] = React.useState(0);
   const [withdrawValue, setWithdrawValue] = React.useState(0);
-
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
-  const customNotify = (data: ICustomNotifyData) => {
-    return (
-      <div>
-        <p className="custom-notify-text">{data.text}</p>
-        {data.link ? (
-          <div className="custom-notify-link-wrap">
-            <a className="custom-notify-link" target="_blank" href={data.link.url} rel="noreferrer">
-              <img width="15px" height="15px" src={IconExternalLink} alt="external link" />
-              {data.link.text}
-            </a>
-          </div>
-        ) : (
-          ''
-        )}
-      </div>
-    );
-  };
-
   const getStakingInfo = async () => {
-    const decimals = new BigNumber(10).pow(contracts.decimals).toString();
-    store.setDecimals(decimals);
-
     setFirstStart(false);
 
-    if (!store.is_contractService) {
-      store.setContractService();
-      console.log('info', store.contractService);
-    }
+    if (!store.is_contractService) store.setContractService();
+    store.setDecimals(new BigNumber(10).pow(contracts.decimals).toString());
 
-    const info = await store.contractService.stakingInfo();
-    setStakingInfo(info);
-  };
-
-  const getAllowance = (amount: string) => {
-    return new Promise((resolve, reject) => {
-      store.contracts.Token.methods
-        .allowance(store.account.address, contracts.params.TOKEN[contracts.type].address)
-        .call()
-        .then((allowance: string) => {
-          const allow = new BigNumber(allowance);
-          const allowed = allow.minus(amount);
-          clog(`allowance: ${allowance}`);
-          allowed.isNegative() ? reject() : resolve(1);
-        });
-    });
-  };
-
-  const stake = (resolve: any, reject: any, amount: string, lAmount: string) => {
-    return store.contracts.Staking.methods
-      .stakeStart(amount, lAmount)
-      .send({
-        from: store.account.address,
-      })
-      .then((tx: any) => {
-        const { transactionHash } = tx;
-        clog(`stake: ${tx} ${transactionHash}`);
-        return { 0: true, 1: transactionHash };
-      })
-      .then(resolve, reject);
-  };
-
-  const startstake = (amount: string, lAmount: string) => {
-    notify('Please wait, staking is in progress.', 'info');
-
-    return new Promise((resolve, reject) => {
-      getAllowance(amount).then(
-        () => {
-          stake(resolve, reject, amount, lAmount);
-        },
-        () => {
-          store.contracts.Token.methods
-            .approve(contracts.params.STAKING[contracts.type].address, amount)
-            .send({
-              from: store.account.address,
-            })
-            .then(() => {
-              stake(resolve, reject, amount, lAmount);
-            }, reject);
-        },
-      );
-    });
+    setStakingInfo(await store.contractService.stakingInfo());
   };
 
   const handleChangeStakingAmount = (value: any) => {
     setStakingValue(value);
     if (value < 0) setStakingValue(0);
     if (value > +stakingInfo.balanceOf) setStakingValue(+stakingInfo.balanceOf);
-  };
-
-  const handleButtonStakingClick = () => {
-    if (+stakingValue === 0 || +stakingValue <= 0) {
-      notify('Please, input value in staking field.', 'warning');
-      return;
-    }
-
-    setStakingProgress(true);
-    const amount = new BigNumber(stakingValue).multipliedBy(store.decimals).toString();
-
-    startstake(amount, '0')
-      .then(
-        (data: any) => {
-          clog(`got staking: ${data} ${data[1]}`);
-          setStakingValue(0);
-          notify(
-            customNotify({
-              text: 'Your stake complete!',
-              link: {
-                url: `${config.tx.link}/${data[1]}`,
-                text: 'View tx',
-              },
-            }),
-            'success',
-          );
-
-          setTimeout(() => {
-            getStakingInfo();
-          }, 10000);
-        },
-        (err: any) => {
-          clog(`staking error: ${err}`);
-          notify(
-            `Something went wrong! ${err.code === 4001 ? 'You denied transaction signature.' : ''}`,
-            'error',
-          );
-        },
-      )
-      .finally(() => setStakingProgress(false));
   };
 
   const handleChangeWithdrawAmount = (value: any) => {
@@ -170,17 +51,52 @@ const Staking: React.FC = () => {
     setWithdrawValue(+stakingInfo.userStakes);
   };
 
+  const handleButtonStakingClick = () => {
+    if (+stakingValue === 0 || +stakingValue <= 0) {
+      notify('Please, input value in staking field.', 'warning');
+      return;
+    }
+
+    setStakingProgress(true);
+    const amount = new BigNumber(stakingValue).multipliedBy(store.decimals).toString();
+
+    store.contractService
+      .startStake(amount, '0')
+      .then(
+        (data: any) => {
+          notify(
+            customNotify({
+              text: 'Your stake complete!',
+              link: {
+                url: `${config.tx.link}/${data[1]}`,
+                text: 'View tx',
+              },
+            }),
+            'success',
+          );
+
+          setTimeout(() => {
+            getStakingInfo();
+          }, update_after_tx_timeout);
+        },
+        (err: any) => {
+          clogData('staking error: ', err);
+          notify(`Something went wrong! ${errCode(err.code)}`, 'error');
+        },
+      )
+      .finally(() => {
+        setStakingProgress(false);
+        setStakingValue(0);
+      });
+  };
+
   const handleButtonWithdrawClick = () => {
     notify('Please wait, withdraw is in progress.', 'info');
     setWithdrawProgress(true);
-    store.contracts.Staking.methods
-      .stakeEnd()
-      .send({
-        from: store.account.address,
-      })
+    store.contractService
+      .withdrow()
       .then(
         (data: any) => {
-          clog(`got withdraw: ${data}`);
           notify(
             customNotify({
               text: 'Your withdraw complete!',
@@ -194,15 +110,17 @@ const Staking: React.FC = () => {
 
           setTimeout(() => {
             getStakingInfo();
-          }, 10000);
+          }, update_after_tx_timeout);
         },
         (err: any) => {
-          clog(`withdraw err: ${err}`);
-          setWithdrawValue(0);
+          clogData('withdraw error: ', err);
           notify(`Something went wrong! ${errCode(err.code)}`, 'error');
         },
       )
-      .finally(() => setWithdrawProgress(false));
+      .finally(() => {
+        setWithdrawProgress(false);
+        setWithdrawValue(0);
+      });
   };
 
   autorun(() => {
@@ -223,23 +141,12 @@ const Staking: React.FC = () => {
     }
   }, [store]);
 
-  const h1Styles: CSS.Properties = {
-    bottom: '2rem',
-    padding: '0.5rem',
-    fontFamily: 'sans-serif',
-    fontSize: '1.5rem',
-    textAlign: 'center',
-    color: 'black',
-    marginTop: '250px',
-    marginBottom: '150px',
-  };
-
   return (
     <div className="staking">
       {store.account.address ? (
         <StakingInfo info={stakingInfo} token="BTCMT" />
       ) : (
-        <div style={h1Styles}>
+        <div className="no_login_data">
           <span className="links__title text-center text text-black text-bold-e">
             Please LogIn to see Information
           </span>

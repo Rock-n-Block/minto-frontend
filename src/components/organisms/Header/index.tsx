@@ -14,6 +14,7 @@ import UserImg from '../../../assets/img/icons/user-account.svg';
 import ArrowImg from '../../../assets/img/sections/header/arrow.svg';
 import { WalletConnect } from '../../../services/walletconnect';
 import { useStore } from '../../../store';
+import { clogData } from '../../../utils';
 import { Button } from '../../atoms';
 
 import './Header.scss';
@@ -52,7 +53,7 @@ const Header: React.FC = observer(() => {
               account.balance = value;
             })
             .finally(() => {
-              console.log(account);
+              clogData('user account: ', account);
               store.updateAccount(account);
             });
 

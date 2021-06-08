@@ -1,6 +1,8 @@
 import { IConfig, IContracts } from '../types';
 
 export const is_production = false;
+export const show_logs = true;
+export const update_after_tx_timeout = 5000;
 
 export const config: IConfig = {
   tx: {

@@ -1,7 +1,9 @@
+/* eslint-disable import/no-cycle */
 import { createContext, FC, useContext } from 'react';
 import { makeAutoObservable } from 'mobx';
-import { IMenu, IAccount, IContract, IInputVal } from '../types';
+
 import { ContractService } from '../services/contract';
+import { IAccount, IContract, IInputVal, IMenu } from '../types';
 
 class AppStore {
   menu: IMenu = { walletsOpen: false };
