@@ -2,7 +2,9 @@ import React from 'react';
 import BigNumber from 'bignumber.js/bignumber';
 import { autorun } from 'mobx';
 
-import { Procedure } from '../../components/organisms';
+import IconLocked from '../../assets/img/icons/lock.svg';
+import IconUnlock from '../../assets/img/icons/unlock.svg';
+import { Procedure2 } from '../../components/organisms';
 import { StakingInfo } from '../../components/sections';
 import { config, contracts, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
@@ -155,51 +157,114 @@ const Staking: React.FC = () => {
 
       {store.account.address ? (
         <div>
-          <Procedure
+          <Procedure2
             title="Stake your tokens"
-            info={[
+            gropupItems={[
               {
-                title: 'In your wallet',
-                value: `${stakingInfo.balanceOf} BTCMT`,
+                info: [
+                  {
+                    title: 'Unlocked',
+                    value: `${stakingInfo.balanceOf} BTCMT`,
+                    src: IconUnlock,
+                  },
+                  {
+                    title: 'You already staked',
+                    value: `${stakingInfo.userStakes} BTCMT`,
+                  },
+                ],
+
+                inputMiniButtonShow: true,
+                inputMiniButtonTitle: 'Amount to stake',
+                inputMiniButtonText: 'All available',
+                inputMiniButtonClick: handleFullButtonStakingClick,
+
+                inputButtonShow: true,
+                inputChange: handleChangeStakingAmount,
+                inputValue: stakingValue,
+                inputMax: +stakingInfo.balanceOf,
               },
               {
-                title: 'You already staked',
-                value: `${stakingInfo.userStakes} BTCMT`,
+                info: [
+                  {
+                    title: 'Locked BTCMT',
+                    value: `${stakingInfo.balanceOf} BTCMT`,
+                    src: IconLocked,
+                  },
+                  {
+                    title: 'You already staked',
+                    value: `${stakingInfo.userStakes} BTCMT`,
+                  },
+                ],
+                inputMiniButtonShow: true,
+                inputMiniButtonTitle: 'Amount to stake',
+                inputMiniButtonText: 'All available',
+                inputMiniButtonClick: handleFullButtonStakingClick,
+
+                inputButtonShow: true,
+                inputChange: handleChangeStakingAmount,
+                inputValue: stakingValue,
+                inputMax: +stakingInfo.balanceOf,
               },
             ]}
-            inputTitle="Amount to stake"
-            btnAllText="All available"
             submitBtnText="Stake"
-            inputType="Staking"
-            inputChange={handleChangeStakingAmount}
-            inputMax={+stakingInfo.balanceOf}
-            inputValue={stakingValue}
             btnProcessed={stakingProgress}
             btnProcessedText="Processing..."
-            btnClick={handleFullButtonStakingClick}
             buttonClick={handleButtonStakingClick}
           />
-          <Procedure
+          <Procedure2
             title="Withdraw"
             theme="light"
-            info={[
+            gropupItems={[
               {
-                title: 'You already staked',
-                value: `${stakingInfo.userStakes} BTCMT`,
+                info: [
+                  {
+                    title: 'Unlocked',
+                    value: `${stakingInfo.userStakes} BTCMT`,
+                    src: IconUnlock,
+                  },
+                  {
+                    title: 'Amount to withdraw',
+                    value: `${stakingInfo.userStakes} BTCMT`,
+                  },
+                ],
+
+                inputMiniButtonShow: true,
+                inputMiniButtonTitle: 'Amount to withdraw',
+                inputMiniButtonText: 'All available',
+                inputMiniButtonClick: handleFullButtonWithdrawClick,
+
+                inputButtonShow: true,
+                inputChange: handleChangeWithdrawAmount,
+                inputValue: withdrawValue,
+                inputMax: +stakingInfo.userStakes,
+              },
+              {
+                info: [
+                  {
+                    title: 'Locked BTCMT',
+                    value: `${stakingInfo.userStakes} BTCMT`,
+                    src: IconLocked,
+                  },
+                  {
+                    title: 'Amount to withdraw',
+                    value: `${stakingInfo.userStakes} BTCMT`,
+                  },
+                ],
+
+                inputMiniButtonShow: true,
+                inputMiniButtonTitle: 'Amount to withdraw',
+                inputMiniButtonText: 'All available',
+                inputMiniButtonClick: handleFullButtonWithdrawClick,
+
+                inputButtonShow: true,
+                inputChange: handleChangeWithdrawAmount,
+                inputValue: withdrawValue,
+                inputMax: +stakingInfo.userStakes,
               },
             ]}
-            miniButtonShow={false}
-            inputTitle="Amount to Withdraw"
-            btnAllText="All available"
             submitBtnText="Withdraw"
-            inputButtonShow={false}
-            inputType="Withdraw"
-            inputMax={+stakingInfo.userStakes}
-            inputChange={handleChangeWithdrawAmount}
-            inputValue={withdrawValue}
             btnProcessed={withdrawProgress}
             btnProcessedText="Processing..."
-            btnClick={handleFullButtonWithdrawClick}
             buttonClick={handleButtonWithdrawClick}
           />
         </div>

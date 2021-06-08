@@ -12,7 +12,11 @@ import './HomePreview.scss';
 const HomePreview: React.FC = () => {
   const store = useStore();
 
-  const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IData);
+  const [info, setInfo] = React.useState({
+    available: 'Heco Infura',
+    totalSupply: 'I need a',
+  } as IData);
+  // const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IData);
   const [firstStart, setFirstStart] = React.useState(true);
 
   const getInfo = async () => {

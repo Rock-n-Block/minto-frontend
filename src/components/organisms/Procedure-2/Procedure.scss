@@ -1,0 +1,129 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins/media';
+
+.procedure-two {
+  padding: 80px 0 100px;
+
+  background-repeat: no-repeat;
+  @include b('tablet') {
+    padding: 32px 20px 45px;
+  }
+
+  &__content {
+    margin: 0 auto;
+
+    max-width: 800px;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  &__submit {
+    margin: 20px auto 0;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    // display: grid;
+    // grid-template-columns: 1fr;
+    // grid-gap: 30px;
+
+    // @include b('tablet') {
+    //   margin: 30px 0 40px;
+    //   padding: 20px 0;
+
+    //   flex-direction: column;
+    //   align-items: flex-start !important;
+    // }
+
+    &-wrap {
+      display: grid;
+      grid-template-columns: minmax(150px, 300px) 1fr;
+      grid-gap: 20px;
+      padding: 35px 0;
+      border-top: 1px solid rgba($white-g, 0.2);
+      border-bottom: 1px solid rgba($white-g, 0.2);
+    }
+
+    &-item {
+      @include b('tablet') {
+        width: 100%;
+      }
+
+      &-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      img {
+        margin-right: 10px;
+      }
+
+      & + & {
+        // text-align: right;
+        @include b('tablet') {
+          margin-top: 20px;
+          padding-top: 20px;
+
+          text-align-last: left;
+
+          border-top: 1px solid rgba($white-g, 0.2);
+        }
+      }
+    }
+  }
+
+  &__input {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &-title {
+      margin-bottom: 20px;
+      width: 100%;
+      align-items: center;
+      justify-content: flex-end;
+
+      span {
+        margin-right: 15px;
+        font-size: 14px;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: default;
+      }
+    }
+  }
+}
+
+.procedure-two.light {
+  color: $black;
+  background-color: $white-g;
+
+  .procedure-two {
+    &__info {
+      &-wrap {
+        border-top: 1px solid rgba($black, 0.2);
+        border-bottom: 1px solid rgba($black, 0.2);
+      }
+    }
+  }
+}
+
+.procedure-two.dark {
+  color: white;
+  background-color: $black;
+  background-image: url(../../../assets/img/procedure-b.svg);
+  background-position: center center;
+  background-size: 105% auto;
+  @include b('tablet') {
+    background-image: none;
+  }
+}
