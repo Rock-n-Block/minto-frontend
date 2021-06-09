@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { Footer, Header, Links } from './components/organisms';
-import { AboutPage, HomePage, MiningPage, StakingPage } from './pages';
+import { AboutPage, AmdinPage, HomePage, MiningPage, StakingPage } from './pages';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.scss';
@@ -28,6 +28,7 @@ export const App: React.FC = () => {
         <Route path="/staking" component={StakingPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/mining" component={MiningPage} />
+        <Route path="/admin" component={AmdinPage} />
       </Switch>
       <Links />
       <Footer />

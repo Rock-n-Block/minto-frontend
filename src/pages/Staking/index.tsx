@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import BigNumber from 'bignumber.js/bignumber';
-import { autorun } from 'mobx';
 
+// import { autorun } from 'mobx';
 import IconLocked from '../../assets/img/icons/lock.svg';
 import IconUnlock from '../../assets/img/icons/unlock.svg';
 import { Procedure2 } from '../../components/organisms';
@@ -28,14 +28,14 @@ const Staking: React.FC = () => {
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
-  const getStakingInfo = async () => {
+  const getStakingInfo = useCallback(async () => {
     setFirstStart(false);
 
     if (!store.is_contractService) store.setContractService();
     store.setDecimals(new BigNumber(10).pow(contracts.decimals).toString());
 
     setStakingInfo(await store.contractService.stakingInfo());
-  };
+  }, [setStakingInfo, store]);
 
   // Change amounts ------------------------------------------------
 
@@ -176,17 +176,17 @@ const Staking: React.FC = () => {
 
   // On Run ------------------------------------------------
 
-  autorun(() => {
-    if (!store.account.address) return;
-    if (!firstStart) return;
-    getStakingInfo();
-  });
+  // autorun(() => {
+  //   if (!store.account.address) return;
+  //   if (!firstStart) return;
+  //   getStakingInfo();
+  // });
 
   React.useEffect(() => {
     if (!store.account.address) return;
     if (!firstStart) return;
     getStakingInfo();
-  });
+  }, [getStakingInfo, firstStart, store]);
 
   React.useEffect(() => {
     if (!store.account.address && config.menu.onlyForAuth) {
