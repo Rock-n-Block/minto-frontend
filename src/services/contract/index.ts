@@ -70,9 +70,9 @@ export class ContractService {
       .balanceOfLocked(this.store.account.address)
       .call()
       .then((value: string) => {
-        clog(`balanceOfLocked (availableToStakeLocked): ${value}`);
+        clog(`balanceOfLocked (availableLocked): ${value}`);
         return {
-          key: 'availableToStakeLocked',
+          key: 'availableLocked',
           value: normalizedValue(value),
         };
       });
@@ -100,11 +100,11 @@ export class ContractService {
       .balanceOf(this.store.account.address)
       .call()
       .then((value: string) => {
-        clog(`balanceOf (balanceOf): ${value}`);
+        clog(`balanceOf (availableUnlocked): ${value}`);
         const balance = normalizedValue(value);
         this.store.updateAccount({ balance });
         return {
-          key: 'balanceOf',
+          key: 'availableUnlocked',
           value: balance,
         };
       });
@@ -117,11 +117,21 @@ export class ContractService {
       .userStakes(this.store.account.address)
       .call()
       .then((value: string) => {
-        clog(`userStakes (userStakes): ${value[1]}`);
-        return {
-          key: 'userStakes',
-          value: normalizedValue(value[1]),
-        };
+        clogData('userStakes (userStakes):', value);
+        return [
+          {
+            key: 'userStakesTotal',
+            value: normalizedValue(value[1]),
+          },
+          {
+            key: 'userStakesLocked',
+            value: normalizedValue(value[2]),
+          },
+          {
+            key: 'userStakesUnlocked',
+            value: normalizedValue(value[3]),
+          },
+        ];
       });
 
     return data;
@@ -143,8 +153,9 @@ export class ContractService {
   }
 
   public async getUserTh(): Promise<IDataContract> {
-    return this.getUserStakes().then((data: IDataContract) => {
-      const th = new BigNumber(data.value).div(this.store.decimals).multipliedBy(0.01).toString();
+    return this.getUserStakes().then((result: IDataContract) => {
+      const data = dataToObject(result);
+      const th = new BigNumber(data.userStakesTotal).multipliedBy(0.01).toString();
       clog(`userStakes (th): ${th}`);
       return {
         key: 'th',
@@ -152,44 +163,6 @@ export class ContractService {
       };
     });
   }
-
-  public stakingInfo = async (): Promise<IData> => {
-    clogGroup('Staking contract values: contract method (template data): contract value');
-
-    const promises = [
-      this.getTotalStakers(),
-      this.getTotalSupply(),
-      this.getNowTotalMined(),
-      this.getBalanceOfLocked(),
-      this.getBalanceOfSum(),
-      this.getBalanceOf(),
-      this.getUserStakes(),
-    ];
-
-    return Promise.all(promises)
-      .then((res) => {
-        clogGroup('End', true);
-        return res;
-      })
-      .then((results): IData => {
-        return dataToObject(results, true, 'Staking normilized values');
-      });
-  };
-
-  public miningInfo = async (): Promise<IData> => {
-    clogGroup('Mining contract values: contract method (template data): contract value');
-
-    const promises = [this.getUserReward(), this.getUserTh()];
-
-    return Promise.all(promises)
-      .then((res) => {
-        clogGroup('End', true);
-        return res;
-      })
-      .then((results): IData => {
-        return dataToObject(results, true, 'Mining normilized values');
-      });
-  };
 
   public getAllowance(amount: string): Promise<number> {
     return new Promise((resolve, reject) => {
@@ -240,7 +213,9 @@ export class ContractService {
     });
   }
 
-  public async withdrow(): Promise<any> {
+  public async withdraw(): Promise<any> {
+    notify('Please wait, withdraw is in progress.', 'info');
+
     return this.staking
       .stakeEnd()
       .send({
@@ -252,7 +227,9 @@ export class ContractService {
       });
   }
 
-  public async withdrowAllReward(): Promise<any> {
+  public async withdrawAllReward(): Promise<any> {
+    notify('Please wait, claim is in progress.', 'info');
+
     return this.staking
       .withdrawRewardAll()
       .send({
@@ -263,26 +240,42 @@ export class ContractService {
         return data;
       });
   }
+
+  public stakingInfo = async (): Promise<IData> => {
+    clogGroup('Staking contract values: contract method (template data): contract value');
+
+    const promises = [
+      this.getTotalStakers(),
+      this.getTotalSupply(),
+      this.getNowTotalMined(),
+      this.getBalanceOf(),
+      this.getBalanceOfLocked(),
+      this.getBalanceOfSum(),
+      this.getUserStakes(),
+    ];
+
+    return Promise.all(promises)
+      .then((res) => {
+        clogGroup('End', true);
+        return res;
+      })
+      .then((results): IData => {
+        return dataToObject(results.flat(), true, 'Staking normilized values');
+      });
+  };
+
+  public miningInfo = async (): Promise<IData> => {
+    clogGroup('Mining contract values: contract method (template data): contract value');
+
+    const promises = [this.getUserReward(), this.getUserTh()];
+
+    return Promise.all(promises)
+      .then((res) => {
+        clogGroup('End', true);
+        return res;
+      })
+      .then((results): IData => {
+        return dataToObject(results, true, 'Mining normilized values');
+      });
+  };
 }
-
-// this.getDataFromContract('alreadyStaked', 'nowTotalMined()', 'Staking', true),
-
-// public async getDataFromContract(
-//   name: string,
-//   useMethod: any,
-//   contractName: string,
-//   normilize = false,
-// ): Promise<IDataContract> {
-//   const data: IDataContract = await this.store.contracts[contractName]
-//     .methods(() => useMethod)
-//     .call()
-//     .then((value: string) => {
-//       clog(`${useMethod} (${name}): ${value}`);
-//       return {
-//         key: name,
-//         value: normilize ? normalizedValue(value) : value,
-//       };
-//     });
-
-//   return data;
-// }

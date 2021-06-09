@@ -18,8 +18,13 @@ const Staking: React.FC = () => {
 
   const [stakingInfo, setStakingInfo] = React.useState({} as IData);
   const [firstStart, setFirstStart] = React.useState(true);
-  const [stakingValue, setStakingValue] = React.useState(0);
-  const [withdrawValue, setWithdrawValue] = React.useState(0);
+
+  const [stLocked, setStLocked] = React.useState(0);
+  const [stUnlocked, setStUnlocked] = React.useState(0);
+
+  const [wdLocked, setWdLocked] = React.useState(0);
+  const [wdUnlocked, setWdUnlocked] = React.useState(0);
+
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
@@ -32,38 +37,68 @@ const Staking: React.FC = () => {
     setStakingInfo(await store.contractService.stakingInfo());
   };
 
-  const handleChangeStakingAmount = (value: any) => {
-    setStakingValue(value);
-    if (value < 0) setStakingValue(0);
-    if (value > +stakingInfo.balanceOf) setStakingValue(+stakingInfo.balanceOf);
+  // Change amounts ------------------------------------------------
+
+  const handleChangeStakingLockedAmount = (value: number) => {
+    setStLocked(value);
+    if (value < 0) setStLocked(0);
+    if (value > +stakingInfo.availableLocked) setStLocked(+stakingInfo.availableLocked);
   };
 
-  const handleChangeWithdrawAmount = (value: any) => {
-    setWithdrawValue(value);
-    if (value < 0) setWithdrawValue(0);
-    if (value > +stakingInfo.userStakes) setWithdrawValue(+stakingInfo.userStakes);
+  const handleChangeStakingUnlockedAmount = (value: number) => {
+    setStUnlocked(value);
+    if (value < 0) setStUnlocked(0);
+    if (value > +stakingInfo.availableUnlocked) setStUnlocked(+stakingInfo.availableUnlocked);
   };
 
-  const handleFullButtonStakingClick = (value: any) => {
-    setStakingValue(value);
-    setStakingValue(+stakingInfo.balanceOf);
+  const handleChangeWithdrawLockedAmount = (value: number) => {
+    setWdLocked(value);
+    if (value < 0) setWdLocked(0);
+    if (value > +stakingInfo.userStakesLocked) setWdLocked(+stakingInfo.userStakesLocked);
   };
 
-  const handleFullButtonWithdrawClick = () => {
-    setWithdrawValue(+stakingInfo.userStakes);
+  const handleChangeWithdrawUnlockedAmount = (value: number) => {
+    setWdUnlocked(value);
+    if (value < 0) setWdUnlocked(0);
+    if (value > +stakingInfo.userStakesUnlocked) setWdUnlocked(+stakingInfo.userStakesUnlocked);
   };
+
+  // Send Max ------------------------------------------------
+
+  const handleFullButtonStakingLockedClick = () => {
+    setStLocked(+stakingInfo.availableLocked);
+  };
+
+  const handleFullButtonStakingUnlockedClick = () => {
+    setStUnlocked(+stakingInfo.availableUnlocked);
+  };
+
+  const handleFullButtonWithdrawLockedClick = () => {
+    setWdLocked(+stakingInfo.userStakesLocked);
+  };
+
+  const handleFullButtonWithdrawUnlockedClick = () => {
+    setWdUnlocked(+stakingInfo.userStakesUnlocked);
+  };
+
+  // Send Tx ------------------------------------------------
 
   const handleButtonStakingClick = () => {
-    if (+stakingValue === 0 || +stakingValue <= 0) {
-      notify('Please, input value in staking field.', 'warning');
+    if (+stLocked === 0 && +stLocked <= 0 && +stUnlocked === 0 && +stUnlocked <= 0) {
+      notify('Please, input value in staking fields (both or one).', 'error');
       return;
     }
 
     setStakingProgress(true);
-    const amount = new BigNumber(stakingValue).multipliedBy(store.decimals).toString();
+
+    const amount = new BigNumber(stLocked).multipliedBy(store.decimals).toString();
+    const lamount =
+      +stLocked === 0 ? 0 : new BigNumber(stLocked).multipliedBy(store.decimals).toString();
+
+    notify(`Attention! You send: ${stLocked} (Locked) and ${stUnlocked} (Unlocked)`, 'warning');
 
     store.contractService
-      .startStake(amount, '0')
+      .startStake(amount, lamount)
       .then(
         (data: any) => {
           notify(
@@ -88,15 +123,23 @@ const Staking: React.FC = () => {
       )
       .finally(() => {
         setStakingProgress(false);
-        setStakingValue(0);
+        setStLocked(0);
+        setStUnlocked(0);
       });
   };
 
   const handleButtonWithdrawClick = () => {
-    notify('Please wait, withdraw is in progress.', 'info');
+    if (+wdLocked === 0 && +wdLocked <= 0 && +wdUnlocked === 0 && +wdUnlocked <= 0) {
+      notify('Please, input value in withdraw fields (both or one).', 'error');
+      return;
+    }
+
+    notify(`Attention! You send: ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked)`, 'warning');
+
     setWithdrawProgress(true);
+
     store.contractService
-      .withdrow()
+      .withdraw()
       .then(
         (data: any) => {
           notify(
@@ -121,9 +164,12 @@ const Staking: React.FC = () => {
       )
       .finally(() => {
         setWithdrawProgress(false);
-        setWithdrawValue(0);
+        setWdLocked(0);
+        setWdUnlocked(0);
       });
   };
+
+  // On Run ------------------------------------------------
 
   autorun(() => {
     if (!store.account.address) return;
@@ -142,6 +188,8 @@ const Staking: React.FC = () => {
       store.toggleWalletMenu(true);
     }
   }, [store]);
+
+  // Template ------------------------------------------------
 
   return (
     <div className="staking">
@@ -164,46 +212,46 @@ const Staking: React.FC = () => {
                 info: [
                   {
                     title: 'Unlocked',
-                    value: `${stakingInfo.balanceOf} BTCMT`,
+                    value: `${stakingInfo.availableUnlocked} BTCMT`,
                     src: IconUnlock,
                   },
                   {
                     title: 'You already staked',
-                    value: `${stakingInfo.userStakes} BTCMT`,
+                    value: `${stakingInfo.userStakesUnlocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
                 inputMiniButtonTitle: 'Amount to stake',
                 inputMiniButtonText: 'All available',
-                inputMiniButtonClick: handleFullButtonStakingClick,
+                inputMiniButtonClick: handleFullButtonStakingUnlockedClick,
 
                 inputButtonShow: true,
-                inputChange: handleChangeStakingAmount,
-                inputValue: stakingValue,
-                inputMax: +stakingInfo.balanceOf,
+                inputChange: handleChangeStakingUnlockedAmount,
+                inputValue: stUnlocked,
+                inputMax: +stakingInfo.availableUnlocked,
               },
               {
                 info: [
                   {
                     title: 'Locked BTCMT',
-                    value: `${stakingInfo.balanceOf} BTCMT`,
+                    value: `${stakingInfo.availableLocked} BTCMT`,
                     src: IconLocked,
                   },
                   {
                     title: 'You already staked',
-                    value: `${stakingInfo.userStakes} BTCMT`,
+                    value: `${stakingInfo.userStakesLocked} BTCMT`,
                   },
                 ],
                 inputMiniButtonShow: true,
                 inputMiniButtonTitle: 'Amount to stake',
                 inputMiniButtonText: 'All available',
-                inputMiniButtonClick: handleFullButtonStakingClick,
+                inputMiniButtonClick: handleFullButtonStakingLockedClick,
 
                 inputButtonShow: true,
-                inputChange: handleChangeStakingAmount,
-                inputValue: stakingValue,
-                inputMax: +stakingInfo.balanceOf,
+                inputChange: handleChangeStakingLockedAmount,
+                inputValue: stLocked,
+                inputMax: +stakingInfo.availableLocked,
               },
             ]}
             submitBtnText="Stake"
@@ -217,49 +265,49 @@ const Staking: React.FC = () => {
             gropupItems={[
               {
                 info: [
+                  // {
+                  //   title: 'Unlocked',
+                  //   value: `${stakingInfo.userStakes} BTCMT`,
+                  //   src: IconUnlock,
+                  // },
                   {
-                    title: 'Unlocked',
-                    value: `${stakingInfo.userStakes} BTCMT`,
-                    src: IconUnlock,
-                  },
-                  {
-                    title: 'Amount to withdraw',
-                    value: `${stakingInfo.userStakes} BTCMT`,
+                    title: 'Unlocked Amount to withdraw',
+                    value: `${stakingInfo.userStakesUnlocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
                 inputMiniButtonTitle: 'Amount to withdraw',
                 inputMiniButtonText: 'All available',
-                inputMiniButtonClick: handleFullButtonWithdrawClick,
+                inputMiniButtonClick: handleFullButtonWithdrawUnlockedClick,
 
                 inputButtonShow: true,
-                inputChange: handleChangeWithdrawAmount,
-                inputValue: withdrawValue,
-                inputMax: +stakingInfo.userStakes,
+                inputChange: handleChangeWithdrawUnlockedAmount,
+                inputValue: wdUnlocked,
+                inputMax: +stakingInfo.userStakesUnlocked,
               },
               {
                 info: [
+                  // {
+                  //   title: 'Locked BTCMT',
+                  //   value: `${stakingInfo.userStakes} BTCMT`,
+                  //   src: IconLocked,
+                  // },
                   {
-                    title: 'Locked BTCMT',
-                    value: `${stakingInfo.userStakes} BTCMT`,
-                    src: IconLocked,
-                  },
-                  {
-                    title: 'Amount to withdraw',
-                    value: `${stakingInfo.userStakes} BTCMT`,
+                    title: 'Locked Amount to withdraw',
+                    value: `${stakingInfo.userStakesLocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
                 inputMiniButtonTitle: 'Amount to withdraw',
                 inputMiniButtonText: 'All available',
-                inputMiniButtonClick: handleFullButtonWithdrawClick,
+                inputMiniButtonClick: handleFullButtonWithdrawLockedClick,
 
                 inputButtonShow: true,
-                inputChange: handleChangeWithdrawAmount,
-                inputValue: withdrawValue,
-                inputMax: +stakingInfo.userStakes,
+                inputChange: handleChangeWithdrawLockedAmount,
+                inputValue: wdLocked,
+                inputMax: +stakingInfo.userStakesLocked,
               },
             ]}
             submitBtnText="Withdraw"

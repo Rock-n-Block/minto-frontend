@@ -16,7 +16,7 @@ export const App: React.FC = () => {
         autoClose={5000}
         hideProgressBar
         newestOnTop={false}
-        closeOnClick
+        closeOnClick={false}
         rtl={false}
         pauseOnFocusLoss={false}
         draggable={false}

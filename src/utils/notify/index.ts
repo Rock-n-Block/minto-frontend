@@ -4,14 +4,15 @@ import { ICodeInfo, ITemplateNotify } from '../../types';
 
 export const errCode = (code: number): string => {
   const codeInfo = {
-    4001: 'Signature transaction denied',
+    4001: 'Signature transaction denied.',
     4100: 'Unauthorized. The requested method and/or account has not been authorized by the user.',
     4200: 'Unsupported Method. The Provider does not support the requested method.',
     4900: 'Disconnected. The Provider is disconnected from all chains.',
     4901: 'Chain Disconnected. The Provider is not connected to the requested chain.',
+    0: 'Probably you have problem with transaction, please check your latest transaction in wallet.',
   } as ICodeInfo;
 
-  return codeInfo[code];
+  return codeInfo[code || 0];
 };
 
 export const notify = (template: string | any, type?: string): void => {
@@ -19,7 +20,7 @@ export const notify = (template: string | any, type?: string): void => {
     position: 'bottom-right',
     autoClose: 10000,
     hideProgressBar: true,
-    closeOnClick: true,
+    closeOnClick: false,
     pauseOnHover: true,
     draggable: false,
     progress: undefined,

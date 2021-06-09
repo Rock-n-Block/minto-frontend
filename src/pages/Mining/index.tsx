@@ -49,7 +49,7 @@ const Mining: React.FC = () => {
     setMiningProgress(true);
 
     store.contractService
-      .withdrowAllReward()
+      .withdrawAllReward()
       .then(
         (data: any) => {
           notify(
@@ -138,8 +138,9 @@ const Mining: React.FC = () => {
                 <span className="mining-table-head-item">Claim status</span>
               </div>
               <div className="mining-table-body">
-                {tdata.slice(offset, offset + PER_PAGE).map((item) => (
-                  <div className="mining-table-body-item mining-table-col">
+                {tdata.slice(offset, offset + PER_PAGE).map((item, index) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <div key={index} className="mining-table-body-item mining-table-col">
                     <span className="mining-table-body-item-text">{item.date}</span>
                     <span className="mining-table-body-item-text">{item.reward}</span>
                     <span className="mining-table-body-item-text">

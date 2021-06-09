@@ -12,11 +12,7 @@ import './HomePreview.scss';
 const HomePreview: React.FC = () => {
   const store = useStore();
 
-  const [info, setInfo] = React.useState({
-    available: 'Heco Infura',
-    totalSupply: 'I need a',
-  } as IData);
-  // const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IData);
+  const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IData);
   const [firstStart, setFirstStart] = React.useState(true);
 
   const getInfo = async () => {
@@ -91,8 +87,8 @@ const HomePreview: React.FC = () => {
             className="home__preview-info-item"
           />
           <Info
-            content={info.available}
-            topText="Available"
+            content={info.availableToStake}
+            topText="Available To Staking"
             bottomText="BTCMT"
             className="home__preview-info-item"
           />
