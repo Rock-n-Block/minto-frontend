@@ -31,3 +31,11 @@ export const dataToObject = (data: any, log?: boolean, logName?: string): IData 
 
   return values;
 };
+
+export const isAddress = (address: string): boolean => {
+  if (address.length !== 42) return false;
+  if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) return false;
+  // if (!/0x[0-9a-fA-F]{40}/.test(address)) return false;
+  if (/^(0x)?[0-9a-f]{40}$/.test(address) || /^(0x)?[0-9A-F]{40}$/.test(address)) return true;
+  return true;
+};

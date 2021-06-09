@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js/bignumber';
 
 import { contracts } from '../../config';
 import { AppStore } from '../../store';
-import { IData, IDataContract } from '../../types';
+import { IData, IDataContract, IRoles } from '../../types';
 import { clog, clogData, clogGroup, dataToObject, normalizedValue, notify } from '../../utils';
 
 export class ContractService {
@@ -280,6 +280,20 @@ export class ContractService {
       });
   }
 
+  public async mintLockedTokens(address: string, amount: string): Promise<any> {
+    notify('Please wait, minting locked tokens is in progress.', 'info');
+
+    return this.token
+      .mintLocked(address, amount)
+      .send({
+        from: this.store.account.address,
+      })
+      .then((data: any) => {
+        clogData('mint locked tokens: ', data);
+        return data.transactionHash;
+      });
+  }
+
   public async claimAllReward(): Promise<any> {
     notify('Please wait, claim all is in progress.', 'info');
 
@@ -305,6 +319,19 @@ export class ContractService {
       .then((data: any) => {
         clogData('withdrawRewardPartially: ', data);
         return data;
+      });
+  }
+
+  public async hasRole(role?: string): Promise<IRoles> {
+    return this.token
+      .hasRole(role || '0x00', this.store.account.address)
+      .call()
+      .then((data: any) => {
+        clogData('hasRole: ', data);
+        return {
+          role: role || '0x00',
+          has_role: data,
+        };
       });
   }
 

@@ -20,6 +20,7 @@ export interface ButtonProps extends IColorScheme, ISize {
   linkClassName?: string;
   shadow?: boolean;
   icon?: string;
+  type?: 'submit' | 'button' | 'reset';
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -33,6 +34,7 @@ const Button: React.FC<ButtonProps> = ({
   link,
   linkClassName,
   icon,
+  type = 'button',
 }) => {
   const BtnContent = (
     <>
@@ -45,6 +47,7 @@ const Button: React.FC<ButtonProps> = ({
     <BtnAntd
       onClick={onClick}
       disabled={disabled || loading}
+      htmlType={type}
       className={classNames(
         className || '',
         'text text-bold btn',

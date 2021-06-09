@@ -45,6 +45,13 @@ export interface IConfig {
   };
 }
 
+export interface IRoles {
+  [index: string]: {
+    contractRole: string;
+    role: string;
+  };
+}
+
 export interface IContracts {
   decimals: number;
   names: string[];

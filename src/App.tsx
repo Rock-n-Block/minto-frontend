@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { Footer, Header, Links } from './components/organisms';
@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.scss';
 
 export const App: React.FC = () => {
+  const location = useLocation();
+
   return (
     <div className="minto">
       <ToastContainer
@@ -22,7 +24,7 @@ export const App: React.FC = () => {
         draggable={false}
         pauseOnHover
       />
-      <Header />
+      {location.pathname !== '/admin' ? <Header /> : ''}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/staking" component={StakingPage} />
@@ -30,8 +32,14 @@ export const App: React.FC = () => {
         <Route path="/mining" component={MiningPage} />
         <Route path="/admin" component={AmdinPage} />
       </Switch>
-      <Links />
-      <Footer />
+      {location.pathname !== '/admin' ? (
+        <div>
+          <Links />
+          <Footer />
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

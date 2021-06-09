@@ -89,8 +89,8 @@ const Staking: React.FC = () => {
     clogData('unlocked value:', stUnlocked);
     clogData('locked value:', stLocked);
 
-    const amount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
-    const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stUnlocked);
+    const amount = +stUnlocked === 0 ? 0 : deNormalizedValue(stUnlocked);
+    const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
 
     clogData('unlocked amount:', amount);
     clogData('locked amount:', lAmount);
@@ -186,7 +186,7 @@ const Staking: React.FC = () => {
       ) : (
         <div className="no_login_data">
           <span className="links__title text-center text text-black text-bold-e">
-            Please LogIn to see Information
+            Please Connect Wallet to see Information.
           </span>
         </div>
       )}

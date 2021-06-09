@@ -201,7 +201,7 @@ const Mining: React.FC = () => {
       ) : (
         <div className="no_login_data">
           <span className="links__title text-center text text-black text-bold-e">
-            Please LogIn to see Information
+            Please Connect Wallet to see Information.
           </span>
         </div>
       )}

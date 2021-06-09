@@ -1,3 +1,5 @@
+@import 'src/styles/mixins/media';
+
 .admin-content {
   margin-top: 50px;
 
@@ -6,6 +8,10 @@
     grid-template-columns: repeat(2, 1fr) 160px;
     grid-gap: 20px;
     align-items: center;
+
+    @include b('tablet') {
+      grid-template-columns: 1fr;
+    }
   }
 
   &-item {
