@@ -164,9 +164,10 @@ export class ContractService {
     });
   }
 
+  // TODO: FIX Allowance for Unlocked Token
   public getAllowance(amount: string): Promise<number> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (+amount === 0) resolve(1);
 
       resolve(-1);
@@ -182,9 +183,10 @@ export class ContractService {
     });
   }
 
+  // TODO: FIX Allowance for Locked Token
   public getAllowanceLocked(amount: string): Promise<number> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (+amount === 0) resolve(1);
 
       resolve(-1);
