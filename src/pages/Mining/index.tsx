@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import ReactPaginate from 'react-paginate';
-import BigNumber from 'bignumber.js/bignumber';
-import { autorun } from 'mobx';
+import { observer } from 'mobx-react-lite';
 
 import { Procedure } from '../../components/organisms';
-import { config, contracts, update_after_tx_timeout } from '../../config';
+import { config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData, ITableData } from '../../types';
 import { clogData, customNotify, deNormalizedValue, notify } from '../../utils';
@@ -16,28 +15,23 @@ import './Mining.scss';
 const Mining: React.FC = () => {
   const store = useStore();
 
-  const [firstStart, setFirstStart] = React.useState(true);
   const [miningInfo, setMiningInfo] = React.useState({} as IData);
+  const [tdata, settData] = React.useState([] as ITableData[]);
+  const [currentPage, setCurrentPage] = React.useState(0);
 
   const [mnValue, setMnValue] = React.useState(0);
   const [miningProgress, setMiningProgress] = React.useState(false);
-
-  const [currentPage, setCurrentPage] = React.useState(0);
-  const [tdata, settData] = React.useState([] as ITableData[]);
 
   const PER_PAGE = 10;
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(tdata.length / PER_PAGE);
 
-  const getMiningInfo = async () => {
-    setFirstStart(false);
-
+  const getMiningInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
-    store.setDecimals(new BigNumber(10).pow(contracts.decimals).toString());
 
     setMiningInfo(await store.contractService.miningInfo());
     settData(tableData);
-  };
+  }, [store]);
 
   // Change amounts ------------------------------------------------
 
@@ -129,23 +123,13 @@ const Mining: React.FC = () => {
 
   // On Run ------------------------------------------------
 
-  autorun(() => {
-    if (!store.account.address) return;
-    if (!firstStart) return;
-    getMiningInfo();
-  });
-
-  React.useEffect(() => {
-    if (!store.account.address) return;
-    if (!firstStart) return;
-    getMiningInfo();
-  });
-
   React.useEffect(() => {
     if (!store.account.address && config.menu.onlyForAuth) {
       store.toggleWalletMenu(true);
     }
-  }, [store]);
+    if (!store.account.address) return;
+    getMiningInfo();
+  }, [getMiningInfo, store.account.address, store]);
 
   // Template ------------------------------------------------
 
@@ -225,4 +209,4 @@ const Mining: React.FC = () => {
   );
 };
 
-export default Mining;
+export default observer(Mining);

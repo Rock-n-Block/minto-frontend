@@ -10,7 +10,6 @@ class AppStore {
   account: IAccount = {};
   contracts: IContract = {};
   web3: any;
-  decimals = '0';
   contractService: any;
   is_contractService = false;
   inputValue = {
@@ -30,10 +29,6 @@ class AppStore {
 
   setWeb3 = (web3: Array<any>): void => {
     this.web3 = web3;
-  };
-
-  setDecimals = (value: string): void => {
-    this.decimals = value;
   };
 
   setInputValue = (type: string, value: string | number): void => {

@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
-import BigNumber from 'bignumber.js/bignumber';
+import { observer } from 'mobx-react-lite';
 
-// import { autorun } from 'mobx';
 import IconLocked from '../../assets/img/icons/lock.svg';
 import IconUnlock from '../../assets/img/icons/unlock.svg';
 import { Procedure2 } from '../../components/organisms';
 import { StakingInfo } from '../../components/sections';
-import { config, contracts, update_after_tx_timeout } from '../../config';
+import { config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
 import { clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
@@ -16,7 +15,6 @@ import './Staking.scss';
 const Staking: React.FC = () => {
   const store = useStore();
 
-  const [firstStart, setFirstStart] = React.useState(true);
   const [stakingInfo, setStakingInfo] = React.useState({} as IData);
 
   const [stLocked, setStLocked] = React.useState(0);
@@ -29,13 +27,10 @@ const Staking: React.FC = () => {
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
   const getStakingInfo = useCallback(async () => {
-    setFirstStart(false);
-
     if (!store.is_contractService) store.setContractService();
-    store.setDecimals(new BigNumber(10).pow(contracts.decimals).toString());
 
     setStakingInfo(await store.contractService.stakingInfo());
-  }, [setStakingInfo, store]);
+  }, [store]);
 
   // Change amounts ------------------------------------------------
 
@@ -176,23 +171,11 @@ const Staking: React.FC = () => {
 
   // On Run ------------------------------------------------
 
-  // autorun(() => {
-  //   if (!store.account.address) return;
-  //   if (!firstStart) return;
-  //   getStakingInfo();
-  // });
-
   React.useEffect(() => {
+    if (!store.account.address && config.menu.onlyForAuth) store.toggleWalletMenu(true);
     if (!store.account.address) return;
-    if (!firstStart) return;
     getStakingInfo();
-  }, [getStakingInfo, firstStart, store]);
-
-  React.useEffect(() => {
-    if (!store.account.address && config.menu.onlyForAuth) {
-      store.toggleWalletMenu(true);
-    }
-  }, [store]);
+  }, [getStakingInfo, store.account.address, store]);
 
   // Template ------------------------------------------------
 
@@ -328,4 +311,4 @@ const Staking: React.FC = () => {
   );
 };
 
-export default Staking;
+export default observer(Staking);

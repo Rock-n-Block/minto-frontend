@@ -263,22 +263,6 @@ export class ContractService {
           this.sendToStaking(resolve, reject, amount, lAmount);
         });
       });
-
-      // this.getAllowance(amount).then(
-      //   () => {
-      //     this.sendToStaking(resolve, reject, amount, lAmount);
-      //   },
-      //   () => {
-      //     this.token
-      //       .approve(contracts.params.STAKING[contracts.type].address, amount)
-      //       .send({
-      //         from: this.store.account.address,
-      //       })
-      //       .then(() => {
-      //         this.sendToStaking(resolve, reject, amount, lAmount);
-      //       }, reject);
-      //   },
-      // );
     });
   }
 
