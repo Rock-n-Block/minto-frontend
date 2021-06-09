@@ -58,8 +58,9 @@ const Procedure2: React.FC<IProcedure> = ({
           {title}
         </div>
 
-        {gropupItems.map((gItem) => (
-          <div className="procedure-two__info-wrap" key={nextId()}>
+        {gropupItems.map((gItem, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div className="procedure-two__info-wrap" key={index}>
             <div className="procedure-two__info">
               {gItem.info.map((item) => (
                 <div className="procedure-two__info-item" key={nextId()}>
