@@ -59,7 +59,7 @@ const Procedure2: React.FC<IProcedure> = ({
         </div>
 
         {gropupItems.map((gItem) => (
-          <div className="procedure-two__info-wrap">
+          <div className="procedure-two__info-wrap" key={nextId()}>
             <div className="procedure-two__info">
               {gItem.info.map((item) => (
                 <div className="procedure-two__info-item" key={nextId()}>
@@ -106,7 +106,6 @@ const Procedure2: React.FC<IProcedure> = ({
                   shadow={theme === 'light'}
                   onChange={(e) => gItem.inputChange(e.target.value)}
                   value={gItem.inputValue}
-                  max={gItem.inputMax}
                 />
               ) : (
                 ''

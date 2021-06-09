@@ -9,15 +9,15 @@ import { StakingInfo } from '../../components/sections';
 import { config, contracts, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
-import { clogData, customNotify, errCode, notify } from '../../utils';
+import { clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
 
 import './Staking.scss';
 
 const Staking: React.FC = () => {
   const store = useStore();
 
-  const [stakingInfo, setStakingInfo] = React.useState({} as IData);
   const [firstStart, setFirstStart] = React.useState(true);
+  const [stakingInfo, setStakingInfo] = React.useState({} as IData);
 
   const [stLocked, setStLocked] = React.useState(0);
   const [stUnlocked, setStUnlocked] = React.useState(0);
@@ -91,19 +91,24 @@ const Staking: React.FC = () => {
 
     setStakingProgress(true);
 
-    const amount = new BigNumber(stUnlocked).multipliedBy(store.decimals).toString();
-    const lamount =
-      +stLocked === 0 ? 0 : new BigNumber(stLocked).multipliedBy(store.decimals).toString();
+    clogData('unlocked value:', stUnlocked);
+    clogData('locked value:', stLocked);
+
+    const amount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
+    const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stUnlocked);
+
+    clogData('unlocked amount:', amount);
+    clogData('locked amount:', lAmount);
 
     notify(`Attention! You send: ${stLocked} (Locked) and ${stUnlocked} (Unlocked)`, 'warning');
 
     store.contractService
-      .startStake(amount, lamount)
+      .startStake(amount, lAmount)
       .then(
         (data: any) => {
           notify(
             customNotify({
-              text: 'Your stake complete!',
+              text: `Your Stake BTCMT ${stLocked} (Locked) and ${stUnlocked} (Unlocked) complete!`,
               link: {
                 url: `${config.tx.link}/${data[1]}`,
                 text: 'View tx',
@@ -144,9 +149,9 @@ const Staking: React.FC = () => {
         (data: any) => {
           notify(
             customNotify({
-              text: 'Your withdraw complete!',
+              text: `Your Withdraw BTCMT ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked) complete!`,
               link: {
-                url: `https://testnet.hecoinfo.com/tx/${data.transactionHash}`,
+                url: `${config.tx.link}/${data.transactionHash}`,
                 text: 'View transaction',
               },
             }),

@@ -137,12 +137,12 @@ export class ContractService {
     return data;
   }
 
-  public async getUserReward(day?: string): Promise<IDataContract> {
+  public async getUserReward(): Promise<IDataContract> {
     const data: IDataContract = await this.staking
-      ._calculationReward(this.store.account.address, day || '0')
+      .getCurrentUserReward(this.store.account.address)
       .call()
       .then((value: string) => {
-        clog(`_calculationReward (availableToClaim): ${value[0]}`);
+        clog(`getCurrentUserReward (availableToClaim): ${value[0]}`);
         return {
           key: 'availableToClaim',
           value: normalizedValue(value[0], 0),
@@ -165,16 +165,38 @@ export class ContractService {
   }
 
   public getAllowance(amount: string): Promise<number> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return new Promise((resolve, reject) => {
-      this.staking
-        .allowance(this.store.account.address, contracts.params.TOKEN[contracts.type].address)
-        .call()
-        .then((allowance: string) => {
-          const allow = new BigNumber(allowance);
-          const allowed = allow.minus(amount);
-          clog(`allowance: ${allowance}`);
-          allowed.isNegative() ? reject() : resolve(1);
-        });
+      if (+amount === 0) resolve(1);
+
+      resolve(-1);
+      // this.staking
+      //   .allowance(this.store.account.address, contracts.params.TOKEN[contracts.type].address)
+      //   .call()
+      //   .then((allowance: string) => {
+      //     const allow = new BigNumber(allowance);
+      //     const allowed = allow.minus(amount);
+      //     clog(`allowance: ${allowance}`);
+      //     allowed.isNegative() ? reject() : resolve(1);
+      //   });
+    });
+  }
+
+  public getAllowanceLocked(amount: string): Promise<number> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    return new Promise((resolve, reject) => {
+      if (+amount === 0) resolve(1);
+
+      resolve(-1);
+      //   this.staking
+      //     .allowance(this.store.account.address, contracts.params.TOKEN[contracts.type].address)
+      //     .call()
+      //     .then((allowance: string) => {
+      //       const allow = new BigNumber(allowance);
+      //       const allowed = allow.minus(amount);
+      //       clog(`allowanceLocked: ${allowance}`);
+      //       allowed.isNegative() ? reject() : resolve(1);
+      //     });
     });
   }
 
@@ -191,25 +213,70 @@ export class ContractService {
       .then(resolve, reject);
   }
 
+  public async approveToken(amount: string): Promise<any> {
+    return this.token
+      .approve(contracts.params.STAKING[contracts.type].address, amount)
+      .send({
+        from: this.store.account.address,
+      })
+      .then((data: any) => {
+        clogData('approve (approveToken): ', data);
+        return data.transactionHash;
+      });
+  }
+
+  public async approveLockedToken(amount: string): Promise<any> {
+    return this.token
+      .approveLocked(contracts.params.STAKING[contracts.type].address, amount)
+      .send({
+        from: this.store.account.address,
+      })
+      .then((data: any) => {
+        clogData('approve (approveLockedToken): ', data);
+        return data.transactionHash;
+      });
+  }
+
   public startStake(amount: string, lAmount: string): Promise<any> {
     notify('Please wait, staking is in progress.', 'info');
 
     return new Promise((resolve, reject) => {
-      this.getAllowance(amount).then(
-        () => {
+      const promises = [this.getAllowance(amount), this.getAllowanceLocked(lAmount)];
+
+      Promise.all(promises).then(async (res: number[]) => {
+        const approvePromises = [];
+
+        if (res[0] === 0 && res[1] === 0) {
           this.sendToStaking(resolve, reject, amount, lAmount);
-        },
-        () => {
-          this.token
-            .approve(contracts.params.STAKING[contracts.type].address, amount)
-            .send({
-              from: this.store.account.address,
-            })
-            .then(() => {
-              this.sendToStaking(resolve, reject, amount, lAmount);
-            }, reject);
-        },
-      );
+          return;
+        }
+
+        if (res[0] !== 0 && res[0] < 0) approvePromises.push(this.approveToken(amount));
+        if (res[0] !== 0 && res[0] < 0) approvePromises.push(this.approveLockedToken(lAmount));
+
+        await Promise.all(approvePromises).then((result: any) => {
+          clogData(`data from approveToken and approveLockedToken: `, result);
+          clog(`unlocked amount: ${amount}`);
+          clog(`locked amount: ${lAmount}`);
+          this.sendToStaking(resolve, reject, amount, lAmount);
+        });
+      });
+
+      // this.getAllowance(amount).then(
+      //   () => {
+      //     this.sendToStaking(resolve, reject, amount, lAmount);
+      //   },
+      //   () => {
+      //     this.token
+      //       .approve(contracts.params.STAKING[contracts.type].address, amount)
+      //       .send({
+      //         from: this.store.account.address,
+      //       })
+      //       .then(() => {
+      //         this.sendToStaking(resolve, reject, amount, lAmount);
+      //       }, reject);
+      //   },
+      // );
     });
   }
 
@@ -227,8 +294,8 @@ export class ContractService {
       });
   }
 
-  public async withdrawAllReward(): Promise<any> {
-    notify('Please wait, claim is in progress.', 'info');
+  public async claimAllReward(): Promise<any> {
+    notify('Please wait, claim all is in progress.', 'info');
 
     return this.staking
       .withdrawRewardAll()
@@ -237,6 +304,20 @@ export class ContractService {
       })
       .then((data: any) => {
         clogData('withdrawRewardAll: ', data);
+        return data;
+      });
+  }
+
+  public async claimReward(amount: string): Promise<any> {
+    notify('Please wait, claim is in progress.', 'info');
+
+    return this.staking
+      .withdrawRewardPartially(amount)
+      .send({
+        from: this.store.account.address,
+      })
+      .then((data: any) => {
+        clogData('withdrawRewardPartially: ', data);
         return data;
       });
   }

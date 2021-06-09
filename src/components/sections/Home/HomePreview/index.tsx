@@ -88,7 +88,7 @@ const HomePreview: React.FC = () => {
           />
           <Info
             content={info.availableToStake}
-            topText="Available To Staking"
+            topText="Total available"
             bottomText="BTCMT"
             className="home__preview-info-item"
           />

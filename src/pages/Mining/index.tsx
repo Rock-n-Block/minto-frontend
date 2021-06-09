@@ -7,7 +7,7 @@ import { Procedure } from '../../components/organisms';
 import { config, contracts, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData, ITableData } from '../../types';
-import { clogData, customNotify, notify } from '../../utils';
+import { clogData, customNotify, deNormalizedValue, notify } from '../../utils';
 
 import { tableData } from './data';
 
@@ -16,10 +16,10 @@ import './Mining.scss';
 const Mining: React.FC = () => {
   const store = useStore();
 
-  const [miningInfo, setMiningInfo] = React.useState({} as IData);
   const [firstStart, setFirstStart] = React.useState(true);
+  const [miningInfo, setMiningInfo] = React.useState({} as IData);
 
-  const [miningValue, setMiningValue] = React.useState(0);
+  const [mnValue, setMnValue] = React.useState(0);
   const [miningProgress, setMiningProgress] = React.useState(false);
 
   const [currentPage, setCurrentPage] = React.useState(0);
@@ -39,22 +39,69 @@ const Mining: React.FC = () => {
     settData(tableData);
   };
 
+  // Change amounts ------------------------------------------------
+
   const handleChangeClaimAmount = (value: any): void => {
-    setMiningValue(value);
-    if (value < 0) setMiningValue(0);
-    if (value > +miningInfo.availableToClaim) setMiningValue(+miningInfo.availableToClaim);
+    setMnValue(value);
+    if (value < 0) setMnValue(0);
+    if (value > +miningInfo.availableToClaim) setMnValue(+miningInfo.availableToClaim);
   };
 
+  // Send Max ------------------------------------------------
+
+  const handleButtonClick = (): void => {
+    setMnValue(+miningInfo.availableToClaim);
+  };
+
+  // Send Tx ------------------------------------------------
+
   const handleButtonClaimClick = (): void => {
+    if (+mnValue === 0 && +mnValue <= 0) {
+      notify('Please, input value in claim field.', 'error');
+      return;
+    }
+
+    notify(`Attention! You will get: ${mnValue} HBTC.`, 'warning');
+
     setMiningProgress(true);
+    if (mnValue === +miningInfo.availableToClaim) {
+      store.contractService
+        .claimAllReward()
+        .then(
+          (data: any) => {
+            notify(
+              customNotify({
+                text: `Your Claim ${+miningInfo.availableToClaim} HBTC complete!`,
+                link: {
+                  url: `${config.tx.link}/${data[1]}`,
+                  text: 'View tx',
+                },
+              }),
+              'success',
+            );
+            setTimeout(() => {
+              getMiningInfo();
+            }, update_after_tx_timeout);
+          },
+          (err: any) => clogData('claim err: ', err),
+        )
+        .finally(() => {
+          setMiningProgress(false);
+          setMnValue(0);
+        });
+
+      return;
+    }
+
+    const amount = deNormalizedValue(mnValue);
 
     store.contractService
-      .withdrawAllReward()
+      .claimReward(amount)
       .then(
         (data: any) => {
           notify(
             customNotify({
-              text: 'Your claim complete!',
+              text: `Your Claim ${mnValue} HBTC complete!`,
               link: {
                 url: `${config.tx.link}/${data[1]}`,
                 text: 'View tx',
@@ -70,17 +117,17 @@ const Mining: React.FC = () => {
       )
       .finally(() => {
         setMiningProgress(false);
-        setMiningValue(0);
+        setMnValue(0);
       });
   };
 
-  const handleButtonClick = (): void => {
-    setMiningValue(+miningInfo.availableToClaim);
-  };
+  // Functions ------------------------------------------------
 
   const handlePageClick = ({ selected: selectedPage }: any) => {
     setCurrentPage(selectedPage);
   };
+
+  // On Run ------------------------------------------------
 
   autorun(() => {
     if (!store.account.address) return;
@@ -100,6 +147,8 @@ const Mining: React.FC = () => {
     }
   }, [store]);
 
+  // Template ------------------------------------------------
+
   return (
     <div className="mining">
       {store.account.address ? (
@@ -116,17 +165,16 @@ const Mining: React.FC = () => {
                 value: `${miningInfo.availableToClaim} HBTC`,
               },
             ]}
-            miniButtonShow={false}
+            miniButtonShow
             inputTitle="Amount"
             btnAllText="All available"
             btnClick={handleButtonClick}
             submitBtnText="Claim"
-            inputButtonShow={false}
             btnProcessed={miningProgress}
             btnProcessedText="Processing..."
             buttonClick={handleButtonClaimClick}
             inputChange={handleChangeClaimAmount}
-            inputValue={miningValue}
+            inputValue={mnValue}
           />
 
           <div className="mining-table-wrap">
@@ -135,7 +183,7 @@ const Mining: React.FC = () => {
               <div className="mining-table-head mining-table-col">
                 <span className="mining-table-head-item">Date</span>
                 <span className="mining-table-head-item">HBTC reward</span>
-                <span className="mining-table-head-item">Claim status</span>
+                {/* <span className="mining-table-head-item">Claim status</span> */}
               </div>
               <div className="mining-table-body">
                 {tdata.slice(offset, offset + PER_PAGE).map((item, index) => (
@@ -143,9 +191,9 @@ const Mining: React.FC = () => {
                   <div key={index} className="mining-table-body-item mining-table-col">
                     <span className="mining-table-body-item-text">{item.date}</span>
                     <span className="mining-table-body-item-text">{item.reward}</span>
-                    <span className="mining-table-body-item-text">
+                    {/* <span className="mining-table-body-item-text">
                       {item.status ? 'Yes' : 'No'}
-                    </span>
+                    </span> */}
                   </div>
                 ))}
               </div>

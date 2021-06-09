@@ -53,7 +53,7 @@ export const contracts: IContracts = {
         abi: [],
       },
       testnet: {
-        address: '0x7736dF4B9B4f09AF983eE2609Cc244e10B97EaF2',
+        address: '0x29964310BaC668855b21A8Ba5B5DaE4f3317df79',
         abi: [
           { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
           {
@@ -433,7 +433,7 @@ export const contracts: IContracts = {
               { internalType: 'uint256[]', name: 'farmIndexes', type: 'uint256[]' },
             ],
             name: 'transferFarm',
-            outputs: [],
+            outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
             stateMutability: 'nonpayable',
             type: 'function',
           },
@@ -499,7 +499,7 @@ export const contracts: IContracts = {
         abi: [],
       },
       testnet: {
-        address: '0xdBAa48b10c97E43CFb422236e388Ce061aa07FCB',
+        address: '0x15519b808F9754B6e4ABA81b1671ffDc8d2AEf24',
         abi: [
           {
             inputs: [
@@ -578,13 +578,23 @@ export const contracts: IContracts = {
           },
           {
             inputs: [
-              { internalType: 'address', name: 'user', type: 'address' },
-              { internalType: 'uint256', name: 'forDays', type: 'uint256' },
+              { internalType: 'address', name: '', type: 'address' },
+              { internalType: 'uint256', name: '', type: 'uint256' },
             ],
-            name: '_calculationReward',
+            name: '_stakesDays',
+            outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+            stateMutability: 'view',
+            type: 'function',
+          },
+          {
+            inputs: [
+              { internalType: 'address', name: '', type: 'address' },
+              { internalType: 'uint256', name: '', type: 'uint256' },
+            ],
+            name: '_unstakesDays',
             outputs: [
-              { internalType: 'uint256', name: '', type: 'uint256' },
-              { internalType: 'uint256', name: '', type: 'uint256' },
+              { internalType: 'uint256', name: 'amount', type: 'uint256' },
+              { internalType: 'bool', name: 'before', type: 'bool' },
             ],
             stateMutability: 'view',
             type: 'function',
@@ -604,6 +614,17 @@ export const contracts: IContracts = {
             type: 'function',
           },
           {
+            inputs: [
+              { internalType: 'address', name: 'user', type: 'address' },
+              { internalType: 'uint256', name: 'startDay', type: 'uint256' },
+              { internalType: 'uint256', name: 'endDay', type: 'uint256' },
+            ],
+            name: 'calculationRewardTable',
+            outputs: [{ internalType: 'uint256[]', name: 'arr', type: 'uint256[]' }],
+            stateMutability: 'view',
+            type: 'function',
+          },
+          {
             inputs: [],
             name: 'currentDay',
             outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
@@ -613,6 +634,13 @@ export const contracts: IContracts = {
           {
             inputs: [],
             name: 'farmStartedTime',
+            outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+            stateMutability: 'view',
+            type: 'function',
+          },
+          {
+            inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+            name: 'getCurrentUserReward',
             outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
             stateMutability: 'view',
             type: 'function',
@@ -685,6 +713,16 @@ export const contracts: IContracts = {
           },
           {
             inputs: [
+              { internalType: 'uint256', name: 'lockedAmount', type: 'uint256' },
+              { internalType: 'uint256', name: 'unlockedAmount', type: 'uint256' },
+            ],
+            name: 'stakeEndPartially',
+            outputs: [],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+          {
+            inputs: [
               { internalType: 'uint256', name: 'amountUnlocked', type: 'uint256' },
               { internalType: 'uint256', name: 'amountLocked', type: 'uint256' },
             ],
@@ -730,6 +768,7 @@ export const contracts: IContracts = {
               { internalType: 'uint256', name: 'lockedAmount', type: 'uint256' },
               { internalType: 'uint256', name: 'unlockedAmount', type: 'uint256' },
               { internalType: 'uint256', name: 'previousAmount', type: 'uint256' },
+              { internalType: 'uint256', name: 'reservedReward', type: 'uint256' },
               { internalType: 'uint256', name: 'claimedDay', type: 'uint256' },
             ],
             stateMutability: 'view',
@@ -743,7 +782,7 @@ export const contracts: IContracts = {
             type: 'function',
           },
           {
-            inputs: [{ internalType: 'uint256', name: 'forDays', type: 'uint256' }],
+            inputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
             name: 'withdrawRewardPartially',
             outputs: [],
             stateMutability: 'nonpayable',
