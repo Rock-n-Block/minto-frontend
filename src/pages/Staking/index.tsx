@@ -91,7 +91,7 @@ const Staking: React.FC = () => {
 
     setStakingProgress(true);
 
-    const amount = new BigNumber(stLocked).multipliedBy(store.decimals).toString();
+    const amount = new BigNumber(stUnlocked).multipliedBy(store.decimals).toString();
     const lamount =
       +stLocked === 0 ? 0 : new BigNumber(stLocked).multipliedBy(store.decimals).toString();
 
