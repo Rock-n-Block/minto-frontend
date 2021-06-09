@@ -253,11 +253,6 @@ const Staking: React.FC = () => {
             gropupItems={[
               {
                 info: [
-                  // {
-                  //   title: 'Unlocked',
-                  //   value: `${stakingInfo.userStakes} BTCMT`,
-                  //   src: IconUnlock,
-                  // },
                   {
                     title: 'Unlocked Amount to withdraw',
                     value: `${stakingInfo.userStakesUnlocked} BTCMT`,
@@ -276,11 +271,6 @@ const Staking: React.FC = () => {
               },
               {
                 info: [
-                  // {
-                  //   title: 'Locked BTCMT',
-                  //   value: `${stakingInfo.userStakes} BTCMT`,
-                  //   src: IconLocked,
-                  // },
                   {
                     title: 'Locked Amount to withdraw',
                     value: `${stakingInfo.userStakesLocked} BTCMT`,

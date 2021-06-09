@@ -23,6 +23,7 @@ interface InputProps extends IColorScheme, ISize, IType {
   onPressEnter?: (e: any) => void;
   value?: string;
   max?: number;
+  required?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -37,6 +38,7 @@ const Input: React.FC<InputProps> = ({
   onPressEnter,
   value,
   max,
+  required = false,
 }) => {
   return (
     <InputAntd
@@ -57,6 +59,7 @@ const Input: React.FC<InputProps> = ({
       value={value}
       max={max}
       min="0"
+      required={required}
     />
   );
 };
