@@ -39,22 +39,32 @@ const Footer: React.FC = () => {
           <div className="footer__divider"> </div>
           <ul className="footer__socials-list">
             <li className="footer__socials-item">
-              <a href="https://twitter.com/btcmtofficial" className="footer__social circle">
+              <a
+                href="https://twitter.com/btcmtofficial"
+                target="_blank"
+                className="footer__social circle"
+                rel="noreferrer"
+              >
                 <img src={Twitter} alt="twitter" />
               </a>
             </li>
             <li className="footer__socials-item">
-              <a href="/#" className="footer__social circle">
+              <a href="/#" target="_blank" className="footer__social circle">
                 <img src={Medium} alt="medium" />
               </a>
             </li>
             <li className="footer__socials-item">
-              <a href="https://t.me/btcmtofficial" className="footer__social circle">
+              <a
+                href="https://t.me/btcmtofficial"
+                target="_blank"
+                className="footer__social circle"
+                rel="noreferrer"
+              >
                 <img src={Telegram} alt="telegram" />
               </a>
             </li>
             <li className="footer__socials-item">
-              <a href="/#" className="footer__social circle">
+              <a href="/#" target="_blank" className="footer__social circle">
                 <img src={Github} alt="github" />
               </a>
             </li>
