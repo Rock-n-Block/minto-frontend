@@ -58,7 +58,7 @@ const Admin: React.FC = () => {
 
     store.contractService.hasRole().then((user: { role: string; has_role: boolean }) => {
       if (!user.has_role) {
-        notify(`You can't Mint because don't have ${rolesByHex[user.role].role} Role`, 'error');
+        notify(`Can't do Mint because you don't have ${rolesByHex[user.role].role} Role.`, 'error');
         setBtnProceed(false);
       }
 
@@ -125,7 +125,7 @@ const Admin: React.FC = () => {
           <span className="admin-login-title">Log in</span>
           <Input
             size="md"
-            placeholder="0.0"
+            placeholder="E-mail"
             colorScheme="outline"
             type="email"
             onChange={(e) => setLogInEmail(e.target.value)}
@@ -135,7 +135,7 @@ const Admin: React.FC = () => {
           />
           <Input
             size="md"
-            placeholder="0.0"
+            placeholder="Password"
             colorScheme="outline"
             type="password"
             onChange={(e) => setLogInPassword(e.target.value)}
@@ -143,8 +143,8 @@ const Admin: React.FC = () => {
             required
             shadow
           />
-          <Button type="submit" size="lmd">
-            <span className="text-upper text-slg">Log In</span>
+          <Button type="submit" size="lg">
+            <span className="text-upper text-md">Log In</span>
           </Button>
         </form>
       ) : store.account.address ? (
@@ -159,6 +159,7 @@ const Admin: React.FC = () => {
             {
               title: 'Address to Mint Locked tokens',
               inputType: 'text',
+              inputPlaceholder: 'Address to mint',
               inputChange: handleChangeMtAddress,
               inputValue: mtAddress,
             },

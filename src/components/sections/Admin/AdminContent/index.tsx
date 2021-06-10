@@ -7,6 +7,7 @@ import './AdminContent.scss';
 interface IItems {
   title: string;
   inputType: any;
+  inputPlaceholder?: string;
   inputChange: any;
   inputValue: string;
 }
@@ -35,7 +36,7 @@ const AdminContent: React.FC<IAdminContent> = ({
             <span className="admin-content-item-title">{item.title}</span>
             <Input
               size="md"
-              placeholder="0.0"
+              placeholder={item.inputPlaceholder || '0.0'}
               colorScheme="outline"
               type={item.inputType}
               onChange={(e) => item.inputChange(e.target.value)}

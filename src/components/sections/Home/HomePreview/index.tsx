@@ -86,12 +86,12 @@ const HomePreview: React.FC = () => {
             bottomText="BTCMT"
             className="home__preview-info-item"
           />
-          <Info
+          {/* <Info
             content={info.availableToStake}
             topText="Total available"
             bottomText="BTCMT"
             className="home__preview-info-item"
-          />
+          /> */}
         </div>
       </div>
     </div>

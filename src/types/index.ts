@@ -23,6 +23,9 @@ export interface IDataContract {
 }
 
 export interface IConfig {
+  backend: {
+    url: string;
+  };
   tx: { link: string };
   menu: {
     open: {

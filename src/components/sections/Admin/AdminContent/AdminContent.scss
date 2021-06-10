@@ -3,6 +3,10 @@
 .admin-content {
   margin-top: 50px;
 
+  @include b('tablet') {
+    margin-top: 10px;
+  }
+
   &-wrap {
     display: grid;
     grid-template-columns: repeat(2, 1fr) 160px;
@@ -11,6 +15,7 @@
 
     @include b('tablet') {
       grid-template-columns: 1fr;
+      padding: 10px 20px;
     }
   }
 
@@ -24,14 +29,28 @@
       font-weight: normal;
       font-size: 18px;
       color: #1a2121;
+
+      @include b('tablet') {
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
     }
 
     .input {
       max-width: 100%;
+
+      @include b('tablet') {
+        padding: 20px;
+        font-size: 14px;
+      }
     }
   }
 
   .btn {
     margin-top: 35px;
+
+    @include b('tablet') {
+      margin-top: 15px;
+    }
   }
 }

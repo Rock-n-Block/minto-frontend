@@ -6,7 +6,7 @@ import { Procedure } from '../../components/organisms';
 import { config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData, ITableData } from '../../types';
-import { clogData, customNotify, deNormalizedValue, notify } from '../../utils';
+import { API, clogData, customNotify, deNormalizedValue, notify } from '../../utils';
 
 import { tableData } from './data';
 
@@ -30,6 +30,16 @@ const Mining: React.FC = () => {
     if (!store.is_contractService) store.setContractService();
 
     setMiningInfo(await store.contractService.miningInfo());
+
+    const tData = await API.get('/user/history', {
+      params: {
+        address: store.account.address,
+      },
+    });
+
+    clogData('get user table data: ', tData);
+    clogData('get user table data: ', tData.data.results[0]);
+
     settData(tableData);
   }, [store]);
 

@@ -134,12 +134,21 @@ const Staking: React.FC = () => {
       return;
     }
 
+    clogData('unlocked value:', wdUnlocked);
+    clogData('locked value:', wdLocked);
+
+    const amount = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked);
+    const lAmount = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked);
+
+    clogData('unlocked amount:', amount);
+    clogData('locked amount:', lAmount);
+
     notify(`Attention! You send: ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked)`, 'warning');
 
     setWithdrawProgress(true);
 
     store.contractService
-      .withdraw()
+      .withdrawPartially(lAmount, amount)
       .then(
         (data: any) => {
           notify(

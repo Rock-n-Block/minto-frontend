@@ -142,10 +142,10 @@ export class ContractService {
       .getCurrentUserReward(this.store.account.address)
       .call()
       .then((value: string) => {
-        clog(`getCurrentUserReward (availableToClaim): ${value[0]}`);
+        clog(`getCurrentUserReward (availableToClaim): ${value}`);
         return {
           key: 'availableToClaim',
-          value: normalizedValue(value[0], 0),
+          value: normalizedValue(value, 0), // .toLocaleString('fullwide', { useGrouping: false }),
         };
       });
 
@@ -215,28 +215,40 @@ export class ContractService {
       .then(resolve, reject);
   }
 
-  public async approveToken(amount: string): Promise<any> {
-    return this.token
-      .approve(contracts.params.STAKING[contracts.type].address, amount)
-      .send({
-        from: this.store.account.address,
-      })
-      .then((data: any) => {
-        clogData('approve (approveToken): ', data);
-        return data.transactionHash;
-      });
+  public async approveUnlocked(amount: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      return this.token
+        .approve(contracts.params.STAKING[contracts.type].address, amount)
+        .send({
+          from: this.store.account.address,
+        })
+        .then((tx: any) => {
+          clogData('approve (approve): ', tx);
+          resolve({ 0: true, 1: tx.transactionHash });
+        })
+        .catch((err: any) => {
+          clogData(`reject (approve): `, err);
+          reject(err);
+        });
+    });
   }
 
-  public async approveLockedToken(amount: string): Promise<any> {
-    return this.token
-      .approveLocked(contracts.params.STAKING[contracts.type].address, amount)
-      .send({
-        from: this.store.account.address,
-      })
-      .then((data: any) => {
-        clogData('approve (approveLockedToken): ', data);
-        return data.transactionHash;
-      });
+  public async approveLocked(amount: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      return this.token
+        .approveLocked(contracts.params.STAKING[contracts.type].address, amount)
+        .send({
+          from: this.store.account.address,
+        })
+        .then((tx: any) => {
+          clogData('approve (approveLocked): ', tx);
+          resolve({ 0: true, 1: tx.transactionHash });
+        })
+        .catch((err: any) => {
+          clogData(`reject (approveLocked): `, err);
+          reject(err);
+        });
+    });
   }
 
   public startStake(amount: string, lAmount: string): Promise<any> {
@@ -245,23 +257,25 @@ export class ContractService {
     return new Promise((resolve, reject) => {
       const promises = [this.getAllowance(amount), this.getAllowanceLocked(lAmount)];
 
-      Promise.all(promises).then(async (res: number[]) => {
-        const approvePromises = [];
-
+      Promise.all(promises).then((res) => {
         if (res[0] === 0 && res[1] === 0) {
-          this.sendToStaking(resolve, reject, amount, lAmount);
-          return;
+          return this.sendToStaking(resolve, reject, amount, lAmount);
         }
 
-        if (res[0] !== 0 && res[0] < 0) approvePromises.push(this.approveToken(amount));
-        if (res[0] !== 0 && res[0] < 0) approvePromises.push(this.approveLockedToken(lAmount));
+        const aprPromises = [];
 
-        await Promise.all(approvePromises).then((result: any) => {
-          clogData(`data from approveToken and approveLockedToken: `, result);
-          clog(`unlocked amount: ${amount}`);
-          clog(`locked amount: ${lAmount}`);
-          this.sendToStaking(resolve, reject, amount, lAmount);
-        });
+        if (res[0] !== 0 && res[0] < 0) aprPromises.push(this.approveUnlocked(amount));
+        if (res[1] !== 0 && res[1] < 0) aprPromises.push(this.approveLocked(lAmount));
+
+        return Promise.all(aprPromises)
+          .then((result: any) => {
+            clogData(`approveUnlocked and approveLocked result: `, result);
+            return this.sendToStaking(resolve, reject, amount, lAmount);
+          })
+          .catch((err) => {
+            clogData(`approveUnlocked and approveLocked err: `, err);
+            reject(err);
+          });
       });
     });
   }
@@ -276,6 +290,20 @@ export class ContractService {
       })
       .then((data: any) => {
         clogData('withdrow: ', data);
+        return data;
+      });
+  }
+
+  public async withdrawPartially(lAmount: string, amount: string): Promise<any> {
+    notify('Please wait, withdraw is in progress.', 'info');
+
+    return this.staking
+      .stakeEndPartially(lAmount, amount)
+      .send({
+        from: this.store.account.address,
+      })
+      .then((data: any) => {
+        clogData('withdrawPartially: ', data);
         return data;
       });
   }
