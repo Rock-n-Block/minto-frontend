@@ -1,9 +1,8 @@
-import { toast } from 'react-toastify';
 import { ConnectWallet } from '@amfi/connect-wallet';
 import Web3 from 'web3';
 
 import { config, contracts } from '../../config';
-import { clogData } from '../../utils';
+import { clogData, notify } from '../../utils';
 
 export class WalletConnect {
   private connectWallet: any;
@@ -81,7 +80,7 @@ export class WalletConnect {
           clogData('user account: ', userAccount);
           if (!account || userAccount.address !== account.address) {
             resolve(userAccount);
-            toast.success(
+            notify(
               `Account connected: ${userAccount.address.substring(
                 0,
                 4,
@@ -89,29 +88,13 @@ export class WalletConnect {
                 userAccount.address.length - 4,
                 userAccount.address.length,
               )}`,
-              {
-                position: 'bottom-right',
-                autoClose: 7000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: false,
-                progress: undefined,
-              },
+              'success',
             );
           }
         },
         (err: any) => {
           clogData('wallet connect - get user account: ', err);
-          toast.error(`⚠️ Chain error. ${err.message.text}`, {
-            position: 'bottom-right',
-            autoClose: 7000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-          });
+          notify(`⚠️ Chain error: $${err.message.text}`, 'error');
           reject(err);
         },
       );

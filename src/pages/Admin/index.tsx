@@ -6,12 +6,23 @@ import { HeaderAdmin } from '../../components/organisms';
 import AdminContent from '../../components/sections/Admin/AdminContent';
 import { config } from '../../config';
 import { useStore } from '../../store';
-import { customNotify, deNormalizedValue, isAddress, notify, rolesByHex } from '../../utils';
+import {
+  API,
+  clogData,
+  customNotify,
+  deNormalizedValue,
+  isAddress,
+  notify,
+  rolesByHex,
+} from '../../utils';
 
 import './Admin.scss';
 
 const Admin: React.FC = () => {
   const store = useStore();
+
+  const storedJwt = localStorage.getItem('token');
+  const [jwt, setJwt] = React.useState(storedJwt || null);
 
   const [mtAmount, setMtAmount] = React.useState(0);
   const [mtAddress, setMtAddress] = React.useState('');
@@ -20,10 +31,12 @@ const Admin: React.FC = () => {
   const [logIn, setLogIn] = React.useState(false);
   const [logInEmail, setLogInEmail] = React.useState('');
   const [logInPassword, setLogInPassword] = React.useState('');
+  const [loginProcess, setLoginProcess] = React.useState(false);
 
   const getInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
-  }, [store]);
+    clogData('Jwt data: ', jwt);
+  }, [store, jwt]);
 
   // Change amounts ------------------------------------------------
 
@@ -85,14 +98,29 @@ const Admin: React.FC = () => {
     });
   };
 
-  const userLogIn = () => {
-    if (logInEmail !== 'admin@admin.admin' || logInPassword !== 'admin') {
-      notify(`Email or Password are not valid`, 'error');
-      return;
-    }
+  const userLogIn = async () => {
+    setLoginProcess(true);
 
-    setLogIn(true);
-    notify(`Successfully login via ${logInEmail}.`, 'success');
+    await API.post('/admin-panel/api/api-token-auth/', {
+      username: logInEmail,
+      password: logInPassword,
+    })
+      .then((res: any) => {
+        clogData('User history: ', res);
+        localStorage.setItem('token', res.data.token);
+        setJwt(res.data.token);
+        setLogIn(true);
+        notify(`Successfully login via ${logInEmail}.`, 'success');
+      })
+      .catch((error: any) => {
+        if (error.response) {
+          notify(`Email or Password are not valid`, 'error');
+          clogData(`Login got error status ${error.response.status}: `, error.response.data);
+        }
+      })
+      .finally(() => {
+        setLoginProcess(false);
+      });
   };
 
   const userLogOut = () => {
@@ -125,9 +153,9 @@ const Admin: React.FC = () => {
           <span className="admin-login-title">Log in</span>
           <Input
             size="md"
-            placeholder="E-mail"
+            placeholder="Username"
             colorScheme="outline"
-            type="email"
+            type="text"
             onChange={(e) => setLogInEmail(e.target.value)}
             value={logInEmail}
             required
@@ -143,9 +171,16 @@ const Admin: React.FC = () => {
             required
             shadow
           />
-          <Button type="submit" size="lg">
-            <span className="text-upper text-md">Log In</span>
-          </Button>
+
+          {loginProcess ? (
+            <Button disabled type="submit" size="lg">
+              <span className="text-upper text-md">Processing...</span>
+            </Button>
+          ) : (
+            <Button type="submit" size="lg">
+              <span className="text-upper text-md">Log In</span>
+            </Button>
+          )}
         </form>
       ) : store.account.address ? (
         <AdminContent

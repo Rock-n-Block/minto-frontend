@@ -75,7 +75,7 @@ export interface IData {
 
 export interface ITableData {
   date: string;
-  reward: number;
+  value: number;
   status: boolean;
 }
 

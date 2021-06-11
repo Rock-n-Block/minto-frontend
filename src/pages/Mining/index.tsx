@@ -6,9 +6,14 @@ import { Procedure } from '../../components/organisms';
 import { config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData, ITableData } from '../../types';
-import { API, clogData, customNotify, deNormalizedValue, notify } from '../../utils';
-
-import { tableData } from './data';
+import {
+  API,
+  clogData,
+  customNotify,
+  deNormalizedValue,
+  normalizedValue,
+  notify,
+} from '../../utils';
 
 import './Mining.scss';
 
@@ -31,16 +36,25 @@ const Mining: React.FC = () => {
 
     setMiningInfo(await store.contractService.miningInfo());
 
-    const tData = await API.get('/user/history', {
-      params: {
-        address: store.account.address,
-      },
-    });
-
-    clogData('get user table data: ', tData);
-    clogData('get user table data: ', tData.data.results[0]);
-
-    settData(tableData);
+    await API.post('/user/history/', {
+      address: store.account.address,
+    })
+      .then((res: any) => {
+        clogData('User history: ', res);
+        settData(res.data.history);
+      })
+      .catch((error: any) => {
+        if (error.response) {
+          if (error.response.status === 500) notify(`Cant't load history.`, 'error');
+          if (error.response.status === 404) {
+            notify(`User history not found.`, 'warning');
+            // API.post('/user/save/', {
+            //   address: store.account.address,
+            // })
+          }
+          clogData(`User history got error status ${error.response.status}: `, error.response.data);
+        }
+      });
   }, [store]);
 
   // Change amounts ------------------------------------------------
@@ -184,7 +198,9 @@ const Mining: React.FC = () => {
                   // eslint-disable-next-line react/no-array-index-key
                   <div key={index} className="mining-table-body-item mining-table-col">
                     <span className="mining-table-body-item-text">{item.date}</span>
-                    <span className="mining-table-body-item-text">{item.reward}</span>
+                    <span className="mining-table-body-item-text">
+                      {normalizedValue(item.value, 0)}
+                    </span>
                     {/* <span className="mining-table-body-item-text">
                       {item.status ? 'Yes' : 'No'}
                     </span> */}
