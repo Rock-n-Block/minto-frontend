@@ -48,9 +48,6 @@ const Mining: React.FC = () => {
           if (error.response.status === 500) notify(`Cant't load history.`, 'error');
           if (error.response.status === 404) {
             notify(`User history not found.`, 'warning');
-            // API.post('/user/save/', {
-            //   address: store.account.address,
-            // })
           }
           clogData(`User history got error status ${error.response.status}: `, error.response.data);
         }

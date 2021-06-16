@@ -502,7 +502,7 @@ export const contracts: IContracts = {
         abi: [],
       },
       testnet: {
-        address: '0x15519b808F9754B6e4ABA81b1671ffDc8d2AEf24',
+        address: '0x9381266E9d780EadA86Cb04Ce6189a645770a52F',
         abi: [
           {
             inputs: [
@@ -644,6 +644,13 @@ export const contracts: IContracts = {
           {
             inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
             name: 'getCurrentUserReward',
+            outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+            stateMutability: 'view',
+            type: 'function',
+          },
+          {
+            inputs: [],
+            name: 'getTodayReward',
             outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
             stateMutability: 'view',
             type: 'function',
