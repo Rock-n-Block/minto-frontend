@@ -11,6 +11,7 @@ import { IData } from '../../types';
 import { clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
 
 import './Staking.scss';
+import { useTranslation } from 'react-i18next';
 
 const Staking: React.FC = () => {
   const store = useStore();
@@ -25,6 +26,8 @@ const Staking: React.FC = () => {
 
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
+
+  const { t } = useTranslation();
 
   const getStakingInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
@@ -80,22 +83,28 @@ const Staking: React.FC = () => {
 
   const handleButtonStakingClick = () => {
     if (+stLocked === 0 && +stLocked <= 0 && +stUnlocked === 0 && +stUnlocked <= 0) {
-      notify('Please, input value in staking fields (both or one).', 'error');
+      notify(`${t('notifications.staking.inputError')}`, 'error');
       return;
     }
 
     setStakingProgress(true);
 
-    clogData('unlocked value:', stUnlocked);
-    clogData('locked value:', stLocked);
-
     const amount = +stUnlocked === 0 ? 0 : deNormalizedValue(stUnlocked);
     const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
 
-    clogData('unlocked amount:', amount);
-    clogData('locked amount:', lAmount);
-
-    notify(`Attention! You send: ${stLocked} (Locked) and ${stUnlocked} (Unlocked)`, 'warning');
+    notify(
+      customNotify({
+        translate: {
+          key: 'notifications.staking.warning',
+          data: {
+            wdLocked,
+            wdUnlocked,
+          },
+        },
+        text: `Attention! You send: ${stLocked} (Locked) and ${stUnlocked} (Unlocked)`,
+      }),
+      'warning',
+    );
 
     store.contractService
       .startStake(amount, lAmount)
@@ -103,10 +112,18 @@ const Staking: React.FC = () => {
         (data: any) => {
           notify(
             customNotify({
+              translate: {
+                key: 'notifications.staking.complete',
+                data: {
+                  token: 'BTCMT',
+                  stLocked,
+                  stUnlocked,
+                },
+              },
               text: `Your Stake BTCMT ${stLocked} (Locked) and ${stUnlocked} (Unlocked) complete!`,
               link: {
                 url: `${config.tx.link}/${data[1]}`,
-                text: 'View tx',
+                text: `${t('notifications.staking.link')}`,
               },
             }),
             'success',
@@ -118,7 +135,7 @@ const Staking: React.FC = () => {
         },
         (err: any) => {
           clogData('staking error: ', err);
-          notify(`Something went wrong! ${errCode(err.code)}`, 'error');
+          notify(`${t('notifications.error.text')} ${errCode(err.code)}`, 'error');
         },
       )
       .finally(() => {
@@ -130,20 +147,26 @@ const Staking: React.FC = () => {
 
   const handleButtonWithdrawClick = () => {
     if (+wdLocked === 0 && +wdLocked <= 0 && +wdUnlocked === 0 && +wdUnlocked <= 0) {
-      notify('Please, input value in withdraw fields (both or one).', 'error');
+      notify(`${t('notifications.withdraw.inputError')}`, 'error');
       return;
     }
-
-    clogData('unlocked value:', wdUnlocked);
-    clogData('locked value:', wdLocked);
 
     const amount = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked);
     const lAmount = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked);
 
-    clogData('unlocked amount:', amount);
-    clogData('locked amount:', lAmount);
-
-    notify(`Attention! You send: ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked)`, 'warning');
+    notify(
+      customNotify({
+        translate: {
+          key: 'notifications.withdraw.warning',
+          data: {
+            wdLocked,
+            wdUnlocked,
+          },
+        },
+        text: `Attention! You send: ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked)`,
+      }),
+      'warning',
+    );
 
     setWithdrawProgress(true);
 
@@ -153,10 +176,18 @@ const Staking: React.FC = () => {
         (data: any) => {
           notify(
             customNotify({
+              translate: {
+                key: 'notifications.withdraw.complete',
+                data: {
+                  token: 'BTCMT',
+                  wdLocked,
+                  wdUnlocked,
+                },
+              },
               text: `Your Withdraw BTCMT ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked) complete!`,
               link: {
-                url: `${config.tx.link}/${data.transactionHash}`,
-                text: 'View tx',
+                url: `${config.tx.link}/${data[1]}`,
+                text: `${t('notifications.withdraw.link')}`,
               },
             }),
             'success',
@@ -168,7 +199,7 @@ const Staking: React.FC = () => {
         },
         (err: any) => {
           clogData('withdraw error: ', err);
-          notify(`Something went wrong! ${errCode(err.code)}`, 'error');
+          notify(`${t('notifications.error.text')} ${errCode(err.code)}`, 'error');
         },
       )
       .finally(() => {
@@ -195,7 +226,7 @@ const Staking: React.FC = () => {
       ) : (
         <div className="no_login_data">
           <span className="links__title text-center text text-black text-bold-e">
-            Please Connect Wallet to see Information.
+            {t('info.connectWallet')}
           </span>
         </div>
       )}
@@ -203,24 +234,24 @@ const Staking: React.FC = () => {
       {store.account.address ? (
         <div>
           <Procedure2
-            title="Stake your tokens"
+            title={t('page.staking.component.staking.title')}
             gropupItems={[
               {
                 info: [
                   {
-                    title: 'Unlocked',
+                    title: `${t('page.staking.component.staking.unlocked')}`,
                     value: `${stakingInfo.availableUnlocked} BTCMT`,
                     src: IconUnlock,
                   },
                   {
-                    title: 'You already staked',
+                    title: `${t('page.staking.component.staking.text')}`,
                     value: `${stakingInfo.userStakesUnlocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
-                inputMiniButtonTitle: 'Amount to stake',
-                inputMiniButtonText: 'All available',
+                inputMiniButtonTitle: `${t('page.staking.component.staking.buttonText')}`,
+                inputMiniButtonText: `${t('page.staking.component.staking.button')}`,
                 inputMiniButtonClick: handleFullButtonStakingUnlockedClick,
 
                 inputButtonShow: true,
@@ -231,18 +262,18 @@ const Staking: React.FC = () => {
               {
                 info: [
                   {
-                    title: 'Locked BTCMT',
+                    title: `${t('page.staking.component.staking.locked')}`,
                     value: `${stakingInfo.availableLocked} BTCMT`,
                     src: IconLocked,
                   },
                   {
-                    title: 'You already staked',
+                    title: `${t('page.staking.component.staking.text')}`,
                     value: `${stakingInfo.userStakesLocked} BTCMT`,
                   },
                 ],
                 inputMiniButtonShow: true,
-                inputMiniButtonTitle: 'Amount to stake',
-                inputMiniButtonText: 'All available',
+                inputMiniButtonTitle: `${t('page.staking.component.staking.buttonText')}`,
+                inputMiniButtonText: `${t('page.staking.component.staking.button')}`,
                 inputMiniButtonClick: handleFullButtonStakingLockedClick,
 
                 inputButtonShow: true,
@@ -251,26 +282,26 @@ const Staking: React.FC = () => {
                 inputMax: +stakingInfo.availableLocked,
               },
             ]}
-            submitBtnText="Stake"
+            submitBtnText={t('page.staking.component.staking.button2')}
             btnProcessed={stakingProgress}
-            btnProcessedText="Processing..."
+            btnProcessedText={t('button.processing')}
             buttonClick={handleButtonStakingClick}
           />
           <Procedure2
-            title="Withdraw"
+            title={t('page.staking.component.withdraw.title')}
             theme="light"
             gropupItems={[
               {
                 info: [
                   {
-                    title: 'Unlocked Amount to withdraw',
+                    title: `${t('page.staking.component.withdraw.unlocked')}`,
                     value: `${stakingInfo.userStakesUnlocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
-                inputMiniButtonTitle: 'Amount to withdraw',
-                inputMiniButtonText: 'All available',
+                inputMiniButtonTitle: `${t('page.staking.component.withdraw.text')}`,
+                inputMiniButtonText: `${t('page.staking.component.withdraw.button')}`,
                 inputMiniButtonClick: handleFullButtonWithdrawUnlockedClick,
 
                 inputButtonShow: true,
@@ -281,14 +312,14 @@ const Staking: React.FC = () => {
               {
                 info: [
                   {
-                    title: 'Locked Amount to withdraw',
+                    title: `${t('page.staking.component.withdraw.locked')}`,
                     value: `${stakingInfo.userStakesLocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
-                inputMiniButtonTitle: 'Amount to withdraw',
-                inputMiniButtonText: 'All available',
+                inputMiniButtonTitle: `${t('page.staking.component.withdraw.text')}`,
+                inputMiniButtonText: `${t('page.staking.component.withdraw.button')}`,
                 inputMiniButtonClick: handleFullButtonWithdrawLockedClick,
 
                 inputButtonShow: true,
@@ -297,9 +328,9 @@ const Staking: React.FC = () => {
                 inputMax: +stakingInfo.userStakesLocked,
               },
             ]}
-            submitBtnText="Withdraw"
+            submitBtnText={t('page.staking.component.withdraw.button2')}
             btnProcessed={withdrawProgress}
-            btnProcessedText="Processing..."
+            btnProcessedText={t('button.processing')}
             buttonClick={handleButtonWithdrawClick}
           />
         </div>

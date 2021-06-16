@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import nextId from 'react-id-generator';
 import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,6 +18,8 @@ const HomeNews: React.FC = () => {
   const nextRef = React.useRef<HTMLDivElement>(null);
   const [swiperInst, setSwiperInst] = React.useState<any>(null);
   const [activeSlide, setActiveSlide] = React.useState<number>(3);
+
+  const { t } = useTranslation();
 
   const slidesPerGroud = window.innerWidth > 768 ? 3 : 1;
   const slides = [
@@ -60,7 +63,7 @@ const HomeNews: React.FC = () => {
   return (
     <div className="home__news">
       <div className="row home__news-row">
-        <h2 className="h2 text-bold home__news-title">News</h2>
+        <h2 className="h2 text-bold home__news-title">{t('page.home.component.news.title')}</h2>
         <div className="home__news-slider-nav box-f box-f-ai-c">
           <div
             ref={prevRef}

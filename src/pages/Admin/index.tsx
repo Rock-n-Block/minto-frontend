@@ -17,6 +17,7 @@ import {
 } from '../../utils';
 
 import './Admin.scss';
+import { useTranslation } from 'react-i18next';
 
 const Admin: React.FC = () => {
   const store = useStore();
@@ -32,6 +33,8 @@ const Admin: React.FC = () => {
   const [logInEmail, setLogInEmail] = React.useState('');
   const [logInPassword, setLogInPassword] = React.useState('');
   const [loginProcess, setLoginProcess] = React.useState(false);
+
+  const { t } = useTranslation();
 
   const getInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
@@ -207,7 +210,7 @@ const Admin: React.FC = () => {
       ) : (
         <div className="no_login_data">
           <span className="links__title text-center text text-black text-bold-e">
-            Please Connect Wallet to see Information.
+            {t('info.connectWallet')}
           </span>
         </div>
       )}

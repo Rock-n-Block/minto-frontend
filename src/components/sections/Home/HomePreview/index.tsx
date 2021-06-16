@@ -8,12 +8,15 @@ import { clogData, dataToObject, normalizedValue } from '../../../../utils';
 import { Button, Info } from '../../../atoms';
 
 import './HomePreview.scss';
+import { useTranslation } from 'react-i18next';
 
 const HomePreview: React.FC = () => {
   const store = useStore();
 
   const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IData);
   const [firstStart, setFirstStart] = React.useState(true);
+
+  const { t } = useTranslation();
 
   const getInfo = async () => {
     setFirstStart(false);
@@ -63,19 +66,16 @@ const HomePreview: React.FC = () => {
   return (
     <div className="home__preview">
       <div className="row">
-        <h1 className="h1 text-bold home__preview-title">Mine Bitcoin by staking BTCMT tokens</h1>
-        <div className="text-lg home__preview-subtitle">
-          We&apos;ve removed all the unnecessary steps and made mining easier than getting a BTC
-          wallet
-        </div>
+        <h1 className="h1 text-bold home__preview-title">{t('page.home.title')}</h1>
+        <div className="text-lg home__preview-subtitle">{t('page.home.subtitle')}</div>
         <div className="box-f box-f-ai-c home__preview-box">
           <Button size="lmd" className="home__preview-btn">
             <NavLink exact to="/staking" className="text-upper text-slg">
-              Stake
+              {t('page.home.buttons.stake')}
             </NavLink>
           </Button>
           <Button size="md" colorScheme="outline" className="home__preview-btn">
-            <div className="text-upper text-slg">Buy</div>
+            <div className="text-upper text-slg">{t('page.home.buttons.buy')}</div>
           </Button>
         </div>
         <div className="home__preview-info box-f box-f-ai-c">

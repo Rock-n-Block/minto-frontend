@@ -84,7 +84,13 @@ export interface ITemplateNotify {
 }
 
 export interface ICustomNotifyData {
-  text: string;
+  translate?: {
+    key?: string;
+    data?: {
+      [index: string]: string | number;
+    };
+  };
+  text?: string;
   link?: {
     url: string;
     text: string;

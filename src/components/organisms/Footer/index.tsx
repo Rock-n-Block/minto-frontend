@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import Logo from '../../../assets/img/icons/logo.svg';
@@ -10,6 +11,8 @@ import Twitter from '../../../assets/img/sections/footer/twitter.svg';
 import './Footer.scss';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer">
       <div className="row">
@@ -20,17 +23,17 @@ const Footer: React.FC = () => {
           <ul className="footer__navigation">
             <li className="footer__navigation-item">
               <Link to="/about" className="text-black text-smd text-liga-off">
-                About
+                {t('footer.menu.about')}
               </Link>
             </li>
             <li className="footer__navigation-item">
               <Link to="/staking" className="text-black text-smd text-liga-off">
-                Stake BTCMT
+                {t('footer.menu.staking')}
               </Link>
             </li>
             <li className="footer__navigation-item">
               <Link to="/about#contacts" className="text-black text-smd text-liga-off">
-                Contacts
+                {t('footer.menu.contacts')}
               </Link>
             </li>
           </ul>
@@ -71,7 +74,7 @@ const Footer: React.FC = () => {
           </ul>
           <div className="footer__divider" />
         </div>
-        <div className="footer__copyrights text-liga-off">© 2021 Minto. All rights reserved</div>
+        <div className="footer__copyrights text-liga-off">{t('footer.copyright')}</div>
       </div>
     </footer>
   );

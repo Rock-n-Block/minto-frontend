@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import LogoBancor from '../../../../assets/img/sections/home/logo-bancor.svg';
 import LogoBestRate from '../../../../assets/img/sections/home/logo-best-rate.svg';
@@ -14,10 +15,12 @@ import LogoWaves from '../../../../assets/img/sections/home/logo-waves.svg';
 import './HomePartners.scss';
 
 const HomePartners: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="home-partners">
       <div className="row">
-        <h2 className="h2 text-bold text-center">Partners</h2>
+        <h2 className="h2 text-bold text-center">{t('page.home.component.partners.title')}</h2>
         <div className="home-partners__container">
           <div className="home-partners__partner">
             <img src={LogoBinance} alt="rsk logo" />

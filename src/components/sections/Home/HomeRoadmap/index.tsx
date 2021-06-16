@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import nextId from 'react-id-generator';
 import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,6 +18,9 @@ const HomeRoadmap: React.FC = () => {
   const nextRef = React.useRef<HTMLDivElement>(null);
   const [swiperInst, setSwiperInst] = React.useState<any>(null);
   const [activeSlide, setActiveSlide] = React.useState<number>(1);
+
+  const { t } = useTranslation();
+
   const slides = [
     {
       year: 2021,
@@ -50,7 +54,9 @@ const HomeRoadmap: React.FC = () => {
   return (
     <div className="home__roadmap">
       <div className="row">
-        <h2 className="home__roadmap-title h2 text-bold">Roadmap</h2>
+        <h2 className="home__roadmap-title h2 text-bold">
+          {t('page.home.component.roadmap.title')}
+        </h2>
         <div className="home__roadmap-slider-nav box-f box-f-ai-c">
           <div
             ref={prevRef}

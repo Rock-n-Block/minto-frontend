@@ -18,6 +18,7 @@ import { clogData } from '../../../utils';
 import { Button } from '../../atoms';
 
 import './Header.scss';
+import { useTranslation } from 'react-i18next';
 
 const connect = new WalletConnect();
 
@@ -27,6 +28,12 @@ const Header: React.FC = observer(() => {
 
   const store = useStore();
   const { menu, toggleWalletMenu } = store;
+
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
+  };
 
   const handleHeaderClick = (): void => {
     if (window.innerWidth < 768 && (isWalletsMenuOpen || isMobileMenuOpen || menu.walletsOpen)) {
@@ -117,7 +124,7 @@ const Header: React.FC = observer(() => {
               tabIndex={0}
             >
               <img src={SignOutImg} alt="metamask" className="header__wallets-item-img" />
-              <span className="text-bold text-md">LogOut</span>
+              <span className="text-bold text-md">{t('header.menu.logout')}</span>
             </div>
           </div>
         )}
@@ -209,7 +216,7 @@ const Header: React.FC = observer(() => {
                 tabIndex={0}
               >
                 <img src={SignOutImg} alt="metamask" className="header__wallets-item-img" />
-                <span className="text-bold text-lmd">LogOut</span>
+                <span className="text-bold text-lmd">{t('header.menu.logout')}</span>
               </div>
             </div>
           )}
@@ -241,34 +248,34 @@ const Header: React.FC = observer(() => {
                   toggleWalletMenu(true);
                 }}
               >
-                Connect Wallet
+                {t('header.menu.connectWallet')}
               </Button>
             )}
 
             <div className="header__menu-nav">
               <NavLink exact to="/" className="header__menu-nav-item text-bold text-slg text-black">
-                Main
+                {t('header.menu.main')}
               </NavLink>
               <NavLink
                 exact
                 to="/staking"
                 className="header__menu-nav-item text-bold text-slg text-black"
               >
-                Staking
+                {t('header.menu.staking')}
               </NavLink>
               <NavLink
                 exact
                 to="/mining"
                 className="header__menu-nav-item text-bold text-slg text-black"
               >
-                Mining
+                {t('header.menu.mining')}
               </NavLink>
               <NavLink
                 exact
                 to="/about"
                 className="header__menu-nav-item text-bold text-slg text-black"
               >
-                About us
+                {t('header.menu.aboutUs')}
               </NavLink>
             </div>
           </div>
@@ -280,7 +287,7 @@ const Header: React.FC = observer(() => {
             </Link>
             <div className="header__nav box-f-ai-c">
               <NavLink exact to="/" className="header__nav-item text-bold text-md text-black">
-                Main
+                {t('header.menu.main')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </NavLink>
               <NavLink
@@ -288,19 +295,31 @@ const Header: React.FC = observer(() => {
                 to="/staking"
                 className="header__nav-item text-bold text-md text-black"
               >
-                Staking
+                {t('header.menu.staking')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </NavLink>
               <NavLink exact to="/mining" className="header__nav-item text-bold text-md text-black">
-                Mining
+                {t('header.menu.mining')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </NavLink>
               <NavLink exact to="/about" className="header__nav-item text-bold text-md text-black">
-                About us
+                {t('header.menu.aboutUs')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </NavLink>
             </div>
           </div>
+
+          {/* Desctop: Translation Buttons */}
+
+          <div>
+            <button type="button" onClick={() => changeLanguage('en')}>
+              EN
+            </button>
+            <button type="button" onClick={() => changeLanguage('ch')}>
+              CH
+            </button>
+          </div>
+
           {isWalletsMenuOpen || menu.walletsOpen ? (
             <div
               className="header__wallets-close box-f-c"
@@ -343,7 +362,7 @@ const Header: React.FC = observer(() => {
                 toggleWalletMenu(true);
               }}
             >
-              <div className="text-upper text-smd">Connect Wallet</div>
+              <div className="text-upper text-smd">{t('header.menu.connectWallet')}</div>
             </Button>
           )}
         </div>
