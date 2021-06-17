@@ -1,4 +1,5 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
+import i18n from '../../utils/i18n';
 import Web3 from 'web3';
 
 import { config, contracts } from '../../config';
@@ -81,7 +82,7 @@ export class WalletConnect {
           if (!account || userAccount.address !== account.address) {
             resolve(userAccount);
             notify(
-              `Account connected: ${userAccount.address.substring(
+              `${i18n.t('notifications.wallet.connected')}: ${userAccount.address.substring(
                 0,
                 4,
               )}...${userAccount.address.slice(
@@ -94,7 +95,7 @@ export class WalletConnect {
         },
         (err: any) => {
           clogData('wallet connect - get user account: ', err);
-          notify(`⚠️ Chain error: $${err.message.text}`, 'error');
+          notify(`⚠️ ${i18n.t('notifications.wallet.connected')}: $${err.message.text}`, 'error');
           reject(err);
         },
       );

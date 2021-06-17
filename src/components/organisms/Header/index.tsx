@@ -97,6 +97,9 @@ const Header: React.FC = observer(() => {
             .finally(() => {
               clogData('user account: ', account);
               store.updateAccount(account);
+              setMobileMenuOpen(false);
+              setWalletsMenuOpen(false);
+              toggleWalletMenu(false);
             });
 
           store.addContract('Staking', connect.getContract('Staking'));
@@ -297,10 +300,16 @@ const Header: React.FC = observer(() => {
                 size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
+                  setMobileMenuOpen(false);
+                  setWalletsMenuOpen(true);
+                  toggleWalletMenu(true);
                 }}
               >
                 <img src={UserImg} className="header__account-logo" alt="account" />
-                {store.account.address}
+                {`${store.account.address.substring(0, 4)}...${store.account.address.slice(
+                  store.account.address.length - 4,
+                  store.account.address.length,
+                )}`}
                 <img src={ArrowDownWhiteImg} className="header__account-arrow" alt="account" />
               </Button>
             ) : (

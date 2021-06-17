@@ -3,6 +3,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 import BigNumber from 'bignumber.js/bignumber';
+import i18n from '../../utils/i18n';
 
 import { contracts } from '../../config';
 import { AppStore } from '../../store';
@@ -252,7 +253,7 @@ export class ContractService {
   }
 
   public startStake(amount: string, lAmount: string): Promise<any> {
-    notify('Please wait, staking is in progress.', 'info');
+    notify(i18n.t('notifications.staking.wait'), 'info');
 
     return new Promise((resolve, reject) => {
       const promises = [this.getAllowance(amount), this.getAllowanceLocked(lAmount)];
@@ -281,7 +282,7 @@ export class ContractService {
   }
 
   public async withdraw(): Promise<any> {
-    notify('Please wait, withdraw is in progress.', 'info');
+    notify(i18n.t('notifications.withdraw.wait'), 'info');
 
     return this.staking
       .stakeEnd()
@@ -295,7 +296,7 @@ export class ContractService {
   }
 
   public async withdrawPartially(lAmount: string, amount: string): Promise<any> {
-    notify('Please wait, withdraw is in progress.', 'info');
+    notify(i18n.t('notifications.withdraw.wait'), 'info');
 
     return this.staking
       .stakeEndPartially(lAmount, amount)
@@ -323,7 +324,7 @@ export class ContractService {
   }
 
   public async claimAllReward(): Promise<any> {
-    notify('Please wait, claim all is in progress.', 'info');
+    notify(i18n.t('notifications.minting.wait'), 'info');
 
     return this.staking
       .withdrawRewardAll()
@@ -337,7 +338,7 @@ export class ContractService {
   }
 
   public async claimReward(amount: string): Promise<any> {
-    notify('Please wait, claim is in progress.', 'info');
+    notify(i18n.t('notifications.minting.wait'), 'info');
 
     return this.staking
       .withdrawRewardPartially(amount)
