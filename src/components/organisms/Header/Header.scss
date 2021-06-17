@@ -243,4 +243,141 @@
       }
     }
   }
+
+  &-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .language {
+    &-wrap {
+      position: relative;
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @include b(1025) {
+        position: absolute;
+        right: 10px;
+        top: 12px;
+      }
+    }
+
+    &-select {
+      position: absolute;
+      top: -20px;
+      z-index: 2;
+
+      @include b(1025) {
+        top: 0px;
+      }
+
+      &-list {
+        display: block;
+        list-style-type: none;
+        padding: 5px;
+        margin: 0;
+        border-radius: 20px;
+        border: none;
+        position: relative;
+        background-color: #6ddac0;
+        color: white;
+
+        &:after {
+          content: '';
+          display: block;
+          width: 8px;
+          height: 8px;
+          border-width: 2px 2px 0 0;
+          border-style: solid;
+          border-color: white;
+          transform: rotate(135deg);
+          position: absolute;
+          top: 14px;
+          right: 15px;
+          transition: 0.2s ease;
+          cursor: pointer;
+        }
+
+        // &:not(.opened) {
+        //   &:hover {
+        //     background-color: #e3e9ee;
+        //   }
+        // }
+
+        li {
+          display: none;
+          padding: 5px 10px 5px 10px;
+          margin: 0;
+          text-align: right;
+          line-height: 20px;
+          font-size: 16px;
+          font-weight: normal;
+          color: white;
+
+          @include b(1000) {
+            font-size: 14px;
+          }
+
+          &:hover {
+            color: #40a9ff;
+            transition: 0.4s ease;
+          }
+
+          span {
+            cursor: pointer;
+          }
+
+          // &:after {
+          //   content: '';
+          //   display: block;
+          //   clear: both;
+          // }
+
+          &.active {
+            color: white;
+            padding-right: 30px;
+            display: block;
+          }
+        }
+
+        &.opened {
+          border: 1px solid #6ddac0;
+          background-color: #fff;
+
+          &:after {
+            transform: rotate(-45deg);
+            top: 16px;
+            border-color: #6ddac0;
+          }
+
+          li {
+            display: block;
+            transition: 0.4s ease;
+            color: #6ddac0;
+
+            &.active {
+              color: #fff;
+
+              &:hover {
+                color: #fff !important;
+              }
+            }
+
+            &:hover {
+              color: #40a9ff;
+              transition: 0.4s ease;
+              cursor: pointer;
+            }
+
+            + li {
+              // border-top: 1px solid #ddd;
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+  }
 }

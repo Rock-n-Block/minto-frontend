@@ -79,10 +79,14 @@ const HomePreview: React.FC = () => {
           </Button>
         </div>
         <div className="home__preview-info box-f box-f-ai-c">
-          <Info content="$42" topText="Token Price" className="home__preview-info-item" />
+          <Info
+            content="$42"
+            topText={t('page.home.tokenPrice')}
+            className="home__preview-info-item"
+          />
           <Info
             content={info.totalSupply}
-            topText="Total Supply"
+            topText={t('page.home.totalSupply')}
             bottomText="BTCMT"
             className="home__preview-info-item"
           />

@@ -70,14 +70,14 @@
     "withdraw": {
       "inputError": "Please, input value in staking fields (both or one).",
       "warning": "Attention! You send: {wdLocked} (Locked) and {wdUnlocked} (Unlocked).",
-      "wait": "Please wait, staking is in progress.",
+      "wait": "Please wait, withdraw is in progress.",
       "complete": "Your Withdraw {token} {wdLocked} (Locked) and {wdUnlocked} (Unlocked) complete!",
       "link": "VIEW TX"
     },
     "claim": {
       "inputError": "Please, input value in claim field.",
       "warning": "Attention! You will get: {mnValue} {token}.",
-      "wait": "Please wait, staking is in progress.",
+      "wait": "Please wait, claim is in progress.",
       "complete": "Your Claim {value} {token} complete!",
       "link": "VIEW TX"
     }
@@ -107,7 +107,7 @@
         },
         "launch": {
           "text": "We’re launching soon, subscribe to be the first to know!",
-          "input": "Eenter your email",
+          "input": "Enter your email",
           "button": "Subscribe"
         },
         "partners": {
@@ -125,7 +125,7 @@
             "center": "Subscribe to the news by email",
             "right": "Talk to the team and like-minded people"
           },
-          "input": "Eenter your email",
+          "input": "Enter your email",
           "button": "Subscribe"
         }
       }
@@ -162,7 +162,7 @@
         "left": "your mining power equivalent",
         "right": "available to claim"
       },
-      "textButtton": "amount",
+      "textButton": "amount",
       "button": "available",
       "button2": "claim",
       "history": {

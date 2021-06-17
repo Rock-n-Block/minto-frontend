@@ -25,6 +25,19 @@ const connect = new WalletConnect();
 const Header: React.FC = observer(() => {
   const [isWalletsMenuOpen, setWalletsMenuOpen] = React.useState<boolean>(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = React.useState<boolean>(false);
+  const [langToggle, setLangToggle] = React.useState<boolean>(false);
+  const [langList, setLangList] = React.useState([
+    {
+      lng: 'en',
+      title: 'Eng',
+      active: true,
+    },
+    {
+      lng: 'ch',
+      title: 'Ch',
+      active: false,
+    },
+  ]);
 
   const store = useStore();
   const { menu, toggleWalletMenu } = store;
@@ -33,6 +46,23 @@ const Header: React.FC = observer(() => {
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
+
+    const langListCopy = langList;
+
+    langListCopy.map((lang) => {
+      if (lang.lng === language) {
+        lang.active = true;
+      } else {
+        lang.active = false;
+      }
+      return lang;
+    });
+
+    langListCopy.sort((a, b) => {
+      return b.active ? 1 : -1;
+    });
+
+    setLangList(langListCopy);
   };
 
   const handleHeaderClick = (): void => {
@@ -41,6 +71,10 @@ const Header: React.FC = observer(() => {
       setWalletsMenuOpen(false);
       toggleWalletMenu(false);
     }
+  };
+
+  const handleToggleLanguage = (): void => {
+    setLangToggle(!langToggle);
   };
 
   const handleLogOutClick = (): void => {
@@ -129,6 +163,8 @@ const Header: React.FC = observer(() => {
           </div>
         )}
 
+        {/* Mobile */}
+
         <div className="header__content box-f box-f-ai-c box-f-jc-sb hidden-desktop">
           <div className="header__wrapper">
             {!isMobileMenuOpen && !isWalletsMenuOpen && !menu.walletsOpen ? (
@@ -170,6 +206,34 @@ const Header: React.FC = observer(() => {
             <Link to="/" className="header__logo">
               <img src={LogoImg} alt="" />
             </Link>
+
+            {/* Mobile: Translation Buttons */}
+
+            <div className="language-wrap">
+              <div className="language-select">
+                <ul
+                  role="presentation"
+                  className={cn('language-select-list', {
+                    opened: langToggle,
+                  })}
+                  onKeyDown={() => handleToggleLanguage()}
+                  onClick={() => handleToggleLanguage()}
+                >
+                  {langList.map((item) => (
+                    <li
+                      role="presentation"
+                      onClick={() => changeLanguage(item.lng)}
+                      onKeyDown={() => changeLanguage(item.lng)}
+                      className={cn({
+                        active: item.active,
+                      })}
+                    >
+                      <span>{item.title}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
           {!store.account.address ? (
             <div
@@ -280,6 +344,9 @@ const Header: React.FC = observer(() => {
             </div>
           </div>
         </div>
+
+        {/* Desktop */}
+
         <div className="header__content box-f box-f-ai-c box-f-jc-sb hidden-mobile">
           <div className="header__wrapper box-f box-f-ai-c">
             <Link to="/" className="header__logo">
@@ -309,62 +376,81 @@ const Header: React.FC = observer(() => {
             </div>
           </div>
 
-          {/* Desctop: Translation Buttons */}
-
-          <div>
-            <button type="button" onClick={() => changeLanguage('en')}>
-              EN
-            </button>
-            <button type="button" onClick={() => changeLanguage('ch')}>
-              CH
-            </button>
-          </div>
-
-          {isWalletsMenuOpen || menu.walletsOpen ? (
-            <div
-              className="header__wallets-close box-f-c"
-              onClick={() => {
-                setWalletsMenuOpen(false);
-                toggleWalletMenu(false);
-              }}
-              onKeyDown={() => {
-                setWalletsMenuOpen(false);
-                toggleWalletMenu(false);
-              }}
-              role="button"
-              tabIndex={0}
-            >
-              <img src={CrossImg} alt="close" />
-            </div>
-          ) : store.account.address ? (
-            <Button
-              className="header__wallets-open"
-              size="sm"
-              onClick={() => {
-                setWalletsMenuOpen(true);
-              }}
-            >
-              <img src={UserImg} className="header__account-logo" alt="account" />
-              <div className="text-upper text-smd">
-                {`${store.account.address.substring(0, 4)}...${store.account.address.slice(
-                  store.account.address.length - 4,
-                  store.account.address.length,
-                )}`}
+          <div className="header-right">
+            {isWalletsMenuOpen || menu.walletsOpen ? (
+              <div
+                className="header__wallets-close box-f-c"
+                onClick={() => {
+                  setWalletsMenuOpen(false);
+                  toggleWalletMenu(false);
+                }}
+                onKeyDown={() => {
+                  setWalletsMenuOpen(false);
+                  toggleWalletMenu(false);
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                <img src={CrossImg} alt="close" />
               </div>
-              <img src={ArrowDownWhiteImg} className="header__account-arrow" alt="account" />
-            </Button>
-          ) : (
-            <Button
-              className="header__wallets-open"
-              size="sm"
-              onClick={() => {
-                setWalletsMenuOpen(true);
-                toggleWalletMenu(true);
-              }}
-            >
-              <div className="text-upper text-smd">{t('header.menu.connectWallet')}</div>
-            </Button>
-          )}
+            ) : store.account.address ? (
+              <Button
+                className="header__wallets-open"
+                size="sm"
+                onClick={() => {
+                  setWalletsMenuOpen(true);
+                }}
+              >
+                <img src={UserImg} className="header__account-logo" alt="account" />
+                <div className="text-upper text-smd">
+                  {`${store.account.address.substring(0, 4)}...${store.account.address.slice(
+                    store.account.address.length - 4,
+                    store.account.address.length,
+                  )}`}
+                </div>
+                <img src={ArrowDownWhiteImg} className="header__account-arrow" alt="account" />
+              </Button>
+            ) : (
+              <Button
+                className="header__wallets-open"
+                size="sm"
+                onClick={() => {
+                  setWalletsMenuOpen(true);
+                  toggleWalletMenu(true);
+                }}
+              >
+                <div className="text-upper text-smd">{t('header.menu.connectWallet')}</div>
+              </Button>
+            )}
+
+            {/* Desktop: Translation Buttons */}
+
+            <div className="language-wrap">
+              <div className="language-select">
+                <ul
+                  role="presentation"
+                  className={cn('language-select-list', {
+                    opened: langToggle,
+                  })}
+                  onKeyDown={() => handleToggleLanguage()}
+                  onClick={() => handleToggleLanguage()}
+                >
+                  {langList.map((item) => (
+                    <li
+                      role="presentation"
+                      onClick={() => changeLanguage(item.lng)}
+                      onKeyDown={() => changeLanguage(item.lng)}
+                      className={cn({
+                        active: item.active,
+                      })}
+                    >
+                      <span>{item.title}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>

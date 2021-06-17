@@ -1,174 +1,174 @@
 {
   "header": {
     "menu": {
-      "main": "Main",
-      "staking": "Staking",
-      "mining": "Mining",
-      "aboutUs": "About us",
-      "connectWallet": "Connect wallet",
-      "logout": "LogOut"
+      "main": "主页",
+      "staking": "抵押",
+      "mining": "挖矿",
+      "aboutUs": "关于Minto",
+      "connectWallet": "连接钱包",
+      "logout": "登出"
     }
   },
   "footer": {
     "menu": {
-      "about": "About",
-      "staking": "Stake BTCMT",
-      "contacts": "Contacts"
+      "about": "关于",
+      "staking": "抵押BTCMT",
+      "contacts": "联系方式"
     },
-    "copyright": "© 2021 Minto. All rights reserved"
+    "copyright": "© 2021 Minto. 版权所有"
   },
   "info": {
-    "connectWallet": "Please Connect Wallet to see Information."
+    "connectWallet": "請連接錢包以查看信息。"
   },
   "button": {
-    "processing": "Processing..."
+    "processing": "加工..."
   },
   "component": {
     "aboutUs": {
-      "title": "About",
-      "text": "Simply put - mining is expensive. Keeping it profitable is another part of the story. Minto aims to lower both the risks and the entry threshold by tokenizing mining power in the form of the BTCMT token.",
-      "text2": "Receive transparent mining rewards as if you had an ASIC-setup or make profits by buying and selling any amount of mining power without dealing with the problems of traditional mining.",
-      "text3": "Bitcoin mining has never been easier. Learn more about the future of the mining industry",
+      "title": "关于Minto",
+      "text": "简而言之 - 挖矿很昂贵。 保持盈利就不用说了。 Minto 旨在通过以 BTCMT 代币的形式对挖矿能力进行代币化来降低风险和入门门槛。",
+      "text2": "获得透明的挖矿奖励，就像您拥有 ASIC 设置一样，或者通过买卖任意数量的挖矿算力赚取利润，而无需处理传统挖矿的问题。",
+      "text3": "比特币挖矿从未如此简单。 了解有关挖矿行业未来的更多信息",
       "buttons": {
-        "whitepaper": "whitepaper",
-        "pressRelease": "press release",
-        "presentation": "presentation"
+        "whitepaper": "白皮书",
+        "pressRelease": "新闻稿",
+        "presentation": "PPT"
       }
     }
   },
   "notifications": {
     "wallet": {
-      "connected": "Account connected",
+      "connected": "帐户已连接",
       "error": {
-        "chain": "Chain error. Please choose heco-testnet network in your provider."
+        "chain": "链条错误。 请选择您的供应商Heco测试环境。"
       }
     },
     "success": {
-      "subscribe": "Thanks for subscribing!"
+      "subscribe": "感謝訂閱！"
     },
     "error": {
-      "text": "Something went wrong!",
-      "tryAgain": "Please try again later."
+      "text": "出问题了！",
+      "tryAgain": "請稍後再試。"
     },
     "metaMask": {
       "error": {
-        "4001": "Signature transaction denied.",
+        "4001": "签名交易被拒绝。",
         "4100": "Unauthorized. The requested method and/or account has not been authorized by the user.",
         "4200": "Unsupported Method. The Provider does not support the requested method.",
         "4900": "Disconnected. The Provider is disconnected from all chains.",
         "4901": "Chain Disconnected. The Provider is not connected to the requested chain.",
-        "0": "Probably you have problem with transaction, please check your latest transaction in wallet"
+        "0": "可能您的交易有问题，请在钱包中查看您最近的交易。"
       }
     },
     "staking": {
-      "inputError": "Please, input value in staking fields (both or one).",
-      "warning": "Attention! You send: {stLocked} (Locked) and {stUnlocked} (Unlocked).",
-      "wait": "Please wait, staking is in progress.",
-      "complete": "Your Staking {token} {stLocked} (Locked) and {stUnlocked} (Unlocked) complete!",
-      "link": "VIEW TX"
+      "inputError": "请在提款字段中输入值（两个或一个）。",
+      "warning": "请注意！ 您发送的：{stLocked}（锁定）和 {stUnlocked}（解锁）",
+      "wait": "请稍候，抵押正在进行中。",
+      "complete": "您的 {token} {stLocked}（锁定）和 {stUnlocked}（解锁）已完成！",
+      "link": "外部链接 查看TX"
     },
     "withdraw": {
-      "inputError": "Please, input value in staking fields (both or one).",
-      "warning": "Attention! You send: {wdLocked} (Locked) and {wdUnlocked} (Unlocked).",
-      "wait": "Please wait, staking is in progress.",
-      "complete": "Your Withdraw {token} {wdLocked} (Locked) and {wdUnlocked} (Unlocked) complete!",
-      "link": "VIEW TX"
+      "inputError": "请在提款字段中输入值（两个或一个）。",
+      "warning": "请注意！ 您发送的：{wdLocked} (Locked) 和 {wdUnlocked} (Unlocked).",
+      "wait": "请稍候，提现正在进行中。",
+      "complete": "您的提款 {token} {wdLocked}（锁定）和 {wdUnlocked}（解锁）完成！",
+      "link": "外部链接 查看TX"
     },
     "claim": {
-      "inputError": "Please, input value in claim field.",
-      "warning": "Attention! You will get: {mnValue} {token}.",
-      "wait": "Please wait, staking is in progress.",
-      "complete": "Your Claim {value} {token} complete!",
-      "link": "VIEW TX"
+      "inputError": "請在索賠字段中輸入值。",
+      "warning": "请注意！ 您将获得：{mnValue} {token}。",
+      "wait": "请稍候，索赔正在进行中。",
+      "complete": "您的索賠 {value} {token} 已完成！",
+      "link": "外部链接 查看TX"
     }
   },
   "page": {
     "home": {
-      "title": "Mine Bitcoin by staking BTCMT tokens",
-      "subtitle": "We've removed all the unnecessary steps and made mining easier than getting a BTC wallet",
+      "title": "通过抵押 BTCMT 代币挖比特币",
+      "subtitle": "我们去掉了所有不必要的步骤，使挖矿比获得 BTC 钱包更容易",
       "buttons": {
-        "stake": "stake",
-        "buy": "buy"
+        "stake": "抵押",
+        "buy": "购买"
       },
-      "tokenPrice": "token price",
-      "totalSupply": "total supply",
+      "tokenPrice": "代币价格",
+      "totalSupply": "总供应量",
       "component": {
         "datacenters": {
-          "title": "Our data centers",
-          "text": "We looked far and wide to find the perfect place to host our project; it had to be up to the highest international technological standards and it had to be capable of expanding as our project grew.",
-          "text2": "Our project is hosted in a gem we found in the Republic of Karelia. The 86,000 square foot, brand new data center is in an ideal location that has enabled us to cut operation costs down to a minimum, thanks to a stable 1Gbit internet connection, smooth logistics and the suitable climate in the region.",
-          "text3": "The facility and operation are in complete compliance with local and international regulations, and the site is maintained by a team of over 150 experienced technicians.",
+          "title": "我们的数据中心",
+          "text": "我们四处寻找合适的机构场所来托管我们的项目； 该地必须达到最高的国际技术标准，并且必须能够随着我们项目的发展而扩展。",
+          "text2": "我们的项目位于在卡累利阿共和国发现的理想地区中。 86,000 平方米的全新数据中心位于理想的位置。这使我们能够将运营成本降至最低 - 归功于稳定的 1Gbit 互联网连接、顺畅的物流和该地区适宜的气候。",
+          "text3": "设施和操作完全符合当地和国际法规，现场由 150 多名经验丰富的技术人员组成的团队维护。",
           "slide": {
-            "one": "The overall energy capacity is 64.5 MW and has been fitted with 3500 of the most advanced ASIC miners, with 50,000 THs of mining power allocatedto Minto. Those figures will increase as the project grows.",
-            "two": "The data center is powered by a private plant that provides it with cheap, green electricity.",
-            "three": "The facility's extra square footage opens up opportunities for further scaling at no additional cost.",
-            "four": "The overall computing capabilities of the facility can be used for scientific calculations, processing big data, rendering and artificial intelligence."
+            "one": "整体能源容量为 64.5 MW，已配备 3500 台最先进的 ASIC 矿机，50,000 THs 的挖矿功率分配给 Minto。 这些数字将随着项目的发展而增加",
+            "two": "该数据中心由一家私人工厂供电，该工厂为其提供廉价的绿色电力。",
+            "three": "该设施的额外平方英尺为进一步扩展提供了机会，无需额外费用",
+            "four": "该设施的整体计算能力可用于科学计算、处理大数据、渲染和人工智能。"
           }
         },
         "launch": {
-          "text": "We’re launching soon, subscribe to be the first to know!",
-          "input": "Eenter your email",
-          "button": "Subscribe"
+          "text": "我们即将推出，订阅关注 - 第一时间收到开启的通知！",
+          "input": "输入您的邮箱",
+          "button": "订阅"
         },
         "partners": {
-          "title": "Partners"
+          "title": "合作伙伴"
         },
         "roadmap": {
-          "title": "Roadmap"
+          "title": "路线图"
         },
         "news": {
-          "title": "News"
+          "title": "新闻"
         },
         "subscribe": {
           "text": {
-            "left": "Subscribe",
-            "center": "Subscribe to the news by email",
-            "right": "Talk to the team and like-minded people"
+            "left": "订阅",
+            "center": "输入恁的邮箱订阅新闻",
+            "right": "与团队中志同道合的人交流"
           },
-          "input": "Eenter your email",
-          "button": "Subscribe"
+          "input": "输入您的邮箱",
+          "button": "订阅"
         }
       }
     },
     "staking": {
-      "tokenPrice": "Token price",
-      "totalSupply": "Total supply",
-      "availableToStake": "Available to stake",
-      "totalStaked": "Total staked",
+      "tokenPrice": "代币价格",
+      "totalSupply": "总供应量",
+      "availableToStake": "可以抵押",
+      "totalStaked": "抵押总额",
       "component": {
         "staking": {
-          "title": "Stake your tokens",
-          "unlocked": "unlocked",
-          "locked": "locked",
-          "text": "you already staked",
-          "undefined": "undefined BTCMT",
-          "buttonText": "amount to stake ",
-          "button": "all available",
-          "button2": "stake"
+          "title": "抵押您的代币",
+          "unlocked": "解锁",
+          "locked": "锁定",
+          "text": "您已押",
+          "undefined": "未定义BTCMT",
+          "buttonText": "抵押金额",
+          "button": "全部可用",
+          "button2": "抵押"
         },
         "withdraw": {
-          "title": "Withdraw",
-          "locked": "locked amount to withdraw ",
-          "unlocked": "unlocked amount to withdraw ",
-          "text": "amount to withdraw ",
-          "button": "all available",
-          "button2": "Withdraw"
+          "title": "提现",
+          "locked": "提现锁定金额",
+          "unlocked": "提现解锁金额",
+          "text": "提现金额",
+          "button": "全部可用",
+          "button2": "提现"
         }
       }
     },
     "mining": {
-      "title": "Mining",
+      "title": "挖矿",
       "text": {
-        "left": "your mining power equivalent",
-        "right": "available to claim"
+        "left": "您的挖矿算力",
+        "right": "可索赔"
       },
-      "textButtton": "amount",
-      "button": "available",
-      "button2": "claim",
+      "textButton": "数量",
+      "button": "可用",
+      "button2": "宣稱",
       "history": {
-        "title": "History",
+        "title": "历史",
         "table": {
-          "col": ["Date", "HBTC reward"]
+          "col": ["日期", "HBTC奖励"]
         }
       }
     }
