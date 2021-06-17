@@ -9,8 +9,11 @@ export const config: IConfig = {
     url: is_production ? '/api' : 'https://dev-minto.rocknblock.io/api',
   },
   tx: {
-    link: is_production ? ' https://hecoinfo.com/tx' : ' https://testnet.hecoinfo.com/tx',
+    link: is_production ? 'https://hecoinfo.com/tx' : 'https://testnet.hecoinfo.com/tx',
   },
+  provider: is_production
+    ? 'https://http-mainnet.hecochain.com'
+    : 'https://http-testnet.hecochain.com',
   menu: {
     open: {
       openConnectModal: true,
@@ -18,8 +21,6 @@ export const config: IConfig = {
     onlyForAuth: true,
   },
   network: {
-    // name: 'rinkeby',
-    // chainID: 4,
     name: 'heco-testnet',
     chainID: 256,
     // name: 'heco',

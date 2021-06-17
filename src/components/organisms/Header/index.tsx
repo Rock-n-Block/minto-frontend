@@ -19,6 +19,7 @@ import { Button } from '../../atoms';
 
 import './Header.scss';
 import { useTranslation } from 'react-i18next';
+import nextId from 'react-id-generator';
 
 const connect = new WalletConnect();
 
@@ -222,6 +223,7 @@ const Header: React.FC = observer(() => {
                   {langList.map((item) => (
                     <li
                       role="presentation"
+                      key={nextId()}
                       onClick={() => changeLanguage(item.lng)}
                       onKeyDown={() => changeLanguage(item.lng)}
                       className={cn({
@@ -438,6 +440,7 @@ const Header: React.FC = observer(() => {
                   {langList.map((item) => (
                     <li
                       role="presentation"
+                      key={nextId()}
                       onClick={() => changeLanguage(item.lng)}
                       onKeyDown={() => changeLanguage(item.lng)}
                       className={cn({

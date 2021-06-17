@@ -27,6 +27,7 @@ export interface IConfig {
     url: string;
   };
   tx: { link: string };
+  provider: string;
   menu: {
     open: {
       openConnectModal: boolean;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { autorun } from 'mobx';
+import Web3 from 'web3';
 
 import { useStore } from '../../../../store';
 import { IData } from '../../../../types';
@@ -9,14 +9,48 @@ import { Button, Info } from '../../../atoms';
 
 import './HomePreview.scss';
 import { useTranslation } from 'react-i18next';
+import { contracts, config } from '../../../../config';
 
 const HomePreview: React.FC = () => {
   const store = useStore();
 
   const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IData);
   const [firstStart, setFirstStart] = React.useState(true);
+  const [gotWeb3Data, setGotWeb3Data] = React.useState(false);
 
   const { t } = useTranslation();
+
+  const getInfoFromWeb3 = async () => {
+    setGotWeb3Data(true);
+
+    const w3 = new Web3(config.provider);
+    const web3Contract = [] as any;
+
+    contracts.names.forEach((name: string) => {
+      const contractData = contracts.params[name.toUpperCase()][contracts.type];
+      const contract = new w3.eth.Contract(contractData.abi, contractData.address);
+      web3Contract[name] = contract;
+    });
+
+    const promises = [
+      web3Contract.Token.methods
+        .totalSupply()
+        .call()
+        .then((value: string) => {
+          clogData('totalSupply (totalSupply): ', value);
+          return {
+            key: 'totalSupply',
+            value: normalizedValue(value),
+          };
+        }),
+    ];
+
+    const uinfo = await Promise.all(promises).then((results): IData => {
+      return dataToObject(results, true, 'Main page normilized values');
+    });
+
+    setInfo(uinfo);
+  };
 
   const getInfo = async () => {
     setFirstStart(false);
@@ -51,14 +85,12 @@ const HomePreview: React.FC = () => {
     setInfo(uinfo);
   };
 
-  autorun(() => {
-    if (!store.account.address) return;
-    if (!firstStart) return;
-    getInfo();
-  });
-
   React.useEffect(() => {
-    if (!store.account.address) return;
+    if (!store.account.address) {
+      if (gotWeb3Data) return;
+      getInfoFromWeb3();
+      return;
+    }
     if (!firstStart) return;
     getInfo();
   });
