@@ -1,6 +1,7 @@
-import i18n from '../i18n';
 import { toast, ToastOptions } from 'react-toastify';
+
 import { ITemplateNotify } from '../../types';
+import i18n from '../i18n';
 
 export const errCode = (code: number): string => {
   const codes = [4001, 4100, 4200, 4900, 4901];

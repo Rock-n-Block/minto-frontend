@@ -3,12 +3,12 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
 import BigNumber from 'bignumber.js/bignumber';
-import i18n from '../../utils/i18n';
 
 import { contracts } from '../../config';
 import { AppStore } from '../../store';
 import { IData, IDataContract, IRoles } from '../../types';
 import { clog, clogData, clogGroup, dataToObject, normalizedValue, notify } from '../../utils';
+import i18n from '../../utils/i18n';
 
 export class ContractService {
   private store: any;

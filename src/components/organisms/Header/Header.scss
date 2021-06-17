@@ -194,7 +194,7 @@
 
     padding: 18px 18px 18px 34px;
 
-    background: white;
+    background: #fff;
     border: 1px solid rgba(109, 218, 192, 0.12);
     border-radius: 50px;
     box-shadow: 0 2px 30px rgba(109, 218, 192, 0.15);
@@ -252,52 +252,64 @@
   .language {
     &-wrap {
       position: relative;
-      width: 100px;
+
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+
+      width: 100px;
 
       @include b(1025) {
         position: absolute;
-        right: 10px;
         top: 12px;
+        right: 10px;
       }
     }
 
     &-select {
       position: absolute;
-      top: -20px;
       z-index: 2;
+      top: -20px;
 
       @include b(1025) {
-        top: 0px;
+        top: 0;
       }
 
       &-list {
-        display: block;
-        list-style-type: none;
-        padding: 5px;
-        margin: 0;
-        border-radius: 20px;
-        border: none;
         position: relative;
-        background-color: #6ddac0;
-        color: white;
 
-        &:after {
+        margin: 0;
+        padding: 5px;
+
+        display: block;
+
+        list-style-type: none;
+
+        color: #fff;
+        background-color: #6ddac0;
+        border: none;
+        border-radius: 20px;
+
+        &::after {
           content: '';
-          display: block;
-          width: 8px;
-          height: 8px;
-          border-width: 2px 2px 0 0;
-          border-style: solid;
-          border-color: white;
-          transform: rotate(135deg);
+
           position: absolute;
           top: 14px;
           right: 15px;
-          transition: 0.2s ease;
+
+          display: block;
+
+          width: 8px;
+          height: 8px;
+
           cursor: pointer;
+
+          border-width: 2px 2px 0 0;
+          border-style: solid;
+          border-color: #fff;
+
+          transition: 0.2s ease;
+          transform: rotate(135deg);
         }
 
         // &:not(.opened) {
@@ -305,16 +317,18 @@
         //     background-color: #e3e9ee;
         //   }
         // }
-
         li {
-          display: none;
-          padding: 5px 10px 5px 10px;
           margin: 0;
-          text-align: right;
-          line-height: 20px;
+          padding: 5px 10px 5px 10px;
+
+          display: none;
+
           font-size: 16px;
-          font-weight: normal;
-          color: white;
+          font-weight: 500;
+          line-height: 20px;
+          text-align: right;
+
+          color: #fff;
 
           @include b(1000) {
             font-size: 14px;
@@ -322,6 +336,7 @@
 
           &:hover {
             color: #40a9ff;
+
             transition: 0.4s ease;
           }
 
@@ -334,28 +349,33 @@
           //   display: block;
           //   clear: both;
           // }
-
           &.active {
-            color: white;
             padding-right: 30px;
+
             display: block;
+
+            color: #fff;
           }
         }
 
         &.opened {
-          border: 1px solid #6ddac0;
           background-color: #fff;
+          border: 1px solid #6ddac0;
 
-          &:after {
-            transform: rotate(-45deg);
+          &::after {
             top: 16px;
+
             border-color: #6ddac0;
+
+            transform: rotate(-45deg);
           }
 
           li {
             display: block;
-            transition: 0.4s ease;
+
             color: #6ddac0;
+
+            transition: 0.4s ease;
 
             &.active {
               color: #fff;
@@ -366,9 +386,11 @@
             }
 
             &:hover {
-              color: #40a9ff;
-              transition: 0.4s ease;
               cursor: pointer;
+
+              color: #40a9ff;
+
+              transition: 0.4s ease;
             }
 
             + li {

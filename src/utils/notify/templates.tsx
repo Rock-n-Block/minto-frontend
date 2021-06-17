@@ -1,4 +1,5 @@
 import { Trans } from 'react-i18next';
+
 import IconExternalLink from '../../assets/img/icons/external-link.svg';
 import { ICustomNotifyData } from '../../types';
 

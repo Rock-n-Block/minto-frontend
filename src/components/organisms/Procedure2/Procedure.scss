@@ -16,8 +16,9 @@
   }
 
   &__title {
-    text-align: center;
     margin-bottom: 40px;
+
+    text-align: center;
   }
 
   &__submit {
@@ -40,14 +41,15 @@
     //   flex-direction: column;
     //   align-items: flex-start !important;
     // }
-
     &-wrap {
-      display: grid;
-      grid-template-columns: minmax(150px, 300px) 1fr;
-      grid-gap: 20px;
       padding: 35px 0;
+
+      display: grid;
+
       border-top: 1px solid rgba($white-g, 0.2);
       border-bottom: 1px solid rgba($white-g, 0.2);
+      grid-template-columns: minmax(150px, 300px) 1fr;
+      grid-gap: 20px;
     }
 
     &-item {
@@ -56,9 +58,10 @@
       }
 
       &-title {
+        margin-bottom: 8px;
+
         display: flex;
         align-items: center;
-        margin-bottom: 8px;
       }
 
       img {
@@ -80,23 +83,28 @@
   }
 
   &__input {
-    text-align: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+
+    text-align: center;
 
     &-title {
       margin-bottom: 20px;
-      width: 100%;
-      align-items: center;
+
       justify-content: flex-end;
+      align-items: center;
+
+      width: 100%;
 
       span {
         margin-right: 15px;
+
         font-size: 14px;
         text-align: center;
         text-transform: uppercase;
+
         cursor: default;
       }
     }
@@ -118,7 +126,7 @@
 }
 
 .procedure-two.dark {
-  color: white;
+  color: #fff;
   background-color: $black;
   background-image: url(../../../assets/img/procedure-b.svg);
   background-position: center center;

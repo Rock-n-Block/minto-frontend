@@ -5,10 +5,11 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import './utils/i18n';
+
 import ScollToTop from './utils/ScollToTop';
 import { App } from './App';
 import { AppStore, StoreProvider } from './store';
-import './utils/i18n';
 
 const store = new AppStore();
 

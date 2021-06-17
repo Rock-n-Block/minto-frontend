@@ -1,9 +1,9 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
-import i18n from '../../utils/i18n';
 import Web3 from 'web3';
 
 import { config, contracts } from '../../config';
 import { clogData, notify } from '../../utils';
+import i18n from '../../utils/i18n';
 
 export class WalletConnect {
   private connectWallet: any;

@@ -6,28 +6,34 @@
   &-notify {
     &-text {
       margin-bottom: 2px;
+
       display: inline-block;
     }
 
     &-link {
-      display: flex;
       padding: 7px 10px;
+
+      display: flex;
+
+      font-size: 13px;
+      text-transform: uppercase;
+
+      color: #fff;
       background-color: #6ddac1be;
       border-radius: 15px;
-      color: #fff;
+
       transition: 0.4s ease;
-      text-transform: uppercase;
-      font-size: 13px;
 
       img {
         margin-right: 5px;
       }
 
       &-wrap {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
         margin-top: 5px;
+
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
 
         .custom-notify-link {
           margin: 3px;

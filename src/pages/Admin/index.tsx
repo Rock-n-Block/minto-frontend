@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
 import { Button, Input } from '../../components/atoms';
@@ -17,7 +18,6 @@ import {
 } from '../../utils';
 
 import './Admin.scss';
-import { useTranslation } from 'react-i18next';
 
 const Admin: React.FC = () => {
   const store = useStore();

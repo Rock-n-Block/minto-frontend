@@ -90,7 +90,7 @@
     &-img {
       max-height: 500px;
 
-      border: 12px solid white;
+      border: 12px solid #fff;
       box-shadow: $green-sh;
       @include b('tablet') {
         margin: 0 auto;

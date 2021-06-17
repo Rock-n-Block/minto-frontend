@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { observer } from 'mobx-react-lite';
 
@@ -17,7 +18,6 @@ import {
 } from '../../utils';
 
 import './Mining.scss';
-import { useTranslation } from 'react-i18next';
 
 const Mining: React.FC = () => {
   const store = useStore();

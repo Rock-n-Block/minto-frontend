@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import nextId from 'react-id-generator';
 import { Link, NavLink } from 'react-router-dom';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -18,8 +20,6 @@ import { clogData } from '../../../utils';
 import { Button } from '../../atoms';
 
 import './Header.scss';
-import { useTranslation } from 'react-i18next';
-import nextId from 'react-id-generator';
 
 const connect = new WalletConnect();
 

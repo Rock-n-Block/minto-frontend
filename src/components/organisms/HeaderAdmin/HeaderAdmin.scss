@@ -74,6 +74,7 @@
     display: grid;
     grid-template-columns: 156px max-content;
     grid-gap: 30px;
+
     align-items: center;
 
     img {
@@ -81,6 +82,7 @@
     }
     @include b('tablet') {
       margin: 0 auto;
+
       width: 146px;
       grid-template-columns: max-content;
       grid-gap: 10px;
@@ -88,6 +90,7 @@
 
     span {
       font-size: 18px;
+
       color: #1a2121;
     }
   }
@@ -203,7 +206,7 @@
 
     padding: 18px 18px 18px 34px;
 
-    background: white;
+    background: #fff;
     border: 1px solid rgba(109, 218, 192, 0.12);
     border-radius: 50px;
     box-shadow: 0 2px 30px rgba(109, 218, 192, 0.15);
@@ -213,11 +216,13 @@
   }
 
   &__nav {
-    width: 100%;
     margin-left: 0;
+    padding-right: 20px;
+
     display: flex;
     justify-content: flex-end;
-    padding-right: 20px;
+
+    width: 100%;
 
     &-open {
       position: absolute;

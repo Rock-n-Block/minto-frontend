@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
 import IconLocked from '../../assets/img/icons/lock.svg';
@@ -11,7 +12,6 @@ import { IData } from '../../types';
 import { clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
 
 import './Staking.scss';
-import { useTranslation } from 'react-i18next';
 
 const Staking: React.FC = () => {
   const store = useStore();

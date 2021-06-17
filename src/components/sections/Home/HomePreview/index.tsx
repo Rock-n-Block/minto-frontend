@@ -1,15 +1,15 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import Web3 from 'web3';
 
+import { config, contracts } from '../../../../config';
 import { useStore } from '../../../../store';
 import { IData } from '../../../../types';
 import { clogData, dataToObject, normalizedValue } from '../../../../utils';
 import { Button, Info } from '../../../atoms';
 
 import './HomePreview.scss';
-import { useTranslation } from 'react-i18next';
-import { contracts, config } from '../../../../config';
 
 const HomePreview: React.FC = () => {
   const store = useStore();
