@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Github from '../../../assets/img/icons/github.svg';
-import Medium from '../../../assets/img/icons/medium.svg';
+import Facebook from '../../../assets/img/icons/facebook.svg';
 import Telegram from '../../../assets/img/icons/telegram.svg';
 import Twitter from '../../../assets/img/icons/twitter.svg';
 import { API, clogData, notify } from '../../../utils';
@@ -52,12 +51,15 @@ const Links: React.FC = () => {
             >
               <img src={Twitter} alt="Twitter" />
             </a>
-            <a href="/#" target="_blank" className="link__subscribe__network circle box-f-c">
-              <img src={Medium} alt="Medium" />
+            <a
+              href="https://www.facebook.com/btcmtofficial"
+              rel="noreferrer"
+              target="_blank"
+              className="link__subscribe__network circle box-f-c"
+            >
+              <img src={Facebook} alt="Facebook" />
             </a>
-            <a href="/#" target="_blank" className="link__subscribe__network circle box-f-c">
-              <img src={Github} alt="Github" />
-            </a>
+            <span className="link__subscribe__network no-border circle box-f-c"> </span>
           </div>
         </div>
         <form

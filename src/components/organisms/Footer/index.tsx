@@ -1,10 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 import Logo from '../../../assets/img/icons/logo.svg';
-import Github from '../../../assets/img/sections/footer/github.svg';
-import Medium from '../../../assets/img/sections/footer/medium.svg';
+import Facebook from '../../../assets/img/icons/facebook-white.svg';
 import Telegram from '../../../assets/img/sections/footer/telegram.svg';
 import Twitter from '../../../assets/img/sections/footer/twitter.svg';
 
@@ -16,25 +14,19 @@ const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="row">
-        <Link to="/#">
+        <span>
           <img src={Logo} alt="logo" />
-        </Link>
+        </span>
         <nav className="footer__navigation-container">
           <ul className="footer__navigation">
             <li className="footer__navigation-item">
-              <Link to="/about" className="text-black text-smd text-liga-off">
-                {t('footer.menu.about')}
-              </Link>
+              <span className="text-black text-smd text-liga-off">{t('footer.menu.about')}</span>
             </li>
             <li className="footer__navigation-item">
-              <Link to="/staking" className="text-black text-smd text-liga-off">
-                {t('footer.menu.staking')}
-              </Link>
+              <span className="text-black text-smd text-liga-off">{t('footer.menu.staking')}</span>
             </li>
             <li className="footer__navigation-item">
-              <Link to="/about#contacts" className="text-black text-smd text-liga-off">
-                {t('footer.menu.contacts')}
-              </Link>
+              <span className="text-black text-smd text-liga-off">{t('footer.menu.contacts')}</span>
             </li>
           </ul>
         </nav>
@@ -52,8 +44,13 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li className="footer__socials-item">
-              <a href="/#" target="_blank" className="footer__social circle">
-                <img src={Medium} alt="medium" />
+              <a
+                href="https://www.facebook.com/btcmtofficial"
+                target="_blank"
+                className="footer__social circle"
+                rel="noreferrer"
+              >
+                <img src={Facebook} alt="facebook" />
               </a>
             </li>
             <li className="footer__socials-item">
@@ -64,11 +61,6 @@ const Footer: React.FC = () => {
                 rel="noreferrer"
               >
                 <img src={Telegram} alt="telegram" />
-              </a>
-            </li>
-            <li className="footer__socials-item">
-              <a href="/#" target="_blank" className="footer__social circle">
-                <img src={Github} alt="github" />
               </a>
             </li>
           </ul>

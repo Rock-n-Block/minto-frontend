@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { About, Subscribe } from '../../components/organisms';
+import { About } from '../../components/organisms';
 import {
   HomeDataCentres,
-  HomeNews,
-  HomePartners,
+  // HomeNews,
+  // HomePartners,
   HomePreview,
-  HomeRoadmap,
+  // HomeRoadmap,
 } from '../../components/sections';
 
 import 'swiper/swiper.scss';
@@ -17,10 +17,10 @@ const Home: React.FC = () => {
       <HomePreview />
       <About />
       <HomeDataCentres />
-      <Subscribe />
-      <HomePartners />
-      <HomeRoadmap />
-      <HomeNews />
+      {/* <Subscribe /> */}
+      {/* <HomePartners /> */}
+      {/* <HomeRoadmap /> */}
+      {/* <HomeNews /> */}
     </main>
   );
 };

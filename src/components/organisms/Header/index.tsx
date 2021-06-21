@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import nextId from 'react-id-generator';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 
@@ -313,45 +313,24 @@ const Header: React.FC = observer(() => {
                 <img src={ArrowDownWhiteImg} className="header__account-arrow" alt="account" />
               </Button>
             ) : (
-              <Button
-                className="header__menu-btn"
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMobileMenuOpen(false);
-                  setWalletsMenuOpen(true);
-                  toggleWalletMenu(true);
-                }}
-              >
+              <Button className="header__menu-btn" size="sm">
                 {t('header.menu.connectWallet')}
               </Button>
             )}
 
             <div className="header__menu-nav">
-              <NavLink exact to="/" className="header__menu-nav-item text-bold text-slg text-black">
+              <span className="header__menu-nav-item text-bold text-slg text-black">
                 {t('header.menu.main')}
-              </NavLink>
-              <NavLink
-                exact
-                to="/staking"
-                className="header__menu-nav-item text-bold text-slg text-black"
-              >
+              </span>
+              <span className="header__menu-nav-item text-bold text-slg text-black">
                 {t('header.menu.staking')}
-              </NavLink>
-              <NavLink
-                exact
-                to="/mining"
-                className="header__menu-nav-item text-bold text-slg text-black"
-              >
+              </span>
+              <span className="header__menu-nav-item text-bold text-slg text-black">
                 {t('header.menu.mining')}
-              </NavLink>
-              <NavLink
-                exact
-                to="/about"
-                className="header__menu-nav-item text-bold text-slg text-black"
-              >
+              </span>
+              <span className="header__menu-nav-item text-bold text-slg text-black">
                 {t('header.menu.aboutUs')}
-              </NavLink>
+              </span>
             </div>
           </div>
         </div>
@@ -364,26 +343,22 @@ const Header: React.FC = observer(() => {
               <img src={LogoImg} alt="" />
             </Link>
             <div className="header__nav box-f-ai-c">
-              <NavLink exact to="/" className="header__nav-item text-bold text-md text-black">
+              <span className="header__nav-item text-bold text-md text-black">
                 {t('header.menu.main')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
-              </NavLink>
-              <NavLink
-                exact
-                to="/staking"
-                className="header__nav-item text-bold text-md text-black"
-              >
+              </span>
+              <span className="header__nav-item text-bold text-md text-black">
                 {t('header.menu.staking')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
-              </NavLink>
-              <NavLink exact to="/mining" className="header__nav-item text-bold text-md text-black">
+              </span>
+              <span className="header__nav-item text-bold text-md text-black">
                 {t('header.menu.mining')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
-              </NavLink>
-              <NavLink exact to="/about" className="header__nav-item text-bold text-md text-black">
+              </span>
+              <span className="header__nav-item text-bold text-md text-black">
                 {t('header.menu.aboutUs')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
-              </NavLink>
+              </span>
             </div>
           </div>
 
@@ -422,14 +397,7 @@ const Header: React.FC = observer(() => {
                 <img src={ArrowDownWhiteImg} className="header__account-arrow" alt="account" />
               </Button>
             ) : (
-              <Button
-                className="header__wallets-open"
-                size="sm"
-                onClick={() => {
-                  setWalletsMenuOpen(true);
-                  toggleWalletMenu(true);
-                }}
-              >
+              <Button className="header__wallets-open" size="sm">
                 <div className="text-upper text-smd">{t('header.menu.connectWallet')}</div>
               </Button>
             )}

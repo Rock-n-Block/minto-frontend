@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import IconDoc from '../../../assets/img/icons/doc-detail.svg';
-import IconNewspaper from '../../../assets/img/icons/newspaper-folding.svg';
+// import IconNewspaper from '../../../assets/img/icons/newspaper-folding.svg';
 import IconPowerpoint from '../../../assets/img/icons/powerpoint.svg';
 import { Button } from '../../atoms';
 
@@ -18,14 +18,14 @@ const About: React.FC = () => {
           <h2 className="about__title h2 text-white text-bold">{t('component.aboutUs.title')}</h2>
           <p className="about__description text-lg text-white">{t('component.aboutUs.text')}</p>
           <a href="/resources/Whitepaper.pdf" target="_blank">
-            <Button
+            {/* <Button
               size="lg"
               colorScheme="green"
               className="about__whitepaper-btn text-upper text-bold-e text-lmd"
               icon={IconNewspaper}
             >
               {t('component.aboutUs.buttons.whitepaper')}
-            </Button>
+            </Button> */}
           </a>
         </section>
         <section className="about__right">

@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { Footer, Header, Links } from './components/organisms';
-import { AboutPage, AmdinPage, HomePage, MiningPage, StakingPage } from './pages';
+import { HomePage } from './pages';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/index.scss';
@@ -27,10 +27,10 @@ export const App: React.FC = () => {
       {location.pathname !== '/admin' ? <Header /> : ''}
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/staking" component={StakingPage} />
-        <Route path="/about" component={AboutPage} />
-        <Route path="/mining" component={MiningPage} />
-        <Route path="/admin" component={AmdinPage} />
+        {/* <Route path="/staking" component={StakingPage} /> */}
+        {/* <Route path="/about" component={AboutPage} /> */}
+        {/* <Route path="/mining" component={MiningPage} /> */}
+        {/* <Route path="/admin" component={AmdinPage} /> */}
       </Switch>
       {location.pathname !== '/admin' ? (
         <div>
