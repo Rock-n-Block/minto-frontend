@@ -21,6 +21,16 @@
     width: 100%;
     z-index: 1;
 
+    @include b('tablet') {
+      position: relative;
+      flex-direction: row;
+      max-width: 100%;
+      margin-top: 50px;
+      justify-content: space-around;
+      right: 0;
+      bottom: 0;
+    }
+
     &-item {
       display: flex;
       flex-direction: column;
