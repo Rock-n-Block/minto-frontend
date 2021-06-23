@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import IconLocked from '../../assets/img/icons/lock.svg';
 import IconUnlock from '../../assets/img/icons/unlock.svg';
 import { Procedure2 } from '../../components/organisms';
-import { StakingInfo } from '../../components/sections';
+// import { StakingInfo } from '../../components/sections';
 import { config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
@@ -24,6 +24,11 @@ const Staking: React.FC = () => {
   const [wdLocked, setWdLocked] = React.useState(0);
   const [wdUnlocked, setWdUnlocked] = React.useState(0);
 
+  const [dailyReward, setDailyReward] = React.useState(0);
+  const [dailyShared, setDailyShared] = React.useState(0);
+
+  const [balanceOfStaking, setBalanceOfStaking] = React.useState(0);
+
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
@@ -32,8 +37,24 @@ const Staking: React.FC = () => {
   const getStakingInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
 
+    const balanceOfSum = await store.contractService.balanceOfSumStaking();
+    setBalanceOfStaking(balanceOfSum.value);
+
     setStakingInfo(await store.contractService.stakingInfo());
   }, [store]);
+
+  // Functions ------------------------------------------------
+
+  // TODO: add daity rewards
+  const updateDailyData = (locked: number, unlocked: number) => {
+    const amount = +locked + +unlocked;
+
+    const reward = amount === 0 ? 0 : 34 / amount;
+    const shares = (amount / (amount + balanceOfStaking)) * 100;
+
+    setDailyReward(Number.isNaN(reward) ? 0 : +reward.toFixed(4));
+    setDailyShared(Number.isNaN(shares) ? 0 : +shares.toFixed(4));
+  };
 
   // Change amounts ------------------------------------------------
 
@@ -41,12 +62,14 @@ const Staking: React.FC = () => {
     setStLocked(value);
     if (value < 0) setStLocked(0);
     if (value > +stakingInfo.availableLocked) setStLocked(+stakingInfo.availableLocked);
+    updateDailyData(value, stUnlocked);
   };
 
   const handleChangeStakingUnlockedAmount = (value: number) => {
     setStUnlocked(value);
     if (value < 0) setStUnlocked(0);
     if (value > +stakingInfo.availableUnlocked) setStUnlocked(+stakingInfo.availableUnlocked);
+    updateDailyData(stLocked, value);
   };
 
   const handleChangeWithdrawLockedAmount = (value: number) => {
@@ -221,7 +244,7 @@ const Staking: React.FC = () => {
 
   return (
     <div className="staking">
-      {store.account.address ? (
+      {/* {store.account.address ? (
         <StakingInfo info={stakingInfo} token="BTCMT" />
       ) : (
         <div className="no_login_data">
@@ -229,7 +252,9 @@ const Staking: React.FC = () => {
             {t('info.connectWallet')}
           </span>
         </div>
-      )}
+      )} */}
+
+      <div className="staking-spacer" />
 
       {store.account.address ? (
         <div>
@@ -286,6 +311,10 @@ const Staking: React.FC = () => {
             btnProcessed={stakingProgress}
             btnProcessedText={t('button.processing')}
             buttonClick={handleButtonStakingClick}
+            daily={{
+              dailyReward: `${dailyReward}`,
+              dailyShare: `${dailyShared}`,
+            }}
           />
           <Procedure2
             title={t('page.staking.component.withdraw.title')}

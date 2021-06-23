@@ -35,6 +35,10 @@ interface IProcedure {
   buttonClick: any;
   btnProcessed?: boolean;
   btnProcessedText?: string;
+  daily?: {
+    dailyReward: string;
+    dailyShare: string;
+  };
 }
 
 const Procedure2: React.FC<IProcedure> = ({
@@ -45,6 +49,7 @@ const Procedure2: React.FC<IProcedure> = ({
   buttonClick,
   btnProcessed = false,
   btnProcessedText = 'Please Wait...',
+  daily,
 }) => {
   return (
     <div className={cn('procedure-two', theme)}>
@@ -125,6 +130,25 @@ const Procedure2: React.FC<IProcedure> = ({
           </Button>
         )}
       </div>
+      {daily ? (
+        <div className="procedure-two-info">
+          <div className="procedure-two-info-item">
+            <span className="procedure-two-info-title">Estimated daily reward</span>
+            <div className="procedure-two-info-block">
+              <span className="procedure-two-info-block-text">{daily.dailyReward}</span>
+              <span className="procedure-two-info-block-subtext">HBTC</span>
+            </div>
+          </div>
+          <div className="procedure-two-info-item">
+            <span className="procedure-two-info-title">Estimated daily share</span>
+            <div className="procedure-two-info-block">
+              <span className="procedure-two-info-block-text">{daily.dailyShare}%</span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
