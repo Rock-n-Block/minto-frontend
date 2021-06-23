@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import Web3 from 'web3';
@@ -13,25 +13,32 @@ import './HomePreview.scss';
 
 const HomePreview: React.FC = () => {
   const store = useStore();
-
-  const [info, setInfo] = React.useState({ available: '-', totalSupply: '-' } as IData);
-  const [firstStart, setFirstStart] = React.useState(true);
-  const [gotWeb3Data, setGotWeb3Data] = React.useState(false);
-
   const { t } = useTranslation();
 
-  const getInfoFromWeb3 = async () => {
-    setGotWeb3Data(true);
+  const [info, setInfo] = React.useState({
+    available: '-',
+    totalSupply: '-',
+    totalHashrate: '-',
+    dailyRewards: '-',
+    alreadyStaked: '-',
+    allTimeMined: '-',
+  } as IData);
 
-    const w3 = new Web3(config.provider);
-    const web3Contract = [] as any;
+  const getInfo = useCallback(async () => {
+    const { address } = store.account;
 
-    contracts.names.forEach((name: string) => {
-      const contractData = contracts.params[name.toUpperCase()][contracts.type];
-      const contract = new w3.eth.Contract(contractData.abi, contractData.address);
-      web3Contract[name] = contract;
-    });
+    address ? (!store.is_contractService ? store.setContractService() : null) : null;
+    const web3Contract = address ? store.contracts : ([] as any);
 
+    if (!address) {
+      const w3 = new Web3(config.provider);
+      contracts.names.forEach((name: string) => {
+        const contractData = contracts.params[name.toUpperCase()][contracts.type];
+        web3Contract[name] = new w3.eth.Contract(contractData.abi, contractData.address);
+      });
+    }
+
+    // TODO: Add dailyRewards from backend
     const promises = [
       web3Contract.Token.methods
         .totalSupply()
@@ -43,6 +50,43 @@ const HomePreview: React.FC = () => {
             value: normalizedValue(value),
           };
         }),
+      new Promise((resolve) => {
+        clogData('totalHashrate (totalHashrate): ', 50_000);
+        resolve({
+          key: 'totalHashrate',
+          value: '50 000',
+        });
+      }),
+      web3Contract.Token.methods
+        .balanceOfSum(contracts.params.STAKING[contracts.type].address)
+        .call()
+        .then((value: string) => {
+          clogData('dailyRewards (dailyRewards): ', value);
+          return {
+            key: 'dailyRewards',
+            value: normalizedValue(value),
+          };
+        }),
+      web3Contract.Token.methods
+        .balanceOfSum(contracts.params.STAKING[contracts.type].address)
+        .call()
+        .then((value: string) => {
+          clogData('alreadyStaked (alreadyStaked): ', value);
+          return {
+            key: 'alreadyStaked',
+            value: normalizedValue(value),
+          };
+        }),
+      web3Contract.Staking.methods
+        .allTimeTotalMined()
+        .call()
+        .then((value: string) => {
+          clogData('allTimeMined (allTimeMined): ', value);
+          return {
+            key: 'allTimeMined',
+            value: normalizedValue(value),
+          };
+        }),
     ];
 
     const uinfo = await Promise.all(promises).then((results): IData => {
@@ -50,50 +94,15 @@ const HomePreview: React.FC = () => {
     });
 
     setInfo(uinfo);
-  };
+  }, [store]);
 
-  const getInfo = async () => {
-    setFirstStart(false);
-
-    const promises = [
-      store.contracts.Token.methods
-        .totalSupply()
-        .call()
-        .then((value: string) => {
-          clogData('totalSupply (totalSupply): ', value);
-          return {
-            key: 'totalSupply',
-            value: normalizedValue(value),
-          };
-        }),
-      store.contracts.Token.methods
-        .balanceOfSum(store.account.address)
-        .call()
-        .then((value: string) => {
-          clogData('balanceOfSum (availableToStake): ', value);
-          return {
-            key: 'availableToStake',
-            value: normalizedValue(value),
-          };
-        }),
-    ];
-
-    const uinfo = await Promise.all(promises).then((results): IData => {
-      return dataToObject(results, true, 'Main page normilized values');
-    });
-
-    setInfo(uinfo);
-  };
+  // On Run ------------------------------------------------
 
   React.useEffect(() => {
-    if (!store.account.address) {
-      if (gotWeb3Data) return;
-      getInfoFromWeb3();
-      return;
-    }
-    if (!firstStart) return;
     getInfo();
-  });
+  }, [getInfo, store.account.address, store]);
+
+  // Template ------------------------------------------------
 
   return (
     <div className="home__preview">
@@ -122,12 +131,32 @@ const HomePreview: React.FC = () => {
             bottomText="BTCMT"
             className="home__preview-info-item"
           />
-          {/* <Info
-            content={info.availableToStake}
-            topText="Total available"
+          <Info
+            content={info.totalHashrate}
+            topText="Total hashrate"
+            bottomText="TH/s"
+            className="home__preview-info-item"
+          />
+        </div>
+        <div className="home__preview-info box-f box-f-ai-c">
+          <Info
+            content={info.dailyRewards}
+            topText="Daily rewards"
+            bottomText="USD"
+            className="home__preview-info-item"
+          />
+          <Info
+            content={info.alreadyStaked}
+            topText="Already staked"
             bottomText="BTCMT"
             className="home__preview-info-item"
-          /> */}
+          />
+          <Info
+            content={info.allTimeMined}
+            topText="All time mined"
+            bottomText="HBTC"
+            className="home__preview-info-item"
+          />
         </div>
       </div>
     </div>
