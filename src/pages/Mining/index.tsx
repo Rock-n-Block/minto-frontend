@@ -1,21 +1,12 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactPaginate from 'react-paginate';
 import { observer } from 'mobx-react-lite';
 
-import { Procedure } from '../../components/organisms';
+import { HistoryTable, Procedure } from '../../components/organisms';
 import { config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData, IUserHistory } from '../../types';
-import {
-  API,
-  clogData,
-  customNotify,
-  deNormalizedValue,
-  errCode,
-  normalizedValue,
-  notify,
-} from '../../utils';
+import { API, clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
 
 import './Mining.scss';
 
@@ -24,14 +15,9 @@ const Mining: React.FC = () => {
 
   const [miningInfo, setMiningInfo] = React.useState({} as IData);
   const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
-  const [currentPage, setCurrentPage] = React.useState(0);
 
   const [mnValue, setMnValue] = React.useState(0);
   const [miningProgress, setMiningProgress] = React.useState(false);
-
-  const PER_PAGE = 10;
-  const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(tdata.history.length / PER_PAGE);
 
   const { t } = useTranslation();
 
@@ -170,12 +156,6 @@ const Mining: React.FC = () => {
       });
   };
 
-  // Functions ------------------------------------------------
-
-  const handlePageClick = ({ selected: selectedPage }: any) => {
-    setCurrentPage(selectedPage);
-  };
-
   // On Run ------------------------------------------------
 
   React.useEffect(() => {
@@ -216,55 +196,18 @@ const Mining: React.FC = () => {
             inputValue={mnValue}
           />
 
-          <div className="mining-table-wrap">
-            <div className="mining-table">
-              {/* <span className="mining-table-title">History</span> */}
-              <span className="mining-table-title">{t('page.mining.history.title')}</span>
-              <div className="mining-table-head mining-table-col">
-                <span className="mining-table-head-item">
-                  {t('page.mining.history.table.col.0')}
-                </span>
-                <span className="mining-table-head-item">
-                  {t('page.mining.history.table.col.1')}
-                </span>
-                {/* <span className="mining-table-head-item">Claim status</span> */}
-              </div>
-              <div className="mining-table-body">
-                {tdata.history.slice(offset, offset + PER_PAGE).map((item, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <div key={index} className="mining-table-body-item mining-table-col">
-                    <span className="mining-table-body-item-text">{item.date}</span>
-                    <span className="mining-table-body-item-text">
-                      {normalizedValue(item.value, 0)}
-                    </span>
-                    {/* <span className="mining-table-body-item-text">
-                      {item.status ? 'Yes' : 'No'}
-                    </span> */}
-                  </div>
-                ))}
-              </div>
-              <div className="mining-table-body">
-                <div className="mining-table-body-item mining-table-col mining-table-total">
-                  <span className="mining-table-body-item-text">Total</span>
-                  <span className="mining-table-body-item-text">{tdata.total}</span>
-                </div>
-              </div>
-              <ReactPaginate
-                previousLabel="<"
-                nextLabel=">"
-                pageCount={pageCount}
-                onPageChange={handlePageClick}
-                marginPagesDisplayed={1}
-                pageRangeDisplayed={2}
-                containerClassName="pagination"
-                pageLinkClassName="pagination-link"
-                previousLinkClassName="pagination-link-prev"
-                nextLinkClassName="pagination-link-next"
-                disabledClassName="pagination-link-disabled"
-                activeClassName="pagination-link-active"
-              />
-            </div>
-          </div>
+          <HistoryTable
+            title={t('page.mining.history.title')}
+            head={{
+              date: `${t('page.mining.history.table.col.0')}`,
+              revard: `${t('page.mining.history.table.col.1')}`,
+            }}
+            body={tdata.history}
+            total={{
+              title: 'Total',
+              value: `${0}`,
+            }}
+          />
         </div>
       ) : (
         <div className="no_login_data">
