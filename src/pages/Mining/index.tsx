@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { Procedure } from '../../components/organisms';
 import { config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
-import { IData, ITableData } from '../../types';
+import { IData, IUserHistory } from '../../types';
 import {
   API,
   clogData,
@@ -23,7 +23,7 @@ const Mining: React.FC = () => {
   const store = useStore();
 
   const [miningInfo, setMiningInfo] = React.useState({} as IData);
-  const [tdata, settData] = React.useState([] as ITableData[]);
+  const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
   const [currentPage, setCurrentPage] = React.useState(0);
 
   const [mnValue, setMnValue] = React.useState(0);
@@ -31,7 +31,7 @@ const Mining: React.FC = () => {
 
   const PER_PAGE = 10;
   const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(tdata.length / PER_PAGE);
+  const pageCount = Math.ceil(tdata.history.length / PER_PAGE);
 
   const { t } = useTranslation();
 
@@ -45,7 +45,7 @@ const Mining: React.FC = () => {
     })
       .then((res: any) => {
         clogData('User history: ', res);
-        settData(res.data.history);
+        settData(res.data);
       })
       .catch((error: any) => {
         if (error.response) {
@@ -230,7 +230,7 @@ const Mining: React.FC = () => {
                 {/* <span className="mining-table-head-item">Claim status</span> */}
               </div>
               <div className="mining-table-body">
-                {tdata.slice(offset, offset + PER_PAGE).map((item, index) => (
+                {tdata.history.slice(offset, offset + PER_PAGE).map((item, index) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <div key={index} className="mining-table-body-item mining-table-col">
                     <span className="mining-table-body-item-text">{item.date}</span>
@@ -242,6 +242,12 @@ const Mining: React.FC = () => {
                     </span> */}
                   </div>
                 ))}
+              </div>
+              <div className="mining-table-body">
+                <div className="mining-table-body-item mining-table-col mining-table-total">
+                  <span className="mining-table-body-item-text">Total</span>
+                  <span className="mining-table-body-item-text">{tdata.total}</span>
+                </div>
               </div>
               <ReactPaginate
                 previousLabel="<"

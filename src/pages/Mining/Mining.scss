@@ -20,6 +20,14 @@
 
     cursor: default;
 
+    &-total {
+      margin-top: 40px;
+      border-top: 3px solid #6ddac0;
+      border-bottom: 3px solid #6ddac0;
+      border-radius: 0 !important;
+      font-weight: 800;
+    }
+
     &-wrap {
       padding: 40px 0;
 

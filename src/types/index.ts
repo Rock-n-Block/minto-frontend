@@ -74,6 +74,10 @@ export interface IData {
   [index: string]: string | number;
 }
 
+export interface IUserHistory {
+  total: string;
+  history: ITableData[];
+}
 export interface ITableData {
   date: string;
   value: number;
