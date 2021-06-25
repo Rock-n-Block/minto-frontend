@@ -75,6 +75,8 @@ const Links: React.FC = () => {
           <div className="link__subscribe-email__e-mail input-container">
             <Input
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               required
               placeholder={t('page.home.component.subscribe.input')}
               shadow

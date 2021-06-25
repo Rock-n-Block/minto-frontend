@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Logo from '../../../assets/img/icons/logo.svg';
 import Facebook from '../../../assets/img/icons/facebook-white.svg';
+import Logo from '../../../assets/img/icons/logo.svg';
 import Telegram from '../../../assets/img/sections/footer/telegram.svg';
 import Twitter from '../../../assets/img/sections/footer/twitter.svg';
 

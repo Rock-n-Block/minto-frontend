@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-// import Web3 from 'web3';
 
+// import Web3 from 'web3';
 // import { config, contracts } from '../../../../config';
 // import { useStore } from '../../../../store';
 // import { IData } from '../../../../types';
