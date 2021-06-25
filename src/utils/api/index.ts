@@ -7,4 +7,17 @@ export const API = axios.create({
   responseType: 'json',
 });
 
+export async function getDailyRewards(): Promise<number> {
+  const value = await API.get('/total/history/today/')
+    .then((res: any) => {
+      console.log('history: ', res.data);
+      return res.data.value;
+    })
+    .catch((error: any) => {
+      console.log('history error: ', error);
+    });
+
+  return value;
+}
+
 export default API;

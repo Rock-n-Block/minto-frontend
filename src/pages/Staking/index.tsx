@@ -9,7 +9,14 @@ import { Procedure2 } from '../../components/organisms';
 import { config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
-import { clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
+import {
+  clogData,
+  customNotify,
+  deNormalizedValue,
+  errCode,
+  getDailyRewards,
+  notify,
+} from '../../utils';
 
 import './Staking.scss';
 
@@ -28,6 +35,7 @@ const Staking: React.FC = () => {
   const [dailyShared, setDailyShared] = React.useState(0);
 
   const [balanceOfStaking, setBalanceOfStaking] = React.useState(0);
+  // const [dailyRewards, setDailyRewards] = React.useState(0);
 
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
@@ -36,6 +44,10 @@ const Staking: React.FC = () => {
 
   const getStakingInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
+
+    await getDailyRewards()
+      .then((v: number) => setDailyReward(v))
+      .catch((err: any) => clogData('daily reward error:', err));
 
     const balanceOfSum = await store.contractService.balanceOfSumStaking();
     setBalanceOfStaking(balanceOfSum.value);
@@ -49,7 +61,7 @@ const Staking: React.FC = () => {
   const updateDailyData = (locked: number, unlocked: number) => {
     const amount = +locked + +unlocked;
 
-    const reward = amount === 0 ? 0 : 34 / amount;
+    const reward = amount === 0 ? 0 : dailyReward / amount;
     const shares = (amount / (amount + balanceOfStaking)) * 100;
 
     setDailyReward(Number.isNaN(reward) ? 0 : +reward.toFixed(4));

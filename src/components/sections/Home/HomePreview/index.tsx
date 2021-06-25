@@ -6,7 +6,7 @@ import Web3 from 'web3';
 import { config, contracts } from '../../../../config';
 import { useStore } from '../../../../store';
 import { IData } from '../../../../types';
-import { clogData, dataToObject, normalizedValue } from '../../../../utils';
+import { clogData, dataToObject, getDailyRewards, normalizedValue } from '../../../../utils';
 import { Button, Info } from '../../../atoms';
 
 import './HomePreview.scss';
@@ -57,16 +57,15 @@ const HomePreview: React.FC = () => {
           value: '50 000',
         });
       }),
-      web3Contract.Token.methods
-        .balanceOfSum(contracts.params.STAKING[contracts.type].address)
-        .call()
-        .then((value: string) => {
-          clogData('dailyRewards (dailyRewards): ', value);
+
+      await getDailyRewards()
+        .then((value: number) => {
           return {
             key: 'dailyRewards',
             value: normalizedValue(value),
           };
-        }),
+        })
+        .catch((err: any) => clogData('daily reward error:', err)),
       web3Contract.Token.methods
         .balanceOfSum(contracts.params.STAKING[contracts.type].address)
         .call()
