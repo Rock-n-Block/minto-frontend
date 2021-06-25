@@ -347,6 +347,13 @@ const Header: React.FC = observer(() => {
               </NavLink>
               <NavLink
                 exact
+                to="/stats"
+                className="header__menu-nav-item text-bold text-slg text-black"
+              >
+                Stats
+              </NavLink>
+              <NavLink
+                exact
                 to="/about"
                 className="header__menu-nav-item text-bold text-slg text-black"
               >
@@ -378,6 +385,10 @@ const Header: React.FC = observer(() => {
               </NavLink>
               <NavLink exact to="/mining" className="header__nav-item text-bold text-md text-black">
                 {t('header.menu.mining')}
+                <img src={ArrowImg} alt="" className="header__nav-item-img" />
+              </NavLink>
+              <NavLink exact to="/stats" className="header__nav-item text-bold text-md text-black">
+                Stats
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </NavLink>
               <NavLink exact to="/about" className="header__nav-item text-bold text-md text-black">

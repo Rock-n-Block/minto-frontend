@@ -244,16 +244,6 @@ const Staking: React.FC = () => {
 
   return (
     <div className="staking">
-      {/* {store.account.address ? (
-        <StakingInfo info={stakingInfo} token="BTCMT" />
-      ) : (
-        <div className="no_login_data">
-          <span className="links__title text-center text text-black text-bold-e">
-            {t('info.connectWallet')}
-          </span>
-        </div>
-      )} */}
-
       <div className="staking-spacer" />
 
       {store.account.address ? (
