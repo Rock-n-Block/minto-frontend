@@ -190,6 +190,8 @@ const Statistic: React.FC = () => {
       .catch((error: any) => {
         if (error.response)
           clogData(`Total got error status ${error.response.status}: `, error.response.data);
+
+        settData([]);
       });
 
     setInfo(uinfo);
