@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import nextId from 'react-id-generator';
+import axios from 'axios';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import Web3 from 'web3';
@@ -106,9 +107,8 @@ const Statistic: React.FC = () => {
     }
 
     const promises = [
-      // TODO: посчитать - узнать откуда брать данные
-      web3Contract.Token.methods
-        .totalSupply()
+      web3Contract.Staking.methods
+        .nowTotalMined()
         .call()
         .then((value: string) => {
           clogData('totalStaked (totalStaked): ', value);
@@ -117,7 +117,6 @@ const Statistic: React.FC = () => {
             value: normalizedValue(value),
           };
         }),
-      // TODO: посчитать - узнать откуда брать данные
       web3Contract.Token.methods
         .totalSupply()
         .call()
@@ -139,16 +138,7 @@ const Statistic: React.FC = () => {
           };
         }),
       // TODO: посчитать - узнать откуда брать данные
-      web3Contract.Token.methods
-        .totalSupply()
-        .call()
-        .then((value: string) => {
-          clogData('boostFactor (boostFactor): ', value);
-          return {
-            key: 'boostFactor',
-            value: normalizedValue(value),
-          };
-        }),
+      // Тянуть инфу с huobi pool
       new Promise((resolve) => {
         clogData('estimateDailyRewardsToday (estimateDailyRewardsToday): ', 50_000);
         resolve({
@@ -156,26 +146,37 @@ const Statistic: React.FC = () => {
           value: '50 000',
         });
       }),
-      // TODO: посчитать - узнать правильно ли получаю данные
       await getDailyRewards()
         .then((value: number) => {
-          clogData('rewardPerTokenWithBoost (rewardPerTokenWithBoost): ', value);
+          clogData('rewardPerTokenWithBoostHBTC (rewardPerTokenWithBoostHBTC): ', value);
           return {
-            key: 'rewardPerTokenWithBoost',
-            value: normalizedValue(value),
+            key: 'rewardPerTokenWithBoostHBTC',
+            value: normalizedValue(value / (1 * 10 ** 18)),
           };
         })
-        .catch((err: any) => clogData('rewardPerTokenWithBoost error:', err)),
-      // TODO: посчитать - узнать откуда брать данные
+        .catch((err: any) => clogData('rewardPerTokenWithBoostHBTC error:', err)),
       await getDailyRewards()
-        .then((value: number) => {
-          clogData('rewardsPerTokenWithBoost (rewardsPerTokenWithBoost): ', value);
+        .then(async (value: number) => {
+          clogData('rewardPerTokenWithBoostUSD (rewardPerTokenWithBoostUSD): ', value);
+
+          const cgData = await axios
+            .get('https://api.coingecko.com/api/v3/simple/price?ids=huobi-btc&vs_currencies=usd')
+            .then(
+              (res) => res.data['huobi-btc'].usd,
+              (err) => {
+                clogData('coingeco 1 huobi to usd Error: ', err);
+                return 0;
+              },
+            );
+
+          clogData('coingeco 1 huobi to usd: ', cgData);
+
           return {
-            key: 'rewardsPerTokenWithBoost',
-            value: normalizedValue(value),
+            key: 'rewardPerTokenWithBoostUSD',
+            value: cgData,
           };
         })
-        .catch((err: any) => clogData('rewardsPerTokenWithBoost error:', err)),
+        .catch((err: any) => clogData('rewardPerTokenWithBoostUSD error:', err)),
     ];
 
     const uinfo = await Promise.all(promises).then((results): IData => {
@@ -184,7 +185,7 @@ const Statistic: React.FC = () => {
 
     await API.get('/total/history/')
       .then((res: any) => {
-        clogData('Total history: ', res);
+        clogData('Total history: ', res.data);
         settData(res.data);
       })
       .catch((error: any) => {
@@ -279,7 +280,9 @@ const Statistic: React.FC = () => {
           </div>
           <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">Boost factor</span>
-            <span className="stats-data-info-item-value">{info.boostFactor}</span>
+            <span className="stats-data-info-item-value">
+              {(((+info.totalStaked || 0) * 0.1) / 50000).toFixed(6)}
+            </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
           </div>
@@ -291,13 +294,18 @@ const Statistic: React.FC = () => {
           </div>
           <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">Reward per token with boost</span>
-            <span className="stats-data-info-item-value">{info.rewardPerTokenWithBoost}</span>
+            <span className="stats-data-info-item-value">
+              {(
+                (((+info.totalStaked || 0) * 0.1) / 50000) *
+                (+info.rewardPerTokenWithBoostUSD || 0)
+              ).toFixed(2)}
+            </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">USD</span>
           </div>
           <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">Rewards per token with boost</span>
-            <span className="stats-data-info-item-value">{info.rewardsPerTokenWithBoost}</span>
+            <span className="stats-data-info-item-value">{info.rewardPerTokenWithBoostHBTC}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
           </div>
@@ -310,7 +318,7 @@ const Statistic: React.FC = () => {
           date: `${t('page.mining.history.table.col.0')}`,
           revard: `${t('page.mining.history.table.col.1')}`,
         }}
-        body={tdata}
+        body={tdata || []}
         total={{
           title: 'Total',
           value: `${0}`,
