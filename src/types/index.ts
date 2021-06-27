@@ -1,6 +1,5 @@
+import { INetwork, IProvider, ISettings } from '@amfi/connect-wallet/dist/interface';
 import { BigNumber } from 'bignumber.js/bignumber';
-
-import { INetwork, IProvider, ISettings } from '../../../../Projects/connect-wallet/dist/interface';
 
 export interface IMenu {
   walletsOpen: boolean;
