@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { config } from '../../config';
+import { backend } from '../../config';
 import { clogData } from '../logger';
 
 export const API = axios.create({
-  baseURL: `${config.backend.url}`,
+  baseURL: `${backend.url}`,
   responseType: 'json',
 });
 

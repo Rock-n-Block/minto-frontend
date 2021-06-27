@@ -278,7 +278,7 @@ export class ContractService {
           return this.sendToStaking(resolve, reject, amount, lAmount);
         }
 
-        const aprPromises = [];
+        const aprPromises = [] as Promise<any>[];
 
         if (res[0] !== 0 && res[0] < 0) aprPromises.push(this.approveUnlocked(amount));
         if (res[1] !== 0 && res[1] < 0) aprPromises.push(this.approveLocked(lAmount));

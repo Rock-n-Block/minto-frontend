@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import Web3 from 'web3';
 
-import { config, contracts } from '../../../../config';
+import { chain, contracts } from '../../../../config';
 import { useStore } from '../../../../store';
 import { IData } from '../../../../types';
 import { clogData, dataToObject, getDailyRewards, normalizedValue } from '../../../../utils';
@@ -31,7 +31,7 @@ const HomePreview: React.FC = () => {
     const web3Contract = address ? store.contracts : ([] as any);
 
     if (!address) {
-      const w3 = new Web3(config.provider);
+      const w3 = new Web3(chain.rpc);
       contracts.names.forEach((name: string) => {
         const contractData = contracts.params[name.toUpperCase()][contracts.type];
         web3Contract[name] = new w3.eth.Contract(contractData.abi, contractData.address);

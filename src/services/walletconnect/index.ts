@@ -1,7 +1,7 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
 import Web3 from 'web3';
 
-import { config, contracts } from '../../config';
+import { connectWallet, contracts } from '../../config';
 import { clogData, notify } from '../../utils';
 import i18n from '../../utils/i18n';
 
@@ -13,12 +13,7 @@ export class WalletConnect {
   }
 
   public async initWalletConnect(name: string): Promise<boolean> {
-    const {
-      connectWallet: { provider, settings },
-      network,
-    } = config;
-
-    clogData('network: ', network);
+    const { provider, network, settings } = connectWallet;
 
     const connecting = this.connectWallet
       .connect(provider[name], network, settings)

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
 import { HistoryTable, Procedure } from '../../components/organisms';
-import { config, update_after_tx_timeout } from '../../config';
+import { chain, config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData, IUserHistory } from '../../types';
 import { API, clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
@@ -97,7 +97,7 @@ const Mining: React.FC = () => {
                 },
                 text: `Your Claim ${+miningInfo.availableToClaim} HBTC complete!`,
                 link: {
-                  url: `${config.tx.link}/${data[1]}`,
+                  url: `${chain.tx.link}/${data[1]}`,
                   text: `${t('notifications.claim.link')}`,
                 },
               }),
@@ -135,7 +135,7 @@ const Mining: React.FC = () => {
               },
               text: `Your Claim ${mnValue} HBTC complete!`,
               link: {
-                url: `${config.tx.link}/${data[1]}`,
+                url: `${chain.tx.link}/${data[1]}`,
                 text: `${t('notifications.claim.link')}`,
               },
             }),

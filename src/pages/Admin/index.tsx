@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Button, Input } from '../../components/atoms';
 import { HeaderAdmin } from '../../components/organisms';
 import AdminContent from '../../components/sections/Admin/AdminContent';
-import { config } from '../../config';
+import { chain } from '../../config';
 import { useStore } from '../../store';
 import {
   API,
@@ -86,7 +86,7 @@ const Admin: React.FC = () => {
               customNotify({
                 text: `You Mint ${mtAmount} Locked BTCMT to address ${mtAddress}!`,
                 link: {
-                  url: `${config.tx.link}/${data}`,
+                  url: `${chain.tx.link}/${data}`,
                   text: 'View tx',
                 },
               }),

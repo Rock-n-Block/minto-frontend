@@ -1,56 +1,60 @@
-import { IConfig, IContracts } from '../types';
+import { IAppConfig, IBackendConfig, IChainConfig, IConnectWallet, IContracts } from '../types';
 
 export const is_production = false;
+
 export const show_logs = true;
 export const update_after_tx_timeout = 5000;
 
-export const config: IConfig = {
-  backend: {
-    url: is_production ? '/api' : '/api',
-    // url: is_production ? '/api' : 'https://dev-minto.rocknblock.io/api',
-  },
+export const backend: IBackendConfig = {
+  url: is_production ? '/api' : '/api',
+};
+
+export const chain: IChainConfig = {
+  name: is_production ? 'heco' : 'heco-testnet',
+  id: is_production ? 128 : 256,
+  rpc: is_production ? 'https://http-mainnet.hecochain.com' : 'https://http-testnet.hecochain.com',
   tx: {
     link: is_production ? 'https://hecoinfo.com/tx' : 'https://testnet.hecoinfo.com/tx',
   },
-  provider: is_production
-    ? 'https://http-mainnet.hecochain.com'
-    : 'https://http-testnet.hecochain.com',
+};
+
+export const connectWallet: IConnectWallet = {
+  wallets: ['MetaMask', 'WalletConnect'],
+  network: {
+    name: chain.name,
+    chainID: chain.id,
+  },
+  provider: {
+    MetaMask: { name: 'MetaMask' },
+    WalletConnect: {
+      name: 'WalletConnect',
+      useProvider: 'rpc',
+      provider: {
+        rpc: {
+          rpc: {
+            [chain.id]: chain.rpc,
+          },
+          chainId: chain.id,
+        },
+      },
+    },
+  },
+  settings: { providerType: true },
+};
+
+export const config: IAppConfig = {
   menu: {
     open: {
       openConnectModal: true,
     },
     onlyForAuth: true,
   },
-  network: {
-    name: 'heco-testnet',
-    chainID: 256,
-    // name: 'heco',
-    // chainID: 128,
-  },
-  connectWallet: {
-    type: ['MetaMask', 'WalletConnect'],
-    provider: {
-      MetaMask: { name: 'MetaMask' },
-      WalletConnect: {
-        name: 'WalletConnect',
-        use: 'provider',
-        bridge: {
-          url: 'https://bridge.walletconnect.org',
-          infura: 'https://rinkeby.infura.io/v3/fcced28c4c894be791f39a8643431cf8',
-        },
-        provider: {
-          infuraID: 'fcced28c4c894be791f39a8643431cf8',
-        },
-      },
-    },
-    settings: { providerType: true },
-  },
 };
 
 export const contracts: IContracts = {
-  decimals: 18,
-  names: ['Token', 'Staking'],
   type: is_production ? 'mainnet' : 'testnet',
+  names: ['Token', 'Staking'],
+  decimals: 18,
   params: {
     TOKEN: {
       mainnet: {

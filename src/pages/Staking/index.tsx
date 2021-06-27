@@ -5,8 +5,7 @@ import { observer } from 'mobx-react-lite';
 import IconLocked from '../../assets/img/icons/lock.svg';
 import IconUnlock from '../../assets/img/icons/unlock.svg';
 import { Procedure2 } from '../../components/organisms';
-// import { StakingInfo } from '../../components/sections';
-import { config, update_after_tx_timeout } from '../../config';
+import { chain, config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
 import {
@@ -157,7 +156,7 @@ const Staking: React.FC = () => {
               },
               text: `Your Stake BTCMT ${stLocked} (Locked) and ${stUnlocked} (Unlocked) complete!`,
               link: {
-                url: `${config.tx.link}/${data[1]}`,
+                url: `${chain.tx.link}/${data[1]}`,
                 text: `${t('notifications.staking.link')}`,
               },
             }),
@@ -221,7 +220,7 @@ const Staking: React.FC = () => {
               },
               text: `Your Withdraw BTCMT ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked) complete!`,
               link: {
-                url: `${config.tx.link}/${data[1]}`,
+                url: `${chain.tx.link}/${data[1]}`,
                 text: `${t('notifications.withdraw.link')}`,
               },
             }),

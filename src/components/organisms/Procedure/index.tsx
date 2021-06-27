@@ -6,8 +6,6 @@ import { Button, Input } from '../../atoms';
 
 import './Procedure.scss';
 
-// import { useStore } from '../../../store';
-
 interface IInfoItem {
   title: string;
   value: string;
@@ -50,8 +48,6 @@ const Procedure: React.FC<IProcedure> = ({
   btnProcessedText = 'Please Wait...',
   inputMax,
 }) => {
-  // const store = useStore();
-
   return (
     <div className={cn('procedure', theme)}>
       <div className="procedure__content">
