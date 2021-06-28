@@ -137,15 +137,22 @@ const Statistic: React.FC = () => {
             value: normalizedValue(value),
           };
         }),
-      // TODO: посчитать - узнать откуда брать данные
-      // Тянуть инфу с huobi pool
-      new Promise((resolve) => {
-        clogData('estimateDailyRewardsToday (estimateDailyRewardsToday): ', 50_000);
-        resolve({
-          key: 'estimateDailyRewardsToday',
-          value: '50 000',
-        });
-      }),
+      await getDailyRewards()
+        .then((value: number) => {
+          clogData('estimateDailyRewardsToday (estimateDailyRewardsToday): ', value);
+          return {
+            key: 'estimateDailyRewardsToday',
+            value: normalizedValue(value),
+          };
+        })
+        .catch((err: any) => clogData('rewardPerTokenWithBoostHBTC error:', err)),
+      // new Promise((resolve) => {
+      //   clogData('estimateDailyRewardsToday (estimateDailyRewardsToday): ', 50_000);
+      //   resolve({
+      //     key: 'estimateDailyRewardsToday',
+      //     value: '50 000',
+      //   });
+      // }),
       await getDailyRewards()
         .then((value: number) => {
           clogData('rewardPerTokenWithBoostHBTC (rewardPerTokenWithBoostHBTC): ', value);
@@ -296,8 +303,7 @@ const Statistic: React.FC = () => {
             <span className="stats-data-info-item-title">Reward per token with boost</span>
             <span className="stats-data-info-item-value">
               {(
-                (((+info.totalStaked || 0) * 0.1) / 50000) *
-                (+info.rewardPerTokenWithBoostUSD || 0)
+                +info.rewardPerTokenWithBoostHBTC * (+info.rewardPerTokenWithBoostUSD || 0)
               ).toFixed(2)}
             </span>
             <span className="stats-data-info-item-line" />

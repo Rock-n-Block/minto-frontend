@@ -70,7 +70,7 @@ export class WalletConnect {
   }
 
   public getAccount(account: { address?: string; balance?: string }): Promise<any> {
-    return new Promise((resolve: any, reject) => {
+    return new Promise((resolve: any, reject: any) => {
       this.connectWallet.getAccounts().subscribe(
         (userAccount: any) => {
           clogData('user account: ', userAccount);
@@ -89,8 +89,15 @@ export class WalletConnect {
           }
         },
         (err: any) => {
-          clogData('wallet connect - get user account: ', err);
-          notify(`⚠️ ${i18n.t('notifications.wallet.connected')}: $${err.message.text}`, 'error');
+          clogData('getAccount wallet connect - get user account err: ', err);
+          if (err.code && err.code === 6) {
+            notify(`⚠️ User account disconnected!`, 'success');
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          } else {
+            notify(`⚠️ ${i18n.t('notifications.wallet.connected')}: $${err.message.text}`, 'error');
+          }
           reject(err);
         },
       );
