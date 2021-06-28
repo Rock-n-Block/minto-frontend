@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import Logo from '../../../assets/img/icons/logo.svg';
+import Facebook from '../../../assets/img/sections/footer/facebook.svg';
 import Github from '../../../assets/img/sections/footer/github.svg';
 import Medium from '../../../assets/img/sections/footer/medium.svg';
 import Telegram from '../../../assets/img/sections/footer/telegram.svg';
@@ -54,6 +55,16 @@ const Footer: React.FC = () => {
             <li className="footer__socials-item">
               <a href="/#" target="_blank" className="footer__social circle">
                 <img src={Medium} alt="medium" />
+              </a>
+            </li>
+            <li className="footer__socials-item">
+              <a
+                href="https://www.facebook.com/btcmtofficial"
+                target="_blank"
+                className="footer__social circle"
+                rel="noreferrer"
+              >
+                <img src={Facebook} alt="facebook" />
               </a>
             </li>
             <li className="footer__socials-item">
