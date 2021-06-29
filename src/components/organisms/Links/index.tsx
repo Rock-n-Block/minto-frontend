@@ -15,13 +15,16 @@ const Links: React.FC = () => {
   const [email, setEmail] = React.useState('');
   const [isProcess, setIsProcess] = React.useState(false);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const handleSubscribeClick = async () => {
     setIsProcess(true);
 
+    const lang = i18n.language;
+
     await API.post('/email/subscribe/', {
       email,
+      lang,
     })
       .then((res: any) => {
         clogData('subscribe: ', res);
