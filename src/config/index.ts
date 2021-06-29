@@ -6,7 +6,7 @@ export const update_after_tx_timeout = 5000;
 
 export const config: IConfig = {
   backend: {
-    url: is_production ? '/api' : 'https://dev-minto.rocknblock.io/api',
+    url: is_production ? '/api' : '/api',
   },
   tx: {
     link: is_production ? 'https://hecoinfo.com/tx' : 'https://testnet.hecoinfo.com/tx',
