@@ -7,7 +7,7 @@ import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import Web3 from 'web3';
 
-import { HistoryTable } from '../../components/organisms';
+import { Calculator, HistoryTable } from '../../components/organisms';
 import { chain, contracts } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
@@ -21,6 +21,10 @@ const Statistic: React.FC = () => {
   // const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
   const [tdata, settData] = React.useState([]);
   const [chartButton, setChartButton] = React.useState(0);
+
+  const [rewardCalcValue, setRewardCalcValue] = React.useState(0);
+  const [dailyReward, setDailyReward] = React.useState(0);
+  const [dailyRewardUsd, setDailyRewardUsd] = React.useState(0);
 
   const [chartButtons, setChartButtons] = React.useState([
     {
@@ -146,13 +150,6 @@ const Statistic: React.FC = () => {
           };
         })
         .catch((err: any) => clogData('rewardPerTokenWithBoostHBTC error:', err)),
-      // new Promise((resolve) => {
-      //   clogData('estimateDailyRewardsToday (estimateDailyRewardsToday): ', 50_000);
-      //   resolve({
-      //     key: 'estimateDailyRewardsToday',
-      //     value: '50 000',
-      //   });
-      // }),
       await getDailyRewards()
         .then((value: number) => {
           clogData('rewardPerTokenWithBoostHBTC (rewardPerTokenWithBoostHBTC): ', value);
@@ -162,28 +159,21 @@ const Statistic: React.FC = () => {
           };
         })
         .catch((err: any) => clogData('rewardPerTokenWithBoostHBTC error:', err)),
-      await getDailyRewards()
-        .then(async (value: number) => {
-          clogData('rewardPerTokenWithBoostUSD (rewardPerTokenWithBoostUSD): ', value);
-
-          const cgData = await axios
-            .get('https://api.coingecko.com/api/v3/simple/price?ids=huobi-btc&vs_currencies=usd')
-            .then(
-              (res) => res.data['huobi-btc'].usd,
-              (err) => {
-                clogData('coingeco 1 huobi to usd Error: ', err);
-                return 0;
-              },
-            );
-
-          clogData('coingeco 1 huobi to usd: ', cgData);
-
-          return {
-            key: 'rewardPerTokenWithBoostUSD',
-            value: cgData,
-          };
-        })
-        .catch((err: any) => clogData('rewardPerTokenWithBoostUSD error:', err)),
+      await axios
+        .get('https://api.coingecko.com/api/v3/simple/price?ids=huobi-btc&vs_currencies=usd')
+        .then(
+          (res) => {
+            clogData('rewardPerTokenWithBoostUSD: ', res.data['huobi-btc'].usd);
+            return {
+              key: 'rewardPerTokenWithBoostUSD',
+              value: res.data['huobi-btc'].usd,
+            };
+          },
+          (err) => {
+            clogData('rewardPerTokenWithBoostUSD: ', err);
+            return 0;
+          },
+        ),
     ];
 
     const uinfo = await Promise.all(promises).then((results): IData => {
@@ -223,6 +213,19 @@ const Statistic: React.FC = () => {
 
     setChartButton(data);
     setChartButtons(chartButtomsCopy);
+  };
+
+  // Change amounts ------------------------------------------------
+
+  const handleRewardCalcChange = (value: number) => {
+    setRewardCalcValue(value);
+    if (value < 0) setRewardCalcValue(0);
+
+    const dReward = value <= 0 ? 0 : +info.estimateDailyRewardsToday / value;
+    const dRewardUsd = dReward * +info.rewardPerTokenWithBoostUSD;
+
+    setDailyReward(+dReward.toFixed(2));
+    setDailyRewardUsd(+dRewardUsd.toFixed(2));
   };
 
   // On Run ------------------------------------------------
@@ -329,6 +332,29 @@ const Statistic: React.FC = () => {
           title: 'Total',
           value: `${0}`,
         }}
+      />
+
+      <Calculator
+        title="Rewards calculation"
+        input={{
+          title: 'Enter Amount (BTCMT)',
+          value: `${rewardCalcValue}`,
+          change: handleRewardCalcChange,
+          placeholder: '0.0',
+          type: 'number',
+        }}
+        info={[
+          {
+            title: 'Estimated daily reward',
+            value: `${dailyReward}`,
+            text: 'HBTC',
+          },
+          {
+            title: 'Estimated daily reward',
+            value: `${dailyRewardUsd}`,
+            text: 'USD',
+          },
+        ]}
       />
     </div>
   );

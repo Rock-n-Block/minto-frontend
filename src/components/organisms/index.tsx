@@ -7,3 +7,4 @@ export { default as Procedure } from './Procedure';
 export { default as Procedure2 } from './Procedure2';
 export { default as Links } from './Links';
 export { default as HistoryTable } from './HistoryTable';
+export { default as Calculator } from './Calculator';
