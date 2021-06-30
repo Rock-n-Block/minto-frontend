@@ -41,7 +41,7 @@ const Header: React.FC = observer(() => {
   ]);
 
   const store = useStore();
-  const { menu, toggleWalletMenu } = store;
+  const { menu, toggleWalletMenu, setLang } = store;
 
   const { t, i18n } = useTranslation();
 
@@ -64,6 +64,7 @@ const Header: React.FC = observer(() => {
     });
 
     setLangList(langListCopy);
+    setLang(language);
   };
 
   const handleHeaderClick = (): void => {
