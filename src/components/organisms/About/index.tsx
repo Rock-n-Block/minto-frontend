@@ -4,16 +4,13 @@ import { useTranslation } from 'react-i18next';
 import IconDoc from '../../../assets/img/icons/doc-detail.svg';
 import IconNewspaper from '../../../assets/img/icons/newspaper-folding.svg';
 import IconPowerpoint from '../../../assets/img/icons/powerpoint.svg';
-import { useStore } from '../../../store/index';
 import { Button } from '../../atoms';
 
 import './About.scss';
 
 const About: React.FC = () => {
-  const { t } = useTranslation();
-
-  const store = useStore();
-  const { lang } = store;
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
 
   return (
     <div className="about">
@@ -21,7 +18,7 @@ const About: React.FC = () => {
         <section className="about__left">
           <h2 className="about__title h2 text-white text-bold">{t('component.aboutUs.title')}</h2>
           <p className="about__description text-lg text-white">{t('component.aboutUs.text')}</p>
-          <a href="/resources/Whitepaper.pdf" target="_blank">
+          <a href="/resources/Minto whitepaper.pdf" target="_blank">
             <Button
               size="lg"
               colorScheme="green"
@@ -56,7 +53,11 @@ const About: React.FC = () => {
                 </span>
               </Button>
             </a>
-            <a href="/resources/Minto Presentation.pdf" target="_blank">
+            <a
+              href={`/resources/Minto Presentation ${lang === 'en' ? 'en' : 'ch'}.pdf`}
+              target="_blank"
+              rel="noreferrer"
+            >
               <Button className="btn-about" colorScheme="outline" size="lsm" icon={IconPowerpoint}>
                 <span className="text-smd text-upper text-bold-e text-white">
                   {t('component.aboutUs.buttons.presentation')}

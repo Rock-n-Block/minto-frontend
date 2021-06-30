@@ -9,7 +9,6 @@ class AppStore {
   menu: IMenu = { walletsOpen: false };
   account: IAccount = {};
   contracts: IContract = {};
-  lang = 'en';
   web3: any;
   contractService: any;
   is_contractService = false;
@@ -47,10 +46,6 @@ class AppStore {
 
   addContract = (name: string, contract: Array<any>): void => {
     this.contracts[name] = contract;
-  };
-
-  setLang = (lang: string): void => {
-    this.lang = lang;
   };
 }
 
