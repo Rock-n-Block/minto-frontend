@@ -7,7 +7,7 @@ import Twitter from '../../../assets/img/icons/twitter.svg';
 import WeChat from '../../../assets/img/icons/weChat.svg';
 import { API, clogData, notify } from '../../../utils';
 import { Button, Input } from '../../atoms';
-import { ModalQR } from '../../molecules';
+import { ModalQR } from '..';
 
 import './Links.scss';
 

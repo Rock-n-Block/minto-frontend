@@ -6,3 +6,4 @@ export { default as About } from './About';
 export { default as Procedure } from './Procedure';
 export { default as Procedure2 } from './Procedure2';
 export { default as Links } from './Links';
+export { default as ModalQR } from './ModalQR';

@@ -6,7 +6,7 @@ import Logo from '../../../assets/img/icons/logo.svg';
 import Telegram from '../../../assets/img/sections/footer/telegram.svg';
 import Twitter from '../../../assets/img/sections/footer/twitter.svg';
 import WeChat from '../../../assets/img/sections/footer/weChat.svg';
-import { ModalQR } from '../../molecules';
+import { ModalQR } from '..';
 
 import './Footer.scss';
 

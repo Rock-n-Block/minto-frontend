@@ -37,7 +37,7 @@ const About: React.FC = () => {
             {t('component.aboutUs.text3')}
           </p>
           <div className="about__btns">
-            <a href={`/resources/Minto Press-R ${lang}.pdf`} target="_blank" rel="noreferrer">
+            <a href={`/resources/${lang}/Minto Press-R.pdf`} target="_blank" rel="noreferrer">
               <Button
                 colorScheme="outline"
                 size="lsm"
@@ -49,7 +49,7 @@ const About: React.FC = () => {
                 </span>
               </Button>
             </a>
-            <a href={`/resources/Minto Presentation ${lang}.pdf`} target="_blank" rel="noreferrer">
+            <a href={`/resources/${lang}/Minto Presentation.pdf`} target="_blank" rel="noreferrer">
               <Button className="btn-about" colorScheme="outline" size="lsm" icon={IconPowerpoint}>
                 <span className="text-smd text-upper text-bold-e text-white">
                   {t('component.aboutUs.buttons.presentation')}
