@@ -180,6 +180,8 @@
   }
 
   &__wrapper {
+    width: 100%;
+
     @include b('tablet') {
       position: relative;
 
@@ -204,7 +206,9 @@
   }
 
   &__nav {
-    margin-left: 250px;
+    // margin-left: 250px;
+    width: 100%;
+    justify-content: center;
 
     &-open {
       position: absolute;
