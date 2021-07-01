@@ -4,6 +4,7 @@
       "main": "Main",
       "staking": "Staking",
       "mining": "Mining",
+      "stats": "Stats",
       "aboutUs": "About us",
       "connectWallet": "Connect wallet",
       "logout": "LogOut"

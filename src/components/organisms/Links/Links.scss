@@ -134,7 +134,7 @@
 
       width: 102px;
       height: 102px;
-
+      background: $black;
       border: 3px solid $green;
       @include b('tablet') {
         margin-top: 20px;

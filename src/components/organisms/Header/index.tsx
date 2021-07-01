@@ -329,6 +329,9 @@ const Header: React.FC = observer(() => {
                 {t('header.menu.mining')}
               </span>
               <span className="header__menu-nav-item text-bold text-slg text-black">
+                {t('header.menu.stats')}
+              </span>
+              <span className="header__menu-nav-item text-bold text-slg text-black">
                 {t('header.menu.aboutUs')}
               </span>
             </div>
@@ -353,6 +356,10 @@ const Header: React.FC = observer(() => {
               </span>
               <span className="header__nav-item text-bold text-md text-black">
                 {t('header.menu.mining')}
+                <img src={ArrowImg} alt="" className="header__nav-item-img" />
+              </span>
+              <span className="header__nav-item text-bold text-md text-black">
+                {t('header.menu.stats')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </span>
               <span className="header__nav-item text-bold text-md text-black">

@@ -5,14 +5,22 @@ import Facebook from '../../../assets/img/icons/facebook-white.svg';
 import Logo from '../../../assets/img/icons/logo.svg';
 import Telegram from '../../../assets/img/sections/footer/telegram.svg';
 import Twitter from '../../../assets/img/sections/footer/twitter.svg';
+import WeChat from '../../../assets/img/sections/footer/weChat.svg';
+import { ModalQR } from '../../molecules';
 
 import './Footer.scss';
 
 const Footer: React.FC = () => {
-  const { t } = useTranslation();
+  const [modalQr, setModalQr] = React.useState(false);
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
 
+  const showModalQR = () => {
+    setModalQr(true);
+  };
   return (
     <footer className="footer">
+      {modalQr ? <ModalQR showModal={modalQr} closeModal={setModalQr} /> : ''}
       <div className="row">
         <span>
           <img src={Logo} alt="logo" />
@@ -54,14 +62,24 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li className="footer__socials-item">
-              <a
-                href="https://t.me/btcmtofficial"
-                target="_blank"
-                className="footer__social circle"
-                rel="noreferrer"
-              >
-                <img src={Telegram} alt="telegram" />
-              </a>
+              {lang === 'en' ? (
+                <a
+                  href="https://t.me/btcmtofficialchat"
+                  target="_blank"
+                  className="footer__social circle"
+                  rel="noreferrer"
+                >
+                  <img src={Telegram} alt="Telegram" />
+                </a>
+              ) : (
+                <button
+                  onClick={() => showModalQR()}
+                  type="button"
+                  className="footer__social circle"
+                >
+                  <img src={WeChat} alt="WeChat" />
+                </button>
+              )}
             </li>
           </ul>
           <div className="footer__divider" />
