@@ -70,9 +70,9 @@
       width: 75px;
       height: 75px;
 
-      border: 3px solid $green;
-
       background-color: transparent;
+
+      border: 3px solid $green;
 
       @include b('tablet') {
         &:not(:last-child) {
@@ -134,10 +134,10 @@
     &-tg {
       margin: 32px auto 0;
 
-      background-color: transparent;
-
       width: 102px;
       height: 102px;
+
+      background-color: transparent;
 
       border: 3px solid $green;
       @include b('tablet') {
