@@ -145,7 +145,11 @@
           "undefined": "未定义BTCMT",
           "buttonText": "抵押金额",
           "button": "全部可用",
-          "button2": "抵押"
+          "button2": "抵押",
+          "daily": {
+            "estimatedDailyReward": "預計每日獎勵",
+            "estimatedDailyShare": "估計每日份額"
+          }
         },
         "withdraw": {
           "title": "提现",
@@ -169,7 +173,34 @@
       "history": {
         "title": "历史",
         "table": {
-          "col": ["日期", "HBTC奖励"]
+          "col": ["日期", "HBTC奖励", "全部的"]
+        }
+      }
+    },
+    "statistic": {
+      "chart": {
+        "title": "目前的價格",
+        "buttons": ["1天", "1w", "1米", "1年"]
+      },
+      "info": {
+        "totalStaked": "總質押",
+        "totalIssued": "發行總額",
+        "allTimeMined": "所有時間開採",
+        "boostFactor": "升壓因子",
+        "estimatedRewardsToday": "預計今天的獎勵",
+        "rewardPerTokenWithBoost": "獎勵每個令牌與提升"
+      },
+      "table": {
+        "title": "HBTC 獎勵歷史（總計）",
+        "col": ["日期", "HBTC奖励", "全部的"]
+      },
+      "component": {
+        "calculator": {
+          "title": "獎勵計算",
+          "input": {
+            "title": "輸入金額"
+          },
+          "estimatedDailyReward": "預計每日獎勵"
         }
       }
     }

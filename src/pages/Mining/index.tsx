@@ -176,11 +176,11 @@ const Mining: React.FC = () => {
             title={t('page.mining.title')}
             info={[
               {
-                title: `${t('page.mining.text.left')}`,
+                title: t('page.mining.text.left'),
                 value: `${miningInfo.th} TH/s`,
               },
               {
-                title: `${t('page.mining.text.right')}`,
+                title: t('page.mining.text.right'),
                 value: `${miningInfo.availableToClaim} HBTC`,
               },
             ]}
@@ -199,12 +199,12 @@ const Mining: React.FC = () => {
           <HistoryTable
             title={t('page.mining.history.title')}
             head={{
-              date: `${t('page.mining.history.table.col.0')}`,
-              revard: `${t('page.mining.history.table.col.1')}`,
+              date: t('page.mining.history.table.col.0'),
+              revard: t('page.mining.history.table.col.1'),
             }}
             body={tdata.history}
             total={{
-              title: 'Total',
+              title: t('page.mining.history.table.col.2'),
               value: `${0}`,
             }}
           />

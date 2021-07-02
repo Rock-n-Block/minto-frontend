@@ -18,6 +18,8 @@ import './Statistic.scss';
 const Statistic: React.FC = () => {
   const store = useStore();
 
+  const { t } = useTranslation();
+
   // const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
   const [tdata, settData] = React.useState([]);
   const [chartButton, setChartButton] = React.useState(0);
@@ -28,22 +30,22 @@ const Statistic: React.FC = () => {
 
   const [chartButtons, setChartButtons] = React.useState([
     {
-      id: 1,
+      id: 0,
       title: '1d',
       active: true,
     },
     {
-      id: 2,
+      id: 1,
       title: '1w',
       active: false,
     },
     {
-      id: 3,
+      id: 2,
       title: '1m',
       active: false,
     },
     {
-      id: 4,
+      id: 3,
       title: '1y',
       active: false,
     },
@@ -58,8 +60,6 @@ const Statistic: React.FC = () => {
     rewardPerTokenWithBoost: '-',
     rewardsPerTokenWithBoost: '-',
   } as IData);
-
-  const { t } = useTranslation();
 
   const dataChart = {
     labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
@@ -242,7 +242,9 @@ const Statistic: React.FC = () => {
         <div className="stats-data-chart">
           <div className="stats-data-chart-head">
             <div className="stats-data-chart-head-price">
-              <span className="stats-data-chart-head-price-title">Current price (BTCMT)</span>
+              <span className="stats-data-chart-head-price-title">
+                {t('page.statistic.chart.title')} (BTCMT)
+              </span>
               <div className="stats-data-chart-head-price-box">
                 <span className="stats-data-chart-head-price-box-title">$255</span>
                 <span className="stats-data-chart-head-price-box-change">3.2%</span>
@@ -260,7 +262,7 @@ const Statistic: React.FC = () => {
                     active: i.active,
                   })}
                 >
-                  {i.title}
+                  {t(`page.statistic.chart.buttons.${i.id}`)}
                 </span>
               ))}
             </div>
@@ -271,25 +273,33 @@ const Statistic: React.FC = () => {
         </div>
         <div className="stats-data-info">
           <div className="stats-data-info-item">
-            <span className="stats-data-info-item-title">Total Staked</span>
+            <span className="stats-data-info-item-title">
+              {t('page.statistic.info.totalStaked')}
+            </span>
             <span className="stats-data-info-item-value">{info.totalStaked}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">BTCMT</span>
           </div>
           <div className="stats-data-info-item">
-            <span className="stats-data-info-item-title">Total issued</span>
+            <span className="stats-data-info-item-title">
+              {t('page.statistic.info.totalStaked')}
+            </span>
             <span className="stats-data-info-item-value">{info.totalIssued}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">BTCMT</span>
           </div>
           <div className="stats-data-info-item">
-            <span className="stats-data-info-item-title">All time mined</span>
+            <span className="stats-data-info-item-title">
+              {t('page.statistic.info.allTimeMined')}
+            </span>
             <span className="stats-data-info-item-value">{info.allTimeMined}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
           </div>
           <div className="stats-data-info-item">
-            <span className="stats-data-info-item-title">Boost factor</span>
+            <span className="stats-data-info-item-title">
+              {t('page.statistic.info.boostFactor')}
+            </span>
             <span className="stats-data-info-item-value">
               {(((+info.totalStaked || 0) * 0.1) / 50000).toFixed(6)}
             </span>
@@ -297,13 +307,17 @@ const Statistic: React.FC = () => {
             <span className="stats-data-info-item-subtitle">HBTC</span>
           </div>
           <div className="stats-data-info-item">
-            <span className="stats-data-info-item-title">Estimated rewards today</span>
+            <span className="stats-data-info-item-title">
+              {t('page.statistic.info.estimatedRewardsToday')}
+            </span>
             <span className="stats-data-info-item-value">{info.estimateDailyRewardsToday}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
           </div>
           <div className="stats-data-info-item">
-            <span className="stats-data-info-item-title">Reward per token with boost</span>
+            <span className="stats-data-info-item-title">
+              {t('page.statistic.info.rewardPerTokenWithBoost')}
+            </span>
             <span className="stats-data-info-item-value">
               {(
                 +info.rewardPerTokenWithBoostHBTC * (+info.rewardPerTokenWithBoostUSD || 0)
@@ -313,7 +327,9 @@ const Statistic: React.FC = () => {
             <span className="stats-data-info-item-subtitle">USD</span>
           </div>
           <div className="stats-data-info-item">
-            <span className="stats-data-info-item-title">Rewards per token with boost</span>
+            <span className="stats-data-info-item-title">
+              {t('page.statistic.info.rewardPerTokenWithBoost')}
+            </span>
             <span className="stats-data-info-item-value">{info.rewardPerTokenWithBoostHBTC}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
@@ -322,22 +338,22 @@ const Statistic: React.FC = () => {
       </div>
 
       <HistoryTable
-        title="HBTC reward history (total)"
+        title={t('page.statistic.table.title')}
         head={{
-          date: `${t('page.mining.history.table.col.0')}`,
-          revard: `${t('page.mining.history.table.col.1')}`,
+          date: `${t('page.statistic.table.col.0')}`,
+          revard: `${t('page.statistic.table.col.1')}`,
         }}
         body={tdata || []}
         total={{
-          title: 'Total',
+          title: `${t('page.statistic.table.col.2')}`,
           value: `${0}`,
         }}
       />
 
       <Calculator
-        title="Rewards calculation"
+        title={t('page.statistic.component.calculator.title')}
         input={{
-          title: 'Enter Amount (BTCMT)',
+          title: `${t('page.statistic.component.calculator.input.title')} (BTCMT)`,
           value: `${rewardCalcValue}`,
           change: handleRewardCalcChange,
           placeholder: '0.0',
@@ -345,12 +361,12 @@ const Statistic: React.FC = () => {
         }}
         info={[
           {
-            title: 'Estimated daily reward',
+            title: t('page.statistic.component.calculator.estimatedDailyReward'),
             value: `${dailyReward}`,
             text: 'HBTC',
           },
           {
-            title: 'Estimated daily reward',
+            title: t('page.statistic.component.calculator.estimatedDailyReward'),
             value: `${dailyRewardUsd}`,
             text: 'USD',
           },

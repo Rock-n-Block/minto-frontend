@@ -145,7 +145,11 @@
           "undefined": "undefined BTCMT",
           "buttonText": "amount to stake ",
           "button": "all available",
-          "button2": "stake"
+          "button2": "stake",
+          "daily": {
+            "estimatedDailyReward": "Estimated daily reward",
+            "estimatedDailyShare": "Estimated daily share"
+          }
         },
         "withdraw": {
           "title": "Withdraw",
@@ -169,7 +173,34 @@
       "history": {
         "title": "History",
         "table": {
-          "col": ["Date", "HBTC reward"]
+          "col": ["Date", "HBTC reward", "Total"]
+        }
+      }
+    },
+    "statistic": {
+      "chart": {
+        "title": "Current price",
+        "buttons": ["1d", "1w", "1m", "1y"]
+      },
+      "info": {
+        "totalStaked": "Total staked",
+        "totalIssued": "Total issued",
+        "allTimeMined": "All time mined",
+        "boostFactor": "Boost factor",
+        "estimatedRewardsToday": "Estimated rewards today",
+        "rewardPerTokenWithBoost": "Reward per token with boost"
+      },
+      "table": {
+        "title": "HBTC reward history (total)",
+        "col": ["Date", "HBTC reward", "Total"]
+      },
+      "component": {
+        "calculator": {
+          "title": "Rewards calculation",
+          "input": {
+            "title": "Enter Amount"
+          },
+          "estimatedDailyReward": "Estimated daily reward"
         }
       }
     }

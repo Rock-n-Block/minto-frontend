@@ -265,19 +265,19 @@ const Staking: React.FC = () => {
               {
                 info: [
                   {
-                    title: `${t('page.staking.component.staking.unlocked')}`,
+                    title: t('page.staking.component.staking.unlocked'),
                     value: `${stakingInfo.availableUnlocked} BTCMT`,
                     src: IconUnlock,
                   },
                   {
-                    title: `${t('page.staking.component.staking.text')}`,
+                    title: t('page.staking.component.staking.text'),
                     value: `${stakingInfo.userStakesUnlocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
-                inputMiniButtonTitle: `${t('page.staking.component.staking.buttonText')}`,
-                inputMiniButtonText: `${t('page.staking.component.staking.button')}`,
+                inputMiniButtonTitle: t('page.staking.component.staking.buttonText'),
+                inputMiniButtonText: t('page.staking.component.staking.button'),
                 inputMiniButtonClick: handleFullButtonStakingUnlockedClick,
 
                 inputButtonShow: true,
@@ -288,18 +288,18 @@ const Staking: React.FC = () => {
               {
                 info: [
                   {
-                    title: `${t('page.staking.component.staking.locked')}`,
+                    title: t('page.staking.component.staking.locked'),
                     value: `${stakingInfo.availableLocked} BTCMT`,
                     src: IconLocked,
                   },
                   {
-                    title: `${t('page.staking.component.staking.text')}`,
+                    title: t('page.staking.component.staking.text'),
                     value: `${stakingInfo.userStakesLocked} BTCMT`,
                   },
                 ],
                 inputMiniButtonShow: true,
-                inputMiniButtonTitle: `${t('page.staking.component.staking.buttonText')}`,
-                inputMiniButtonText: `${t('page.staking.component.staking.button')}`,
+                inputMiniButtonTitle: t('page.staking.component.staking.buttonText'),
+                inputMiniButtonText: t('page.staking.component.staking.button'),
                 inputMiniButtonClick: handleFullButtonStakingLockedClick,
 
                 inputButtonShow: true,
@@ -314,7 +314,9 @@ const Staking: React.FC = () => {
             buttonClick={handleButtonStakingClick}
             daily={{
               dailyReward: `${dailyReward}`,
+              dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
               dailyShare: `${dailyShared}`,
+              dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
             }}
           />
           <Procedure2
@@ -324,14 +326,14 @@ const Staking: React.FC = () => {
               {
                 info: [
                   {
-                    title: `${t('page.staking.component.withdraw.unlocked')}`,
+                    title: t('page.staking.component.withdraw.unlocked'),
                     value: `${stakingInfo.userStakesUnlocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
-                inputMiniButtonTitle: `${t('page.staking.component.withdraw.text')}`,
-                inputMiniButtonText: `${t('page.staking.component.withdraw.button')}`,
+                inputMiniButtonTitle: t('page.staking.component.withdraw.text'),
+                inputMiniButtonText: t('page.staking.component.withdraw.button'),
                 inputMiniButtonClick: handleFullButtonWithdrawUnlockedClick,
 
                 inputButtonShow: true,
@@ -342,14 +344,14 @@ const Staking: React.FC = () => {
               {
                 info: [
                   {
-                    title: `${t('page.staking.component.withdraw.locked')}`,
+                    title: t('page.staking.component.withdraw.locked'),
                     value: `${stakingInfo.userStakesLocked} BTCMT`,
                   },
                 ],
 
                 inputMiniButtonShow: true,
-                inputMiniButtonTitle: `${t('page.staking.component.withdraw.text')}`,
-                inputMiniButtonText: `${t('page.staking.component.withdraw.button')}`,
+                inputMiniButtonTitle: t('page.staking.component.withdraw.text'),
+                inputMiniButtonText: t('page.staking.component.withdraw.button'),
                 inputMiniButtonClick: handleFullButtonWithdrawLockedClick,
 
                 inputButtonShow: true,

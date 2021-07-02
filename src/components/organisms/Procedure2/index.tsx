@@ -37,7 +37,9 @@ interface IProcedure {
   btnProcessedText?: string;
   daily?: {
     dailyReward: string;
+    dailyRewardTitle: string;
     dailyShare: string;
+    dailyShareTitle: string;
   };
 }
 
@@ -133,14 +135,14 @@ const Procedure2: React.FC<IProcedure> = ({
       {daily ? (
         <div className="procedure-two-info">
           <div className="procedure-two-info-item">
-            <span className="procedure-two-info-title">Estimated daily reward</span>
+            <span className="procedure-two-info-title">{daily.dailyRewardTitle}</span>
             <div className="procedure-two-info-block">
               <span className="procedure-two-info-block-text">{daily.dailyReward}</span>
               <span className="procedure-two-info-block-subtext">HBTC</span>
             </div>
           </div>
           <div className="procedure-two-info-item">
-            <span className="procedure-two-info-title">Estimated daily share</span>
+            <span className="procedure-two-info-title">{daily.dailyShareTitle}</span>
             <div className="procedure-two-info-block">
               <span className="procedure-two-info-block-text">{daily.dailyShare}%</span>
             </div>
