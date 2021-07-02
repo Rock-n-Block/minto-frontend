@@ -6,21 +6,23 @@ import Github from '../../../assets/img/icons/github.svg';
 import Medium from '../../../assets/img/icons/medium.svg';
 import Telegram from '../../../assets/img/icons/telegram.svg';
 import Twitter from '../../../assets/img/icons/twitter.svg';
+import WeChat from '../../../assets/img/icons/weChat.svg';
 import { API, clogData, notify } from '../../../utils';
 import { Button, Input } from '../../atoms';
+import { ModalQR } from '..';
 
 import './Links.scss';
 
 const Links: React.FC = () => {
   const [email, setEmail] = React.useState('');
   const [isProcess, setIsProcess] = React.useState(false);
+  const [modalQr, setModalQr] = React.useState(false);
 
   const { t, i18n } = useTranslation();
+  const lang = i18n.language;
 
   const handleSubscribeClick = async () => {
     setIsProcess(true);
-
-    const lang = i18n.language;
 
     await API.post('/email/subscribe/', {
       email,
@@ -40,8 +42,13 @@ const Links: React.FC = () => {
       });
   };
 
+  const showModalQR = () => {
+    setModalQr(true);
+  };
+
   return (
     <div className="links">
+      {modalQr ? <ModalQR showModal={modalQr} closeModal={setModalQr} /> : ''}
       <div className="row ">
         <div className="links__link link__subscribe">
           <h3 className="links__title text-center text text-white text-bold-e">
@@ -57,7 +64,7 @@ const Links: React.FC = () => {
               <img src={Twitter} alt="Twitter" />
             </a>
             <a
-              href="https://twitter.com/btcmtofficial"
+              href="https://facebook.com/btcmtofficial"
               target="_blank"
               className="link__subscribe__network circle box-f-c"
               rel="noreferrer"
@@ -85,6 +92,8 @@ const Links: React.FC = () => {
           <div className="link__subscribe-email__e-mail input-container">
             <Input
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               required
               placeholder={t('page.home.component.subscribe.input')}
               shadow
@@ -118,14 +127,26 @@ const Links: React.FC = () => {
           <h3 className="links__title text-center text text-white text-bold-e">
             {t('page.home.component.subscribe.text.right')}
           </h3>
-          <a
-            href="https://t.me/btcmtofficial"
-            target="_blank"
-            className="link__chat-tg circle box-f-c"
-            rel="noreferrer"
-          >
-            <img src={Telegram} alt="Telegram" />
-          </a>
+          <div className="link__subscribe__social-networks">
+            {lang === 'en' ? (
+              <a
+                href="https://t.me/btcmtofficialchat"
+                target="_blank"
+                className="link__chat-tg circle box-f-c"
+                rel="noreferrer"
+              >
+                <img src={Telegram} alt="Telegram" />
+              </a>
+            ) : (
+              <button
+                type="button"
+                className="link__chat-tg circle box-f-c"
+                onClick={() => showModalQR()}
+              >
+                <img src={WeChat} alt="WeChat" />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,50 @@
+.modal {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+
+  background: rgba(0, 0, 0, 0.8);
+
+  &__body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+
+    &-items {
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      width: 390px;
+      height: 400px;
+
+      background: #fff;
+      border-radius: 50px 10px 50px 50px;
+
+      &-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+
+        cursor: pointer;
+      }
+
+      h2 {
+        margin-bottom: 20px;
+
+        line-height: 1.2;
+        text-align: center;
+      }
+    }
+  }
+}

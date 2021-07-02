@@ -2,24 +2,32 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import Facebook from '../../../assets/img/icons/facebook-white.svg';
 import Logo from '../../../assets/img/icons/logo.svg';
-import Facebook from '../../../assets/img/sections/footer/facebook.svg';
 import Github from '../../../assets/img/sections/footer/github.svg';
 import Medium from '../../../assets/img/sections/footer/medium.svg';
 import Telegram from '../../../assets/img/sections/footer/telegram.svg';
 import Twitter from '../../../assets/img/sections/footer/twitter.svg';
+import WeChat from '../../../assets/img/sections/footer/weChat.svg';
+import { ModalQR } from '..';
 
 import './Footer.scss';
 
 const Footer: React.FC = () => {
-  const { t } = useTranslation();
+  const [modalQr, setModalQr] = React.useState(false);
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
 
+  const showModalQR = () => {
+    setModalQr(true);
+  };
   return (
     <footer className="footer">
+      {modalQr ? <ModalQR showModal={modalQr} closeModal={setModalQr} /> : ''}
       <div className="row">
-        <Link to="/#">
+        <span>
           <img src={Logo} alt="logo" />
-        </Link>
+        </span>
         <nav className="footer__navigation-container">
           <ul className="footer__navigation">
             <li className="footer__navigation-item">
@@ -53,11 +61,6 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li className="footer__socials-item">
-              <a href="/#" target="_blank" className="footer__social circle">
-                <img src={Medium} alt="medium" />
-              </a>
-            </li>
-            <li className="footer__socials-item">
               <a
                 href="https://www.facebook.com/btcmtofficial"
                 target="_blank"
@@ -68,19 +71,34 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li className="footer__socials-item">
-              <a
-                href="https://t.me/btcmtofficial"
-                target="_blank"
-                className="footer__social circle"
-                rel="noreferrer"
-              >
-                <img src={Telegram} alt="telegram" />
+              <a href="/#" target="_blank" className="footer__social circle">
+                <img src={Medium} alt="medium" />
               </a>
             </li>
             <li className="footer__socials-item">
               <a href="/#" target="_blank" className="footer__social circle">
                 <img src={Github} alt="github" />
               </a>
+            </li>
+            <li className="footer__socials-item">
+              {lang === 'en' ? (
+                <a
+                  href="https://t.me/btcmtofficialchat"
+                  target="_blank"
+                  className="footer__social circle"
+                  rel="noreferrer"
+                >
+                  <img src={Telegram} alt="Telegram" />
+                </a>
+              ) : (
+                <button
+                  onClick={() => showModalQR()}
+                  type="button"
+                  className="footer__social circle"
+                >
+                  <img src={WeChat} alt="WeChat" />
+                </button>
+              )}
             </li>
           </ul>
           <div className="footer__divider" />

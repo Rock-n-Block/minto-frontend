@@ -26,10 +26,12 @@
   }
 
   &__title {
-    max-width: 250px;
+    max-width: 270px;
+    height: 45px;
 
     @include b('tablet') {
       max-width: 350px;
+      height: auto;
     }
   }
 
@@ -69,6 +71,8 @@
       height: 75px;
 
       border: 3px solid $green;
+
+      background-color: transparent;
 
       @include b('tablet') {
         &:not(:last-child) {
@@ -128,7 +132,9 @@
     }
 
     &-tg {
-      margin: 52px auto 0;
+      margin: 32px auto 0;
+
+      background-color: transparent;
 
       width: 102px;
       height: 102px;

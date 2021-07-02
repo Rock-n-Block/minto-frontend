@@ -180,6 +180,8 @@
   }
 
   &__wrapper {
+    width: 100%;
+
     @include b('tablet') {
       position: relative;
 
@@ -204,8 +206,9 @@
   }
 
   &__nav {
+    justify-content: center;
     // margin-left: 250px;
-    margin-left: 190px;
+    width: 100%;
 
     &-open {
       position: absolute;
@@ -270,7 +273,7 @@
     &-select {
       position: absolute;
       z-index: 2;
-      top: -20px;
+      top: -23px;
 
       @include b(1025) {
         top: 0;
@@ -280,7 +283,7 @@
         position: relative;
 
         margin: 0;
-        padding: 5px;
+        padding: 8px;
 
         display: block;
 
@@ -289,7 +292,7 @@
         color: #fff;
         background-color: #6ddac0;
         border: none;
-        border-radius: 20px;
+        border-radius: 24px;
 
         &::after {
           content: '';
@@ -379,10 +382,12 @@
             transition: 0.4s ease;
 
             &.active {
-              color: #fff;
+              // color: #fff;
+              color: #6ddac0;
 
               &:hover {
-                color: #fff !important;
+                // color: #fff !important;
+                color: #40a9ff;
               }
             }
 

@@ -388,7 +388,7 @@ const Header: React.FC = observer(() => {
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </NavLink>
               <NavLink exact to="/stats" className="header__nav-item text-bold text-md text-black">
-                Stats
+                {t('header.menu.stats')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </NavLink>
               <NavLink exact to="/about" className="header__nav-item text-bold text-md text-black">
