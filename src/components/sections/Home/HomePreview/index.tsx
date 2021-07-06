@@ -40,6 +40,13 @@ const HomePreview: React.FC = () => {
 
     // TODO: Add dailyRewards from backend
     const promises = [
+      new Promise((resolve) => {
+        clogData('available (available): ', '-');
+        resolve({
+          key: 'available',
+          value: '-',
+        });
+      }),
       web3Contract.Token.methods
         .totalSupply()
         .call()
@@ -120,7 +127,7 @@ const HomePreview: React.FC = () => {
         </div>
         <div className="home__preview-info box-f box-f-ai-c">
           <Info
-            content="$42"
+            content={info.available}
             topText={t('page.home.tokenPrice')}
             className="home__preview-info-item"
           />

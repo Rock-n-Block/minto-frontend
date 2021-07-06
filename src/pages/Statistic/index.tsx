@@ -319,9 +319,15 @@ const Statistic: React.FC = () => {
               {t('page.statistic.info.rewardPerTokenWithBoost')}
             </span>
             <span className="stats-data-info-item-value">
-              {(
-                +info.rewardPerTokenWithBoostHBTC * (+info.rewardPerTokenWithBoostUSD || 0)
-              ).toFixed(2)}
+              {Number.isNaN(
+                (
+                  +info.rewardPerTokenWithBoostHBTC * (+info.rewardPerTokenWithBoostUSD || 0)
+                ).toFixed(2),
+              )
+                ? (
+                    +info.rewardPerTokenWithBoostHBTC * (+info.rewardPerTokenWithBoostUSD || 0)
+                  ).toFixed(2)
+                : '-'}
             </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">USD</span>
