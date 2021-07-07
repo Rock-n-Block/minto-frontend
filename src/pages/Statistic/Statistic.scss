@@ -17,10 +17,18 @@
     &-chart {
       padding: 40px;
 
+      @include b('mobile') {
+        padding: 30px 20px;
+      }
+
       &-head {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        @include b('mobile') {
+          flex-direction: column;
+        }
 
         &-buttons {
           padding: 10px;
@@ -32,6 +40,10 @@
           border: 1px solid #6ddac0;
           border-radius: 10em;
           box-shadow: 0 2px 30px rgba(109, 218, 192, 0.15);
+
+          @include b('mobile') {
+            margin-top: 30px;
+          }
 
           &-item {
             margin-right: 10px;
@@ -48,6 +60,11 @@
             color: #000;
             background-color: #f3f8f6;
             border-radius: 40px;
+
+            @include b('mobile') {
+              width: 60px;
+              height: 40px;
+            }
 
             &.active {
               cursor: default;
@@ -75,6 +92,10 @@
             text-transform: uppercase;
 
             color: #6ddac0;
+
+            @include b('mobile') {
+              font-size: 14px;
+            }
           }
 
           &-box {
@@ -83,6 +104,10 @@
 
             line-height: 1;
 
+            @include b('mobile') {
+              justify-content: center;
+            }
+
             &-title {
               font-size: 50px;
               font-weight: 600;
@@ -90,6 +115,10 @@
               letter-spacing: -0.05em;
 
               color: #1a2121;
+
+              @include b('mobile') {
+                font-size: 30px;
+              }
             }
 
             &-change {
@@ -123,6 +152,11 @@
         grid-template-columns: 1fr;
       }
 
+      @include b('mobile') {
+        padding: 30px 20px 50px 20px;
+        grid-gap: 20px;
+      }
+
       &-item {
         display: flex;
         flex-direction: column;
@@ -139,6 +173,10 @@
           text-transform: uppercase;
 
           opacity: 0.3;
+
+          @include b('mobile') {
+            font-size: 12px;
+          }
         }
 
         &-value {
@@ -146,6 +184,10 @@
 
           font-size: 46px;
           font-weight: 800;
+
+          @include b('mobile') {
+            font-size: 25px;
+          }
         }
 
         &-line {
@@ -162,6 +204,10 @@
           font-weight: 500;
 
           opacity: 0.3;
+
+          @include b('mobile') {
+            font-size: 16px;
+          }
         }
       }
     }
