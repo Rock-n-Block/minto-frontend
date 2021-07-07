@@ -64,14 +64,19 @@ const Links: React.FC = () => {
               <img src={Twitter} alt="Twitter" />
             </a>
             <a
-              href="https://facebook.com/btcmtofficial"
+              href="https://www.facebook.com/btcmtofficial"
               target="_blank"
               className="link__subscribe__network circle box-f-c"
               rel="noreferrer"
             >
               <img src={Facebook} alt="Facebook" />
             </a>
-            <a href="/#" target="_blank" className="link__subscribe__network circle box-f-c">
+            <a
+              href="https://medium.com/@btcmtofficial"
+              rel="noreferrer"
+              target="_blank"
+              className="link__subscribe__network circle box-f-c"
+            >
               <img src={Medium} alt="Medium" />
             </a>
             <a href="/#" target="_blank" className="link__subscribe__network circle box-f-c">

@@ -31,9 +31,9 @@ const AboutContacts: React.FC = () => {
             </ul>
           </div>
         </div>
-        <a href="mailto:support@minto.io">
+        <a href="mailto:info@minto.finance">
           <Button icon={IconMail} className="about-contacts__support-btn" colorScheme="white">
-            support@minto.io
+            info@minto.finance
           </Button>
         </a>
       </div>

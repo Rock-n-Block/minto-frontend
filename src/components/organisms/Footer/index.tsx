@@ -71,7 +71,12 @@ const Footer: React.FC = () => {
               </a>
             </li>
             <li className="footer__socials-item">
-              <a href="/#" target="_blank" className="footer__social circle">
+              <a
+                href="https://medium.com/@btcmtofficial"
+                target="_blank"
+                className="footer__social circle"
+                rel="noreferrer"
+              >
                 <img src={Medium} alt="medium" />
               </a>
             </li>
@@ -83,7 +88,7 @@ const Footer: React.FC = () => {
             <li className="footer__socials-item">
               {lang === 'en' ? (
                 <a
-                  href="https://t.me/btcmtofficialchat"
+                  href="https://t.me/btcmtofficial"
                   target="_blank"
                   className="footer__social circle"
                   rel="noreferrer"
