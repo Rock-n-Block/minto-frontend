@@ -63,23 +63,20 @@
     },
     "staking": {
       "inputError": "请在提款字段中输入值（两个或一个）。",
-      "warning": "请注意！ 您发送的：{stLocked}（锁定）和 {stUnlocked}（解锁）",
       "wait": "请稍候，抵押正在进行中。",
-      "complete": "您的 {token} {stLocked}（锁定）和 {stUnlocked}（解锁）已完成！",
+      "complete": "您的 锁定 和 解锁 已完成！",
       "link": "外部链接 查看TX"
     },
     "withdraw": {
       "inputError": "请在提款字段中输入值（两个或一个）。",
-      "warning": "请注意！ 您发送的：{wdLocked} (Locked) 和 {wdUnlocked} (Unlocked).",
       "wait": "请稍候，提现正在进行中。",
-      "complete": "您的提款 {token} {wdLocked}（锁定）和 {wdUnlocked}（解锁）完成！",
+      "complete": "您的提款 锁定 和 解锁 完成！",
       "link": "外部链接 查看TX"
     },
     "claim": {
       "inputError": "請在索賠字段中輸入值。",
-      "warning": "请注意！ 您将获得：{mnValue} {token}。",
       "wait": "请稍候，索赔正在进行中。",
-      "complete": "您的索賠 {value} {token} 已完成！",
+      "complete": "您的索賠 已完成！",
       "link": "外部链接 查看TX"
     }
   },

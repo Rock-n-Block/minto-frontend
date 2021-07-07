@@ -126,20 +126,6 @@ const Staking: React.FC = () => {
     const amount = +stUnlocked === 0 ? 0 : deNormalizedValue(stUnlocked);
     const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
 
-    notify(
-      customNotify({
-        translate: {
-          key: 'notifications.staking.warning',
-          data: {
-            wdLocked,
-            wdUnlocked,
-          },
-        },
-        text: `Attention! You send: ${stLocked} (Locked) and ${stUnlocked} (Unlocked)`,
-      }),
-      'warning',
-    );
-
     store.contractService
       .startStake(amount, lAmount)
       .then(
@@ -187,20 +173,6 @@ const Staking: React.FC = () => {
 
     const amount = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked);
     const lAmount = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked);
-
-    notify(
-      customNotify({
-        translate: {
-          key: 'notifications.withdraw.warning',
-          data: {
-            wdLocked,
-            wdUnlocked,
-          },
-        },
-        text: `Attention! You send: ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked)`,
-      }),
-      'warning',
-    );
 
     setWithdrawProgress(true);
 

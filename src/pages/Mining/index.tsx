@@ -66,20 +66,6 @@ const Mining: React.FC = () => {
       return;
     }
 
-    notify(
-      customNotify({
-        translate: {
-          key: 'notifications.claim.warning',
-          data: {
-            token: 'HBTC',
-            mnValue,
-          },
-        },
-        text: `Attention! You will get: ${mnValue} HBTC.`,
-      }),
-      'warning',
-    );
-
     setMiningProgress(true);
     if (mnValue === +miningInfo.availableToClaim) {
       store.contractService
