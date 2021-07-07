@@ -5,6 +5,7 @@ import nextId from 'react-id-generator';
 import axios from 'axios';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 import Web3 from 'web3';
 
 import { Calculator, HistoryTable } from '../../components/organisms';
@@ -14,6 +15,21 @@ import { IData } from '../../types';
 import { API, clogData, dataToObject, getDailyRewards, normalizedValue } from '../../utils';
 
 import './Statistic.scss';
+
+interface IChartData {
+  [index: string]: IChartDataItem[];
+}
+interface IChartDataItem {
+  x: string;
+  y: number;
+}
+
+interface IChartButton {
+  id: number;
+  title: string;
+  info: string;
+  active: boolean;
+}
 
 const Statistic: React.FC = () => {
   const store = useStore();
@@ -32,24 +48,28 @@ const Statistic: React.FC = () => {
     {
       id: 0,
       title: '1d',
+      info: 'day',
       active: true,
     },
     {
       id: 1,
       title: '1w',
+      info: 'week',
       active: false,
     },
     {
       id: 2,
       title: '1m',
+      info: 'month',
       active: false,
     },
     {
       id: 3,
       title: '1y',
+      info: 'year',
       active: false,
     },
-  ]);
+  ] as IChartButton[]);
 
   const [info, setInfo] = React.useState({
     totalStaked: '-',
@@ -61,31 +81,97 @@ const Statistic: React.FC = () => {
     rewardsPerTokenWithBoost: '-',
   } as IData);
 
-  const dataChart = {
-    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
+  const chart = {
+    day: [
+      { x: moment.utc('2021-06-01T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 75 },
+      { x: moment.utc('2021-06-02T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 49 },
+      { x: moment.utc('2021-06-03T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 90 },
+      { x: moment.utc('2021-06-04T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 29 },
+      { x: moment.utc('2021-06-05T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 36 },
+      { x: moment.utc('2021-06-06T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 25 },
+      { x: moment.utc('2021-06-07T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 18 },
+    ],
+    week: [
+      { x: moment.utc('2021-04-26T06:00:00.508Z').format('YYYY/MM/DD'), y: 112 },
+      { x: moment.utc('2021-05-03T06:00:00.508Z').format('YYYY/MM/DD'), y: 32 },
+      { x: moment.utc('2021-05-10T06:00:00.508Z').format('YYYY/MM/DD'), y: 46 },
+      { x: moment.utc('2021-05-17T06:00:00.508Z').format('YYYY/MM/DD'), y: 213 },
+      { x: moment.utc('2021-05-24T06:00:00.508Z').format('YYYY/MM/DD'), y: 333 },
+      { x: moment.utc('2021-05-31T06:00:00.508Z').format('YYYY/MM/DD'), y: 23 },
+      { x: moment.utc('2021-06-07T06:00:00.508Z').format('YYYY/MM/DD'), y: 123 },
+    ],
+    month: [
+      { x: moment.utc('2021-01-01T00:00:00.508Z').format('YYYY/MM'), y: 1234 },
+      { x: moment.utc('2021-02-01T00:00:00.508Z').format('YYYY/MM'), y: 3123 },
+      { x: moment.utc('2021-03-01T00:00:00.508Z').format('YYYY/MM'), y: 2134 },
+      { x: moment.utc('2021-04-01T00:00:00.508Z').format('YYYY/MM'), y: 1235 },
+      { x: moment.utc('2021-05-01T00:00:00.508Z').format('YYYY/MM'), y: 4321 },
+      { x: moment.utc('2021-06-01T00:00:00.508Z').format('YYYY/MM'), y: 5632 },
+      { x: moment.utc('2021-07-01T00:00:00.508Z').format('YYYY/MM'), y: 4433 },
+    ],
+    year: [
+      { x: moment.utc('2020-01-01T00:00:00.508Z').format('YYYY'), y: 32112 },
+      { x: moment.utc('2021-01-01T00:00:00.508Z').format('YYYY'), y: 43212 },
+      { x: moment.utc('2022-01-01T00:00:00.508Z').format('YYYY'), y: 32123 },
+      { x: moment.utc('2023-01-01T00:00:00.508Z').format('YYYY'), y: 12345 },
+      { x: moment.utc('2024-01-01T00:00:00.508Z').format('YYYY'), y: 1232 },
+      { x: moment.utc('2025-01-01T00:00:00.508Z').format('YYYY'), y: 9912 },
+      { x: moment.utc('2026-01-01T00:00:00.508Z').format('YYYY'), y: 48765 },
+    ],
+  } as IChartData;
+
+  const [chartData, setChartData] = React.useState(chart.day as IChartDataItem[]);
+
+  const [dataChart, setDataChart] = React.useState({
     datasets: [
       {
         label: 'BTCMT',
         tension: 0.3,
-        data: [12, 19, 3, 5, 2, 3, 123, 77, 44, 66, 54],
+        data: chartData,
         fill: true,
         backgroundColor: 'rgba(109, 218, 192,0.1)',
         borderColor: 'rgb(109, 218, 192)',
+        radius: 5,
+        borderWidth: 1,
+        pointHitRadius: 5,
       },
     ],
-  };
+  });
+
+  // let chartReference = {};
+
+  // const dataChart = {
+  //   datasets: [
+  //     {
+  //       label: 'BTCMT',
+  //       tension: 0.3,
+  //       data: chartData,
+  //       fill: true,
+  //       backgroundColor: 'rgba(109, 218, 192,0.1)',
+  //       borderColor: 'rgb(109, 218, 192)',
+  //       radius: 5,
+  //       borderWidth: 1,
+  //       pointHitRadius: 5,
+  //     },
+  //   ],
+  // };
 
   const options = {
     scales: {
-      // xAxes: {
-      //   display: false,
-      // },
+      xAxes: [
+        {
+          type: 'time',
+          time: { parser: 'YYYY/MM/DD HH:mm:ss' },
+        },
+      ],
       yAxes: [
         {
+          display: true,
           ticks: {
-            display: false,
-            beginAtZero: true,
+            beginAtZero: false,
           },
+          suggestedMax: 600,
+          suggestedMin: 0,
         },
       ],
     },
@@ -197,22 +283,35 @@ const Statistic: React.FC = () => {
 
   // Functions ------------------------------------------------
 
-  const changeChart = (data: number) => {
-    if (chartButton === data) return;
+  const changeChart = (data: IChartButton) => {
+    if (chartButton === data.id) return;
 
     const chartButtomsCopy = chartButtons;
 
     chartButtomsCopy.map((btn) => {
-      if (btn.id === data) {
-        btn.active = true;
-      } else {
-        btn.active = false;
-      }
+      btn.active = btn.id === data.id;
       return btn;
     });
 
-    setChartButton(data);
+    setChartButton(data.id);
     setChartButtons(chartButtomsCopy);
+    setChartData(chart[data.info]);
+
+    setDataChart({
+      datasets: [
+        {
+          label: 'BTCMT',
+          tension: 0.3,
+          data: chart[data.info],
+          fill: true,
+          backgroundColor: 'rgba(109, 218, 192,0.1)',
+          borderColor: 'rgb(109, 218, 192)',
+          radius: 5,
+          borderWidth: 1,
+          pointHitRadius: 5,
+        },
+      ],
+    });
   };
 
   // Change amounts ------------------------------------------------
@@ -253,11 +352,11 @@ const Statistic: React.FC = () => {
             <div className="stats-data-chart-head-buttons">
               {chartButtons.map((i) => (
                 <span
-                  onClick={() => changeChart(i.id)}
+                  onClick={() => changeChart(i)}
                   role="button"
                   tabIndex={0}
                   key={nextId()}
-                  onKeyDown={() => changeChart(i.id)}
+                  onKeyDown={() => changeChart(i)}
                   className={cn('stats-data-chart-head-buttons-item', {
                     active: i.active,
                   })}
@@ -268,7 +367,14 @@ const Statistic: React.FC = () => {
             </div>
           </div>
           <div className="stats-data-chart-line">
-            <Line type="line" data={dataChart} options={options} />
+            <Line
+              type="line"
+              data={dataChart}
+              options={options}
+              // redraw
+              // eslint-disable-next-line no-return-assign
+              // ref={(reference) => (chartReference = reference)}
+            />
           </div>
         </div>
         <div className="stats-data-info">
