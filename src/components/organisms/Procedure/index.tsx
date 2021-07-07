@@ -84,7 +84,7 @@ const Procedure: React.FC<IProcedure> = ({
         <div className="procedure__input">
           {miniButtonShow ? (
             <div className="procedure__input-title box-f-c">
-              <span className="text-sm">{inputTitle}</span>
+              <span className="text-sm text-upper">{inputTitle}</span>
               <Button colorScheme="outline" size="ssm" onClick={btnClick}>
                 <div
                   className={cn('text-sm', {

@@ -168,7 +168,7 @@
         "right": "available to claim"
       },
       "textButton": "amount",
-      "button": "available",
+      "button": "all available",
       "button2": "claim",
       "history": {
         "title": "History",
