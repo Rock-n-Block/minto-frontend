@@ -83,13 +83,28 @@ const Statistic: React.FC = () => {
 
   const chart = {
     day: [
-      { x: moment.utc('2021-06-01T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 75 },
-      { x: moment.utc('2021-06-02T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 49 },
-      { x: moment.utc('2021-06-03T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 90 },
-      { x: moment.utc('2021-06-04T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 29 },
-      { x: moment.utc('2021-06-05T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 36 },
-      { x: moment.utc('2021-06-06T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 25 },
-      { x: moment.utc('2021-06-07T00:00:00.508Z').format('YYYY/MM/DD HH:mm:ss'), y: 18 },
+      { x: moment.utc('2021-06-01T01:00:00.508Z').format('HH:mm'), y: 49 },
+      { x: moment.utc('2021-06-01T02:00:00.508Z').format('HH:mm'), y: 90 },
+      { x: moment.utc('2021-06-01T03:00:00.508Z').format('HH:mm'), y: 29 },
+      { x: moment.utc('2021-06-01T04:00:00.508Z').format('HH:mm'), y: 36 },
+      { x: moment.utc('2021-06-01T05:00:00.508Z').format('HH:mm'), y: 25 },
+      { x: moment.utc('2021-06-01T06:00:00.508Z').format('HH:mm'), y: 286 },
+      { x: moment.utc('2021-06-01T07:00:00.508Z').format('HH:mm'), y: 192 },
+      { x: moment.utc('2021-06-01T08:00:00.508Z').format('HH:mm'), y: 168 },
+      { x: moment.utc('2021-06-01T09:00:00.508Z').format('HH:mm'), y: 54 },
+      { x: moment.utc('2021-06-01T10:00:00.508Z').format('HH:mm'), y: 96 },
+      { x: moment.utc('2021-06-01T11:00:00.508Z').format('HH:mm'), y: 62 },
+      { x: moment.utc('2021-06-01T12:00:00.508Z').format('HH:mm'), y: 77 },
+      { x: moment.utc('2021-06-01T13:00:00.508Z').format('HH:mm'), y: 32 },
+      { x: moment.utc('2021-06-01T14:00:00.508Z').format('HH:mm'), y: 49 },
+      { x: moment.utc('2021-06-01T15:00:00.508Z').format('HH:mm'), y: 85 },
+      { x: moment.utc('2021-06-01T16:00:00.508Z').format('HH:mm'), y: 93 },
+      { x: moment.utc('2021-06-01T17:00:00.508Z').format('HH:mm'), y: 63 },
+      { x: moment.utc('2021-06-01T18:00:00.508Z').format('HH:mm'), y: 155 },
+      { x: moment.utc('2021-06-01T19:00:00.508Z').format('HH:mm'), y: 73 },
+      { x: moment.utc('2021-06-01T20:00:00.508Z').format('HH:mm'), y: 234 },
+      { x: moment.utc('2021-06-01T21:00:00.508Z').format('HH:mm'), y: 456 },
+      { x: moment.utc('2021-06-01T22:00:00.508Z').format('HH:mm'), y: 123 },
     ],
     week: [
       { x: moment.utc('2021-04-26T06:00:00.508Z').format('YYYY/MM/DD'), y: 112 },
@@ -137,24 +152,6 @@ const Statistic: React.FC = () => {
       },
     ],
   });
-
-  // let chartReference = {};
-
-  // const dataChart = {
-  //   datasets: [
-  //     {
-  //       label: 'BTCMT',
-  //       tension: 0.3,
-  //       data: chartData,
-  //       fill: true,
-  //       backgroundColor: 'rgba(109, 218, 192,0.1)',
-  //       borderColor: 'rgb(109, 218, 192)',
-  //       radius: 5,
-  //       borderWidth: 1,
-  //       pointHitRadius: 5,
-  //     },
-  //   ],
-  // };
 
   const options = {
     scales: {
@@ -372,7 +369,6 @@ const Statistic: React.FC = () => {
               data={dataChart}
               options={options}
               // redraw
-              // eslint-disable-next-line no-return-assign
               // ref={(reference) => (chartReference = reference)}
             />
           </div>

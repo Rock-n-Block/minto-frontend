@@ -9,19 +9,13 @@
   &__container {
     margin-top: 72px;
 
-    // grid-template-rows: 1fr 1fr;
-    // grid-template-columns: repeat(5, 1fr);
-    // row-gap: 86px;
-
     display: grid;
     grid-template-columns: repeat(auto-fit, 15%);
     justify-content: space-around;
     gap: 20px;
 
     @include b('tablet') {
-      grid-template-rows: repeat(5, 1fr);
-      grid-template-columns: repeat(2, 1fr);
-      row-gap: 20px;
+      grid-template-columns: repeat(2, 25%);
     }
   }
 

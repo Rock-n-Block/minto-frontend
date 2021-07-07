@@ -5,9 +5,10 @@ import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
-import NewsImg1 from '../../../../assets/img/sections/home/news-1.jpg';
-import NewsImg2 from '../../../../assets/img/sections/home/news-2.jpg';
-import NewsImg3 from '../../../../assets/img/sections/home/news-3.jpg';
+import NewsImg1 from '../../../../assets/img/sections/home/news-1.png';
+import NewsImg2 from '../../../../assets/img/sections/home/news-2.png';
+import NewsImg3 from '../../../../assets/img/sections/home/news-3.png';
+import NewsImg4 from '../../../../assets/img/sections/home/news-4.png';
 
 import './HomeNews.scss';
 
@@ -25,39 +26,43 @@ const HomeNews: React.FC = () => {
   const slides = [
     {
       img: NewsImg1,
-      date: 'March 24, 2021',
-      title: 'CryptoUniverse spring update',
-      text: 'We could not wait to present you the first part of the huge transformation. CryptoUniverse',
+      date: 'July 07, 2021',
+      title: 'Telegram chat',
+      text: 'We want to be in touch with you in the way it will be comfortable. Cryptocommunity and millions of people around the world love Telegram. The Minto team is not an exception.',
+      link: {
+        text: 'Follow the channel and chat',
+        url: 'https://t.me/btcmtofficial',
+      },
     },
     {
       img: NewsImg2,
-      date: 'March 9, 2021',
-      title: 'March 9th Maintenance',
-      text: 'Dear users,   We had update-related maintenance today. It took some time for our provider to complete',
+      date: 'July 07, 2021',
+      title: 'Crypto Daily article',
+      text: 'Here is an article about the current state of bitcoin mining. Sustainable future, ecology and origins. All the basic things and a modern opinion mentioning Minto.',
+      link: {
+        text: 'Read Crypto Daily',
+        url: 'https://cryptodaily.co.uk/preview/52287',
+      },
     },
     {
       img: NewsImg3,
-      date: 'February 12, 2021',
-      title: 'Crypto Valentine’s Day - Happy 4 CryptoUniverse Birthday',
-      text: 'CryptoUniverse was born on Valentine’s day, so everything we do is filled with love with',
+      date: 'July 07, 2021',
+      title: 'Medium',
+      text: 'People love Medium as a platform for authors that allows them to comfortably share vision and thoughts. Our team has something to say too. Read our first article about the value for investors.',
+      link: {
+        text: 'Follow us',
+        url: 'https://medium.com/@btcmtofficial/how-minto-gives-value-to-investors-8ea3c677616c?source=---------2----------------------------',
+      },
     },
     {
-      img: NewsImg1,
-      date: 'March 24, 2021',
-      title: 'CryptoUniverse spring update',
-      text: 'We could not wait to present you the first part of the huge transformation. CryptoUniverse',
-    },
-    {
-      img: NewsImg2,
-      date: 'March 9, 2021',
-      title: 'March 9th Maintenance',
-      text: 'Dear users,   We had update-related maintenance today. It took some time for our provider to complete',
-    },
-    {
-      img: NewsImg3,
-      date: 'February 12, 2021',
-      title: 'Crypto Valentine’s Day - Happy 4 CryptoUniverse Birthday',
-      text: 'CryptoUniverse was born on Valentine’s day, so everything we do is filled with love with',
+      img: NewsImg4,
+      date: 'July 07, 2021',
+      title: 'Tokenomics',
+      text: 'Our second article on Medium. Find out more about our vision on token and get details about how the economics of token works.',
+      link: {
+        text: 'Read about tokeonomics',
+        url: 'https://medium.com/@btcmtofficial/minto-vision-and-tokenomics-6826ef75b1c4',
+      },
     },
   ];
   return (
@@ -72,7 +77,7 @@ const HomeNews: React.FC = () => {
             <ArrowImg />
           </div>
           <div className="text-green text-smd home__data-slider-nav-counter">
-            {activeSlide / slidesPerGroud}/{slides.length / slidesPerGroud}
+            {Math.ceil(activeSlide / slidesPerGroud)}/{Math.ceil(slides.length / slidesPerGroud)}
           </div>
           <div
             ref={nextRef}
@@ -128,6 +133,14 @@ const HomeNews: React.FC = () => {
               </div>
               <div className="home__news-slide-title text text-bold-e">{slide.title}</div>
               <div className="home__news-slide-text text-md">{slide.text}</div>
+              <a
+                href={slide.link.url}
+                target="_blank"
+                rel="nofollow noreferrer"
+                className="home__news-slide-link text-md"
+              >
+                {slide.link.text}
+              </a>
             </SwiperSlide>
           ))}
         </Swiper>
