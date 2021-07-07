@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { About } from '../../components/organisms';
-import { AboutContacts, AboutTeam } from '../../components/sections';
+import { AboutContacts, HomeDataCentres } from '../../components/sections';
 
 import 'swiper/swiper.scss';
 
@@ -10,7 +10,8 @@ const AboutPage: React.FC = () => {
     <main className="about-page">
       <About />
       <AboutContacts />
-      <AboutTeam />
+      {/* <AboutTeam /> */}
+      <HomeDataCentres />
     </main>
   );
 };

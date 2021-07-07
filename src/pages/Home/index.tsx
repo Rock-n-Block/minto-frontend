@@ -1,13 +1,7 @@
 import React from 'react';
 
 import { About, Subscribe } from '../../components/organisms';
-import {
-  HomeDataCentres,
-  HomeNews,
-  HomePartners,
-  HomePreview,
-  HomeRoadmap,
-} from '../../components/sections';
+import { HomeNews, HomePartners, HomePreview, HomeRoadmap } from '../../components/sections';
 
 import 'swiper/swiper.scss';
 
@@ -16,7 +10,6 @@ const Home: React.FC = () => {
     <main className="home">
       <HomePreview />
       <About />
-      <HomeDataCentres />
       <Subscribe />
       <HomePartners />
       <HomeRoadmap />

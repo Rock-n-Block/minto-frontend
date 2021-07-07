@@ -5,14 +5,10 @@ import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
-import Img1 from '../../../../assets/img/sections/home/data-1.jpg';
-import Img2 from '../../../../assets/img/sections/home/data-2.jpg';
-import Img3 from '../../../../assets/img/sections/home/data-3.jpg';
-import Img4 from '../../../../assets/img/sections/home/data-4.jpg';
-import Img5 from '../../../../assets/img/sections/home/data-5.jpg';
-import Img6 from '../../../../assets/img/sections/home/data-6.jpg';
-import Img7 from '../../../../assets/img/sections/home/data-7.jpg';
-import Img8 from '../../../../assets/img/sections/home/data-8.jpg';
+import Img1 from '../../../../assets/img/sections/about/data/data-1.jpg';
+import Img2 from '../../../../assets/img/sections/about/data/data-2.jpg';
+import Img3 from '../../../../assets/img/sections/about/data/data-3.jpg';
+import Img4 from '../../../../assets/img/sections/about/data/data-4.jpg';
 import ShadowImg from '../../../../assets/img/sections/home/shadow.svg';
 
 import './HomeDataCentres.scss';
@@ -43,22 +39,6 @@ const HomeDataCentres: React.FC = () => {
     {
       img: Img4,
       text: `${t('page.home.component.datacenters.slide.four')}`,
-    },
-    {
-      img: Img5,
-      text: '',
-    },
-    {
-      img: Img6,
-      text: '',
-    },
-    {
-      img: Img7,
-      text: '',
-    },
-    {
-      img: Img8,
-      text: '',
     },
   ];
   return (
