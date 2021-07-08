@@ -1,7 +1,8 @@
 @import 'src/styles/mixins/media';
 
 .home-partners {
-  padding: 150px 0;
+  // padding: 150px 0;
+  padding: 150px 0 50px 0;
   @include b('tablet') {
     padding: 40px 0 60px;
   }
