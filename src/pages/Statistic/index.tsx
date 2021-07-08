@@ -354,8 +354,8 @@ const Statistic: React.FC = () => {
                 {t('page.statistic.chart.title')} (BTCMT)
               </span>
               <div className="stats-data-chart-head-price-box">
-                <span className="stats-data-chart-head-price-box-title">$255</span>
-                <span className="stats-data-chart-head-price-box-change">3.2%</span>
+                <span className="stats-data-chart-head-price-box-title">-</span>
+                <span className="stats-data-chart-head-price-box-change">-</span>
               </div>
             </div>
             <div className="stats-data-chart-head-buttons">
