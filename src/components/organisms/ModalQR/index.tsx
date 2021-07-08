@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Close from '../../../assets/img/icons/modal-times.svg';
-import QRcode from '../../../assets/img/qrCode.svg';
+// import QRcode from '../../../assets/img/qrCode.svg';
+import QRcode from '../../../assets/img/qrCode.jpg';
 
 import './ModalQR.scss';
 
