@@ -138,6 +138,7 @@ const Statistic: React.FC = () => {
   const [chartData, setChartData] = React.useState(chart.day as IChartDataItem[]);
 
   const [dataChart, setDataChart] = React.useState({
+    labels: [],
     datasets: [
       {
         label: 'BTCMT',
@@ -154,6 +155,10 @@ const Statistic: React.FC = () => {
   });
 
   const options = {
+    parsing: {
+      xAxisKey: 'x',
+      yAxisKey: 'y',
+    },
     scales: {
       xAxes: [
         {
@@ -295,6 +300,7 @@ const Statistic: React.FC = () => {
     setChartData(chart[data.info]);
 
     setDataChart({
+      labels: [],
       datasets: [
         {
           label: 'BTCMT',
