@@ -126,9 +126,16 @@ const HomePreview: React.FC = () => {
               {t('page.home.buttons.stake')}
             </NavLink>
           </Button>
-          <Button size="md" colorScheme="outline" className="home__preview-btn">
-            <div className="text-upper text-slg">{t('page.home.buttons.buy')}</div>
-          </Button>
+          <a
+            className="home__preview-btn"
+            rel="nofollow noreferrer"
+            target="_blank"
+            href="https://forms.gle/jq7kVz9Li8zCgfG58"
+          >
+            <Button size="md" colorScheme="outline" className="home__preview-btn">
+              <div className="text-upper text-slg">{t('page.home.buttons.buy')}</div>
+            </Button>
+          </a>
         </div>
         <div className="home__preview-info box-f box-f-ai-c">
           <Info
