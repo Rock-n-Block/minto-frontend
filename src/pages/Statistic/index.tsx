@@ -12,7 +12,7 @@ import { Calculator, HistoryTable } from '../../components/organisms';
 import { chain, contracts } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
-import { API, clogData, dataToObject, getDailyRewards, normalizedValue } from '../../utils';
+import { API, clogData, dataToObject, getDailyRewards } from '../../utils';
 
 import './Statistic.scss';
 
@@ -206,7 +206,8 @@ const Statistic: React.FC = () => {
           clogData('totalStaked (totalStaked): ', value);
           return {
             key: 'totalStaked',
-            value: normalizedValue(value),
+            // value: normalizedValue(value),
+            value: '-',
           };
         }),
       web3Contract.Token.methods
@@ -216,7 +217,8 @@ const Statistic: React.FC = () => {
           clogData('totalIssued (totalIssued): ', value);
           return {
             key: 'totalIssued',
-            value: normalizedValue(value),
+            // value: normalizedValue(value),
+            value: '-',
           };
         }),
       web3Contract.Staking.methods
@@ -226,7 +228,8 @@ const Statistic: React.FC = () => {
           clogData('allTimeMined (allTimeMined): ', value);
           return {
             key: 'allTimeMined',
-            value: normalizedValue(value),
+            // value: normalizedValue(value),
+            value: '-',
           };
         }),
       await getDailyRewards()
@@ -234,7 +237,8 @@ const Statistic: React.FC = () => {
           clogData('estimateDailyRewardsToday (estimateDailyRewardsToday): ', value);
           return {
             key: 'estimateDailyRewardsToday',
-            value: normalizedValue(value),
+            // value: normalizedValue(value),
+            value: '-',
           };
         })
         .catch((err: any) => clogData('rewardPerTokenWithBoostHBTC error:', err)),
@@ -243,7 +247,8 @@ const Statistic: React.FC = () => {
           clogData('rewardPerTokenWithBoostHBTC (rewardPerTokenWithBoostHBTC): ', value);
           return {
             key: 'rewardPerTokenWithBoostHBTC',
-            value: normalizedValue(value / (1 * 10 ** 18)),
+            // value: normalizedValue(value / (1 * 10 ** 18)),
+            value: '-',
           };
         })
         .catch((err: any) => clogData('rewardPerTokenWithBoostHBTC error:', err)),
@@ -254,7 +259,8 @@ const Statistic: React.FC = () => {
             clogData('rewardPerTokenWithBoostUSD: ', res.data['huobi-btc'].usd);
             return {
               key: 'rewardPerTokenWithBoostUSD',
-              value: res.data['huobi-btc'].usd,
+              // value: res.data['huobi-btc'].usd,
+              value: '-',
             };
           },
           (err) => {
@@ -390,7 +396,7 @@ const Statistic: React.FC = () => {
           </div>
           <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
-              {t('page.statistic.info.totalStaked')}
+              {t('page.statistic.info.totalIssued')}
             </span>
             <span className="stats-data-info-item-value">{info.totalIssued}</span>
             <span className="stats-data-info-item-line" />
@@ -409,7 +415,7 @@ const Statistic: React.FC = () => {
               {t('page.statistic.info.boostFactor')}
             </span>
             <span className="stats-data-info-item-value">
-              {(((+info.totalStaked || 0) * 0.1) / 50000).toFixed(6)}
+              {/* {(((+info.totalStaked || 0) * 0.1) / 50000).toFixed(6)} */}-
             </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>

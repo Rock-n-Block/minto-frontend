@@ -6,7 +6,7 @@ import Web3 from 'web3';
 import { chain, contracts } from '../../../../config';
 import { useStore } from '../../../../store';
 import { IData } from '../../../../types';
-import { clogData, dataToObject, getDailyRewards, normalizedValue } from '../../../../utils';
+import { clogData, dataToObject, getDailyRewards } from '../../../../utils';
 import { Button, Info } from '../../../atoms';
 
 import './HomePreview.scss';
@@ -54,7 +54,8 @@ const HomePreview: React.FC = () => {
           clogData('totalSupply (totalSupply): ', value);
           return {
             key: 'totalSupply',
-            value: normalizedValue(value),
+            // value: normalizedValue(value),
+            value: '-',
           };
         }),
       new Promise((resolve) => {
@@ -67,9 +68,11 @@ const HomePreview: React.FC = () => {
 
       await getDailyRewards()
         .then((value: number) => {
+          clogData('getDailyRewards (getDailyRewards): ', value);
           return {
             key: 'dailyRewards',
-            value: normalizedValue(value),
+            // value: normalizedValue(value),
+            value: '-',
           };
         })
         .catch((err: any) => clogData('daily reward error:', err)),
@@ -80,7 +83,8 @@ const HomePreview: React.FC = () => {
           clogData('alreadyStaked (alreadyStaked): ', value);
           return {
             key: 'alreadyStaked',
-            value: normalizedValue(value),
+            // value: normalizedValue(value),
+            value: '-',
           };
         }),
       web3Contract.Staking.methods
@@ -90,7 +94,8 @@ const HomePreview: React.FC = () => {
           clogData('allTimeMined (allTimeMined): ', value);
           return {
             key: 'allTimeMined',
-            value: normalizedValue(value),
+            // value: normalizedValue(value),
+            value: '-',
           };
         }),
     ];
