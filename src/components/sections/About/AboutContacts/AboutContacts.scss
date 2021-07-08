@@ -22,6 +22,30 @@
     }
   }
 
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+
+    &-item {
+      margin-right: 30px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 36px;
+      height: 36px;
+
+      background-color: $black;
+      border: none;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
   &__country {
     margin-top: 70px;
 
