@@ -52,6 +52,9 @@
       padding: 0 45px;
 
       display: flex;
+      @include b('mobile') {
+        padding: 0 10px;
+      }
     }
 
     &-item {

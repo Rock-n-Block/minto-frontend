@@ -47,9 +47,13 @@
     margin-top: 50px;
 
     display: flex;
+    @include b('mobile') {
+      justify-content: center;
+
+      width: 100%;
+    }
 
     &-item {
-      margin-right: 15px;
       padding: 10px 15px;
 
       display: flex;
@@ -59,14 +63,18 @@
 
       width: 100%;
 
-      min-width: 180px;
-      max-width: max-content;
-
       text-transform: uppercase;
 
       border: 1px solid #6ddac0;
 
       border-radius: 10px;
+      @include b('mobile') {
+        width: 49%;
+      }
+
+      & + & {
+        margin-left: 15px;
+      }
 
       &:last-child {
         margin-top: 0;
