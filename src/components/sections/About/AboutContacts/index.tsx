@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Facebook from '../../../../assets/img/icons/facebook-white.svg';
-import IconMail from '../../../../assets/img/icons/mail-open.svg';
+import { ReactComponent as IconMail } from '../../../../assets/img/icons/mail-open.svg';
 // import Github from '../../../../assets/img/sections/footer/github.svg';
 import Medium from '../../../../assets/img/sections/footer/medium.svg';
 import Telegram from '../../../../assets/img/sections/footer/telegram.svg';
@@ -92,11 +92,15 @@ const AboutContacts: React.FC = () => {
             </ul>
           </div>
         </div> */}
-        <a href="mailto:info@minto.finance">
-          <Button icon={IconMail} className="about-contacts__support-btn" colorScheme="white">
-            info@minto.finance
-          </Button>
-        </a>
+        <Button
+          className="about-contacts__support-btn"
+          outLink
+          colorScheme="white"
+          link="mailto:info@minto.finance"
+        >
+          <IconMail className="btn-icon" />
+          info@minto.finance
+        </Button>
       </div>
     </div>
   );

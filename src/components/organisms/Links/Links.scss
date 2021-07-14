@@ -69,6 +69,14 @@
       }
       &-right {
         max-width: unset;
+        @include b('tablet') {
+          justify-content: center;
+        }
+        a {
+          @include b('tablet') {
+            margin-right: 20px;
+          }
+        }
       }
     }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import IconDoc from '../../../assets/img/icons/doc-detail.svg';
-import IconNewspaper from '../../../assets/img/icons/newspaper-folding.svg';
-import IconPowerpoint from '../../../assets/img/icons/powerpoint.svg';
+import { ReactComponent as IconDoc } from '../../../assets/img/icons/doc-detail.svg';
+import { ReactComponent as IconNewspaper } from '../../../assets/img/icons/newspaper-folding.svg';
+import { ReactComponent as IconPowerpoint } from '../../../assets/img/icons/powerpoint.svg';
 import { Button } from '../../atoms';
 
 import './About.scss';
@@ -23,8 +23,8 @@ const About: React.FC = () => {
               size="lg"
               colorScheme="green"
               className="about__whitepaper-btn text-upper text-bold-e text-lmd"
-              icon={IconNewspaper}
             >
+              <IconNewspaper className="btn-icon" />
               {t('component.aboutUs.buttons.whitepaper')}
             </Button>
           </a>
@@ -41,16 +41,17 @@ const About: React.FC = () => {
               <Button
                 colorScheme="outline"
                 size="lsm"
-                icon={IconDoc}
                 className="btn-about text-smd text-upper text-bold-e text-white"
               >
+                <IconDoc className="btn-icon" />
                 <span className="text-smd text-upper text-bold-e text-white">
                   {t('component.aboutUs.buttons.pressRelease')}
                 </span>
               </Button>
             </a>
             <a href={`/resources/${lang}/Minto Presentation.pdf`} target="_blank" rel="noreferrer">
-              <Button className="btn-about" colorScheme="outline" size="lsm" icon={IconPowerpoint}>
+              <Button className="btn-about" colorScheme="outline" size="lsm">
+                <IconPowerpoint className="btn-icon" />
                 <span className="text-smd text-upper text-bold-e text-white">
                   {t('component.aboutUs.buttons.presentation')}
                 </span>

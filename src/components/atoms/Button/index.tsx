@@ -21,6 +21,7 @@ export interface ButtonProps extends IColorScheme, ISize {
   shadow?: boolean;
   icon?: string;
   type?: 'submit' | 'button' | 'reset';
+  outLink?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -35,6 +36,7 @@ const Button: React.FC<ButtonProps> = ({
   linkClassName,
   icon,
   type = 'button',
+  outLink,
 }) => {
   const BtnContent = (
     <>
@@ -61,11 +63,23 @@ const Button: React.FC<ButtonProps> = ({
       {loading ? 'In progress...' : BtnContent}
     </BtnAntd>
   );
-  if (link) {
+  if (link && !outLink) {
     return (
       <Link className={classNames('btn-link', linkClassName)} to={link}>
         {Btn}
       </Link>
+    );
+  }
+  if (link && outLink) {
+    return (
+      <a
+        className={classNames('btn-link', linkClassName)}
+        href={link}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {Btn}
+      </a>
     );
   }
   return Btn;

@@ -6,13 +6,37 @@
   height: auto;
 
   border: 1.4386px solid $green;
+  transition-duration: 0.3s !important;
+  transition-delay: 0s !important;
+  transition-timing-function: ease;
+  & > * {
+    transition-delay: 0s !important;
+    transition-duration: 0.3s !important;
+    transition-timing-function: ease;
+  }
+  svg {
+    path {
+      transition: 0.3s;
+    }
+  }
 
   &-green {
     color: #fff;
     background: $green;
-    border: none;
+    border-color: transparent;
     &:hover,
-    &:active,
+    &:active {
+      color: $green !important;
+      border-color: $green;
+      * {
+        color: $green !important;
+      }
+      svg {
+        path {
+          fill: $green;
+        }
+      }
+    }
     &:focus {
       color: #fff;
       background: $green;
@@ -23,7 +47,19 @@
     color: $green;
     background: transparent;
     &:hover,
-    &:active,
+    &:active {
+      color: #fff !important;
+      background: $green;
+      border: 1.4386px solid $green;
+      * {
+        color: #fff !important;
+      }
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
     &:focus {
       color: $green;
       background: transparent;
@@ -34,6 +70,16 @@
   &-white {
     color: $green;
     background: #fff;
+    &:active,
+    &:hover {
+      background: $green;
+      color: white;
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
   }
 
   .btn-icon {
