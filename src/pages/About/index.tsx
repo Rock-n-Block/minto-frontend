@@ -4,6 +4,7 @@ import { About } from '../../components/organisms';
 import { AboutContacts, HomeDataCentres } from '../../components/sections';
 
 import 'swiper/swiper.scss';
+import './About.scss';
 
 const AboutPage: React.FC = () => {
   return (

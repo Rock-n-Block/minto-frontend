@@ -19,7 +19,8 @@
     "copyright": "© 2021 Minto. 版权所有"
   },
   "info": {
-    "connectWallet": "請連接錢包以查看信息。"
+    "connectWallet": "請連接錢包以查看信息。",
+    "inDev": "該網站部分目前正在開發中，即將推出。"
   },
   "button": {
     "processing": "加工..."

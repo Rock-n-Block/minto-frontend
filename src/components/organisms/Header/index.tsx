@@ -345,13 +345,13 @@ const Header: React.FC = observer(() => {
               >
                 {t('header.menu.mining')}
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 exact
                 to="/stats"
                 className="header__menu-nav-item text-bold text-slg text-black"
               >
                 Stats
-              </NavLink>
+              </NavLink> */}
               <NavLink
                 exact
                 to="/about"
@@ -387,10 +387,10 @@ const Header: React.FC = observer(() => {
                 {t('header.menu.mining')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
               </NavLink>
-              <NavLink exact to="/stats" className="header__nav-item text-bold text-md text-black">
+              {/* <NavLink exact to="/stats" className="header__nav-item text-bold text-md text-black">
                 {t('header.menu.stats')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />
-              </NavLink>
+              </NavLink> */}
               <NavLink exact to="/about" className="header__nav-item text-bold text-md text-black">
                 {t('header.menu.aboutUs')}
                 <img src={ArrowImg} alt="" className="header__nav-item-img" />

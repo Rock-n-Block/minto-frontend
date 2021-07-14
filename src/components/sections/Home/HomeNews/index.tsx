@@ -30,13 +30,13 @@ const HomeNews: React.FC = () => {
       title: 'Telegram chat',
       text: 'We want to be in touch with you in the way it will be comfortable. Cryptocommunity and millions of people around the world love Telegram. The Minto team is not an exception.',
       link: {
-        text: 'Follow the channel and chat',
-        url: 'https://t.me/btcmtofficial',
+        text: 'Follow the chat',
+        url: 'https://t.me/btcmtofficialchat',
       },
     },
     {
       img: NewsImg2,
-      date: 'July 07, 2021',
+      date: 'July 05, 2021',
       title: 'Crypto Daily article',
       text: 'Here is an article about the current state of bitcoin mining. Sustainable future, ecology and origins. All the basic things and a modern opinion mentioning Minto.',
       link: {
@@ -46,7 +46,7 @@ const HomeNews: React.FC = () => {
     },
     {
       img: NewsImg3,
-      date: 'July 07, 2021',
+      date: 'July 01, 2021',
       title: 'Medium',
       text: 'People love Medium as a platform for authors that allows them to comfortably share vision and thoughts. Our team has something to say too. Read our first article about the value for investors.',
       link: {
@@ -56,7 +56,7 @@ const HomeNews: React.FC = () => {
     },
     {
       img: NewsImg4,
-      date: 'July 07, 2021',
+      date: 'June 29, 2021',
       title: 'Tokenomics',
       text: 'Our second article on Medium. Find out more about our vision on token and get details about how the economics of token works.',
       link: {

@@ -41,21 +41,21 @@ const HomePreview: React.FC = () => {
     // TODO: Add dailyRewards from backend
     const promises = [
       new Promise((resolve) => {
-        clogData('available (available): ', '-');
+        clogData('available (available): ', '1,72 USD');
         resolve({
           key: 'available',
-          value: '-',
+          value: '1,72 USD',
         });
       }),
       web3Contract.Token.methods
         .totalSupply()
         .call()
-        .then((value: string) => {
-          clogData('totalSupply (totalSupply): ', value);
+        .then(() => {
+          clogData('totalSupply (totalSupply): ', '5 000 000');
           return {
             key: 'totalSupply',
             // value: normalizedValue(value),
-            value: '-',
+            value: '5 000 000',
           };
         }),
       new Promise((resolve) => {
@@ -156,7 +156,7 @@ const HomePreview: React.FC = () => {
             className="home__preview-info-item"
           />
         </div>
-        <div className="home__preview-info box-f box-f-ai-c">
+        {/* <div className="home__preview-info box-f box-f-ai-c">
           <Info
             content={info.dailyRewards}
             topText="Daily rewards"
@@ -175,7 +175,7 @@ const HomePreview: React.FC = () => {
             bottomText="HBTC"
             className="home__preview-info-item"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

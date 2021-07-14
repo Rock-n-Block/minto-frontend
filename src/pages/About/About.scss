@@ -1,0 +1,8 @@
+@import 'src/styles/mixins/media';
+.about-page {
+  .about {
+    @include b('mobile') {
+      padding-top: 100px;
+    }
+  }
+}

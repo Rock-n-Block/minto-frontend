@@ -41,6 +41,11 @@
       padding: 0;
     }
   }
+  &__tg {
+    img {
+      width: 31px;
+    }
+  }
 }
 
 .link {
@@ -61,6 +66,9 @@
 
         width: 100%;
         max-width: 360px;
+      }
+      &-right {
+        max-width: unset;
       }
     }
 
@@ -132,8 +140,6 @@
     }
 
     &-tg {
-      margin: 32px auto 0;
-
       width: 102px;
       height: 102px;
 

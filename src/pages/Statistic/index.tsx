@@ -482,12 +482,12 @@ const Statistic: React.FC = () => {
         info={[
           {
             title: t('page.statistic.component.calculator.estimatedDailyReward'),
-            value: `${dailyReward}`,
+            value: `${dailyReward || 0}`,
             text: 'HBTC',
           },
           {
             title: t('page.statistic.component.calculator.estimatedDailyReward'),
-            value: `${dailyRewardUsd}`,
+            value: `${dailyRewardUsd || 0}`,
             text: 'USD',
           },
         ]}

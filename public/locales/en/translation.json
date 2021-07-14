@@ -19,7 +19,8 @@
     "copyright": "© 2021 Minto. All rights reserved"
   },
   "info": {
-    "connectWallet": "Please Connect Wallet to see Information."
+    "connectWallet": "Please Connect Wallet to see Information.",
+    "inDev": "This website section in currently in development and will be available soon."
   },
   "button": {
     "processing": "Processing..."

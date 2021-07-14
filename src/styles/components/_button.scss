@@ -11,11 +11,24 @@
     color: #fff;
     background: $green;
     border: none;
+    &:hover,
+    &:active,
+    &:focus {
+      color: #fff;
+      background: $green;
+    }
   }
 
   &-outline {
     color: $green;
     background: transparent;
+    &:hover,
+    &:active,
+    &:focus {
+      color: $green;
+      background: transparent;
+      border: 1.4386px solid $green;
+    }
   }
 
   &-white {

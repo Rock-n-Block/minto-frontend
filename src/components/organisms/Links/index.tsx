@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Facebook from '../../../assets/img/icons/facebook.svg';
-import Github from '../../../assets/img/icons/github.svg';
 import Medium from '../../../assets/img/icons/medium.svg';
 import Telegram from '../../../assets/img/icons/telegram.svg';
 import Twitter from '../../../assets/img/icons/twitter.svg';
@@ -79,8 +78,13 @@ const Links: React.FC = () => {
             >
               <img src={Medium} alt="Medium" />
             </a>
-            <a href="/#" target="_blank" className="link__subscribe__network circle box-f-c">
-              <img src={Github} alt="Github" />
+            <a
+              href="https://t.me/btcmtofficial"
+              target="_blank"
+              rel="noreferrer"
+              className="link__subscribe__network circle box-f-c links__tg"
+            >
+              <img src={Telegram} alt="Github" />
             </a>
           </div>
         </div>
@@ -132,24 +136,43 @@ const Links: React.FC = () => {
           <h3 className="links__title text-center text text-white text-bold-e">
             {t('page.home.component.subscribe.text.right')}
           </h3>
-          <div className="link__subscribe__social-networks">
+          <div className="link__subscribe__social-networks link__subscribe__social-networks-right box-f-ai-c">
             {lang === 'en' ? (
-              <a
-                href="https://t.me/btcmtofficialchat"
-                target="_blank"
-                className="link__chat-tg circle box-f-c"
-                rel="noreferrer"
-              >
-                <img src={Telegram} alt="Telegram" />
-              </a>
+              <>
+                <a
+                  href="https://t.me/btcmtofficialchat"
+                  target="_blank"
+                  className="link__chat-tg circle box-f-c"
+                  rel="noreferrer"
+                >
+                  <img src={Telegram} alt="Telegram" />
+                </a>
+                <button
+                  type="button"
+                  className="link__chat-tg circle box-f-c"
+                  onClick={() => showModalQR()}
+                >
+                  <img src={WeChat} alt="WeChat" />
+                </button>
+              </>
             ) : (
-              <button
-                type="button"
-                className="link__chat-tg circle box-f-c"
-                onClick={() => showModalQR()}
-              >
-                <img src={WeChat} alt="WeChat" />
-              </button>
+              <>
+                <button
+                  type="button"
+                  className="link__chat-tg circle box-f-c"
+                  onClick={() => showModalQR()}
+                >
+                  <img src={WeChat} alt="WeChat" />
+                </button>
+                <a
+                  href="https://t.me/btcmtofficialchat"
+                  target="_blank"
+                  className="link__chat-tg circle box-f-c"
+                  rel="noreferrer"
+                >
+                  <img src={Telegram} alt="Telegram" />
+                </a>
+              </>
             )}
           </div>
         </div>
