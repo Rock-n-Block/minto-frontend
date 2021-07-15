@@ -42,16 +42,23 @@ const Staking: React.FC = () => {
   const { t } = useTranslation();
 
   const getStakingInfo = React.useCallback(async () => {
-    if (!store.is_contractService) store.setContractService();
+    try {
+      if (!store.is_contractService) store.setContractService();
 
-    await getDailyRewards()
-      .then((v: number) => setDailyReward(v))
-      .catch((err: any) => clogData('daily reward error:', err));
+      await getDailyRewards()
+        .then((v: number) => {
+          setDailyReward(v);
+        })
+        .catch((err: any) => clogData('daily reward error:', err));
 
-    const balanceOfSum = await store.contractService.balanceOfSumStaking();
-    setBalanceOfStaking(balanceOfSum.value);
+      const balanceOfSum = await store.contractService.balanceOfSumStaking();
+      setBalanceOfStaking(balanceOfSum.value);
+      const info = await store.contractService.stakingInfo();
 
-    setStakingInfo(await store.contractService.stakingInfo());
+      setStakingInfo(info);
+    } catch (err) {
+      console.log('err getStakingInfo', err);
+    }
   }, [store]);
 
   // Functions ------------------------------------------------

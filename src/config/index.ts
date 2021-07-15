@@ -62,7 +62,7 @@ export const contracts: IContracts = {
         abi: [],
       },
       testnet: {
-        address: '0xa75c6d58a2acd127a648dbfd6f32aa28ea1fdb10',
+        address: '0x55B5c093D5020a79aA5119387db0BB746db00fd1',
         abi: [
           { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
           {

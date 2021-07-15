@@ -96,19 +96,8 @@ export class ContractService {
     return data;
   }
 
-  public async balanceOfSumStaking(): Promise<IDataContract> {
-    const data: IDataContract = await this.token
-      .balanceOfSum(contracts.params.STAKING[contracts.type].address)
-      .call()
-      .then((value: string) => {
-        clog(`balanceOfSumStaking (balanceOfSumStaking): ${value}`);
-        return {
-          key: 'balanceOfSumStaking',
-          value: normalizedValue(value),
-        };
-      });
-
-    return data;
+  public balanceOfSumStaking() {
+    return this.token.balanceOfSum(contracts.params.STAKING[contracts.type].address).call();
   }
 
   public async getBalanceOf(): Promise<IDataContract> {
