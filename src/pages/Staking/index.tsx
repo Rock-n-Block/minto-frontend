@@ -239,7 +239,7 @@ const Staking: React.FC = () => {
           {t('info.inDev')}
         </span>
       </div> */}
-      <div className="staking-spacer" />
+      {/* <div className="staking-spacer" /> */}
 
       {store.account.address ? (
         <div>
