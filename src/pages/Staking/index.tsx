@@ -130,6 +130,7 @@ const Staking: React.FC = () => {
 
     setStakingProgress(true);
 
+    debugger;
     const amount = +stUnlocked === 0 ? 0 : deNormalizedValue(stUnlocked);
     const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
 
