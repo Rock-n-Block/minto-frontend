@@ -89,6 +89,7 @@ export interface IChainConfig {
   tx: {
     link: string;
   };
+  blockExp: string;
 }
 
 export interface IConnectWallet {

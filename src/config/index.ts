@@ -16,6 +16,7 @@ export const chain: IChainConfig = {
   tx: {
     link: is_production ? 'https://hecoinfo.com/tx' : 'https://testnet.hecoinfo.com/tx',
   },
+  blockExp: is_production ? 'https://scan.hecochain.com' : 'https://testnet.bscscan.com',
 };
 
 export const connectWallet: IConnectWallet = {
