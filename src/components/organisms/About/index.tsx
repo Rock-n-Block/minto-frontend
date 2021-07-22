@@ -35,16 +35,18 @@ const About: React.FC = () => {
         </section>
         <section className="about__left">
           <div className="about__audit box-f-ai-c m-box-f-fd-c">
-            <Button
-              colorScheme="outline"
-              size="lsm"
-              className="about__btn text-smd text-upper text-bold-e text-white"
-            >
-              <IconAudit className="btn-icon" />
-              <span className="text-smd text-upper text-bold-e text-white">
-                {t('component.aboutUs.buttons.audit')}
-              </span>
-            </Button>
+            <a href="/resources/MintoAuditReport.pdf" target="_blank" rel="noreferrer">
+              <Button
+                colorScheme="outline"
+                size="lsm"
+                className="about__btn text-smd text-upper text-bold-e text-white"
+              >
+                <IconAudit className="btn-icon" />
+                <span className="text-smd text-upper text-bold-e text-white">
+                  {t('component.aboutUs.buttons.audit')}
+                </span>
+              </Button>
+            </a>
             <div className="about__audit-text text text-white">
               <a href="https://hacken.io/" className="text-green text">
                 {t('component.aboutUs.auditLink')}
