@@ -13,7 +13,10 @@ import './HomePreview.scss';
 
 const HomePreview: React.FC = () => {
   const store = useStore();
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
 
   const [info, setInfo] = React.useState({
     available: '-',
@@ -130,7 +133,11 @@ const HomePreview: React.FC = () => {
             className="home__preview-btn"
             rel="nofollow noreferrer"
             target="_blank"
-            href="https://forms.gle/jq7kVz9Li8zCgfG58"
+            href={
+              language === 'en'
+                ? 'https://btcmt.typeform.com/to/TvDKWGwN'
+                : 'https://btcmt.typeform.com/to/m2E3RYwP'
+            }
           >
             <Button size="md" colorScheme="outline" className="home__preview-btn">
               <div className="text-upper text-slg">{t('page.home.buttons.buy')}</div>

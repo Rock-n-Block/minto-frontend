@@ -10,15 +10,17 @@ import { Button } from '../../atoms';
 import './About.scss';
 
 const About: React.FC = () => {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
 
   return (
     <div className="about">
       <div className="row ">
         <section className="about__left">
           <h2 className="about__title h2 text-white text-bold">{t('component.aboutUs.title')}</h2>
-          <p className="about__description text-lg text-white">{t('component.aboutUs.text')}</p>
+          <p className="about__description text text-white">{t('component.aboutUs.text')}</p>
           <a href="/resources/MintoWhitepaper.pdf" target="_blank">
             <Button
               size="lg"
@@ -58,7 +60,7 @@ const About: React.FC = () => {
             {t('component.aboutUs.text3')}
           </p>
           <div className="about__btns">
-            <a href={`/resources/${lang}/MintoPress-R.pdf`} target="_blank" rel="noreferrer">
+            <a href={`/resources/${language}/MintoPress-R.pdf`} target="_blank" rel="noreferrer">
               <Button
                 colorScheme="outline"
                 size="lsm"
@@ -70,7 +72,11 @@ const About: React.FC = () => {
                 </span>
               </Button>
             </a>
-            <a href={`/resources/${lang}/MintoPresentation.pdf`} target="_blank" rel="noreferrer">
+            <a
+              href={`/resources/${language}/MintoPresentation.pdf`}
+              target="_blank"
+              rel="noreferrer"
+            >
               <Button className="about__btn" colorScheme="outline" size="lsm">
                 <IconPowerpoint className="btn-icon" />
                 <span className="text-smd text-upper text-bold-e text-white">
