@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
 import NewsImg1 from '../../../../assets/img/sections/home/news-1.png';
+import NewsImg0 from '../../../../assets/img/sections/home/news-0.png';
 import NewsImg2 from '../../../../assets/img/sections/home/news-2.png';
 import NewsImg3 from '../../../../assets/img/sections/home/news-3.png';
 import NewsImg4 from '../../../../assets/img/sections/home/news-4.png';
@@ -24,6 +25,16 @@ const HomeNews: React.FC = () => {
 
   const slidesPerGroud = window.innerWidth > 768 ? 3 : 1;
   const slides = [
+    {
+      img: NewsImg0,
+      date: 'July 27, 2021',
+      title: 'Audit Report',
+      text: 'Hacken.io audit rated Minto Contract infrastructure on the top security level',
+      link: {
+        text: 'Read the Report',
+        url: 'https://hacken.io/wp-content/uploads/2021/07/12072021_Minto_SC_Audit_Report.pdf',
+      },
+    },
     {
       img: NewsImg1,
       date: 'July 07, 2021',
