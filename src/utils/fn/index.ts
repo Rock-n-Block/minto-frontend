@@ -12,8 +12,8 @@ export const normalizedValue = (value: string | number, fixed?: number): number 
 };
 
 export const deNormalizedValue = (value: string | number): string => {
-  const decimals = 10 ** contracts.decimals;
-  const amount = new BigNumber(value).multipliedBy(decimals).toString();
+  const decimals = new BigNumber(10).pow(contracts.decimals);
+  const amount = new BigNumber(value).multipliedBy(decimals).toString(10);
   return amount;
 };
 

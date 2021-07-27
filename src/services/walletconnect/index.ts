@@ -1,7 +1,7 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
 import Web3 from 'web3';
 
-import { connectWallet, contracts } from '../../config';
+import { connectWallet, contracts, chain } from '../../config';
 import { clogData, notify } from '../../utils';
 import i18n from '../../utils/i18n';
 
@@ -69,38 +69,105 @@ export class WalletConnect {
       });
   }
 
-  public getAccount(account: { address?: string; balance?: string }): Promise<any> {
+  private async checkHekoNet() {
+    const { connector, providerName } = this.connectWallet;
+    if (providerName === 'MetaMask') {
+      try {
+        const resChain = await connector.connector.request({ method: 'eth_chainId' });
+
+        if (connectWallet.network.chainID !== parseInt(resChain, 16)) {
+          try {
+            await connector.connector.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: `0x${connectWallet.network.chainID.toString(16)}` }],
+            });
+            return true;
+          } catch (error) {
+            // This error code indicates that the chain has not been added to MetaMask.
+            if (error.code === 4902) {
+              try {
+                await connector.connector.request({
+                  method: 'wallet_addEthereumChain',
+                  params: [
+                    {
+                      chainId: `0x${connectWallet.network.chainID.toString(16)}`,
+                      chainName: chain.name,
+                      rpcUrls: [chain.rpc],
+                      blockExplorerUrls: [chain.blockExp],
+                    },
+                  ],
+                });
+                try {
+                  const newChain = await connector.connector.request({ method: 'eth_chainId' });
+
+                  if (connectWallet.network.chainID !== parseInt(newChain, 16)) {
+                    throw new Error('User reject switch network');
+                  }
+                } catch (err) {
+                  throw new Error('get user chain');
+                }
+
+                return true;
+              } catch (err) {
+                throw new Error(`User reject add ${chain.name}`);
+              }
+            } else {
+              throw new Error('User reject switch network');
+            }
+          }
+        }
+      } catch (err) {
+        clogData('getAccount wallet connect - get user account err: ', err);
+        throw new Error(err);
+      }
+    }
+    return true;
+  }
+
+  public async getAccount(account: { address?: string; balance?: string }): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-      this.connectWallet.getAccounts().subscribe(
-        (userAccount: any) => {
-          clogData('user account: ', userAccount);
-          if (!account || userAccount.address !== account.address) {
-            resolve(userAccount);
-            notify(
-              `${i18n.t('notifications.wallet.connected')}: ${userAccount.address.substring(
-                0,
-                4,
-              )}...${userAccount.address.slice(
-                userAccount.address.length - 4,
-                userAccount.address.length,
-              )}`,
-              'success',
-            );
-          }
-        },
-        (err: any) => {
-          clogData('getAccount wallet connect - get user account err: ', err);
-          if (err.code && err.code === 6) {
-            notify(`⚠️ User account disconnected!`, 'success');
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
-          } else {
-            notify(`⚠️ ${i18n.t('notifications.wallet.connected')}: $${err.message.text}`, 'error');
-          }
-          reject(err);
-        },
-      );
+      this.checkHekoNet()
+        .then(() => {
+          this.connectWallet.getAccounts().subscribe(
+            (userAccount: any) => {
+              clogData('user account: ', userAccount);
+              if (!account || userAccount.address !== account.address) {
+                resolve(userAccount);
+                notify(
+                  `${i18n.t('notifications.wallet.connected')}: ${userAccount.address.substring(
+                    0,
+                    4,
+                  )}...${userAccount.address.slice(
+                    userAccount.address.length - 4,
+                    userAccount.address.length,
+                  )}`,
+                  'success',
+                );
+              }
+            },
+            (err: any) => {
+              clogData('getAccount wallet connect - get user account err: ', err);
+              if (err.code && err.code === 6) {
+                notify(`⚠️ User account disconnected!`, 'success');
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
+              } else {
+                notify(
+                  `⚠️ ${i18n.t('notifications.wallet.connected')}: $${err.message.text}`,
+                  'error',
+                );
+              }
+              reject(err);
+            },
+          );
+        })
+        .catch((err) => {
+          notify(
+            `⚠️ ${i18n.t('notifications.wallet.connected')}: $${err.message.text || err.message}`,
+            'error',
+          );
+        });
     });
   }
 }

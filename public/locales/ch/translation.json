@@ -31,10 +31,13 @@
       "text": "简而言之 - 挖矿很昂贵。 保持盈利就不用说了。 Minto 旨在通过以 BTCMT 代币的形式对挖矿能力进行代币化来降低风险和入门门槛。",
       "text2": "获得透明的挖矿奖励，就像您拥有 ASIC 设置一样，或者通过买卖任意数量的挖矿算力赚取利润，而无需处理传统挖矿的问题。",
       "text3": "比特币挖矿从未如此简单。 了解有关挖矿行业未来的更多信息",
+      "auditLink": "Hacken.io",
+      "auditText": "审计将MINTO合约基础设施评为最高安全级别",
       "buttons": {
         "whitepaper": "白皮书",
         "pressRelease": "新闻稿",
-        "presentation": "PPT"
+        "presentation": "PPT",
+        "audit": "审计报告"
       }
     }
   },

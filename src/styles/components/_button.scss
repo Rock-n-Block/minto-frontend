@@ -47,7 +47,8 @@
     color: $green;
     background: transparent;
     &:hover,
-    &:active {
+    &:active,
+    &:focus {
       color: #fff !important;
       background: $green;
       border: 1.4386px solid $green;
@@ -60,11 +61,11 @@
         }
       }
     }
-    &:focus {
-      color: $green;
-      background: transparent;
-      border: 1.4386px solid $green;
-    }
+    // &:focus {
+    //   color: $green;
+    //   background: transparent;
+    //   border: 1.4386px solid $green;
+    // }
   }
 
   &-white {

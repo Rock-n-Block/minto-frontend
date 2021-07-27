@@ -31,10 +31,13 @@
       "text": "Simply put - mining is expensive. Keeping it profitable is another part of the story. Minto aims to lower both the risks and the entry threshold by tokenizing mining power in the form of the BTCMT token.",
       "text2": "Receive transparent mining rewards as if you had an ASIC-setup or make profits by buying and selling any amount of mining power without dealing with the problems of traditional mining.",
       "text3": "Bitcoin mining has never been easier. Learn more about the future of the mining industry",
+      "auditLink": "Hacken.io",
+      "auditText": "audit rated MINTO Contract infrastructure on the top security level",
       "buttons": {
         "whitepaper": "whitepaper",
         "pressRelease": "press release",
-        "presentation": "presentation"
+        "presentation": "presentation",
+        "audit": "audit report"
       }
     }
   },
