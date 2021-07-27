@@ -2,246 +2,237 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
 
-import IconLocked from '../../assets/img/icons/lock.svg';
-import IconUnlock from '../../assets/img/icons/unlock.svg';
-import { Procedure2 } from '../../components/organisms';
-import { chain, config, update_after_tx_timeout } from '../../config';
-import { useStore } from '../../store';
-import { IData } from '../../types';
-import {
-  clogData,
-  customNotify,
-  deNormalizedValue,
-  errCode,
-  getDailyRewards,
-  notify,
-} from '../../utils';
+// import IconLocked from '../../assets/img/icons/lock.svg';
+// import IconUnlock from '../../assets/img/icons/unlock.svg';
+// import { Procedure2 } from '../../components/organisms';
+// import { chain, config, update_after_tx_timeout } from '../../config';
+// import { useStore } from '../../store';
+// import { IData } from '../../types';
+// import {
+//   clogData,
+//   customNotify,
+//   deNormalizedValue,
+//   errCode,
+//   getDailyRewards,
+//   notify,
+// } from '../../utils';
 
 import './Staking.scss';
 
 const Staking: React.FC = () => {
-  const store = useStore();
+  // const store = useStore();
 
-  const [stakingInfo, setStakingInfo] = React.useState({} as IData);
+  // const [stakingInfo, setStakingInfo] = React.useState({} as IData);
 
-  const [stLocked, setStLocked] = React.useState(0);
-  const [stUnlocked, setStUnlocked] = React.useState(0);
+  // const [stLocked, setStLocked] = React.useState(0);
+  // const [stUnlocked, setStUnlocked] = React.useState(0);
 
-  const [wdLocked, setWdLocked] = React.useState(0);
-  const [wdUnlocked, setWdUnlocked] = React.useState(0);
+  // const [wdLocked, setWdLocked] = React.useState(0);
+  // const [wdUnlocked, setWdUnlocked] = React.useState(0);
 
-  const [dailyReward, setDailyReward] = React.useState(0);
-  const [dailyShared, setDailyShared] = React.useState(0);
+  // const [dailyReward, setDailyReward] = React.useState(0);
+  // const [dailyShared, setDailyShared] = React.useState(0);
 
-  const [balanceOfStaking, setBalanceOfStaking] = React.useState(0);
-  // const [dailyRewards, setDailyRewards] = React.useState(0);
+  // const [balanceOfStaking, setBalanceOfStaking] = React.useState(0);
+  // // const [dailyRewards, setDailyRewards] = React.useState(0);
 
-  const [stakingProgress, setStakingProgress] = React.useState(false);
-  const [withdrawProgress, setWithdrawProgress] = React.useState(false);
+  // const [stakingProgress, setStakingProgress] = React.useState(false);
+  // const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
   const { t } = useTranslation();
 
-  const getStakingInfo = React.useCallback(async () => {
-    try {
-      if (!store.is_contractService) store.setContractService();
+  // const getStakingInfo = useCallback(async () => {
+  //   if (!store.is_contractService) store.setContractService();
 
-      await getDailyRewards()
-        .then((v: number) => {
-          setDailyReward(v);
-        })
-        .catch((err: any) => clogData('daily reward error:', err));
+  //   await getDailyRewards()
+  //     .then((v: number) => setDailyReward(v))
+  //     .catch((err: any) => clogData('daily reward error:', err));
 
-      const balanceOfSum = await store.contractService.balanceOfSumStaking();
-      setBalanceOfStaking(balanceOfSum.value);
-      const info = await store.contractService.stakingInfo();
+  //   const balanceOfSum = await store.contractService.balanceOfSumStaking();
+  //   setBalanceOfStaking(balanceOfSum.value);
 
-      setStakingInfo(info);
-    } catch (err) {
-      console.log('err getStakingInfo', err);
-    }
-  }, [store]);
+  //   setStakingInfo(await store.contractService.stakingInfo());
+  // }, [store]);
 
   // Functions ------------------------------------------------
 
   // TODO: add daity rewards
-  const updateDailyData = (locked: number, unlocked: number) => {
-    const amount = +locked + +unlocked;
+  // const updateDailyData = (locked: number, unlocked: number) => {
+  //   const amount = +locked + +unlocked;
 
-    const reward = amount === 0 ? 0 : dailyReward / amount;
-    const shares = (amount / (amount + balanceOfStaking)) * 100;
+  //   const reward = amount === 0 ? 0 : dailyReward / amount;
+  //   const shares = (amount / (amount + balanceOfStaking)) * 100;
 
-    setDailyReward(Number.isNaN(reward) ? 0 : +reward.toFixed(4));
-    setDailyShared(Number.isNaN(shares) ? 0 : +shares.toFixed(4));
-  };
+  //   setDailyReward(Number.isNaN(reward) ? 0 : +reward.toFixed(4));
+  //   setDailyShared(Number.isNaN(shares) ? 0 : +shares.toFixed(4));
+  // };
 
   // Change amounts ------------------------------------------------
 
-  const handleChangeStakingLockedAmount = (value: number) => {
-    setStLocked(value);
-    if (value < 0) setStLocked(0);
-    if (value > +stakingInfo.availableLocked) setStLocked(+stakingInfo.availableLocked);
-    updateDailyData(value, stUnlocked);
-  };
+  // const handleChangeStakingLockedAmount = (value: number) => {
+  //   setStLocked(value);
+  //   if (value < 0) setStLocked(0);
+  //   if (value > +stakingInfo.availableLocked) setStLocked(+stakingInfo.availableLocked);
+  //   updateDailyData(value, stUnlocked);
+  // };
 
-  const handleChangeStakingUnlockedAmount = (value: number) => {
-    setStUnlocked(value);
-    if (value < 0) setStUnlocked(0);
-    if (value > +stakingInfo.availableUnlocked) setStUnlocked(+stakingInfo.availableUnlocked);
-    updateDailyData(stLocked, value);
-  };
+  // const handleChangeStakingUnlockedAmount = (value: number) => {
+  //   setStUnlocked(value);
+  //   if (value < 0) setStUnlocked(0);
+  //   if (value > +stakingInfo.availableUnlocked) setStUnlocked(+stakingInfo.availableUnlocked);
+  //   updateDailyData(stLocked, value);
+  // };
 
-  const handleChangeWithdrawLockedAmount = (value: number) => {
-    setWdLocked(value);
-    if (value < 0) setWdLocked(0);
-    if (value > +stakingInfo.userStakesLocked) setWdLocked(+stakingInfo.userStakesLocked);
-  };
+  // const handleChangeWithdrawLockedAmount = (value: number) => {
+  //   setWdLocked(value);
+  //   if (value < 0) setWdLocked(0);
+  //   if (value > +stakingInfo.userStakesLocked) setWdLocked(+stakingInfo.userStakesLocked);
+  // };
 
-  const handleChangeWithdrawUnlockedAmount = (value: number) => {
-    setWdUnlocked(value);
-    if (value < 0) setWdUnlocked(0);
-    if (value > +stakingInfo.userStakesUnlocked) setWdUnlocked(+stakingInfo.userStakesUnlocked);
-  };
+  // const handleChangeWithdrawUnlockedAmount = (value: number) => {
+  //   setWdUnlocked(value);
+  //   if (value < 0) setWdUnlocked(0);
+  //   if (value > +stakingInfo.userStakesUnlocked) setWdUnlocked(+stakingInfo.userStakesUnlocked);
+  // };
 
   // Send Max ------------------------------------------------
 
-  const handleFullButtonStakingLockedClick = () => {
-    setStLocked(+stakingInfo.availableLocked);
-  };
+  // const handleFullButtonStakingLockedClick = () => {
+  //   setStLocked(+stakingInfo.availableLocked);
+  // };
 
-  const handleFullButtonStakingUnlockedClick = () => {
-    setStUnlocked(+stakingInfo.availableUnlocked);
-  };
+  // const handleFullButtonStakingUnlockedClick = () => {
+  //   setStUnlocked(+stakingInfo.availableUnlocked);
+  // };
 
-  const handleFullButtonWithdrawLockedClick = () => {
-    setWdLocked(+stakingInfo.userStakesLocked);
-  };
+  // const handleFullButtonWithdrawLockedClick = () => {
+  //   setWdLocked(+stakingInfo.userStakesLocked);
+  // };
 
-  const handleFullButtonWithdrawUnlockedClick = () => {
-    setWdUnlocked(+stakingInfo.userStakesUnlocked);
-  };
+  // const handleFullButtonWithdrawUnlockedClick = () => {
+  //   setWdUnlocked(+stakingInfo.userStakesUnlocked);
+  // };
 
   // Send Tx ------------------------------------------------
 
-  const handleButtonStakingClick = () => {
-    if (+stLocked === 0 && +stLocked <= 0 && +stUnlocked === 0 && +stUnlocked <= 0) {
-      notify(`${t('notifications.staking.inputError')}`, 'error');
-      return;
-    }
+  // const handleButtonStakingClick = () => {
+  //   if (+stLocked === 0 && +stLocked <= 0 && +stUnlocked === 0 && +stUnlocked <= 0) {
+  //     notify(`${t('notifications.staking.inputError')}`, 'error');
+  //     return;
+  //   }
 
-    setStakingProgress(true);
+  //   setStakingProgress(true);
 
-    debugger;
-    const amount = +stUnlocked === 0 ? 0 : deNormalizedValue(stUnlocked);
-    const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
+  //   const amount = +stUnlocked === 0 ? 0 : deNormalizedValue(stUnlocked);
+  //   const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
 
-    store.contractService
-      .startStake(amount, lAmount)
-      .then(
-        (data: any) => {
-          notify(
-            customNotify({
-              translate: {
-                key: 'notifications.staking.complete',
-                data: {
-                  token: 'BTCMT',
-                  stLocked,
-                  stUnlocked,
-                },
-              },
-              text: `Your Stake BTCMT ${stLocked} (Locked) and ${stUnlocked} (Unlocked) complete!`,
-              link: {
-                url: `${chain.tx.link}/${data[1]}`,
-                text: `${t('notifications.staking.link')}`,
-              },
-            }),
-            'success',
-          );
+  //   store.contractService
+  //     .startStake(amount, lAmount)
+  //     .then(
+  //       (data: any) => {
+  //         notify(
+  //           customNotify({
+  //             translate: {
+  //               key: 'notifications.staking.complete',
+  //               data: {
+  //                 token: 'BTCMT',
+  //                 stLocked,
+  //                 stUnlocked,
+  //               },
+  //             },
+  //             text: `Your Stake BTCMT ${stLocked} (Locked) and ${stUnlocked} (Unlocked) complete!`,
+  //             link: {
+  //               url: `${chain.tx.link}/${data[1]}`,
+  //               text: `${t('notifications.staking.link')}`,
+  //             },
+  //           }),
+  //           'success',
+  //         );
 
-          setTimeout(() => {
-            getStakingInfo();
-          }, update_after_tx_timeout);
-        },
-        (err: any) => {
-          clogData('staking error: ', err);
-          notify(`${t('notifications.error.text')} ${errCode(err.code)}`, 'error');
-        },
-      )
-      .finally(() => {
-        setStakingProgress(false);
-        setStLocked(0);
-        setStUnlocked(0);
-      });
-  };
+  //         setTimeout(() => {
+  //           getStakingInfo();
+  //         }, update_after_tx_timeout);
+  //       },
+  //       (err: any) => {
+  //         clogData('staking error: ', err);
+  //         notify(`${t('notifications.error.text')} ${errCode(err.code)}`, 'error');
+  //       },
+  //     )
+  //     .finally(() => {
+  //       setStakingProgress(false);
+  //       setStLocked(0);
+  //       setStUnlocked(0);
+  //     });
+  // };
 
-  const handleButtonWithdrawClick = () => {
-    if (+wdLocked === 0 && +wdLocked <= 0 && +wdUnlocked === 0 && +wdUnlocked <= 0) {
-      notify(`${t('notifications.withdraw.inputError')}`, 'error');
-      return;
-    }
+  // const handleButtonWithdrawClick = () => {
+  //   if (+wdLocked === 0 && +wdLocked <= 0 && +wdUnlocked === 0 && +wdUnlocked <= 0) {
+  //     notify(`${t('notifications.withdraw.inputError')}`, 'error');
+  //     return;
+  //   }
 
-    const amount = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked);
-    const lAmount = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked);
+  //   const amount = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked);
+  //   const lAmount = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked);
 
-    setWithdrawProgress(true);
+  //   setWithdrawProgress(true);
 
-    store.contractService
-      .withdrawPartially(lAmount, amount)
-      .then(
-        (data: any) => {
-          notify(
-            customNotify({
-              translate: {
-                key: 'notifications.withdraw.complete',
-                data: {
-                  token: 'BTCMT',
-                  wdLocked,
-                  wdUnlocked,
-                },
-              },
-              text: `Your Withdraw BTCMT ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked) complete!`,
-              link: {
-                url: `${chain.tx.link}/${data[1]}`,
-                text: `${t('notifications.withdraw.link')}`,
-              },
-            }),
-            'success',
-          );
+  //   store.contractService
+  //     .withdrawPartially(lAmount, amount)
+  //     .then(
+  //       (data: any) => {
+  //         notify(
+  //           customNotify({
+  //             translate: {
+  //               key: 'notifications.withdraw.complete',
+  //               data: {
+  //                 token: 'BTCMT',
+  //                 wdLocked,
+  //                 wdUnlocked,
+  //               },
+  //             },
+  //             text: `Your Withdraw BTCMT ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked) complete!`,
+  //             link: {
+  //               url: `${chain.tx.link}/${data[1]}`,
+  //               text: `${t('notifications.withdraw.link')}`,
+  //             },
+  //           }),
+  //           'success',
+  //         );
 
-          setTimeout(() => {
-            getStakingInfo();
-          }, update_after_tx_timeout);
-        },
-        (err: any) => {
-          clogData('withdraw error: ', err);
-          notify(`${t('notifications.error.text')} ${errCode(err.code)}`, 'error');
-        },
-      )
-      .finally(() => {
-        setWithdrawProgress(false);
-        setWdLocked(0);
-        setWdUnlocked(0);
-      });
-  };
+  //         setTimeout(() => {
+  //           getStakingInfo();
+  //         }, update_after_tx_timeout);
+  //       },
+  //       (err: any) => {
+  //         clogData('withdraw error: ', err);
+  //         notify(`${t('notifications.error.text')} ${errCode(err.code)}`, 'error');
+  //       },
+  //     )
+  //     .finally(() => {
+  //       setWithdrawProgress(false);
+  //       setWdLocked(0);
+  //       setWdUnlocked(0);
+  //     });
+  // };
 
   // On Run ------------------------------------------------
 
-  React.useEffect(() => {
-    if (!store.account.address && config.menu.onlyForAuth) store.toggleWalletMenu(true);
-    if (!store.account.address) return;
-    getStakingInfo();
-  }, [getStakingInfo, store.account.address, store]);
+  // React.useEffect(() => {
+  //   if (!store.account.address && config.menu.onlyForAuth) store.toggleWalletMenu(true);
+  //   if (!store.account.address) return;
+  //   getStakingInfo();
+  // }, [getStakingInfo, store.account.address, store]);
 
   // Template ------------------------------------------------
 
   return (
     <div className="staking">
-      {/* <div className="no_login_data">
+      <div className="no_login_data">
         <span className="links__title text-center text text-black text-bold-e">
           {t('info.inDev')}
         </span>
-      </div> */}
-      {/* <div className="staking-spacer" /> */}
-
+      </div>
+      {/* <div className="staking-spacer" />
       {store.account.address ? (
         <div>
           <Procedure2
@@ -259,12 +250,10 @@ const Staking: React.FC = () => {
                     value: `${stakingInfo.userStakesUnlocked} BTCMT`,
                   },
                 ],
-
                 inputMiniButtonShow: true,
                 inputMiniButtonTitle: t('page.staking.component.staking.buttonText'),
                 inputMiniButtonText: t('page.staking.component.staking.button'),
                 inputMiniButtonClick: handleFullButtonStakingUnlockedClick,
-
                 inputButtonShow: true,
                 inputChange: handleChangeStakingUnlockedAmount,
                 inputValue: stUnlocked,
@@ -286,7 +275,6 @@ const Staking: React.FC = () => {
                 inputMiniButtonTitle: t('page.staking.component.staking.buttonText'),
                 inputMiniButtonText: t('page.staking.component.staking.button'),
                 inputMiniButtonClick: handleFullButtonStakingLockedClick,
-
                 inputButtonShow: true,
                 inputChange: handleChangeStakingLockedAmount,
                 inputValue: stLocked,
@@ -315,12 +303,10 @@ const Staking: React.FC = () => {
                     value: `${stakingInfo.userStakesUnlocked} BTCMT`,
                   },
                 ],
-
                 inputMiniButtonShow: true,
                 inputMiniButtonTitle: t('page.staking.component.withdraw.text'),
                 inputMiniButtonText: t('page.staking.component.withdraw.button'),
                 inputMiniButtonClick: handleFullButtonWithdrawUnlockedClick,
-
                 inputButtonShow: true,
                 inputChange: handleChangeWithdrawUnlockedAmount,
                 inputValue: wdUnlocked,
@@ -333,12 +319,10 @@ const Staking: React.FC = () => {
                     value: `${stakingInfo.userStakesLocked} BTCMT`,
                   },
                 ],
-
                 inputMiniButtonShow: true,
                 inputMiniButtonTitle: t('page.staking.component.withdraw.text'),
                 inputMiniButtonText: t('page.staking.component.withdraw.button'),
                 inputMiniButtonClick: handleFullButtonWithdrawLockedClick,
-
                 inputButtonShow: true,
                 inputChange: handleChangeWithdrawLockedAmount,
                 inputValue: wdLocked,
@@ -353,7 +337,7 @@ const Staking: React.FC = () => {
         </div>
       ) : (
         ''
-      )}
+      )} */}
     </div>
   );
 };
