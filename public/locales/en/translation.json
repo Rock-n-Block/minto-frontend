@@ -92,7 +92,7 @@
         "stake": "stake",
         "buy": "presale"
       },
-      "tokenPrice": "token price",
+      "tokenPrice": "PRESALE token price",
       "totalSupply": "total supply",
       "component": {
         "datacenters": {

@@ -47,7 +47,15 @@ const HomePreview: React.FC = () => {
         clogData('available (available): ', '1,72 USD');
         resolve({
           key: 'available',
-          value: '1,72 USD',
+          value: (
+            <>
+              <div className="box-f-ai-c">
+                <span className="text-line-through">1,72</span>
+                <span>&nbsp;&nbsp;</span>
+                <span>1,5</span>
+              </div>
+            </>
+          ),
         });
       }),
       web3Contract.Token.methods
@@ -149,6 +157,7 @@ const HomePreview: React.FC = () => {
             content={info.available}
             topText={t('page.home.tokenPrice')}
             className="home__preview-info-item"
+            bottomText="USD"
           />
           <Info
             content={info.totalSupply}
