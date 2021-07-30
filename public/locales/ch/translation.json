@@ -92,7 +92,7 @@
         "stake": "抵押",
         "buy": "预售"
       },
-      "tokenPrice": "代币价格",
+      "tokenPrice": "预售代币价格",
       "totalSupply": "总供应量",
       "component": {
         "datacenters": {
