@@ -1,0 +1,11 @@
+@import 'src/styles/mixins/media';
+
+.presale {
+  .procedure {
+    margin-bottom: 10px;
+    padding-top: 190px;
+    @include b('tablet') {
+      padding-top: 130px;
+    }
+  }
+}

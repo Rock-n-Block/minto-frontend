@@ -13,10 +13,7 @@ import './HomePreview.scss';
 
 const HomePreview: React.FC = () => {
   const store = useStore();
-  const {
-    t,
-    i18n: { language },
-  } = useTranslation();
+  const { t } = useTranslation();
 
   const [info, setInfo] = React.useState({
     available: '-',
@@ -137,7 +134,7 @@ const HomePreview: React.FC = () => {
               {t('page.home.buttons.stake')}
             </NavLink>
           </Button>
-          <a
+          {/* <a
             className="home__preview-btn"
             rel="nofollow noreferrer"
             target="_blank"
@@ -146,11 +143,13 @@ const HomePreview: React.FC = () => {
                 ? 'https://btcmt.typeform.com/to/TvDKWGwN'
                 : 'https://btcmt.typeform.com/to/m2E3RYwP'
             }
-          >
-            <Button size="md" colorScheme="outline" className="home__preview-btn">
+          > */}
+          <Button size="md" colorScheme="outline" className="home__preview-btn">
+            <NavLink exact to="/presale" className="text-upper text-slg">
               <div className="text-upper text-slg">{t('page.home.buttons.buy')}</div>
-            </Button>
-          </a>
+            </NavLink>
+          </Button>
+          {/* </a> */}
         </div>
         <div className="home__preview-info box-f box-f-ai-c">
           <Info

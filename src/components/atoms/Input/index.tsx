@@ -3,7 +3,7 @@ import { Input as InputAntd } from 'antd';
 import classNames from 'classnames';
 
 interface IColorScheme {
-  colorScheme?: 'white' | 'outline';
+  colorScheme?: 'white' | 'outline' | 'green';
 }
 
 interface ISize {
@@ -24,6 +24,7 @@ interface InputProps extends IColorScheme, ISize, IType {
   value?: string;
   max?: number;
   required?: boolean;
+  disabled?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -39,6 +40,7 @@ const Input: React.FC<InputProps> = ({
   value,
   max,
   required = false,
+  disabled = false,
 }) => {
   return (
     <InputAntd
@@ -52,6 +54,7 @@ const Input: React.FC<InputProps> = ({
           'box-shadow': shadow,
         },
       )}
+      disabled={disabled}
       placeholder={placeholder}
       type={type}
       onChange={onChange}
