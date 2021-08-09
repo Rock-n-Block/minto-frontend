@@ -6,14 +6,17 @@
   height: auto;
 
   border: 1.4386px solid $green;
+
   transition-duration: 0.3s !important;
   transition-delay: 0s !important;
   transition-timing-function: ease;
+
   & > * {
-    transition-delay: 0s !important;
     transition-duration: 0.3s !important;
+    transition-delay: 0s !important;
     transition-timing-function: ease;
   }
+
   svg {
     path {
       transition: 0.3s;
@@ -24,19 +27,23 @@
     color: #fff;
     background: $green;
     border-color: transparent;
+
     &:hover,
     &:active {
       color: $green !important;
       border-color: $green;
+
       * {
         color: $green !important;
       }
+
       svg {
         path {
           fill: $green;
         }
       }
     }
+
     &:focus {
       color: #fff;
       background: $green;
@@ -46,18 +53,21 @@
   &-outline {
     color: $green;
     background: transparent;
+
     &:hover,
     &:active,
     &:focus {
       color: #fff !important;
       background: $green;
       border: 1.4386px solid $green;
+
       * {
         color: #fff !important;
       }
+
       svg {
         path {
-          fill: white;
+          fill: #fff;
         }
       }
     }
@@ -71,13 +81,15 @@
   &-white {
     color: $green;
     background: #fff;
+
     &:active,
     &:hover {
+      color: #fff;
       background: $green;
-      color: white;
+
       svg {
         path {
-          fill: white;
+          fill: #fff;
         }
       }
     }

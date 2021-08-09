@@ -1,4 +1,5 @@
 @import 'src/styles/mixins/media';
+
 .staking {
   background-color: #f3f8f6;
 
@@ -8,6 +9,7 @@
     background-color: #000;
   }
 }
+
 .procedure-two {
   padding-top: 150px;
   @include b('tablet') {

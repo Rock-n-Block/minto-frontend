@@ -7,7 +7,6 @@ import { observer } from 'mobx-react-lite';
 // import { useStore } from '../../store';
 // import { IData, IUserHistory } from '../../types';
 // import { API, clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
-
 import './Mining.scss';
 
 const Mining: React.FC = () => {

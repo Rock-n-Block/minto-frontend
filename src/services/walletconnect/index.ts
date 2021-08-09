@@ -1,7 +1,7 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
 import Web3 from 'web3';
 
-import { connectWallet, contracts, chain } from '../../config';
+import { chain, connectWallet, contracts } from '../../config';
 import { clogData, notify } from '../../utils';
 import i18n from '../../utils/i18n';
 

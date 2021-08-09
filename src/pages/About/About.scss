@@ -1,4 +1,5 @@
 @import 'src/styles/mixins/media';
+
 .about-page {
   .about {
     @include b('mobile') {

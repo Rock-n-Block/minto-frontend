@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ReactComponent as IconDoc } from '../../../assets/img/icons/doc-detail.svg';
 import { ReactComponent as IconAudit } from '../../../assets/img/icons/audit.svg';
+import { ReactComponent as IconDoc } from '../../../assets/img/icons/doc-detail.svg';
 import { ReactComponent as IconNewspaper } from '../../../assets/img/icons/newspaper-folding.svg';
 import { ReactComponent as IconPowerpoint } from '../../../assets/img/icons/powerpoint.svg';
 import { Button } from '../../atoms';

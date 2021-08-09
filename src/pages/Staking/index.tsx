@@ -16,7 +16,6 @@ import { observer } from 'mobx-react-lite';
 //   getDailyRewards,
 //   notify,
 // } from '../../utils';
-
 import './Staking.scss';
 
 const Staking: React.FC = () => {

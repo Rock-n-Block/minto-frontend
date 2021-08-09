@@ -5,8 +5,8 @@ import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
-import NewsImg1 from '../../../../assets/img/sections/home/news-1.png';
 import NewsImg0 from '../../../../assets/img/sections/home/news-0.png';
+import NewsImg1 from '../../../../assets/img/sections/home/news-1.png';
 import NewsImg2 from '../../../../assets/img/sections/home/news-2.png';
 import NewsImg3 from '../../../../assets/img/sections/home/news-3.png';
 import NewsImg4 from '../../../../assets/img/sections/home/news-4.png';
