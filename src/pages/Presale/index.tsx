@@ -14,10 +14,11 @@ import './Presale.scss';
 const Presale: React.FC = () => {
   const store = useStore();
 
-  const [miningInfo, setMiningInfo] = React.useState({} as IData);
+  const [presaleInfo, setPresaleInfo] = React.useState({} as IData);
 
-  const [mnValue, setMnValue] = React.useState(0);
-  const [miningProgress, setMiningProgress] = React.useState(false);
+  const [usdtValue, setUsdtValue] = React.useState(0);
+  const [btcmtValue, setBtcmtValue] = React.useState(0);
+  const [confitmProgress, setConfitmProgress] = React.useState(false);
 
   const [dataSlider, setDataSlider] = React.useState([
     { accent: '', days: 0, daysName: 'DAYS', percent: 0, active: false },
@@ -28,22 +29,40 @@ const Presale: React.FC = () => {
     { accent: '', days: 730, daysName: 'DAYS', percent: 15, active: false },
   ] as IInfoSliderData[]);
 
-  const [percentValue, setPercentValue] = React.useState(0);
+  const [percentValue, setPercentValue] = React.useState(4);
 
   const { t } = useTranslation();
 
-  const getMiningInfo = useCallback(async () => {
+  // Get Presale Info
+
+  const getPresaleInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
 
-    setMiningInfo(await store.contractService.miningInfo());
+    setPresaleInfo(await store.contractService.presaleInfo());
   }, [store]);
 
   // Change amounts ------------------------------------------------
 
-  const handleChangeClaimAmount = (value: any): void => {
-    setMnValue(value);
-    if (value < 0) setMnValue(0);
-    if (value > +miningInfo.availableToClaim) setMnValue(+miningInfo.availableToClaim);
+  const handleChangeUsdtAmount = (value: any): void => {
+    setUsdtValue(value);
+    setBtcmtValue(value * 1.5);
+
+    if (value < 0 || btcmtValue < 0) {
+      setUsdtValue(0);
+      setBtcmtValue(0);
+    }
+  };
+
+  const handleChangeBtcmtAmount = (value: any): void => {
+    setBtcmtValue(value);
+    setUsdtValue(value / 1.5);
+
+    if (value < 0 || usdtValue < 0) {
+      setUsdtValue(0);
+      setBtcmtValue(0);
+    }
+
+    // if (value > +presaleInfo.usdtBalance) setUsdtValue(+presaleInfo.usdtBalance);
   };
 
   const handleSliderClick = (value: any): void => {
@@ -63,59 +82,23 @@ const Presale: React.FC = () => {
   // Send Max ------------------------------------------------
 
   const handleButtonClick = (): void => {
-    setMnValue(+miningInfo.availableToClaim);
+    handleChangeUsdtAmount(+presaleInfo.usdtBalance);
   };
 
   // Send Tx ------------------------------------------------
 
   const handleButtonClaimClick = (): void => {
-    if (+mnValue === 0 && +mnValue <= 0) {
+    if (+usdtValue === 0 && +usdtValue <= 0) {
       notify(`${t('notifications.claim.inputError')}`, 'error');
       return;
     }
 
-    setMiningProgress(true);
-    if (mnValue === +miningInfo.availableToClaim) {
-      store.contractService
-        .claimAllReward()
-        .then(
-          (data: any) => {
-            notify(
-              customNotify({
-                translate: {
-                  key: 'notifications.claim.complete',
-                  data: {
-                    token: 'HBTC',
-                    value: +miningInfo.availableToClaim,
-                  },
-                },
-                text: `Your Claim ${+miningInfo.availableToClaim} HBTC complete!`,
-                link: {
-                  url: `${chain.tx.link}/${data[1]}`,
-                  text: `${t('notifications.claim.link')}`,
-                },
-              }),
-              'success',
-            );
+    setConfitmProgress(true);
 
-            setTimeout(() => {
-              getMiningInfo();
-            }, update_after_tx_timeout);
-          },
-          (err: any) => clogData('claim err: ', err),
-        )
-        .finally(() => {
-          setMiningProgress(false);
-          setMnValue(0);
-        });
-
-      return;
-    }
-
-    const amount = deNormalizedValue(mnValue);
+    const amount = deNormalizedValue(usdtValue);
 
     store.contractService
-      .claimReward(amount)
+      .presaleBuy(amount, percentValue)
       .then(
         (data: any) => {
           notify(
@@ -124,10 +107,10 @@ const Presale: React.FC = () => {
                 key: 'notifications.claim.complete',
                 data: {
                   token: 'HBTC',
-                  value: mnValue,
+                  value: usdtValue,
                 },
               },
-              text: `Your Claim ${mnValue} HBTC complete!`,
+              text: `Your Claim ${usdtValue} HBTC complete!`,
               link: {
                 url: `${chain.tx.link}/${data[1]}`,
                 text: `${t('notifications.claim.link')}`,
@@ -136,17 +119,18 @@ const Presale: React.FC = () => {
             'success',
           );
           setTimeout(() => {
-            getMiningInfo();
+            getPresaleInfo();
           }, update_after_tx_timeout);
         },
         (err: any) => {
-          clogData('claim err: ', err);
+          clogData('buy err: ', err);
           notify(`${t('notifications.error.text')} ${errCode(err.code)}`, 'error');
         },
       )
       .finally(() => {
-        setMiningProgress(false);
-        setMnValue(0);
+        setConfitmProgress(false);
+        setUsdtValue(0);
+        setBtcmtValue(0);
       });
   };
 
@@ -157,8 +141,8 @@ const Presale: React.FC = () => {
       store.toggleWalletMenu(true);
     }
     if (!store.account.address) return;
-    getMiningInfo();
-  }, [getMiningInfo, store.account.address, store]);
+    getPresaleInfo();
+  }, [getPresaleInfo, store.account.address, store]);
 
   // Template ------------------------------------------------
 
@@ -175,16 +159,6 @@ const Presale: React.FC = () => {
               data: dataSlider,
               onСlick: handleSliderClick,
             }}
-            info={[
-              {
-                title: t('page.mining.text.left'),
-                value: `${miningInfo.th} TH/s`,
-              },
-              {
-                title: t('page.mining.text.right'),
-                value: `${miningInfo.availableToClaim} HBTC`,
-              },
-            ]}
             ratio={{
               title: 'Ratio',
               first: {
@@ -198,17 +172,18 @@ const Presale: React.FC = () => {
             }}
             infoText="[number] BTCMT left for presale"
             miniButtonShow
-            inputTitle={`You balance: ${213} USDT`}
+            inputTitle={`You balance: ${presaleInfo.usdtBalance} USDT`}
             btnAllText="All Available"
             btnClick={handleButtonClick}
             submitBtnText="CONFIRM"
-            btnProcessed={miningProgress}
+            btnProcessed={confitmProgress}
             btnProcessedText={t('button.processing')}
             buttonClick={handleButtonClaimClick}
-            inputChange={handleChangeClaimAmount}
-            inputValue={mnValue}
-            getValue="231"
+            inputChange={handleChangeUsdtAmount}
+            inputValue={usdtValue}
+            getValue={btcmtValue}
             getInputTitle="BTCMT"
+            getInputChange={handleChangeBtcmtAmount}
           />
         </div>
       ) : (

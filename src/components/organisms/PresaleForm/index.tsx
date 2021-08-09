@@ -7,11 +7,6 @@ import { Button, Input } from '../../atoms';
 
 import './Presale.scss';
 
-interface IInfoItem {
-  title: string;
-  value: string;
-}
-
 export interface IInfoSliderData {
   accent: string;
   days: number;
@@ -44,12 +39,12 @@ interface IProcedure {
     };
   };
   infoText: string;
-  info: IInfoItem[];
   inputTitle: string;
   btnAllText: string;
   submitBtnText: string;
   inputType?: string;
   inputChange?: any;
+  getInputChange?: any;
   buttonClick?: any;
   inputValue?: any;
   btnClick?: any;
@@ -82,6 +77,7 @@ const Procedure: React.FC<IProcedure> = ({
   btnProcessedText = 'Please Wait...',
   getValue,
   getInputTitle,
+  getInputChange,
 }) => {
   return (
     <div className={cn('procedure', theme)}>
@@ -194,9 +190,9 @@ const Procedure: React.FC<IProcedure> = ({
                 placeholder="0.0"
                 colorScheme="green"
                 type="number"
+                onChange={(e) => getInputChange(e.target.value)}
                 shadow={theme === 'light'}
                 value={getValue}
-                disabled
               />
               <span className="procedure__input-text">{getInputTitle}</span>
             </div>
