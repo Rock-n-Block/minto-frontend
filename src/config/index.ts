@@ -338,7 +338,7 @@ export const contracts: IContracts = {
     },
     TOKEN: {
       mainnet: {
-        address: '0xe0aC1E17D4810d7d7a4680d825233e75960342b7',
+        address: '0x410a56541bD912F9B60943fcB344f1E3D6F09567',
         abi: [
           { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
           {
@@ -788,7 +788,7 @@ export const contracts: IContracts = {
         ],
       },
       testnet: {
-        address: '0x2b1cd0ADFec6Ed778238Cc31315a7b96E877f48a',
+        address: '0xe0aC1E17D4810d7d7a4680d825233e75960342b7',
         abi: [
           { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
           {
