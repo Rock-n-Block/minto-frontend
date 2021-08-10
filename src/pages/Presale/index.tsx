@@ -7,7 +7,7 @@ import { IInfoSliderData } from '../../components/organisms/PresaleForm';
 import { chain, config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
-import { clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
+import { clog, clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
 
 import './Presale.scss';
 
@@ -46,13 +46,8 @@ const Presale: React.FC = () => {
     let info = '';
     const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
 
-    console.log(
-      'capToSell:',
-      presaleInfo.capToSell,
-      'totalSold:',
-      presaleInfo.totalSold,
-      'capToSell-totalSold:',
-      cap,
+    clog(
+      `capToSell: ${presaleInfo.capToSell}, totalSold: ${presaleInfo.totalSold}, capToSell-totalSold: ${cap}`,
     );
 
     if (cap <= 0) {
