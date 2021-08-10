@@ -13,7 +13,7 @@ import './Presale.scss';
 
 const Presale: React.FC = () => {
   const store = useStore();
-
+  const { t } = useTranslation();
   const [presaleInfo, setPresaleInfo] = React.useState({} as IData);
 
   const [usdtValue, setUsdtValue] = React.useState(0);
@@ -23,18 +23,9 @@ const Presale: React.FC = () => {
   const [stopSell, setStopSell] = React.useState(false);
   const [modal, setModal] = React.useState(false);
 
-  const [dataSlider, setDataSlider] = React.useState([
-    { accent: '', days: 0, daysName: 'DAYS', percent: 0, active: false },
-    { accent: '', days: 31, daysName: 'DAYS', percent: 2, active: false },
-    { accent: 'Recommended', days: 90, daysName: 'DAYS', percent: 4, active: true },
-    { accent: '', days: 180, daysName: 'DAYS', percent: 8, active: false },
-    { accent: '', days: 365, daysName: 'DAYS', percent: 10, active: false },
-    { accent: '', days: 730, daysName: 'DAYS', percent: 15, active: false },
-  ] as IInfoSliderData[]);
+  const [dataSlider, setDataSlider] = React.useState([] as IInfoSliderData[]);
 
   const [percentValue, setPercentValue] = React.useState(4);
-
-  const { t } = useTranslation();
 
   // Get Presale Info
   const getPresaleInfo = useCallback(async () => {
@@ -52,14 +43,28 @@ const Presale: React.FC = () => {
     );
 
     if (cap <= 0) {
-      info = 'number of available BTCMT tokens for presale cannot be exceeded';
+      info = t('notifications.presale.exedeed');
       setStopSell(true);
     } else if (cap <= 200000) {
-      info = `${cap} BTCMT left for presale`;
+      info = `${cap} ${t('notifications.presale.left')}`;
     }
 
     setInfoText(info);
-  }, [presaleInfo.capToSell, presaleInfo.totalSold]);
+    setDataSlider([
+      { accent: '', days: 0, daysName: `${t('page.presale.days')}`, percent: 0, active: false },
+      { accent: '', days: 31, daysName: `${t('page.presale.days')}`, percent: 2, active: false },
+      {
+        accent: t('page.presale.recommended'),
+        days: 90,
+        daysName: t('page.presale.days'),
+        percent: 4,
+        active: true,
+      },
+      { accent: '', days: 180, daysName: `${t('page.presale.days')}`, percent: 8, active: false },
+      { accent: '', days: 365, daysName: t('page.presale.days'), percent: 10, active: false },
+      { accent: '', days: 730, daysName: `${t('page.presale.days')}`, percent: 15, active: false },
+    ]);
+  }, [presaleInfo.capToSell, presaleInfo.totalSold, t]);
 
   // Change amounts ------------------------------------------------
 
@@ -192,7 +197,7 @@ const Presale: React.FC = () => {
               onСlick: handleSliderClick,
             }}
             ratio={{
-              title: 'Ratio',
+              title: `${t('page.presale.ratio')}`,
               first: {
                 title: 'BTCMT',
                 value: '1',
@@ -205,7 +210,7 @@ const Presale: React.FC = () => {
             infoText={infoText}
             miniButtonShow
             inputTitle={`${t('page.presale.balance')}: ${presaleInfo.usdtBalance} USDT`}
-            btnAllText="All Available"
+            btnAllText={t('page.presale.allAvailable')}
             btnClick={handleButtonClick}
             submitBtnText={t('page.presale.btnConfirm')}
             btnProcessed={confitmProgress}

@@ -45,6 +45,7 @@
     "presale": {
       "link": "VIEW TX",
       "exceeded": "Number of available BTCMT tokens for presale cannot be exceeded",
+      "left": "BTCMT left for presale",
       "inputError": "Please, input value in presale field.",
       "complete": "Your Presale complete!",
       "wait": "Please wait, presale is in progress."
@@ -103,6 +104,9 @@
       "holdTime": "Hold time",
       "youGetText": "You’ll get",
       "withBonusText": "With bonus",
+      "recommended": "Recommended",
+      "days": "DAYS",
+      "ratio": "Ratio",
       "modal": {
         "title": "Thank you for your purchase!",
         "text": "You will receive BTCMT once the transaction is confirmed.",

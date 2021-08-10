@@ -42,6 +42,14 @@
     }
   },
   "notifications": {
+    "presale": {
+      "link": "查看TX",
+      "exceeded": "不可超过可用于预售的 BTCMT 代币数量",
+      "left": "BTCMT 留给预售",
+      "inputError": "请在预售字段中输入值。",
+      "complete": "您的预售完成！",
+      "wait": "请稍候，预售中."
+    },
     "wallet": {
       "connected": "帐户已连接",
       "error": {
@@ -85,6 +93,26 @@
     }
   },
   "page": {
+    "presale": {
+      "title": "预售",
+      "allAvailable": "所有可用",
+      "btnConfirm": "确认",
+      "balance": "您的余额",
+      "soldOutText": "btcmt 售罄",
+      "bonusText": "奖励代币将添加到购买金额之上",
+      "amount": "数量",
+      "holdTime": "保持时间",
+      "youGetText": "你会得到",
+      "withBonusText": "有奖金",
+      "recommended": "受到推崇的",
+      "days": "天",
+      "ratio": "比率",
+      "modal": {
+        "title": "感谢您的购买！",
+        "text": "交易确认后，您将收到 BTCMT。",
+        "btn": "行"
+      }
+    },
     "home": {
       "title": "通过抵押 BTCMT 代币挖比特币",
       "subtitle": "我们去掉了所有不必要的步骤，使挖矿比获得 BTC 钱包更容易",
