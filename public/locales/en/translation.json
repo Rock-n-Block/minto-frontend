@@ -42,6 +42,13 @@
     }
   },
   "notifications": {
+    "presale": {
+      "link": "VIEW TX",
+      "exceeded": "Number of available BTCMT tokens for presale cannot be exceeded",
+      "inputError": "Please, input value in presale field.",
+      "complete": "Your Presale complete!",
+      "wait": "Please wait, presale is in progress."
+    },
     "wallet": {
       "connected": "Account connected",
       "error": {
@@ -85,6 +92,23 @@
     }
   },
   "page": {
+    "presale": {
+      "title": "PRESALE",
+      "allAvailable": "All Available",
+      "btnConfirm": "CONFIRM",
+      "balance": "Your balance",
+      "soldOutText": "btcmt sold out",
+      "bonusText": "bonus tokens will be added on top of the purchase amount",
+      "amount": "Amount",
+      "holdTime": "Hold time",
+      "youGetText": "You’ll get",
+      "withBonusText": "With bonus",
+      "modal": {
+        "title": "Thank you for your purchase!",
+        "text": "You will receive BTCMT once the transaction is confirmed.",
+        "btn": "OK"
+      }
+    },
     "home": {
       "title": "Mine Bitcoin by staking BTCMT tokens",
       "subtitle": "We've removed all the unnecessary steps and made mining easier than getting a BTC wallet",

@@ -342,7 +342,7 @@ export class ContractService {
   }
 
   public presaleBuy(btcmt: string, usdt: string, percent: number): Promise<any> {
-    notify(i18n.t('notifications.staking.wait'), 'info');
+    notify(i18n.t('notifications.presale.wait'), 'info');
 
     const weeks: { [index: number]: string } = {
       0: '0',

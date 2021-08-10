@@ -58,6 +58,11 @@ interface IProcedure {
   soldOutText: string;
   percentBonus: number;
   stopSell: boolean;
+  holdTime: string;
+  bonusText: string;
+  amountText: string;
+  youGetText: string;
+  withBonusText: string;
 }
 
 const Procedure: React.FC<IProcedure> = ({
@@ -84,6 +89,11 @@ const Procedure: React.FC<IProcedure> = ({
   percentBonus,
   stopSell,
   soldOutText,
+  holdTime,
+  bonusText,
+  amountText,
+  youGetText,
+  withBonusText,
 }) => {
   return (
     <div className={cn('procedure', theme)}>
@@ -98,7 +108,7 @@ const Procedure: React.FC<IProcedure> = ({
         </div>
 
         <div className="procedure__separate">
-          <span>Hold time</span>
+          <span>{holdTime}</span>
         </div>
 
         <div className="procedure__slide">
@@ -135,11 +145,11 @@ const Procedure: React.FC<IProcedure> = ({
         </div>
 
         <div className="procedure__text">
-          <span>bonus tokens will be added on top of the purchase amount</span>
+          <span>{bonusText}</span>
         </div>
 
         <div className="procedure__separate">
-          <span>Amount</span>
+          <span>{amountText}</span>
         </div>
 
         <div className="procedure__input">
@@ -184,12 +194,12 @@ const Procedure: React.FC<IProcedure> = ({
         </div>
 
         <div className="procedure__separate">
-          <span>You’ll get</span>
+          <span>{youGetText}</span>
         </div>
 
         <div className="procedure__text m-30 op-5">
           <span>
-            With bonus {percentBonus}%:{' '}
+            {withBonusText} {percentBonus}%:{' '}
             {parseFloat((+getValue + +getValue * (+percentBonus / 100)).toFixed(4))} BTCMT
           </span>
         </div>

@@ -21,6 +21,7 @@ const Presale: React.FC = () => {
   const [confitmProgress, setConfitmProgress] = React.useState(false);
   const [infoText, setInfoText] = React.useState('');
   const [stopSell, setStopSell] = React.useState(false);
+  const [modal, setModal] = React.useState(false);
 
   const [dataSlider, setDataSlider] = React.useState([
     { accent: '', days: 0, daysName: 'DAYS', percent: 0, active: false },
@@ -108,12 +109,12 @@ const Presale: React.FC = () => {
 
   const handleButtonClaimClick = (): void => {
     if (stopSell) {
-      notify(`number of available BTCMT tokens for presale cannot be exceeded`, 'error');
+      notify(`${t('notifications.presale.exedeed')}`, 'error');
       return;
     }
 
     if (+usdtValue === 0 && +usdtValue <= 0) {
-      notify(`${t('notifications.claim.inputError')}`, 'error');
+      notify(`${t('notifications.presale.inputError')}`, 'error');
       return;
     }
 
@@ -129,20 +130,21 @@ const Presale: React.FC = () => {
           notify(
             customNotify({
               translate: {
-                key: 'notifications.claim.complete',
+                key: 'notifications.presale.complete',
                 data: {
-                  token: 'HBTC',
-                  value: usdtValue,
+                  token: 'BTCMT',
+                  value: btcmtValue,
                 },
               },
-              text: `Your Claim ${usdtValue} HBTC complete!`,
+              text: `Your Presale ${btcmtValue} BTCMT complete!`,
               link: {
                 url: `${chain.tx.link}/${data[1]}`,
-                text: `${t('notifications.claim.link')}`,
+                text: `${t('notifications.presale.link')}`,
               },
             }),
             'success',
           );
+          setModal(true);
         },
         (err: any) => {
           clogData('buy err: ', err);
@@ -183,7 +185,7 @@ const Presale: React.FC = () => {
           <PresaleFrom
             title={{
               one: 'BTCMT',
-              two: 'PRESALE',
+              two: `${t('page.presale.title')}`,
             }}
             slider={{
               data: dataSlider,
@@ -202,10 +204,10 @@ const Presale: React.FC = () => {
             }}
             infoText={infoText}
             miniButtonShow
-            inputTitle={`You balance: ${presaleInfo.usdtBalance} USDT`}
+            inputTitle={`${t('page.presale.balance')}: ${presaleInfo.usdtBalance} USDT`}
             btnAllText="All Available"
             btnClick={handleButtonClick}
-            submitBtnText="CONFIRM"
+            submitBtnText={t('page.presale.btnConfirm')}
             btnProcessed={confitmProgress}
             btnProcessedText={t('button.processing')}
             buttonClick={handleButtonClaimClick}
@@ -215,8 +217,13 @@ const Presale: React.FC = () => {
             getInputTitle="BTCMT"
             getInputChange={handleChangeBtcmtAmount}
             percentBonus={percentValue}
+            bonusText={t('page.presale.bonusText')}
+            holdTime={t('page.presale.holdTime')}
+            amountText={t('page.presale.amount')}
+            youGetText={t('page.presale.youGetText')}
+            withBonusText={t('page.presale.withBonusText')}
             stopSell={stopSell}
-            soldOutText="btcmt sold out"
+            soldOutText={t('page.presale.soldOutText')}
           />
         </div>
       ) : (
@@ -225,6 +232,35 @@ const Presale: React.FC = () => {
             {t('info.connectWallet')}
           </span>
         </div>
+      )}
+
+      {modal ? (
+        <div className="modal">
+          <div className="modal-wrap">
+            <span
+              className="modal-close"
+              role="button"
+              tabIndex={0}
+              onKeyDown={() => setModal(false)}
+              onClick={() => setModal(false)}
+            >
+              x
+            </span>
+            <div className="modal-title">{t('page.presale.modal.title')}</div>
+            <div className="modal-text">{t('page.presale.modal.text')}</div>
+            <div
+              className="modal-btn"
+              role="button"
+              tabIndex={0}
+              onKeyDown={() => setModal(false)}
+              onClick={() => setModal(false)}
+            >
+              {t('page.presale.modal.btn')}
+            </div>
+          </div>
+        </div>
+      ) : (
+        ''
       )}
     </div>
   );
