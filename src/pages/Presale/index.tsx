@@ -19,6 +19,8 @@ const Presale: React.FC = () => {
   const [usdtValue, setUsdtValue] = React.useState(0);
   const [btcmtValue, setBtcmtValue] = React.useState(0);
   const [confitmProgress, setConfitmProgress] = React.useState(false);
+  const [infoText, setInfoText] = React.useState('');
+  const [stopSell, setStopSell] = React.useState(false);
 
   const [dataSlider, setDataSlider] = React.useState([
     { accent: '', days: 0, daysName: 'DAYS', percent: 0, active: false },
@@ -34,18 +36,40 @@ const Presale: React.FC = () => {
   const { t } = useTranslation();
 
   // Get Presale Info
-
   const getPresaleInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
 
     setPresaleInfo(await store.contractService.presaleInfo());
   }, [store]);
 
+  const checkSpendCap = useCallback(() => {
+    let info = '';
+    const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
+
+    console.log(
+      'capToSell:',
+      presaleInfo.capToSell,
+      'totalSold:',
+      presaleInfo.totalSold,
+      'capToSell-totalSold:',
+      cap,
+    );
+
+    if (cap <= 0) {
+      info = 'number of available BTCMT tokens for presale cannot be exceeded';
+      setStopSell(true);
+    } else if (cap <= 200000) {
+      info = `${cap} BTCMT left for presale`;
+    }
+
+    setInfoText(info);
+  }, [presaleInfo.capToSell, presaleInfo.totalSold]);
+
   // Change amounts ------------------------------------------------
 
   const handleChangeUsdtAmount = (value: any): void => {
     setUsdtValue(value);
-    setBtcmtValue(value * 1.5);
+    setBtcmtValue(value / 1.5);
 
     if (value < 0 || btcmtValue < 0) {
       setUsdtValue(0);
@@ -55,7 +79,7 @@ const Presale: React.FC = () => {
 
   const handleChangeBtcmtAmount = (value: any): void => {
     setBtcmtValue(value);
-    setUsdtValue(value / 1.5);
+    setUsdtValue(value * 1.5);
 
     if (value < 0 || usdtValue < 0) {
       setUsdtValue(0);
@@ -88,6 +112,11 @@ const Presale: React.FC = () => {
   // Send Tx ------------------------------------------------
 
   const handleButtonClaimClick = (): void => {
+    if (stopSell) {
+      notify(`number of available BTCMT tokens for presale cannot be exceeded`, 'error');
+      return;
+    }
+
     if (+usdtValue === 0 && +usdtValue <= 0) {
       notify(`${t('notifications.claim.inputError')}`, 'error');
       return;
@@ -95,10 +124,11 @@ const Presale: React.FC = () => {
 
     setConfitmProgress(true);
 
-    const amount = deNormalizedValue(usdtValue);
+    const usdt = deNormalizedValue(usdtValue);
+    const btcmt = deNormalizedValue(btcmtValue);
 
     store.contractService
-      .presaleBuy(amount, percentValue)
+      .presaleBuy(btcmt, usdt, percentValue)
       .then(
         (data: any) => {
           notify(
@@ -118,9 +148,6 @@ const Presale: React.FC = () => {
             }),
             'success',
           );
-          setTimeout(() => {
-            getPresaleInfo();
-          }, update_after_tx_timeout);
         },
         (err: any) => {
           clogData('buy err: ', err);
@@ -131,6 +158,10 @@ const Presale: React.FC = () => {
         setConfitmProgress(false);
         setUsdtValue(0);
         setBtcmtValue(0);
+
+        setTimeout(() => {
+          getPresaleInfo();
+        }, update_after_tx_timeout);
       });
   };
 
@@ -143,6 +174,10 @@ const Presale: React.FC = () => {
     if (!store.account.address) return;
     getPresaleInfo();
   }, [getPresaleInfo, store.account.address, store]);
+
+  React.useEffect(() => {
+    checkSpendCap();
+  }, [checkSpendCap, presaleInfo]);
 
   // Template ------------------------------------------------
 
@@ -170,7 +205,7 @@ const Presale: React.FC = () => {
                 value: '1.5',
               },
             }}
-            infoText="[number] BTCMT left for presale"
+            infoText={infoText}
             miniButtonShow
             inputTitle={`You balance: ${presaleInfo.usdtBalance} USDT`}
             btnAllText="All Available"
@@ -184,6 +219,9 @@ const Presale: React.FC = () => {
             getValue={btcmtValue}
             getInputTitle="BTCMT"
             getInputChange={handleChangeBtcmtAmount}
+            percentBonus={percentValue}
+            stopSell={stopSell}
+            soldOutText="btcmt sold out"
           />
         </div>
       ) : (

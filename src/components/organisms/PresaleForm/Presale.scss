@@ -20,6 +20,14 @@
     cursor: default;
 
     color: #fff;
+
+    &.m-30 {
+      margin: 30px 0;
+    }
+
+    &.op-5 {
+      opacity: 0.5;
+    }
   }
 
   &__separate {

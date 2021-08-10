@@ -38,7 +38,7 @@ interface IProcedure {
       value: string;
     };
   };
-  infoText: string;
+  infoText?: string;
   inputTitle: string;
   btnAllText: string;
   submitBtnText: string;
@@ -55,6 +55,9 @@ interface IProcedure {
   inputMax?: number;
   getValue: any;
   getInputTitle: string;
+  soldOutText: string;
+  percentBonus: number;
+  stopSell: boolean;
 }
 
 const Procedure: React.FC<IProcedure> = ({
@@ -78,6 +81,9 @@ const Procedure: React.FC<IProcedure> = ({
   getValue,
   getInputTitle,
   getInputChange,
+  percentBonus,
+  stopSell,
+  soldOutText,
 }) => {
   return (
     <div className={cn('procedure', theme)}>
@@ -174,12 +180,18 @@ const Procedure: React.FC<IProcedure> = ({
               {ratio.first.value} {ratio.first.title} = {ratio.second.value} {ratio.second.title}
             </span>
           </div>
-
-          <div className="procedure__input-info">{infoText}</div>
+          {infoText ? <div className="procedure__input-info">{infoText}</div> : ''}
         </div>
 
         <div className="procedure__separate">
           <span>You’ll get</span>
+        </div>
+
+        <div className="procedure__text m-30 op-5">
+          <span>
+            With bonus {percentBonus}%:{' '}
+            {parseFloat((+getValue + +getValue * (+percentBonus / 100)).toFixed(4))} BTCMT
+          </span>
         </div>
 
         <div className="procedure__input get-input">
@@ -199,7 +211,11 @@ const Procedure: React.FC<IProcedure> = ({
           ) : (
             ''
           )}
-          {btnProcessed ? (
+          {stopSell ? (
+            <Button disabled className="procedure__submit" size="lmd">
+              <span className="text-upper text-slg">{soldOutText}</span>
+            </Button>
+          ) : btnProcessed ? (
             <Button disabled className="procedure__submit" size="lmd">
               <span className="text-upper text-slg">{btnProcessedText}</span>
             </Button>

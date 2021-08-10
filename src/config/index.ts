@@ -225,7 +225,7 @@ export const contracts: IContracts = {
         abi: [],
       },
       testnet: {
-        address: '0x531393039d82FA462f0D67935E6f5775Eb02302D',
+        address: '0x62f89dE5B145f2A8f0b08Ecea7ae8A41C52efBe3',
         abi: [
           {
             inputs: [

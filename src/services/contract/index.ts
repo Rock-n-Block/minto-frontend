@@ -199,6 +199,8 @@ export class ContractService {
         return {
           key: 'totalSold',
           value: normalizedValue(value),
+          // value: 999999999999800000,
+          // value: 1000000000000000000,
         };
       });
 
@@ -339,7 +341,7 @@ export class ContractService {
     });
   }
 
-  public presaleBuy(usdt: string, percent: number): Promise<any> {
+  public presaleBuy(btcmt: string, usdt: string, percent: number): Promise<any> {
     notify(i18n.t('notifications.staking.wait'), 'info');
 
     const weeks: { [index: number]: string } = {
@@ -367,7 +369,7 @@ export class ContractService {
     const approveUsdt = (amount: string): Promise<any> => {
       return new Promise((resolve, reject) => {
         this.usdt
-          .approve(this.store.account.address, contracts.params.PRESALE[contracts.type].address)
+          .approve(contracts.params.PRESALE[contracts.type].address, usdt)
           .send({
             from: this.store.account.address,
           })
@@ -401,13 +403,13 @@ export class ContractService {
     return new Promise((resolve, reject) => {
       getAllowance(usdt).then(
         () => {
-          buyTokens(resolve, reject, usdt, weeks[percent]);
+          buyTokens(resolve, reject, btcmt, weeks[percent]);
         },
         () => {
           approveUsdt(usdt)
             .then((result: any) => {
               clogData(`approveUsdt result: `, result);
-              return buyTokens(resolve, reject, usdt, weeks[percent]);
+              return buyTokens(resolve, reject, btcmt, weeks[percent]);
             })
             .catch((err) => {
               clogData(`approveUsdt err: `, err);
