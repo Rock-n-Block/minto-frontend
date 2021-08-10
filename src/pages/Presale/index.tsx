@@ -120,7 +120,7 @@ const Presale: React.FC = () => {
 
     setConfitmProgress(true);
 
-    const usdt = deNormalizedValue(usdtValue);
+    const usdt = deNormalizedValue(+usdtValue + 1);
     const btcmt = deNormalizedValue(btcmtValue);
 
     store.contractService
