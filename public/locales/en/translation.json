@@ -48,7 +48,8 @@
       "left": "BTCMT left for presale",
       "inputError": "Please, input value in presale field.",
       "complete": "Your Presale complete!",
-      "wait": "Please wait, presale is in progress."
+      "wait": "Please wait, presale is in progress.",
+      "buy": "You can't buy BTCMT more than"
     },
     "wallet": {
       "connected": "Account connected",

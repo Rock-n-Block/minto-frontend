@@ -48,7 +48,8 @@
       "left": "BTCMT 留给预售",
       "inputError": "请在预售字段中输入值。",
       "complete": "您的预售完成！",
-      "wait": "请稍候，预售中."
+      "wait": "请稍候，预售中.",
+      "buy": "你不能购买 BTCMT 超过"
     },
     "wallet": {
       "connected": "帐户已连接",

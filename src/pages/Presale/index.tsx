@@ -84,7 +84,7 @@ const Presale: React.FC = () => {
       setUsdtValue(usdt);
       setBtcmtValue(cap);
 
-      notify(`You can't buy BTCMT more than ${cap}`, 'warning');
+      notify(`${t('notifications.presale.buy')} ${cap}`, 'warning');
     }
   };
 
@@ -105,7 +105,7 @@ const Presale: React.FC = () => {
       setUsdtValue(usdt);
       setBtcmtValue(cap);
 
-      notify(`You can't buy BTCMT more than ${cap}`, 'warning');
+      notify(`${t('notifications.presale.buy')} ${cap}`, 'warning');
     }
   };
 
@@ -135,7 +135,7 @@ const Presale: React.FC = () => {
     const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
 
     if (btcmtValue > cap) {
-      notify(`You can't buy BTCMT more than ${cap}`, 'warning');
+      notify(`${t('notifications.presale.buy')} ${cap}`, 'warning');
       return;
     }
 
