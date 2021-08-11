@@ -317,7 +317,6 @@
       box-shadow: none;
 
       // padding-right: 90px;
-
       &:disabled {
         cursor: default;
 
@@ -350,23 +349,24 @@
 
     &-text {
       position: absolute;
+      top: 10%;
+      right: 10px;
+
+      padding: 5px 15px;
+
+      display: flex;
+      align-items: center;
+
+      height: 80%;
       // top: 42%;
       // right: 30px;
-
       font-size: 14px;
       font-weight: 600;
       text-transform: uppercase;
 
-      padding: 5px 15px;
-      border-radius: 10em;
-      top: 10%;
-      right: 10px;
-      background-color: #1a2a2a;
-      display: flex;
-      height: 80%;
-      align-items: center;
-
       color: #fff;
+      background-color: #1a2a2a;
+      border-radius: 10em;
     }
 
     &-ratio {
