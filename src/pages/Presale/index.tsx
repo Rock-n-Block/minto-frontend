@@ -67,6 +67,26 @@ const Presale: React.FC = () => {
   }, [presaleInfo.capToSell, presaleInfo.totalSold, t]);
 
   // Change amounts ------------------------------------------------
+  const handleChangeBtcmtAmount = (value: any): void => {
+    setBtcmtValue(value);
+    setUsdtValue(value * 1.5);
+
+    if (+value < 0 || +usdtValue < 0) {
+      setUsdtValue(0);
+      setBtcmtValue(0);
+    }
+
+    const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
+
+    if (+value > cap) {
+      const usdt = cap * 1.5;
+
+      setUsdtValue(usdt);
+      setBtcmtValue(cap);
+
+      notify(`You can't buy BTCMT more than ${cap}`, 'warning');
+    }
+  };
 
   const handleChangeUsdtAmount = (value: any): void => {
     setUsdtValue(value);
@@ -76,18 +96,17 @@ const Presale: React.FC = () => {
       setUsdtValue(0);
       setBtcmtValue(0);
     }
-  };
 
-  const handleChangeBtcmtAmount = (value: any): void => {
-    setBtcmtValue(value);
-    setUsdtValue(value * 1.5);
+    const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
 
-    if (value < 0 || usdtValue < 0) {
-      setUsdtValue(0);
-      setBtcmtValue(0);
+    if (+(value / 1.5) > cap) {
+      const usdt = cap * 1.5;
+
+      setUsdtValue(usdt);
+      setBtcmtValue(cap);
+
+      notify(`You can't buy BTCMT more than ${cap}`, 'warning');
     }
-
-    // if (value > +presaleInfo.usdtBalance) setUsdtValue(+presaleInfo.usdtBalance);
   };
 
   const handleSliderClick = (value: any): void => {
@@ -113,6 +132,13 @@ const Presale: React.FC = () => {
   // Send Tx ------------------------------------------------
 
   const handleButtonClaimClick = (): void => {
+    const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
+
+    if (btcmtValue > cap) {
+      notify(`You can't buy BTCMT more than ${cap}`, 'warning');
+      return;
+    }
+
     if (stopSell) {
       notify(`${t('notifications.presale.exedeed')}`, 'error');
       return;
