@@ -111,6 +111,12 @@ const Procedure: React.FC<IProcedure> = ({
           <span>{holdTime}</span>
         </div>
 
+        <div className="procedure__text">
+          Token lock does not affect your mining.
+          <br />
+          Locked tokens could be staked and bring reward.
+        </div>
+
         <div className="procedure__slide">
           <div className="procedure__slide-content">
             {slider.data.map((item) => (
