@@ -63,6 +63,10 @@ interface IProcedure {
   amountText: string;
   youGetText: string;
   withBonusText: string;
+  underHoldText: {
+    one: string;
+    two: string;
+  };
 }
 
 const Procedure: React.FC<IProcedure> = ({
@@ -94,6 +98,7 @@ const Procedure: React.FC<IProcedure> = ({
   amountText,
   youGetText,
   withBonusText,
+  underHoldText,
 }) => {
   return (
     <div className={cn('procedure', theme)}>
@@ -112,9 +117,9 @@ const Procedure: React.FC<IProcedure> = ({
         </div>
 
         <div className="procedure__text">
-          Token lock does not affect your mining.
+          {underHoldText.one}
           <br />
-          Locked tokens could be staked and bring reward.
+          {underHoldText.two}
         </div>
 
         <div className="procedure__slide">

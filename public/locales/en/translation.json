@@ -107,6 +107,10 @@
       "recommended": "Recommended",
       "days": "DAYS",
       "ratio": "Ratio",
+      "underHoldText": {
+        "one": "Token lock does not affect your mining.",
+        "two": "Locked tokens could be staked and bring reward."
+      },
       "modal": {
         "title": "Thank you for your purchase!",
         "text": "You will receive BTCMT once the transaction is confirmed.",

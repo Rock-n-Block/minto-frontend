@@ -107,6 +107,10 @@
       "recommended": "受到推崇的",
       "days": "天",
       "ratio": "比率",
+      "underHoldText": {
+        "one": "代币锁定不影响您的挖矿。",
+        "two": "锁定的代币可以质押并带来奖励。"
+      },
       "modal": {
         "title": "感谢您的购买！",
         "text": "交易确认后，您将收到 BTCMT。",
