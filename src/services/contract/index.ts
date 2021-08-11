@@ -277,7 +277,7 @@ export class ContractService {
 
   public async approveUnlocked(amount: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      debugger;
+      // debugger;
       return this.token
         .approve(contracts.params.STAKING[contracts.type].address, amount)
         .send({
