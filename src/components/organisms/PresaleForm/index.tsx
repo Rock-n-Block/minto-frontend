@@ -67,6 +67,10 @@ interface IProcedure {
     one: string;
     two: string;
   };
+  afterBonusText: {
+    one: string;
+    two: string;
+  };
 }
 
 const Procedure: React.FC<IProcedure> = ({
@@ -99,6 +103,7 @@ const Procedure: React.FC<IProcedure> = ({
   youGetText,
   withBonusText,
   underHoldText,
+  afterBonusText,
 }) => {
   return (
     <div className={cn('procedure', theme)}>
@@ -159,6 +164,12 @@ const Procedure: React.FC<IProcedure> = ({
           <span>{bonusText}</span>
         </div>
 
+        <div className="procedure__text">
+          <span>{afterBonusText.one}</span>
+          <br />
+          <span>{afterBonusText.two}</span>
+        </div>
+
         <div className="procedure__separate">
           <span>{amountText}</span>
         </div>
@@ -208,13 +219,6 @@ const Procedure: React.FC<IProcedure> = ({
           <span>{youGetText}</span>
         </div>
 
-        <div className="procedure__text m-30 op-5">
-          <span>
-            {withBonusText} {percentBonus}%:{' '}
-            {parseFloat((+getValue + +getValue * (+percentBonus / 100)).toFixed(4))} BTCMT
-          </span>
-        </div>
-
         <div className="procedure__input get-input">
           {inputButtonShow ? (
             <div className="procedure__input-wrap">
@@ -232,6 +236,14 @@ const Procedure: React.FC<IProcedure> = ({
           ) : (
             ''
           )}
+
+          <div className="procedure__text m-30 op-5">
+            <span>
+              {withBonusText} {percentBonus}%:{' '}
+              {parseFloat((+getValue + +getValue * (+percentBonus / 100)).toFixed(4))} BTCMT
+            </span>
+          </div>
+
           {stopSell ? (
             <Button disabled className="procedure__submit" size="lmd">
               <span className="text-upper text-slg">{soldOutText}</span>

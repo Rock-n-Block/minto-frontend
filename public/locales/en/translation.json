@@ -107,6 +107,10 @@
       "recommended": "Recommended",
       "days": "DAYS",
       "ratio": "Ratio",
+      "afterBonusText": {
+        "one": "Locked BTCMT tokens would be unlocked weekly in equal portions during whole lock period.",
+        "two": "All locked tokens could be staked."
+      },
       "underHoldText": {
         "one": "Token lock does not affect your mining.",
         "two": "Locked tokens could be staked and bring reward."

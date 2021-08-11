@@ -237,6 +237,10 @@ const Presale: React.FC = () => {
               one: t('page.presale.underHoldText.one'),
               two: t('page.presale.underHoldText.two'),
             }}
+            afterBonusText={{
+              one: t('page.presale.afterBonusText.one'),
+              two: t('page.presale.afterBonusText.two'),
+            }}
             infoText={infoText}
             miniButtonShow
             inputTitle={`${t('page.presale.balance')}: ${presaleInfo.usdtBalance} USDT`}

@@ -107,6 +107,10 @@
       "recommended": "受到推崇的",
       "days": "天",
       "ratio": "比率",
+      "afterBonusText": {
+        "one": "锁定的 BTCMT 代币将在整个锁定期间每周等量解锁。",
+        "two": "所有锁定的代币都可以质押。"
+      },
       "underHoldText": {
         "one": "代币锁定不影响您的挖矿。",
         "two": "锁定的代币可以质押并带来奖励。"
