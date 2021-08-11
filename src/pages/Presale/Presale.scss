@@ -4,8 +4,8 @@
   .procedure {
     padding-top: 190px;
     @include b('tablet') {
-      padding-bottom: 10px;
       padding-top: 130px;
+      padding-bottom: 10px;
     }
   }
 
