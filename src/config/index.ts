@@ -1,6 +1,6 @@
 import { IAppConfig, IBackendConfig, IChainConfig, IConnectWallet, IContracts } from '../types';
 
-export const is_production = true;
+export const is_production = false;
 
 export const show_logs = true;
 export const update_after_tx_timeout = 5000;
