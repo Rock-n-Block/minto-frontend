@@ -35,7 +35,7 @@ const Header: React.FC = observer(() => {
     },
     {
       lng: 'ch',
-      title: 'Ch',
+      title: '中文',
       active: false,
     },
   ]);
