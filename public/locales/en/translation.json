@@ -156,7 +156,58 @@
           "title": "Roadmap"
         },
         "news": {
-          "title": "News"
+          "title": "News",
+          "slide": {
+            "1": {
+              "title": "Tokenomics",
+              "text": "Our second article on Medium. Find out more about our vision on token and get details about how the economics of token works.",
+              "link": {
+                "text": "Read about tokeonomics"
+              }
+            },
+            "2": {
+              "title": "Medium",
+              "text": "People love Medium as a platform for authors that allows them to comfortably share vision and thoughts. Our team has something to say too. Read our first article about the value for investors.",
+              "link": {
+                "text": "Follow us"
+              }
+            },
+            "3": {
+              "title": "Crypto Daily article",
+              "text": "Here is an article about the current state of bitcoin mining. Sustainable future, ecology and origins. All the basic things and a modern opinion mentioning Minto.",
+              "link": {
+                "text": "Read Crypto Daily"
+              }
+            },
+            "4": {
+              "title": "Telegram chat",
+              "text": "We want to be in touch with you in the way it will be comfortable. Cryptocommunity and millions of people around the world love Telegram. The Minto team is not an exception.",
+              "link": {
+                "text": "Follow the chat"
+              }
+            },
+            "5": {
+              "title": "Audit Report",
+              "text": "Hacken.io audit rated Minto Contract infrastructure on the top security level",
+              "link": {
+                "text": "Read the Report"
+              }
+            },
+            "6": {
+              "title": "Presale Guide",
+              "text": "You decided to participate in the presale but don`t know where to begin? Here is a step-by-step guide on how to do it.",
+              "link": {
+                "text": "Read on Medium"
+              }
+            },
+            "7": {
+              "title": "BTCMT Presale Started",
+              "text": "For all of thow who were planning to participate, now you can buy tokens that have simplified mining to a point beyond. For all of thow who were planning to participate, now you can buy tokens that have simplified mining to a point beyond. Stake it and receive a splendid mining reward!",
+              "link": {
+                "text": "Purchase tokens"
+              }
+            }
+          }
         },
         "subscribe": {
           "text": {
