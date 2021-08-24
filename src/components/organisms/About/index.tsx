@@ -21,16 +21,6 @@ const About: React.FC = () => {
         <section className="about__left">
           <h2 className="about__title h2 text-white text-bold">{t('component.aboutUs.title')}</h2>
           <p className="about__description text text-white">{t('component.aboutUs.text')}</p>
-          <a href="/resources/MintoWhitepaper.pdf" target="_blank">
-            <Button
-              size="lg"
-              colorScheme="green"
-              className="about__whitepaper-btn text-upper text-bold-e text-lmd"
-            >
-              <IconNewspaper className="btn-icon" />
-              {t('component.aboutUs.buttons.whitepaper')}
-            </Button>
-          </a>
         </section>
         <section className="about__right">
           <p className="about__right-text text-gray-l text">{t('component.aboutUs.text2')}</p>
@@ -81,6 +71,14 @@ const About: React.FC = () => {
                 <IconPowerpoint className="btn-icon" />
                 <span className="text-smd text-upper text-bold-e text-white">
                   {t('component.aboutUs.buttons.presentation')}
+                </span>
+              </Button>
+            </a>
+            <a href="/resources/MintoWhitepaper.pdf" target="_blank">
+              <Button size="lg" colorScheme="outline" className="about__btn">
+                <IconNewspaper className="btn-icon" />
+                <span className="text-smd text-upper text-bold-e text-white">
+                  {t('component.aboutUs.buttons.whitepaper')}
                 </span>
               </Button>
             </a>
