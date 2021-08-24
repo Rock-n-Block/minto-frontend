@@ -153,6 +153,7 @@ const Presale: React.FC = () => {
 
     const usdt = deNormalizedValue(+usdtValue + 1);
     const btcmt = deNormalizedValue(btcmtValue);
+    // const btcmt = ((btcmtValue * 1.5 * 10 ** 18) / 1.5).toString();
 
     store.contractService
       .presaleBuy(btcmt, usdt, percentValue)

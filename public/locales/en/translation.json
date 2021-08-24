@@ -138,10 +138,10 @@
           "text2": "Our project is hosted in a gem we found in the Republic of Karelia. The 86,000 square foot, brand new data center is in an ideal location that has enabled us to cut operation costs down to a minimum, thanks to a stable 1Gbit internet connection, smooth logistics and the suitable climate in the region.",
           "text3": "The facility and operation are in complete compliance with local and international regulations, and the site is maintained by a team of over 150 experienced technicians.",
           "slide": {
-            "one": "The overall energy capacity is 64.5 MW and has been fitted with 3500 of the most advanced ASIC miners, with 50,000 THs of mining power allocatedto Minto. Those figures will increase as the project grows.",
-            "two": "The data center is powered by a private plant that provides it with cheap, green electricity.",
-            "three": "The facility's extra square footage opens up opportunities for further scaling at no additional cost.",
-            "four": "The overall computing capabilities of the facility can be used for scientific calculations, processing big data, rendering and artificial intelligence."
+            "one": "The center’s overall energy capacity is 64.5 MW. The facility has been equipped with 31 000 ASIC miners, with over 50 000 THs of mining power allocated to Minto. Those figures will increase as the project grows.",
+            "two": "The data center was built using the most modern technologies, materials and equipment. This guarantees long-term reliability and stability.",
+            "three": "The data center is capable of using any equipment model, including GPUs. In the future, this will allow Minto to issue tokens for mining altcoins.",
+            "four": "The facility’s extra square footage opens up opportunities for further scaling and construction of a second 120 MW data center."
           }
         },
         "launch": {
