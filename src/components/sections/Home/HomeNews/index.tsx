@@ -10,6 +10,8 @@ import NewsImg1 from '../../../../assets/img/sections/home/news-1.png';
 import NewsImg2 from '../../../../assets/img/sections/home/news-2.png';
 import NewsImg3 from '../../../../assets/img/sections/home/news-3.png';
 import NewsImg4 from '../../../../assets/img/sections/home/news-4.png';
+import NewsImg5 from '../../../../assets/img/sections/home/news-5.png';
+import NewsImg6 from '../../../../assets/img/sections/home/news-6.png';
 
 import './HomeNews.scss';
 
@@ -25,6 +27,26 @@ const HomeNews: React.FC = () => {
 
   const slidesPerGroud = window.innerWidth > 768 ? 3 : 1;
   const slides = [
+    {
+      img: NewsImg6,
+      date: 'August 19, 2021',
+      title: 'BTCMT Presale Started',
+      text: 'For all of thow who were planning to participate, now you can buy tokens that have simplified mining to a point beyond. For all of thow who were planning to participate, now you can buy tokens that have simplified mining to a point beyond. Stake it and receive a splendid mining reward!',
+      link: {
+        text: 'Purchase tokens',
+        url: 'https://minto.finance/presale',
+      },
+    },
+    {
+      img: NewsImg5,
+      date: 'August 18, 2021',
+      title: 'Presale Guide',
+      text: 'You decided to participate in the presale but don`t know where to begin? Here is a step-by-step guide on how to do it.',
+      link: {
+        text: 'Read on Medium',
+        url: 'https://medium.com/@btcmtofficial/99874cf710d3',
+      },
+    },
     {
       img: NewsImg0,
       date: 'July 27, 2021',
