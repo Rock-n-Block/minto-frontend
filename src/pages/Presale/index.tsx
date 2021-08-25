@@ -271,6 +271,30 @@ const Presale: React.FC = () => {
           <span className="links__title text-center text text-black text-bold-e">
             {t('info.connectWallet')}
           </span>
+
+          <div className="no_login_data-links">
+            <a
+              href="https://medium.com/@btcmtofficial/a-guide-on-how-to-take-part-in-the-btcmt-presale-99874cf710d3"
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              {t('page.home.links.1')}
+            </a>
+            <a
+              href="https://medium.com/@btcmtofficial/how-to-configure-a-metamask-wallet-to-heco-mainnet-39c5d1f3ee23"
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              {t('page.home.links.2')}
+            </a>
+            <a
+              href="https://medium.com/@btcmtofficial/a-guide-on-how-and-why-to-buy-ht-19b3b024f77d "
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              {t('page.home.links.3')}
+            </a>
+          </div>
         </div>
       )}
 

@@ -96,5 +96,26 @@ a {
   font-size: 1.5rem;
   text-align: center;
 
-  color: #000;
+  &-links {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 25px;
+    width: 100%;
+
+    font-size: 16px;
+
+
+    a {
+      margin-bottom: 5px;
+      // width: max-content;
+      text-decoration: underline;
+      color: #000;
+
+      &:hover {
+        text-decoration: none;
+        color: #6ddac0;
+      }
+    }
+  }
 }
