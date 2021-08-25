@@ -89,6 +89,11 @@ export interface IChainConfig {
   tx: {
     link: string;
   };
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
   blockExp: string;
 }
 

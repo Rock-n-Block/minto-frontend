@@ -91,7 +91,8 @@ export class WalletConnect {
                   params: [
                     {
                       chainId: `0x${connectWallet.network.chainID.toString(16)}`,
-                      chainName: chain.name,
+                      chainName: connectWallet.network.name,
+                      nativeCurrency: chain.nativeCurrency,
                       rpcUrls: [chain.rpc],
                       blockExplorerUrls: [chain.blockExp],
                     },
