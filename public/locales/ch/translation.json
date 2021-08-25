@@ -122,6 +122,11 @@
         "title": "感谢您的购买！",
         "text": "交易确认后，您将收到 BTCMT。",
         "btn": "行"
+      },
+      "modaTitle": {
+        "1": "如何添加BTCMT",
+        "2": "如何为 HECO 设置 MetaMask",
+        "3": "如何购买HT和USDT"
       }
     },
     "home": {

@@ -122,6 +122,11 @@
         "title": "Thank you for your purchase!",
         "text": "You will receive BTCMT once the transaction is confirmed.",
         "btn": "OK"
+      },
+      "modaTitle": {
+        "1": "How to add BTCMT",
+        "2": "How to set up MetaMask for HECO",
+        "3": "How to buy HT and USDT"
       }
     },
     "home": {
