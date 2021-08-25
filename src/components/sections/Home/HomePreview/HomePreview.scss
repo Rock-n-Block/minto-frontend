@@ -29,30 +29,36 @@
 
   &-text {
     margin-bottom: 30px;
+
+    max-width: 650px;
+
     font-size: 16px;
     font-weight: 800;
     line-height: 1.2;
-    max-width: 650px;
   }
 
   &-links {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
     padding-left: 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     width: 100%;
 
     @include b('tablet') {
       margin-top: 25px;
       padding-left: 0;
+
       align-items: center;
     }
 
     a {
       margin-bottom: 5px;
+
+      text-decoration: underline;
       // width: max-content;
       color: #000;
-      text-decoration: underline;
     }
   }
 

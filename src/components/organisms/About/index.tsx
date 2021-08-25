@@ -23,7 +23,11 @@ const About: React.FC = () => {
           <p className="about__description text text-white">{t('component.aboutUs.text')}</p>
 
           <div className="about__btns">
-            <a href="https://pool.huobi.com/pow/miners?signature=01834c444c9944ad8ade4cfea1a0f698" target="_blank" rel="noreferrer">
+            <a
+              href="https://pool.huobi.com/pow/miners?signature=01834c444c9944ad8ade4cfea1a0f698"
+              target="_blank"
+              rel="noreferrer"
+            >
               <Button
                 colorScheme="green"
                 size="lsm"
@@ -34,11 +38,7 @@ const About: React.FC = () => {
                 </span>
               </Button>
             </a>
-            <a
-              href="https://rtsp.me/embed/Y7FAt7aF/"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href="https://rtsp.me/embed/Y7FAt7aF/" target="_blank" rel="noreferrer">
               <Button className="about__btn" colorScheme="green" size="lsm">
                 <span className="text-smd text-upper text-bold-e text-white">
                   {t('component.aboutUs.buttons.datacenterstream')}
@@ -46,7 +46,6 @@ const About: React.FC = () => {
               </Button>
             </a>
           </div>
-
         </section>
         <section className="about__right">
           <p className="about__right-text text-gray-l text">{t('component.aboutUs.text2')}</p>
