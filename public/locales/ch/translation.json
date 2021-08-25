@@ -133,6 +133,11 @@
         "stake": "抵押",
         "buy": "预售"
       },
+      "links": {
+        "1": "如何参与 BTCMT 预售的完整指南",
+        "2": "如何为 HECO 设置 MetaMask",
+        "3": "您需要购买 HT 的方式和原因"
+      },
       "tokenPrice": "预售代币价格",
       "totalSupply": "总供应量",
       "component": {

@@ -133,6 +133,11 @@
         "stake": "stake",
         "buy": "presale"
       },
+      "links": {
+        "1": "Complete guide how to take part in BTCMT presale",
+        "2": "How to set up MetaMask for HECO",
+        "3": "How and why you need to buy HT"
+      },
       "tokenPrice": "PRESALE token price",
       "totalSupply": "total supply",
       "component": {

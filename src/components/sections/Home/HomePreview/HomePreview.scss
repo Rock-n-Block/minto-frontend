@@ -35,6 +35,27 @@
     max-width: 650px;
   }
 
+  &-links {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 25px;
+    width: 100%;
+
+    @include b('tablet') {
+      margin-top: 25px;
+      padding-left: 0;
+      align-items: center;
+    }
+
+    a {
+      margin-bottom: 5px;
+      width: max-content;
+      color: #000;
+      text-decoration: underline;
+    }
+  }
+
   &-btn {
     @include b('tablet') {
       width: 100%;
