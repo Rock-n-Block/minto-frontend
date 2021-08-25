@@ -35,6 +35,8 @@
       "auditText": "审计将MINTO合约基础设施评为最高安全级别",
       "buttons": {
         "whitepaper": "白皮书",
+        "hashrate": "算力观察者",
+        "datacenterstream": "数据中心流",
         "pressRelease": "新闻稿",
         "presentation": "PPT",
         "audit": "审计报告"

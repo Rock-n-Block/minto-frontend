@@ -35,6 +35,8 @@
       "auditText": "audit rated MINTO Contract infrastructure on the top security level",
       "buttons": {
         "whitepaper": "whitepaper",
+        "hashrate": "Hashrate Watcher",
+        "datacenterstream": "Data center stream",
         "pressRelease": "press release",
         "presentation": "presentation",
         "audit": "audit report"
