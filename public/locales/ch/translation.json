@@ -127,6 +127,8 @@
     "home": {
       "title": "通过抵押 BTCMT 代币挖比特币",
       "subtitle": "我们去掉了所有不必要的步骤，使挖矿比获得 BTC 钱包更容易",
+      "participate1": "活跃的预售正在进行中。",
+      "participate2": "要参与，请单击预售按钮并查看指南。",
       "buttons": {
         "stake": "抵押",
         "buy": "预售"

@@ -127,6 +127,8 @@
     "home": {
       "title": "Mine Bitcoin by staking BTCMT tokens",
       "subtitle": "We've removed all the unnecessary steps and made mining easier than getting a BTC wallet",
+      "participate1": "THE ACTIVE STAGE OF THE PRESALE IS IN PROGRESS NOW.",
+      "participate2": "TO PARTICIPATE CLICK THE PRESALE BUTTON AND CHECK OUT THE GUIDES.",
       "buttons": {
         "stake": "stake",
         "buy": "presale"

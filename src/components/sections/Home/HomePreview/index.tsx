@@ -128,6 +128,11 @@ const HomePreview: React.FC = () => {
       <div className="row">
         <h1 className="h1 text-bold home__preview-title">{t('page.home.title')}</h1>
         <div className="text-lg home__preview-subtitle">{t('page.home.subtitle')}</div>
+        <div className="home__preview-text">
+          {t('page.home.participate1')}
+          <br />
+          {t('page.home.participate2')}
+        </div>
         <div className="box-f box-f-ai-c home__preview-box">
           {/* <Button size="lmd" className="home__preview-btn">
             <NavLink exact to="/staking" className="text-upper text-slg">
