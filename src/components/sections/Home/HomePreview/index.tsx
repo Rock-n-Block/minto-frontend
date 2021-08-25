@@ -129,11 +129,11 @@ const HomePreview: React.FC = () => {
         <h1 className="h1 text-bold home__preview-title">{t('page.home.title')}</h1>
         <div className="text-lg home__preview-subtitle">{t('page.home.subtitle')}</div>
         <div className="box-f box-f-ai-c home__preview-box">
-          <Button size="lmd" className="home__preview-btn">
+          {/* <Button size="lmd" className="home__preview-btn">
             <NavLink exact to="/staking" className="text-upper text-slg">
               {t('page.home.buttons.stake')}
             </NavLink>
-          </Button>
+          </Button> */}
           {/* <a
             className="home__preview-btn"
             rel="nofollow noreferrer"
@@ -144,7 +144,7 @@ const HomePreview: React.FC = () => {
                 : 'https://btcmt.typeform.com/to/m2E3RYwP'
             }
           > */}
-          <Button size="md" colorScheme="outline" className="home__preview-btn">
+          <Button size="md" colorScheme="green" className="home__preview-btn">
             <NavLink exact to="/presale" className="text-upper text-slg">
               <div className="text-upper text-slg">{t('page.home.buttons.buy')}</div>
             </NavLink>
