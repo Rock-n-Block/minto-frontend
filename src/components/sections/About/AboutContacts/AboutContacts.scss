@@ -79,6 +79,8 @@
     }
     @include b('tablet') {
       margin-top: 40px;
+
+      font-size: 16px !important;
     }
   }
 }

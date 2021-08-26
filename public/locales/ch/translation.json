@@ -35,6 +35,8 @@
       "auditText": "审计将MINTO合约基础设施评为最高安全级别",
       "buttons": {
         "whitepaper": "白皮书",
+        "hashrate": "算力观察者",
+        "datacenterstream": "数据中心流",
         "pressRelease": "新闻稿",
         "presentation": "PPT",
         "audit": "审计报告"
@@ -120,14 +122,26 @@
         "title": "感谢您的购买！",
         "text": "交易确认后，您将收到 BTCMT。",
         "btn": "行"
+      },
+      "modaTitle": {
+        "1": "如何添加BTCMT",
+        "2": "如何为 HECO 设置 MetaMask",
+        "3": "如何购买HT和USDT"
       }
     },
     "home": {
       "title": "通过抵押 BTCMT 代币挖比特币",
       "subtitle": "我们去掉了所有不必要的步骤，使挖矿比获得 BTC 钱包更容易",
+      "participate1": "活跃的预售正在进行中。",
+      "participate2": "要参与，请单击预售按钮并查看指南。",
       "buttons": {
         "stake": "抵押",
         "buy": "预售"
+      },
+      "links": {
+        "1": "如何参与 BTCMT 预售的完整指南",
+        "2": "如何为 HECO 设置 MetaMask",
+        "3": "您需要购买 HT 的方式和原因"
       },
       "tokenPrice": "预售代币价格",
       "totalSupply": "总供应量",

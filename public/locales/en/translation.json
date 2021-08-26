@@ -35,6 +35,8 @@
       "auditText": "audit rated MINTO Contract infrastructure on the top security level",
       "buttons": {
         "whitepaper": "whitepaper",
+        "hashrate": "Hashrate Watcher",
+        "datacenterstream": "Data center stream",
         "pressRelease": "press release",
         "presentation": "presentation",
         "audit": "audit report"
@@ -120,14 +122,26 @@
         "title": "Thank you for your purchase!",
         "text": "You will receive BTCMT once the transaction is confirmed.",
         "btn": "OK"
+      },
+      "modaTitle": {
+        "1": "How to add BTCMT",
+        "2": "How to set up MetaMask for HECO",
+        "3": "How to buy HT and USDT"
       }
     },
     "home": {
       "title": "Mine Bitcoin by staking BTCMT tokens",
       "subtitle": "We've removed all the unnecessary steps and made mining easier than getting a BTC wallet",
+      "participate1": "THE ACTIVE STAGE OF THE PRESALE IS IN PROGRESS NOW.",
+      "participate2": "TO PARTICIPATE CLICK THE PRESALE BUTTON AND CHECK OUT THE GUIDES.",
       "buttons": {
         "stake": "stake",
         "buy": "presale"
+      },
+      "links": {
+        "1": "Complete guide how to take part in BTCMT presale",
+        "2": "How to set up MetaMask for HECO",
+        "3": "How and why you need to buy HT"
       },
       "tokenPrice": "PRESALE token price",
       "totalSupply": "total supply",

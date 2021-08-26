@@ -1,5 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import nextId from 'react-id-generator';
+import { Modal } from 'antd';
 import cn from 'classnames';
 
 import CheckIcon from '../../../assets/img/icons/check-icon.svg';
@@ -105,6 +107,121 @@ const Procedure: React.FC<IProcedure> = ({
   underHoldText,
   afterBonusText,
 }) => {
+  const [showModal, setShowModal] = React.useState(false);
+  const [infoModal, setInfoModal] = React.useState('');
+
+  const { t } = useTranslation();
+
+  function Hello(props: { name: string }) {
+    const { name } = props;
+
+    if (name === 'add') {
+      return (
+        <div>
+          <br />
+          <span className="procedure__modal-title">{t('page.presale.modaTitle.1')}</span>
+          <br />
+          <b>Pay for the tokens</b>
+          <p>
+            Payment is made through the MetaMask wallet. Gas is paid in HT. Tokens are bought for
+            USDT (HECO).
+          </p>
+          <br />
+          <b>Add tokens to MetaMask — click “Add Token” in the application or browser extension.</b>
+          <br />
+          <br />
+          <p>To add tokens, you should enter the addresses of their smart contracts.</p>
+          <br />
+          <b>Smart contract address USDT (HECO):</b>{' '}
+          <pre>0xa71edc38d189767582c38a3145b5873052c3e47a</pre>
+          <br />
+          <b>Smart contract address BTCMT (HECO):</b>{' '}
+          <pre>0x410a56541bD912F9B60943fcB344f1E3D6F09567</pre>
+          <br />
+          Once the tokens are added, your wallet will display them. Now you need to buy them.
+        </div>
+      );
+    }
+
+    if (name === 'set') {
+      return (
+        <div>
+          <br />
+          <span className="procedure__modal-title">{t('page.presale.modaTitle.2')}</span>
+          <br />
+          You will have to set up your wallet to Heco Mainnet to work with Minto. <br />
+          By default, the MetaMask wallet is configured on the Ethereum network. <br />
+          Go to “Settings” on your MetaMask and click “Networks”:
+          <br />
+          <br />
+          <p>Enter the data of the new network Heco Mainnet in a window that opens:</p>
+          <br />
+          Network Name: Heco <br />
+          RPC URL:{' '}
+          <a href="https://http-mainnet.hecochain.com" target="_blank" rel="noreferrer">
+            https://http-mainnet.hecochain.com
+          </a>{' '}
+          <a href="https://scan.hecochain.com" target="_blank" rel="noreferrer">
+            https://scan.hecochain.com
+          </a>{' '}
+          <br />
+          ChainID: 128 <br /> Symbol: HT <br />
+          Block Explorer:{' '}
+          <a href="https://hecoinfo.com/ " target="_blank" rel="noreferrer">
+            https://hecoinfo.com/{' '}
+          </a>{' '}
+          <br />
+          <br />
+          Then you can see that your wallet is switched to Heco.
+        </div>
+      );
+    }
+
+    if (name === 'buy') {
+      return (
+        <div>
+          <br />
+          <span className="procedure__modal-title">{t('page.presale.modaTitle.3')}</span>
+          <br />
+          <b>To get HT and Heco USDT you may use exchanges that support HECO.</b>
+          <p>For example, you may use</p>
+          <br />
+          <b>Huobi Global:</b>
+          <br />
+          <ul>
+            <li>
+              <a
+                href="https://www.huobi.com/en-us/exchange/ht_usdt"
+                target="_blank"
+                rel="nofollow noreferrer"
+              >
+                https://www.huobi.com/en-us/exchange/ht_usdt
+              </a>{' '}
+              to buy HT.
+            </li>
+            <li>
+              choose the HECO protocol while withdrawing USDT to get HECO USDT on your MetaMask.{' '}
+            </li>
+          </ul>
+          <br />
+          <b>GAte.io</b>
+          <br />
+          <ul>
+            <li>
+              <a href="https://www.gate.io/trade/HT_USDT" target="_blank" rel="nofollow noreferrer">
+                https://www.gate.io/trade/HT_USDT
+              </a>
+            </li>
+            <li>
+              choose the HECO protocol while withdrawing USDT to get HECO USDT on your MetaMask.
+            </li>
+          </ul>
+        </div>
+      );
+    }
+    return <div>Привет, {name}!</div>;
+  }
+
   return (
     <div className={cn('procedure', theme)}>
       <div className="procedure__content">
@@ -115,6 +232,65 @@ const Procedure: React.FC<IProcedure> = ({
           })}
         >
           {title.one} <span className="procedure__title-accent">{title.two}</span>
+        </div>
+
+        <Modal
+          className="procedure__modal"
+          centered
+          visible={showModal}
+          onOk={() => setShowModal(false)}
+          onCancel={() => setShowModal(false)}
+          footer={null}
+        >
+          <Hello name={infoModal} />
+        </Modal>
+
+        <div className="procedure__content-links">
+          <span
+            key={nextId()}
+            role="button"
+            tabIndex={0}
+            onKeyDown={() => {
+              setShowModal(true);
+              setInfoModal('add');
+            }}
+            onClick={() => {
+              setShowModal(true);
+              setInfoModal('add');
+            }}
+          >
+            {t('page.presale.modaTitle.1')}
+          </span>
+          <span
+            key={nextId()}
+            role="button"
+            tabIndex={0}
+            onKeyDown={() => {
+              setShowModal(true);
+              setInfoModal('set');
+            }}
+            onClick={() => {
+              setShowModal(true);
+              setInfoModal('set');
+            }}
+          >
+            {t('page.presale.modaTitle.2')}
+          </span>
+          <span
+            key={nextId()}
+            role="button"
+            tabIndex={0}
+            onKeyDown={() => {
+              setShowModal(true);
+              setInfoModal('buy');
+            }}
+            onClick={() => {
+              setShowModal(true);
+              setInfoModal('buy');
+            }}
+          >
+            {t('page.presale.modaTitle.3')}
+          </span>
         </div>
 
         <div className="procedure__separate">

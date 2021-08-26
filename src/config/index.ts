@@ -10,13 +10,18 @@ export const backend: IBackendConfig = {
 };
 
 export const chain: IChainConfig = {
-  name: is_production ? 'heco' : 'heco-testnet',
+  name: is_production ? 'Huobi ECO Chain Mainnet' : 'Huobi ECO Chain Testnet',
   id: is_production ? 128 : 256,
   rpc: is_production ? 'https://http-mainnet.hecochain.com' : 'https://http-testnet.hecochain.com',
   tx: {
     link: is_production ? 'https://hecoinfo.com/tx' : 'https://testnet.hecoinfo.com/tx',
   },
-  blockExp: is_production ? 'https://scan.hecochain.com' : 'https://testnet.bscscan.com',
+  nativeCurrency: {
+    name: is_production ? 'HT' : 'HTT',
+    symbol: is_production ? 'HT' : 'htt',
+    decimals: 18,
+  },
+  blockExp: is_production ? 'https://hecoinfo.com' : 'https://testnet.hecoinfo.com',
 };
 
 export const connectWallet: IConnectWallet = {

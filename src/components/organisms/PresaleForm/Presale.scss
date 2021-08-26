@@ -9,6 +9,28 @@
     padding: 32px 20px 45px;
   }
 
+  &__modal {
+    cursor: default;
+
+    .ant-modal-content {
+      overflow: hidden;
+
+      border-radius: 25px;
+      // color: white;
+      // background-color: #6ddac0;
+    }
+
+    &-title {
+      display: flex;
+      justify-content: center;
+
+      font-size: 18px;
+      font-weight: 600;
+
+      color: #6ddac0;
+    }
+  }
+
   &__text {
     margin: 50px 0;
 
@@ -256,6 +278,34 @@
     margin: 0 auto;
 
     max-width: 800px;
+
+    &-links {
+      margin-top: 25px;
+
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+
+      @include b(600) {
+        flex-direction: column;
+      }
+
+      span {
+        margin-bottom: 5px;
+
+        text-decoration: underline;
+
+        cursor: pointer;
+
+        color: #fff;
+
+        &:hover {
+          text-decoration: none;
+
+          color: #6ddac0;
+        }
+      }
+    }
   }
 
   &__title {

@@ -64,6 +64,12 @@
       }
     }
 
+    a {
+      @include b('mobile') {
+        width: 100%;
+      }
+    }
+
     .btn:first-child {
       margin-right: 22px;
       @include b('tablet') {
