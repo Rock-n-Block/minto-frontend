@@ -112,7 +112,7 @@ const Procedure: React.FC<IProcedure> = ({
 
   const { t } = useTranslation();
 
-  function Hello(props: { name: string }) {
+  function ModalInfo(props: { name: string }) {
     const { name } = props;
 
     if (name === 'add') {
@@ -219,7 +219,13 @@ const Procedure: React.FC<IProcedure> = ({
         </div>
       );
     }
-    return <div>Привет, {name}!</div>;
+
+    return (
+      <div>
+        <br />
+        <span className="procedure__modal-title">Data not found</span>
+      </div>
+    );
   }
 
   return (
@@ -242,7 +248,7 @@ const Procedure: React.FC<IProcedure> = ({
           onCancel={() => setShowModal(false)}
           footer={null}
         >
-          <Hello name={infoModal} />
+          <ModalInfo name={infoModal} />
         </Modal>
 
         <div className="procedure__content-links">
