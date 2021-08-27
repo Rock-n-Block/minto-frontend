@@ -32,7 +32,7 @@
       "text2": "Receive transparent mining rewards as if you had an ASIC-setup or make profits by buying and selling any amount of mining power without dealing with the problems of traditional mining.",
       "text3": "Bitcoin mining has never been easier. Learn more about the future of the mining industry",
       "auditLink": "Hacken.io",
-      "auditText": "audit rated MINTO Contract infrastructure on the top security level",
+      "auditText": "rated MINTO Contract infrastructure on the highest security level",
       "buttons": {
         "whitepaper": "whitepaper",
         "hashrate": "Hashrate Watcher",
@@ -134,6 +134,7 @@
       "subtitle": "We've removed all the unnecessary steps and made mining easier than getting a BTC wallet",
       "participate1": "THE ACTIVE STAGE OF THE PRESALE IS IN PROGRESS NOW.",
       "participate2": "TO PARTICIPATE CLICK THE PRESALE BUTTON AND CHECK OUT THE GUIDES.",
+      "attention": "Attention! The purchase is made by HECO USDT, you also need HT to pay for the gas.",
       "buttons": {
         "stake": "stake",
         "buy": "presale"
@@ -216,7 +217,7 @@
             },
             "7": {
               "title": "BTCMT Presale Started",
-              "text": "For all of thow who were planning to participate, now you can buy tokens that have simplified mining to a point beyond. For all of thow who were planning to participate, now you can buy tokens that have simplified mining to a point beyond. Stake it and receive a splendid mining reward!",
+              "text": "For all of thow who were planning to participate, now you can buy tokens that have simplified mining to a point beyond. Stake it and receive a splendid mining reward!",
               "link": {
                 "text": "Purchase tokens"
               }

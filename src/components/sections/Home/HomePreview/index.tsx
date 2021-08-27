@@ -132,6 +132,9 @@ const HomePreview: React.FC = () => {
           {t('page.home.participate1')}
           <br />
           {t('page.home.participate2')}
+          <br />
+          <br />
+          {t('page.home.attention')}
         </div>
         <div className="box-f box-f-ai-c home__preview-box">
           {/* <Button size="lmd" className="home__preview-btn">
