@@ -64,6 +64,12 @@
       }
     }
 
+    a {
+      @include b('mobile') {
+        width: 100%;
+      }
+    }
+
     .btn:first-child {
       margin-right: 22px;
       @include b('tablet') {
@@ -71,18 +77,22 @@
       }
     }
   }
+
   &__audit {
     margin-top: 45px;
     @include b('mobile') {
       margin-top: 30px;
     }
+
     &-text {
-      max-width: 380px;
       margin-left: 30px;
+
+      max-width: 380px;
       @include b('mobile') {
-        max-width: unset;
-        margin-left: 0;
         margin-top: 15px;
+        margin-left: 0;
+
+        max-width: unset;
       }
     }
   }
@@ -104,6 +114,7 @@
       margin-top: 30px;
     }
   }
+
   &__btn {
     @include b('mobile') {
       width: 100%;

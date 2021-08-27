@@ -14,11 +14,15 @@ export class ContractService {
   private store: any;
   private staking: any;
   private token: any;
+  private presale: any;
+  private usdt: any;
 
   constructor(appstore: AppStore) {
     this.store = appstore;
     this.staking = this.store.contracts.Staking.methods;
     this.token = this.store.contracts.Token.methods;
+    this.usdt = this.store.contracts.UsdtToken.methods;
+    this.presale = this.store.contracts.Presale.methods;
   }
 
   public async getTotalStakers(): Promise<IDataContract> {
@@ -169,6 +173,57 @@ export class ContractService {
     });
   }
 
+  // Presale Start
+
+  public async getUsdtBalance(): Promise<IDataContract> {
+    const data: IDataContract = await this.usdt
+      .balanceOf(this.store.account.address)
+      .call()
+      .then((value: string) => {
+        clog(`balanceOf (usdtBalance): ${value}`);
+        return {
+          key: 'usdtBalance',
+          value: normalizedValue(value),
+        };
+      });
+
+    return data;
+  }
+
+  public async getTotalSold(): Promise<IDataContract> {
+    const data: IDataContract = await this.presale
+      .totalSold()
+      .call()
+      .then((value: string) => {
+        clog(`totalSold (totalSold): ${value}`);
+        return {
+          key: 'totalSold',
+          value: normalizedValue(value),
+          // value: 999999999999800000,
+          // value: 1000000000000000000,
+        };
+      });
+
+    return data;
+  }
+
+  public async getCapToSell(): Promise<IDataContract> {
+    const data: IDataContract = await this.presale
+      .capToSell()
+      .call()
+      .then((value: string) => {
+        clog(`capToSell (capToSell): ${value}`);
+        return {
+          key: 'capToSell',
+          value: normalizedValue(value),
+        };
+      });
+
+    return data;
+  }
+
+  // Presale Finish
+
   // TODO: FIX Allowance for Unlocked Token
   public getAllowance(amount: string): Promise<number> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -222,7 +277,7 @@ export class ContractService {
 
   public async approveUnlocked(amount: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      debugger;
+      // debugger;
       return this.token
         .approve(contracts.params.STAKING[contracts.type].address, amount)
         .send({
@@ -283,6 +338,86 @@ export class ContractService {
             reject(err);
           });
       });
+    });
+  }
+
+  public presaleBuy(btcmt: string, usdt: string, percent: number): Promise<any> {
+    notify(i18n.t('notifications.presale.wait'), 'info');
+
+    const weeks: { [index: number]: string } = {
+      0: '0',
+      2: '4',
+      4: '13',
+      8: '26',
+      10: '52',
+      15: '104',
+    };
+
+    const getAllowance = (amount: string): Promise<any> => {
+      return new Promise((resolve, reject) => {
+        this.usdt
+          .allowance(this.store.account.address, contracts.params.PRESALE[contracts.type].address)
+          .call()
+          .then((allowance: string) => {
+            const allow = new BigNumber(allowance);
+            const allowed = allow.minus(amount);
+            clog(`allowance: ${allowance}`);
+            allowed.isNegative() ? reject() : resolve(1);
+          });
+      });
+    };
+
+    const approveUsdt = (amount: string): Promise<any> => {
+      return new Promise((resolve, reject) => {
+        this.usdt
+          .approve(contracts.params.PRESALE[contracts.type].address, usdt)
+          .send({
+            from: this.store.account.address,
+          })
+          .then((allowance: string) => {
+            const allow = new BigNumber(allowance);
+            const allowed = allow.minus(amount);
+            clog(`allowance: ${allowance}`);
+            allowed.isNegative() ? reject() : resolve(1);
+          });
+      });
+    };
+
+    const buyTokens = (
+      resolve: any,
+      reject: any,
+      amount: string,
+      weeksTo: string,
+    ): Promise<any> => {
+      return this.presale
+        .buy(amount, weeksTo)
+        .send({
+          from: this.store.account.address,
+        })
+        .then((tx: any) => {
+          clogData('stake: ', tx);
+          return { 0: true, 1: tx.transactionHash };
+        })
+        .then(resolve, reject);
+    };
+
+    return new Promise((resolve, reject) => {
+      getAllowance(usdt).then(
+        () => {
+          buyTokens(resolve, reject, btcmt, weeks[percent]);
+        },
+        () => {
+          approveUsdt(usdt)
+            .then((result: any) => {
+              clogData(`approveUsdt result: `, result);
+              return buyTokens(resolve, reject, btcmt, weeks[percent]);
+            })
+            .catch((err) => {
+              clogData(`approveUsdt err: `, err);
+              reject(err);
+            });
+        },
+      );
     });
   }
 
@@ -389,6 +524,21 @@ export class ContractService {
       })
       .then((results): IData => {
         return dataToObject(results.flat(), true, 'Staking normilized values');
+      });
+  };
+
+  public presaleInfo = async (): Promise<IData> => {
+    clogGroup('Presale contract values: contract method (template data): contract value');
+
+    const promises = [this.getUsdtBalance(), this.getCapToSell(), this.getTotalSold()];
+
+    return Promise.all(promises)
+      .then((res) => {
+        clogGroup('End', true);
+        return res;
+      })
+      .then((results): IData => {
+        return dataToObject(results.flat(), true, 'Presale normilized values');
       });
   };
 

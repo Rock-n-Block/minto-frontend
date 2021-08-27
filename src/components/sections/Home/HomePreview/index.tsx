@@ -13,10 +13,7 @@ import './HomePreview.scss';
 
 const HomePreview: React.FC = () => {
   const store = useStore();
-  const {
-    t,
-    i18n: { language },
-  } = useTranslation();
+  const { t } = useTranslation();
 
   const [info, setInfo] = React.useState({
     available: '-',
@@ -131,13 +128,21 @@ const HomePreview: React.FC = () => {
       <div className="row">
         <h1 className="h1 text-bold home__preview-title">{t('page.home.title')}</h1>
         <div className="text-lg home__preview-subtitle">{t('page.home.subtitle')}</div>
+        <div className="home__preview-text">
+          {t('page.home.participate1')}
+          <br />
+          {t('page.home.participate2')}
+          <br />
+          <br />
+          {t('page.home.attention')}
+        </div>
         <div className="box-f box-f-ai-c home__preview-box">
-          <Button size="lmd" className="home__preview-btn">
+          {/* <Button size="lmd" className="home__preview-btn">
             <NavLink exact to="/staking" className="text-upper text-slg">
               {t('page.home.buttons.stake')}
             </NavLink>
-          </Button>
-          <a
+          </Button> */}
+          {/* <a
             className="home__preview-btn"
             rel="nofollow noreferrer"
             target="_blank"
@@ -146,11 +151,37 @@ const HomePreview: React.FC = () => {
                 ? 'https://btcmt.typeform.com/to/TvDKWGwN'
                 : 'https://btcmt.typeform.com/to/m2E3RYwP'
             }
-          >
-            <Button size="md" colorScheme="outline" className="home__preview-btn">
+          > */}
+          <Button size="md" colorScheme="green" className="home__preview-btn">
+            <NavLink exact to="/presale" className="text-upper text-slg">
               <div className="text-upper text-slg">{t('page.home.buttons.buy')}</div>
-            </Button>
-          </a>
+            </NavLink>
+          </Button>
+          {/* </a> */}
+
+          <div className="home__preview-links">
+            <a
+              href="https://medium.com/@btcmtofficial/a-guide-on-how-to-take-part-in-the-btcmt-presale-99874cf710d3"
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              {t('page.home.links.1')}
+            </a>
+            <a
+              href="https://medium.com/@btcmtofficial/how-to-configure-a-metamask-wallet-to-heco-mainnet-39c5d1f3ee23"
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              {t('page.home.links.2')}
+            </a>
+            <a
+              href="https://medium.com/@btcmtofficial/a-guide-on-how-and-why-to-buy-ht-19b3b024f77d "
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              {t('page.home.links.3')}
+            </a>
+          </div>
         </div>
         <div className="home__preview-info box-f box-f-ai-c">
           <Info

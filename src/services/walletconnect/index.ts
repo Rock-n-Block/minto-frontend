@@ -1,7 +1,7 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
 import Web3 from 'web3';
 
-import { connectWallet, contracts, chain } from '../../config';
+import { chain, connectWallet, contracts } from '../../config';
 import { clogData, notify } from '../../utils';
 import i18n from '../../utils/i18n';
 
@@ -91,7 +91,8 @@ export class WalletConnect {
                   params: [
                     {
                       chainId: `0x${connectWallet.network.chainID.toString(16)}`,
-                      chainName: chain.name,
+                      chainName: connectWallet.network.name,
+                      nativeCurrency: chain.nativeCurrency,
                       rpcUrls: [chain.rpc],
                       blockExplorerUrls: [chain.blockExp],
                     },

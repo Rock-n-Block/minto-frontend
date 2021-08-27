@@ -110,6 +110,7 @@
       align-items: flex-end;
     }
   }
+
   &-f-fd-c {
     @include b('mobile') {
       flex-direction: column;

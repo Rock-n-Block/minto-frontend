@@ -32,9 +32,11 @@
       "text2": "Receive transparent mining rewards as if you had an ASIC-setup or make profits by buying and selling any amount of mining power without dealing with the problems of traditional mining.",
       "text3": "Bitcoin mining has never been easier. Learn more about the future of the mining industry",
       "auditLink": "Hacken.io",
-      "auditText": "audit rated MINTO Contract infrastructure on the top security level",
+      "auditText": "rated MINTO Contract infrastructure on the highest security level",
       "buttons": {
         "whitepaper": "whitepaper",
+        "hashrate": "Hashrate Watcher",
+        "datacenterstream": "Data center stream",
         "pressRelease": "press release",
         "presentation": "presentation",
         "audit": "audit report"
@@ -42,6 +44,15 @@
     }
   },
   "notifications": {
+    "presale": {
+      "link": "VIEW TX",
+      "exceeded": "Number of available BTCMT tokens for presale cannot be exceeded",
+      "left": "BTCMT left for presale",
+      "inputError": "Please, input value in presale field.",
+      "complete": "Your Presale complete!",
+      "wait": "Please wait, presale is in progress.",
+      "buy": "You can't buy BTCMT more than"
+    },
     "wallet": {
       "connected": "Account connected",
       "error": {
@@ -85,12 +96,53 @@
     }
   },
   "page": {
+    "presale": {
+      "title": "PRESALE",
+      "allAvailable": "All Available",
+      "btnConfirm": "CONFIRM",
+      "balance": "Your balance",
+      "soldOutText": "btcmt sold out",
+      "bonusText": "bonus tokens will be added on top of the purchase amount",
+      "amount": "Amount",
+      "holdTime": "Hold time",
+      "youGetText": "You’ll get",
+      "withBonusText": "With bonus",
+      "recommended": "Recommended",
+      "days": "DAYS",
+      "ratio": "Ratio",
+      "afterBonusText": {
+        "one": "Locked BTCMT tokens would be unlocked weekly in equal portions during whole lock period.",
+        "two": "All locked tokens could be staked."
+      },
+      "underHoldText": {
+        "one": "Token lock does not affect your mining.",
+        "two": "Locked tokens could be staked and bring reward."
+      },
+      "modal": {
+        "title": "Thank you for your purchase!",
+        "text": "You will receive BTCMT once the transaction is confirmed.",
+        "btn": "OK"
+      },
+      "modaTitle": {
+        "1": "How to add BTCMT",
+        "2": "How to set up MetaMask for HECO",
+        "3": "How to buy HT and USDT"
+      }
+    },
     "home": {
       "title": "Mine Bitcoin by staking BTCMT tokens",
       "subtitle": "We've removed all the unnecessary steps and made mining easier than getting a BTC wallet",
+      "participate1": "THE ACTIVE STAGE OF THE PRESALE IS IN PROGRESS NOW.",
+      "participate2": "TO PARTICIPATE CLICK THE PRESALE BUTTON AND CHECK OUT THE GUIDES.",
+      "attention": "Attention! The purchase is made by HECO USDT, you also need HT to pay for the gas.",
       "buttons": {
         "stake": "stake",
         "buy": "presale"
+      },
+      "links": {
+        "1": "Complete guide how to take part in BTCMT presale",
+        "2": "How to set up MetaMask for HECO",
+        "3": "How and why you need to buy HT"
       },
       "tokenPrice": "PRESALE token price",
       "totalSupply": "total supply",
@@ -101,10 +153,10 @@
           "text2": "Our project is hosted in a gem we found in the Republic of Karelia. The 86,000 square foot, brand new data center is in an ideal location that has enabled us to cut operation costs down to a minimum, thanks to a stable 1Gbit internet connection, smooth logistics and the suitable climate in the region.",
           "text3": "The facility and operation are in complete compliance with local and international regulations, and the site is maintained by a team of over 150 experienced technicians.",
           "slide": {
-            "one": "The overall energy capacity is 64.5 MW and has been fitted with 3500 of the most advanced ASIC miners, with 50,000 THs of mining power allocatedto Minto. Those figures will increase as the project grows.",
-            "two": "The data center is powered by a private plant that provides it with cheap, green electricity.",
-            "three": "The facility's extra square footage opens up opportunities for further scaling at no additional cost.",
-            "four": "The overall computing capabilities of the facility can be used for scientific calculations, processing big data, rendering and artificial intelligence."
+            "one": "The center’s overall energy capacity is 64.5 MW. The facility has been equipped with 31 000 ASIC miners, with over 50 000 THs of mining power allocated to Minto. Those figures will increase as the project grows.",
+            "two": "The data center was built using the most modern technologies, materials and equipment. This guarantees long-term reliability and stability.",
+            "three": "The data center is capable of using any equipment model, including GPUs. In the future, this will allow Minto to issue tokens for mining altcoins.",
+            "four": "The facility’s extra square footage opens up opportunities for further scaling and construction of a second 120 MW data center."
           }
         },
         "launch": {
@@ -119,7 +171,58 @@
           "title": "Roadmap"
         },
         "news": {
-          "title": "News"
+          "title": "News",
+          "slide": {
+            "1": {
+              "title": "Tokenomics",
+              "text": "Our second article on Medium. Find out more about our vision on token and get details about how the economics of token works.",
+              "link": {
+                "text": "Read about tokeonomics"
+              }
+            },
+            "2": {
+              "title": "Medium",
+              "text": "People love Medium as a platform for authors that allows them to comfortably share vision and thoughts. Our team has something to say too. Read our first article about the value for investors.",
+              "link": {
+                "text": "Follow us"
+              }
+            },
+            "3": {
+              "title": "Crypto Daily article",
+              "text": "Here is an article about the current state of bitcoin mining. Sustainable future, ecology and origins. All the basic things and a modern opinion mentioning Minto.",
+              "link": {
+                "text": "Read Crypto Daily"
+              }
+            },
+            "4": {
+              "title": "Telegram chat",
+              "text": "We want to be in touch with you in the way it will be comfortable. Cryptocommunity and millions of people around the world love Telegram. The Minto team is not an exception.",
+              "link": {
+                "text": "Follow the chat"
+              }
+            },
+            "5": {
+              "title": "Audit Report",
+              "text": "Hacken.io rated MINTO Contract infrastructure on the highest security level",
+              "link": {
+                "text": "Read the Report"
+              }
+            },
+            "6": {
+              "title": "Presale Guide",
+              "text": "You decided to participate in the presale but don`t know where to begin? Here is a step-by-step guide on how to do it.",
+              "link": {
+                "text": "Read on Medium"
+              }
+            },
+            "7": {
+              "title": "BTCMT Presale Started",
+              "text": "For all of thow who were planning to participate, now you can buy tokens that have simplified mining to a point beyond. Stake it and receive a splendid mining reward!",
+              "link": {
+                "text": "Purchase tokens"
+              }
+            }
+          }
         },
         "subscribe": {
           "text": {

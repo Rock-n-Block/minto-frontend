@@ -32,9 +32,11 @@
       "text2": "获得透明的挖矿奖励，就像您拥有 ASIC 设置一样，或者通过买卖任意数量的挖矿算力赚取利润，而无需处理传统挖矿的问题。",
       "text3": "比特币挖矿从未如此简单。 了解有关挖矿行业未来的更多信息",
       "auditLink": "Hacken.io",
-      "auditText": "审计将MINTO合约基础设施评为最高安全级别",
+      "auditText": "将 MINTO 合约基础设施评为最高安全级别",
       "buttons": {
         "whitepaper": "白皮书",
+        "hashrate": "算力观察者",
+        "datacenterstream": "数据中心流",
         "pressRelease": "新闻稿",
         "presentation": "PPT",
         "audit": "审计报告"
@@ -42,6 +44,15 @@
     }
   },
   "notifications": {
+    "presale": {
+      "link": "查看TX",
+      "exceeded": "不可超过可用于预售的 BTCMT 代币数量",
+      "left": "BTCMT 留给预售",
+      "inputError": "请在预售字段中输入值。",
+      "complete": "您的预售完成！",
+      "wait": "请稍候，预售中.",
+      "buy": "你不能购买 BTCMT 超过"
+    },
     "wallet": {
       "connected": "帐户已连接",
       "error": {
@@ -58,10 +69,10 @@
     "metaMask": {
       "error": {
         "4001": "签名交易被拒绝。",
-        "4100": "Unauthorized. The requested method and/or account has not been authorized by the user.",
-        "4200": "Unsupported Method. The Provider does not support the requested method.",
-        "4900": "Disconnected. The Provider is disconnected from all chains.",
-        "4901": "Chain Disconnected. The Provider is not connected to the requested chain.",
+        "4100": "未经授权。 用户未授权请求的方法和/或帐户。",
+        "4200": "不支持的方法。 提供者不支持请求的方法。",
+        "4900": "断开连接。 提供者与所有链断开连接。",
+        "4901": "链断开。 提供者未连接到请求的链。",
         "0": "可能您的交易有问题，请在钱包中查看您最近的交易。"
       }
     },
@@ -85,12 +96,53 @@
     }
   },
   "page": {
+    "presale": {
+      "title": "预售",
+      "allAvailable": "所有可用",
+      "btnConfirm": "确认",
+      "balance": "您的余额",
+      "soldOutText": "btcmt 售罄",
+      "bonusText": "奖励代币将添加到购买金额之上",
+      "amount": "数量",
+      "holdTime": "保持时间",
+      "youGetText": "你会得到",
+      "withBonusText": "有奖金",
+      "recommended": "受到推崇的",
+      "days": "天",
+      "ratio": "比率",
+      "afterBonusText": {
+        "one": "锁定的 BTCMT 代币将在整个锁定期间每周等量解锁。",
+        "two": "所有锁定的代币都可以质押。"
+      },
+      "underHoldText": {
+        "one": "代币锁定不影响您的挖矿。",
+        "two": "锁定的代币可以质押并带来奖励。"
+      },
+      "modal": {
+        "title": "感谢您的购买！",
+        "text": "交易确认后，您将收到 BTCMT。",
+        "btn": "行"
+      },
+      "modaTitle": {
+        "1": "如何添加BTCMT",
+        "2": "如何为 HECO 设置 MetaMask",
+        "3": "如何购买HT和USDT"
+      }
+    },
     "home": {
       "title": "通过抵押 BTCMT 代币挖比特币",
       "subtitle": "我们去掉了所有不必要的步骤，使挖矿比获得 BTC 钱包更容易",
+      "participate1": "活跃的预售正在进行中。",
+      "participate2": "要参与，请单击预售按钮并查看指南。",
+      "attention": "注意力！購買由HECO USDT進行，您還需要HT支付氣體。",
       "buttons": {
         "stake": "抵押",
         "buy": "预售"
+      },
+      "links": {
+        "1": "如何参与 BTCMT 预售的完整指南",
+        "2": "如何为 HECO 设置 MetaMask",
+        "3": "您需要购买 HT 的方式和原因"
       },
       "tokenPrice": "预售代币价格",
       "totalSupply": "总供应量",
@@ -101,10 +153,10 @@
           "text2": "我们的项目位于在卡累利阿共和国发现的理想地区中。 86,000 平方米的全新数据中心位于理想的位置。这使我们能够将运营成本降至最低 - 归功于稳定的 1Gbit 互联网连接、顺畅的物流和该地区适宜的气候。",
           "text3": "设施和操作完全符合当地和国际法规，现场由 150 多名经验丰富的技术人员组成的团队维护。",
           "slide": {
-            "one": "整体能源容量为 64.5 MW，已配备 3500 台最先进的 ASIC 矿机，50,000 THs 的挖矿功率分配给 Minto。 这些数字将随着项目的发展而增加",
-            "two": "该数据中心由一家私人工厂供电，该工厂为其提供廉价的绿色电力。",
-            "three": "该设施的额外平方英尺为进一步扩展提供了机会，无需额外费用",
-            "four": "该设施的整体计算能力可用于科学计算、处理大数据、渲染和人工智能。"
+            "one": "该中心的总能源容量为 64.5 兆瓦。 该设施配备了 31000台 ASIC 矿机，分配给 Minto 的采矿能力超过 50 000 THs。 这些数字将随着项目的发展而增加",
+            "two": "数据中心使用最先进的技术、材料和设备建造的。 这保证了长期的可靠性和稳定性。",
+            "three": "数据中心能够使用任何型号的设备，包括 GPU。 未来，这将允许 Minto 发行代币来开采山寨币。",
+            "four": "该设施额外的场地为进一步扩容和建设第二个 120 MW 数据中心提供了机会。"
           }
         },
         "launch": {
@@ -119,7 +171,58 @@
           "title": "路线图"
         },
         "news": {
-          "title": "新闻"
+          "title": "新闻",
+          "slide": {
+            "1": {
+              "title": "Mars Finance  引入 Minto",
+              "text": "这是来自火星财经的报道",
+              "link": {
+                "text": "阅读文章"
+              }
+            },
+            "2": {
+              "title": "Chain News 引入 Minto",
+              "text": "国最具影响力的加密媒体链闻报道Minto及其挖矿机制",
+              "link": {
+                "text": "阅读文章"
+              }
+            },
+            "3": {
+              "title": "微信公眾號",
+              "text": "我們希望以一種舒適的方式與您聯繫。",
+              "link": {
+                "text": "關注賬號"
+              }
+            },
+            "4": {
+              "title": "Golden Finance 引入 Minto",
+              "text": "中国最大的区块链媒体金色财经在最近的文章中介绍了Minto及其代币",
+              "link": {
+                "text": "阅读文章"
+              }
+            },
+            "5": {
+              "title": "审计报告",
+              "text": "Hacken.io 将 MINTO 合约基础设施评为最高安全级别",
+              "link": {
+                "text": "阅读报告"
+              }
+            },
+            "6": {
+              "title": "预售指南",
+              "text": "如果你决定参与预售但是不知道从哪里开始，这是有关如何执行此操作的分步指南。",
+              "link": {
+                "text": "在Medium上阅读"
+              }
+            },
+            "7": {
+              "title": "BTCMT预售开始",
+              "text": "对于所有打算参与的投资者而言，您可以现在购买将挖矿简化到更高水平的代币。 质押并获得丰厚的挖矿奖励！",
+              "link": {
+                "text": "在这里购买代币"
+              }
+            }
+          }
         },
         "subscribe": {
           "text": {

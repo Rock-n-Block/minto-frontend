@@ -35,7 +35,7 @@ const Header: React.FC = observer(() => {
     },
     {
       lng: 'ch',
-      title: 'Ch',
+      title: '中文',
       active: false,
     },
   ]);
@@ -104,6 +104,8 @@ const Header: React.FC = observer(() => {
 
           store.addContract('Staking', connect.getContract('Staking'));
           store.addContract('Token', connect.getContract('Token'));
+          store.addContract('UsdtToken', connect.getContract('UsdtToken'));
+          store.addContract('Presale', connect.getContract('Presale'));
           store.setWeb3(connect.Web3);
         });
       }

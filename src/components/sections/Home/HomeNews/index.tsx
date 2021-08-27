@@ -5,11 +5,13 @@ import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ReactComponent as ArrowImg } from '../../../../assets/img/icons/swiper-arrow.svg';
-import NewsImg1 from '../../../../assets/img/sections/home/news-1.png';
 import NewsImg0 from '../../../../assets/img/sections/home/news-0.png';
+import NewsImg1 from '../../../../assets/img/sections/home/news-1.png';
 import NewsImg2 from '../../../../assets/img/sections/home/news-2.png';
 import NewsImg3 from '../../../../assets/img/sections/home/news-3.png';
 import NewsImg4 from '../../../../assets/img/sections/home/news-4.png';
+import NewsImg5 from '../../../../assets/img/sections/home/news-5.png';
+import NewsImg6 from '../../../../assets/img/sections/home/news-6.png';
 
 import './HomeNews.scss';
 
@@ -26,52 +28,72 @@ const HomeNews: React.FC = () => {
   const slidesPerGroud = window.innerWidth > 768 ? 3 : 1;
   const slides = [
     {
+      img: NewsImg6,
+      date: 'August 19, 2021',
+      title: `${t('page.home.component.news.slide.7.title')}`,
+      text: `${t('page.home.component.news.slide.7.text')}`,
+      link: {
+        text: `${t('page.home.component.news.slide.7.link.text')}`,
+        url: 'https://minto.finance/presale',
+      },
+    },
+    {
+      img: NewsImg5,
+      date: 'August 18, 2021',
+      title: `${t('page.home.component.news.slide.6.title')}`,
+      text: `${t('page.home.component.news.slide.6.text')}`,
+      link: {
+        text: `${t('page.home.component.news.slide.6.link.text')}`,
+        url: 'https://medium.com/@btcmtofficial/99874cf710d3',
+      },
+    },
+    {
       img: NewsImg0,
       date: 'July 27, 2021',
-      title: 'Audit Report',
-      text: 'Hacken.io audit rated Minto Contract infrastructure on the top security level',
+      title: `${t('page.home.component.news.slide.5.title')}`,
+      text: `${t('page.home.component.news.slide.5.text')}`,
       link: {
-        text: 'Read the Report',
+        text: `${t('page.home.component.news.slide.5.link.text')}`,
         url: 'https://hacken.io/wp-content/uploads/2021/07/12072021_Minto_SC_Audit_Report.pdf',
       },
     },
     {
       img: NewsImg1,
       date: 'July 07, 2021',
-      title: 'Telegram chat',
-      text: 'We want to be in touch with you in the way it will be comfortable. Cryptocommunity and millions of people around the world love Telegram. The Minto team is not an exception.',
+      title: `${t('page.home.component.news.slide.4.title')}`,
+      text: `${t('page.home.component.news.slide.4.text')}`,
       link: {
-        text: 'Follow the chat',
+        text: `${t('page.home.component.news.slide.4.link.text')}`,
         url: 'https://t.me/btcmtofficialchat',
       },
     },
     {
       img: NewsImg2,
       date: 'July 05, 2021',
-      title: 'Crypto Daily article',
-      text: 'Here is an article about the current state of bitcoin mining. Sustainable future, ecology and origins. All the basic things and a modern opinion mentioning Minto.',
+      title: `${t('page.home.component.news.slide.3.title')}`,
+      text: `${t('page.home.component.news.slide.3.text')}`,
       link: {
-        text: 'Read Crypto Daily',
+        text: `${t('page.home.component.news.slide.3.link.text')}`,
         url: 'https://cryptodaily.co.uk/preview/52287',
       },
     },
     {
       img: NewsImg3,
       date: 'July 01, 2021',
-      title: 'Medium',
-      text: 'People love Medium as a platform for authors that allows them to comfortably share vision and thoughts. Our team has something to say too. Read our first article about the value for investors.',
+      title: `${t('page.home.component.news.slide.2.title')}`,
+      text: `${t('page.home.component.news.slide.2.text')}`,
       link: {
-        text: 'Follow us',
+        text: `${t('page.home.component.news.slide.2.link.text')}`,
         url: 'https://medium.com/@btcmtofficial/how-minto-gives-value-to-investors-8ea3c677616c?source=---------2----------------------------',
       },
     },
     {
       img: NewsImg4,
       date: 'June 29, 2021',
-      title: 'Tokenomics',
-      text: 'Our second article on Medium. Find out more about our vision on token and get details about how the economics of token works.',
+      title: `${t('page.home.component.news.slide.1.title')}`,
+      text: `${t('page.home.component.news.slide.1.text')}`,
       link: {
-        text: 'Read about tokeonomics',
+        text: `${t('page.home.component.news.slide.1.link.text')}`,
         url: 'https://medium.com/@btcmtofficial/minto-vision-and-tokenomics-6826ef75b1c4',
       },
     },

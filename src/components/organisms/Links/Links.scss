@@ -41,6 +41,7 @@
       padding: 0;
     }
   }
+
   &__tg {
     img {
       width: 31px;
@@ -67,11 +68,13 @@
         width: 100%;
         max-width: 360px;
       }
+
       &-right {
         max-width: unset;
         @include b('tablet') {
           justify-content: center;
         }
+
         a {
           @include b('tablet') {
             margin-right: 20px;
