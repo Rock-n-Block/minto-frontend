@@ -1,7 +1,48 @@
 {
-  "name": "react-template",
-  "version": "0.1.0",
+  "name": "minto-frontend",
+  "description": "Mine Bitcoin by staking BTCMT tokens.",
+  "version": "1.0.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rock-n-Block/minto-frontend.git"
+  },
+  "keywords": [
+    "minto",
+    "react",
+    "rocknblock",
+    "blockchain",
+    "hecochain",
+    "huobi chain",
+    "frontend"
+  ],
+  "author": {
+    "name": "Amary Filo",
+    "email": "amaryfilo@gmail.com",
+    "url": "https://github.com/amaryfilo"
+  },
+  "contributors": [
+    {
+      "name": "Amary Filo",
+      "email": "amaryfilo@gmail.com",
+      "url": "https://github.com/amaryfilo"
+    },
+    {
+      "name": "Gleb",
+      "url": "https://github.com/CleanBread"
+    },
+    {
+      "name": "Dmitry",
+      "url": "https://github.com/TheJuze"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/Rock-n-Block/minto-frontend/issues"
+  },
+  "engines": {
+    "node": "15.14.0",
+    "npm": "~7.17.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
