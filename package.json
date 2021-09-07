@@ -39,10 +39,6 @@
   "bugs": {
     "url": "https://github.com/Rock-n-Block/minto-frontend/issues"
   },
-  "engines": {
-    "node": ">=14.0.0",
-    "npm": "~7.17.0"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
