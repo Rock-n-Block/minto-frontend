@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { observer } from 'mobx-react-lite';
+import BigNumber from 'bignumber.js/bignumber.js';
 
 import { PresaleFrom } from '../../components/organisms';
 import { IInfoSliderData } from '../../components/organisms/PresaleForm';
@@ -152,11 +153,28 @@ const Presale: React.FC = () => {
     setConfitmProgress(true);
 
     const usdt = deNormalizedValue(+usdtValue + 1);
-    const btcmt = deNormalizedValue(btcmtValue);
-    // const btcmt = ((btcmtValue * 1.5 * 10 ** 18) / 1.5).toString();
+    const btcmt = new BigNumber(btcmtValue);
+
+    const btcmDecimals = btcmt.decimalPlaces();
+
+    const deleteAmount =
+      btcmDecimals >= 2
+        ? (1 / 10 ** btcmDecimals).toFixed(btcmDecimals)
+        : btcmDecimals === 1
+        ? 0.01
+        : 0;
+
+    const btcmtMinus = btcmt.minus(+deleteAmount);
+
+    clog(`btcmt decimals amount: ${btcmDecimals}`);
+    clog(`value to minus from btcmt (look on btcmt decimals amount): ${deleteAmount}`);
+    clog(`original btcmt (what user input): ${btcmt.toString(10)}`);
+    clog(`${btcmt.toString(10)} btcmt - ${deleteAmount} amount: ${btcmtMinus.toString(10)}`);
+
+    const btcmtSend = deNormalizedValue(btcmtMinus.toString(10));
 
     store.contractService
-      .presaleBuy(btcmt, usdt, percentValue)
+      .presaleBuy(btcmtSend, usdt, percentValue)
       .then(
         (data: any) => {
           notify(
