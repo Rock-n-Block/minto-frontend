@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { observer } from 'mobx-react-lite';
 import BigNumber from 'bignumber.js/bignumber.js';
+import { observer } from 'mobx-react-lite';
 
 import { PresaleFrom } from '../../components/organisms';
 import { IInfoSliderData } from '../../components/organisms/PresaleForm';
