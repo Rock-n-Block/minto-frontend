@@ -82,7 +82,7 @@ export class WalletConnect {
               params: [{ chainId: `0x${connectWallet.network.chainID.toString(16)}` }],
             });
             return true;
-          } catch (error) {
+          } catch (error: any) {
             // This error code indicates that the chain has not been added to MetaMask.
             if (error.code === 4902) {
               try {
@@ -117,7 +117,7 @@ export class WalletConnect {
             }
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         clogData('getAccount wallet connect - get user account err: ', err);
         throw new Error(err);
       }
