@@ -7,8 +7,11 @@ import { clog, clogGroup } from '../logger';
 
 export const normalizedValue = (value: string | number, fixed?: number): number => {
   const decimals = 10 ** contracts.decimals;
-  const amount = new BigNumber(value).div(decimals).toNumber();
-  return fixed === 0 ? +amount : +amount.toFixed(fixed || 4);
+  const amount = new BigNumber(value).div(decimals);
+  const amountDecimals = amount.decimalPlaces();
+  const amountReturn = amount.toNumber();
+  // return fixed === 0 ? +amount : +amount.toFixed(fixed || 4);
+  return fixed === 0 ? +amountReturn : +amountReturn.toFixed(fixed || amountDecimals);
 };
 
 export const deNormalizedValue = (value: string | number): string => {
