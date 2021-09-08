@@ -37,7 +37,7 @@ const AboutContacts: React.FC = () => {
             <img src={Twitter} alt="twitter" />
           </a>
           <a
-            href="https://twitter.com/btcmtofficial"
+            href="https://www.facebook.com/btcmtofficial"
             target="_blank"
             rel="noreferrer"
             className="about-contacts__links-item circle"
@@ -45,7 +45,7 @@ const AboutContacts: React.FC = () => {
             <img src={Facebook} alt="facebook" />
           </a>
           <a
-            href="https://twitter.com/btcmtofficial"
+            href="https://medium.com/@btcmtofficial"
             target="_blank"
             rel="noreferrer"
             className="about-contacts__links-item circle"
