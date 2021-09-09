@@ -49,7 +49,9 @@ const HistoryTable: React.FC<ITable> = ({ title, head, body, total }) => {
             // eslint-disable-next-line react/no-array-index-key
             <div key={index} className="history-table-body-item history-table-col">
               <span className="history-table-body-item-text">{item.date}</span>
-              <span className="history-table-body-item-text">{normalizedValue(item.value, 0)}</span>
+              <span className="history-table-body-item-text">
+                {normalizedValue(item.value, true, 0)}
+              </span>
             </div>
           ))}
         </div>
