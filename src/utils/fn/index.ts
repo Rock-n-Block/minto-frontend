@@ -24,8 +24,8 @@ export const normalizedValue = (
   return number
     ? fixed === 0
       ? +amountReturn
-      : +amountReturn.toFixed(fixed || amountDecimals)
-    : amountReturn.toFixed(amountDecimals);
+      : +amount.toFixed(fixed || amountDecimals)
+    : amount.toFixed(amountDecimals);
   // : amountReturn.toString(amountDecimals <= 2 ? 2 : amountDecimals >= 18 ? 18 : amountDecimals);
 };
 
