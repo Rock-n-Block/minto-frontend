@@ -10,8 +10,25 @@
   }
 }
 
+.staking_withdraw-info {
+  max-width: 500px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 1.5;
+  margin-bottom: 50px;
+}
+
 .procedure-two {
   padding-top: 150px;
+
+  &:nth-child(2) {
+    padding-bottom: 30px;
+  }
+
   @include b('tablet') {
     padding-top: 100px;
   }

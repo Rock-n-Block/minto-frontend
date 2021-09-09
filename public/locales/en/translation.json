@@ -261,7 +261,8 @@
           "unlocked": "unlocked amount to withdraw ",
           "text": "amount to withdraw ",
           "button": "all available",
-          "button2": "Withdraw"
+          "button2": "Withdraw",
+          "attention": "For your safety and convenience please withdraw all funds from ”Mining” page before unstaking!"
         }
       }
     },

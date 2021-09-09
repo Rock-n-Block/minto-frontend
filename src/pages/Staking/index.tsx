@@ -141,11 +141,15 @@ const Staking: React.FC = () => {
 
     setStakingProgress(true);
 
-    const unlocked = new BigNumber(stUnlocked);
-    const locked = new BigNumber(stLocked);
+    // const unlocked = new BigNumber(stUnlocked);
+    // const locked = new BigNumber(stLocked);
+    const unlocked = deNormalizedValue(stUnlocked);
+    const locked = deNormalizedValue(stLocked);
 
+    console.log('unlocked:', unlocked, 'locked', locked);
     store.contractService
-      .startStake(deNormalizedValue(unlocked.toString()), deNormalizedValue(locked.toString()))
+      // .startStake(deNormalizedValue(unlocked.toString()), deNormalizedValue(locked.toString()))
+      .startStake(unlocked, locked)
       .then(
         (data: any) => {
           notify(
@@ -352,6 +356,9 @@ const Staking: React.FC = () => {
             btnProcessedText={t('button.processing')}
             buttonClick={handleButtonWithdrawClick}
           />
+          <div className="staking_withdraw-info">
+            <span>{t('page.staking.component.withdraw.attention')}</span>
+          </div>
         </div>
       ) : (
         <div className="no_login_data">

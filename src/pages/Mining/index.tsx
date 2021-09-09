@@ -16,9 +16,13 @@ const Mining: React.FC = () => {
   const store = useStore();
 
   const [miningInfo, setMiningInfo] = React.useState({} as IData);
-  const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
+  const [tdata, settData] = React.useState({
+    total: '0',
+    history: [],
+    total_reward: '0',
+  } as IUserHistory);
 
-  const [mnValue, setMnValue] = React.useState(0);
+  const [mnValue, setMnValue] = React.useState('0');
   const [miningProgress, setMiningProgress] = React.useState(false);
 
   const { t } = useTranslation();
@@ -36,9 +40,7 @@ const Mining: React.FC = () => {
 
         if (res.data.history) {
           res.data.history.map((h) => {
-            console.log('history data before', h.value);
             h.value = new BigNumber(h.value).toString();
-            console.log('history data after', h.value);
             return h;
           });
         }
@@ -58,27 +60,34 @@ const Mining: React.FC = () => {
   // Change amounts ------------------------------------------------
 
   const handleChangeClaimAmount = (value: any): void => {
-    setMnValue(value);
-    if (value < 0) setMnValue(0);
-    if (value > +miningInfo.availableToClaim) setMnValue(+miningInfo.availableToClaim);
+    const { availableToClaim } = miningInfo;
+    const amountAvailable = new BigNumber(availableToClaim);
+    const amount = new BigNumber(value);
+
+    setMnValue(amount.toString());
+    if (amount.isLessThan(0)) setMnValue('0');
+    if (amount.isGreaterThan(amountAvailable)) setMnValue(amountAvailable.toString());
   };
 
   // Send Max ------------------------------------------------
 
   const handleButtonClick = (): void => {
-    setMnValue(+miningInfo.availableToClaim);
+    setMnValue(miningInfo.availableToClaim as string);
   };
 
   // Send Tx ------------------------------------------------
 
   const handleButtonClaimClick = (): void => {
-    if (+mnValue === 0 && +mnValue <= 0) {
+    const { availableToClaim } = miningInfo;
+    const minningAmount = new BigNumber(mnValue);
+
+    if (minningAmount.isLessThanOrEqualTo(0)) {
       notify(`${t('notifications.claim.inputError')}`, 'error');
       return;
     }
 
     setMiningProgress(true);
-    if (mnValue === +miningInfo.availableToClaim) {
+    if (minningAmount.isEqualTo(availableToClaim)) {
       store.contractService
         .claimAllReward()
         .then(
@@ -89,10 +98,10 @@ const Mining: React.FC = () => {
                   key: 'notifications.claim.complete',
                   data: {
                     token: 'HBTC',
-                    value: +miningInfo.availableToClaim,
+                    value: +availableToClaim,
                   },
                 },
-                text: `Your Claim ${+miningInfo.availableToClaim} HBTC complete!`,
+                text: `Your Claim ${availableToClaim} HBTC complete!`,
                 link: {
                   url: `${chain.tx.link}/${data[1]}`,
                   text: `${t('notifications.claim.link')}`,
@@ -109,7 +118,7 @@ const Mining: React.FC = () => {
         )
         .finally(() => {
           setMiningProgress(false);
-          setMnValue(0);
+          setMnValue('0');
         });
 
       return;
@@ -149,7 +158,7 @@ const Mining: React.FC = () => {
       )
       .finally(() => {
         setMiningProgress(false);
-        setMnValue(0);
+        setMnValue('0');
       });
   };
 
@@ -207,7 +216,7 @@ const Mining: React.FC = () => {
             body={tdata.history}
             total={{
               title: t('page.mining.history.table.col.2'),
-              value: `${0}`,
+              value: `${tdata.total_reward}`,
             }}
           />
         </div>
