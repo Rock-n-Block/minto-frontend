@@ -41,7 +41,7 @@ export interface IUserHistory {
 
 export interface ITableData {
   date: string;
-  value: number;
+  value: number | string;
   status: boolean;
 }
 

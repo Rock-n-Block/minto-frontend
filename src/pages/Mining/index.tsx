@@ -10,6 +10,7 @@ import { IData, IUserHistory } from '../../types';
 import { API, clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
 
 import './Mining.scss';
+import BigNumber from 'bignumber.js/bignumber.js';
 
 const Mining: React.FC = () => {
   const store = useStore();
@@ -30,8 +31,17 @@ const Mining: React.FC = () => {
     await API.post('/user/history/', {
       address: store.account.address,
     })
-      .then((res: any) => {
-        clogData('User history: ', res);
+      .then((res: { data: IUserHistory }) => {
+        clogData('User history: ', res.data);
+
+        if (res.data.history) {
+          res.data.history.map((h) => {
+            console.log('history data before', h.value);
+            h.value = new BigNumber(h.value).toString();
+            console.log('history data after', h.value);
+            return h;
+          });
+        }
         settData(res.data);
       })
       .catch((error: any) => {
@@ -193,6 +203,7 @@ const Mining: React.FC = () => {
               date: t('page.mining.history.table.col.0'),
               revard: t('page.mining.history.table.col.1'),
             }}
+            normalize={false}
             body={tdata.history}
             total={{
               title: t('page.mining.history.table.col.2'),

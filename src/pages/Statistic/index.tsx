@@ -466,6 +466,7 @@ const Statistic: React.FC = () => {
           revard: `${t('page.statistic.table.col.1')}`,
         }}
         body={tdata || []}
+        normalize
         total={{
           title: `${t('page.statistic.table.col.2')}`,
           value: `${0}`,
