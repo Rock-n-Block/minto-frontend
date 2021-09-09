@@ -1,6 +1,7 @@
 // import React from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import BigNumber from 'bignumber.js/bignumber.js';
 import { observer } from 'mobx-react-lite';
 
 import IconLocked from '../../assets/img/icons/lock.svg';
@@ -19,7 +20,6 @@ import {
 } from '../../utils';
 
 import './Staking.scss';
-import BigNumber from 'bignumber.js/bignumber.js';
 
 const Staking: React.FC = () => {
   const store = useStore();

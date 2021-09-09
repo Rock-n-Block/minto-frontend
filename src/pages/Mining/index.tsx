@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 // import React from 'react';
 import { useTranslation } from 'react-i18next';
+import BigNumber from 'bignumber.js/bignumber.js';
 import { observer } from 'mobx-react-lite';
 
 import { HistoryTable, Procedure } from '../../components/organisms';
@@ -10,7 +11,6 @@ import { IData, IUserHistory } from '../../types';
 import { API, clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
 
 import './Mining.scss';
-import BigNumber from 'bignumber.js/bignumber.js';
 
 const Mining: React.FC = () => {
   const store = useStore();
