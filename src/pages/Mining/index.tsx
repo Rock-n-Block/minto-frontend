@@ -124,7 +124,7 @@ const Mining: React.FC = () => {
       return;
     }
 
-    const amount = deNormalizedValue(mnValue);
+    const amount = deNormalizedValue(mnValue, true);
 
     store.contractService
       .claimReward(amount)

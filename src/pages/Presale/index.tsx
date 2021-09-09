@@ -74,7 +74,7 @@ const Presale: React.FC = () => {
 
   // Change amounts ------------------------------------------------
   const handleChangeBtcmtAmount = (value: any): void => {
-    console.log(`change Btcmt amount:`, value);
+    // console.log(`change Btcmt amount:`, value);
 
     const btcmt = new BigNumber(value);
     const usdt = btcmt.multipliedBy(1.5);
@@ -82,8 +82,8 @@ const Presale: React.FC = () => {
     setBtcmtValue(btcmt.toString());
     setUsdtValue(usdt.toString());
 
-    console.log(`is usdt ${usdt.toString()} < 0`, usdt.isLessThan(0));
-    console.log(`is btcmt ${btcmt.toString()} < 0`, btcmt.isLessThan(0));
+    // console.log(`is usdt ${usdt.toString()} < 0`, usdt.isLessThan(0));
+    // console.log(`is btcmt ${btcmt.toString()} < 0`, btcmt.isLessThan(0));
 
     if (btcmt.isLessThan(0) || usdt.isLessThan(0)) {
       setUsdtValue('0');
@@ -92,7 +92,7 @@ const Presale: React.FC = () => {
 
     const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
-    console.log(`is btcmt ${btcmt.toString()} > ${cap.toString()} cap`, cap.isLessThan(btcmt));
+    // console.log(`is btcmt ${btcmt.toString()} > ${cap.toString()} cap`, cap.isLessThan(btcmt));
 
     if (cap.isLessThan(btcmt)) {
       const usdtCap = cap.multipliedBy(1.5);
@@ -103,11 +103,11 @@ const Presale: React.FC = () => {
       notify(`${t('notifications.presale.buy')} ${cap.toString()}`, 'warning');
     }
 
-    console.log(`end change Btcmt amount:`, value);
+    // console.log(`end change Btcmt amount:`, value);
   };
 
   const handleChangeUsdtAmount = (value: any): void => {
-    console.log(`change Usdt amount:`, value);
+    // console.log(`change Usdt amount:`, value);
 
     const usdt = new BigNumber(value);
     const btcmt = usdt.div(1.5);
@@ -115,8 +115,8 @@ const Presale: React.FC = () => {
     setUsdtValue(usdt.toString());
     setBtcmtValue(btcmt.toString());
 
-    console.log(`is usdt ${usdt.toString()} < 0`, usdt.isLessThan(0));
-    console.log(`is btcmt ${btcmt.toString()} < 0`, btcmt.isLessThan(0));
+    // console.log(`is usdt ${usdt.toString()} < 0`, usdt.isLessThan(0));
+    // console.log(`is btcmt ${btcmt.toString()} < 0`, btcmt.isLessThan(0));
 
     if (usdt.isLessThan(0) || btcmt.isLessThan(0)) {
       setUsdtValue('0');
@@ -125,7 +125,7 @@ const Presale: React.FC = () => {
 
     const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
-    console.log(`is btcmt ${btcmt.toString()} > ${cap.toString()} cap`, cap.isLessThan(btcmt));
+    // console.log(`is btcmt ${btcmt.toString()} > ${cap.toString()} cap`, cap.isLessThan(btcmt));
 
     if (cap.isLessThan(btcmt)) {
       const usdtCap = cap.multipliedBy(1.5);
@@ -136,7 +136,7 @@ const Presale: React.FC = () => {
       notify(`${t('notifications.presale.buy')} ${cap.toString()}`, 'warning');
     }
 
-    console.log(`end change Usdt amount:`, value);
+    // console.log(`end change Usdt amount:`, value);
   };
 
   const handleSliderClick = (value: any): void => {
@@ -174,7 +174,7 @@ const Presale: React.FC = () => {
       return;
     }
 
-    console.log(`is usdtValue <= 0:`, new BigNumber(usdtValue).isLessThanOrEqualTo(0));
+    // console.log(`is usdtValue <= 0:`, new BigNumber(usdtValue).isLessThanOrEqualTo(0));
     if (new BigNumber(usdtValue).isLessThanOrEqualTo(0)) {
       notify(`${t('notifications.presale.inputError')}`, 'error');
       return;
@@ -182,22 +182,24 @@ const Presale: React.FC = () => {
 
     setConfitmProgress(true);
 
-    const usdt = deNormalizedValue(+usdtValue + 1);
+    const usdt = deNormalizedValue(+usdtValue + 1, true);
     const btcmt = new BigNumber(btcmtValue);
-    let btcmtFix = new BigNumber(btcmtValue).toString();
+    // const btcmt = deNormalizedValue(btcmtValue, true);
 
-    console.log('btcmt', btcmt.toString(), btcmtFix);
+    // let btcmtFix = new BigNumber(btcmtValue).toString();
 
-    if (btcmt.decimalPlaces() > 18) {
-      const vToDelete = btcmt.decimalPlaces() - 18;
-      console.log(btcmt.decimalPlaces(), vToDelete);
-      btcmtFix = btcmtFix.substring(0, btcmtFix.length - vToDelete);
-    }
-    console.log('btcmt slicce', btcmt.toString(), btcmtFix);
+    // console.log('btcmt', btcmt.toString(), btcmtFix);
 
-    const btcmtToMinus = new BigNumber(btcmt.decimalPlaces() > 18 ? btcmtFix : btcmt);
+    // if (btcmt.decimalPlaces() > 18) {
+    //   const vToDelete = btcmt.decimalPlaces() - 18;
+    //   console.log(btcmt.decimalPlaces(), vToDelete);
+    //   btcmtFix = btcmtFix.substring(0, btcmtFix.length - vToDelete);
+    // }
+    // console.log('btcmt slicce', btcmt.toString(), btcmtFix);
 
-    const btcmDecimals = btcmtToMinus.decimalPlaces();
+    // const btcmtToMinus = new BigNumber(btcmt.decimalPlaces() > 18 ? btcmtFix : btcmt);
+
+    const btcmDecimals = btcmt.decimalPlaces();
 
     const deleteAmount =
       btcmDecimals >= 2
@@ -206,14 +208,16 @@ const Presale: React.FC = () => {
         ? 0.01
         : 0;
 
-    const btcmtMinus = btcmtToMinus.minus(+deleteAmount);
+    const btcmtMinus = btcmt.minus(+deleteAmount);
 
     clog(`btcmt decimals amount: ${btcmDecimals}`);
     clog(`value to minus from btcmt (look on btcmt decimals amount): ${deleteAmount}`);
     clog(`original btcmt (what user input): ${btcmt.toString()}`);
-    clog(`${btcmtToMinus.toString()} btcmt - ${deleteAmount} amount: ${btcmtMinus.toString()}`);
+    clog(`${btcmt.toString()} btcmt - ${deleteAmount} amount: ${btcmtMinus.toString()}`);
 
-    const btcmtSend = deNormalizedValue(btcmtMinus.toString());
+    const btcmtSend = deNormalizedValue(btcmtMinus.toString(), true);
+
+    clog(`send btcmt: ${btcmtSend}`);
 
     store.contractService
       .presaleBuy(btcmtSend, usdt, percentValue)

@@ -11,6 +11,7 @@ import { chain, config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
 import {
+  clog,
   clogData,
   customNotify,
   deNormalizedValue,
@@ -35,7 +36,7 @@ const Staking: React.FC = () => {
   const [dailyReward, setDailyReward] = React.useState('0');
   const [dailyShared, setDailyShared] = React.useState('0');
 
-  const [balanceOfStaking, setBalanceOfStaking] = React.useState(0);
+  const [balanceOfStaking, setBalanceOfStaking] = React.useState('0');
 
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
@@ -50,7 +51,7 @@ const Staking: React.FC = () => {
       .catch((err: any) => clogData('daily reward error:', err));
 
     const balanceOfSum = await store.contractService.balanceOfSumStaking();
-    setBalanceOfStaking(balanceOfSum.value);
+    setBalanceOfStaking(new BigNumber(balanceOfSum.value).toString());
 
     setStakingInfo(await store.contractService.stakingInfo());
   }, [store]);
@@ -63,8 +64,8 @@ const Staking: React.FC = () => {
     const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(dailyReward).div(amount);
     const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
 
-    setDailyReward(reward.isNaN() ? '0' : reward.toString()); // reward.tofixed(4)
-    setDailyShared(shares.isNaN() ? '0' : shares.toString()); // shares.tofixed(4)
+    setDailyReward(reward.isNaN() ? '0' : reward.toString());
+    setDailyShared(shares.isNaN() ? '0' : shares.toString());
   };
 
   // Change amounts ------------------------------------------------
@@ -133,7 +134,6 @@ const Staking: React.FC = () => {
   // Send Tx ------------------------------------------------
 
   const handleButtonStakingClick = () => {
-    // ! TODO: Use BigNumber
     if (+stLocked === 0 && +stLocked <= 0 && +stUnlocked === 0 && +stUnlocked <= 0) {
       notify(`${t('notifications.staking.inputError')}`, 'error');
       return;
@@ -141,14 +141,51 @@ const Staking: React.FC = () => {
 
     setStakingProgress(true);
 
+    const unlocked = +stUnlocked === 0 ? '0' : deNormalizedValue(stUnlocked, true);
+    const locked = +stLocked === 0 ? '0' : deNormalizedValue(stLocked, true);
+
+    // console.log('ss', ss);
+
     // const unlocked = new BigNumber(stUnlocked);
     // const locked = new BigNumber(stLocked);
-    const unlocked = deNormalizedValue(stUnlocked);
-    const locked = deNormalizedValue(stLocked);
+    // const unlocked = deNormalizedValue(stUnlocked);
+    // const unlocked = '1.111e+21';
+    // const unlocked = new BigNumber('1111').times(10**21);
 
-    console.log('unlocked:', unlocked, 'locked', locked);
+    // const nUnlocked = new BigNumber(stUnlocked);
+    // let btcmtFix = stUnlocked;
+
+    // if (nUnlocked.decimalPlaces() > 18) {
+    //   const vToDelete = nUnlocked.decimalPlaces() - 18;
+    //   console.log(nUnlocked.decimalPlaces(), vToDelete);
+    //   btcmtFix = btcmtFix.substring(0, btcmtFix.length - vToDelete);
+    // }
+    // // console.log('btcmt slicce', btcmt.toString(), btcmtFix);
+
+    // const btcmtToMinus = new BigNumber(
+    //   nUnlocked.decimalPlaces() > 18 ? btcmtFix : nUnlocked,
+    // ).toString();
+
+    // const btcmDecimals = btcmtToMinus.decimalPlaces();
+
+    // const mUnlocked = stUnlocked.split('.');
+
+    // console.log('sadasdasdas', btcmtToMinus, stUnlocked);
+    // const mUnlocked = btcmtToMinus.split('.');
+    // const decimals = 18;
+    // console.log(mUnlocked);
+
+    // const mUnlockedDecimals = mUnlocked[1].length;
+    // const nDecimals = decimals - mUnlockedDecimals;
+
+    // console.log('nDecimals', nDecimals);
+
+    // // const unlocked = mUnlocked[0] + mUnlocked[1] + (10 ** (nDecimals - 1)).toString();
+    // const unlocked = mUnlocked[0] + (Number(mUnlocked[1]) * 10 ** nDecimals).toString();
+    // .startStake(deNormalizedValue(unlocked.toString()), deNormalizedValue(locked.toString()))
+
+    clog(`staking unlocked: ${unlocked}, locked: ${locked}`);
     store.contractService
-      // .startStake(deNormalizedValue(unlocked.toString()), deNormalizedValue(locked.toString()))
       .startStake(unlocked, locked)
       .then(
         (data: any) => {
@@ -193,13 +230,15 @@ const Staking: React.FC = () => {
       return;
     }
 
-    const amount = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked);
-    const lAmount = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked);
+    const unlocked = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked, true);
+    const locked = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked, true);
 
     setWithdrawProgress(true);
 
+    clog(`withdraw unlocked: ${unlocked}, locked: ${locked}`);
+
     store.contractService
-      .withdrawPartially(lAmount, amount)
+      .withdrawPartially(locked, unlocked)
       .then(
         (data: any) => {
           notify(
