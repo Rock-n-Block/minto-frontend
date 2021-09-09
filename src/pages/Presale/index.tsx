@@ -184,24 +184,20 @@ const Presale: React.FC = () => {
 
     const usdt = deNormalizedValue(+usdtValue + 1);
     const btcmt = new BigNumber(btcmtValue);
-    // let btcmtFix = new BigNumber(btcmtValue).toString();
+    let btcmtFix = new BigNumber(btcmtValue).toString();
 
-    console.log('btcmt', btcmt.toString());
+    console.log('btcmt', btcmt.toString(), btcmtFix);
 
-    // if (btcmt.decimalPlaces() > 18) {
-    //   const vToDelete = btcmt.decimalPlaces() - 18;
-    //   console.log(btcmt.decimalPlaces(), vToDelete);
-    //   btcmtFix = btcmtFix.substring(0, btcmtFix.length - vToDelete);
-    // }
-    // console.log('btcmt slicce', btcmt.toString(), btcmtFix);
+    if (btcmt.decimalPlaces() > 18) {
+      const vToDelete = btcmt.decimalPlaces() - 18;
+      console.log(btcmt.decimalPlaces(), vToDelete);
+      btcmtFix = btcmtFix.substring(0, btcmtFix.length - vToDelete);
+    }
+    console.log('btcmt slicce', btcmt.toString(), btcmtFix);
 
-    // const btcmtToMinus = new BigNumber(
-    //   btcmt.decimalPlaces() > 18 ? +btcmtFix : +btcmt.toFixed(btcmt.decimalPlaces()),
-    // );
+    const btcmtToMinus = new BigNumber(btcmt.decimalPlaces() > 18 ? btcmtFix : btcmt);
 
-    // const btcmtToMinus = new BigNumber(btcmt.decimalPlaces() > 18 ? btcmtFix : btcmt);
-
-    const btcmDecimals = btcmt.decimalPlaces();
+    const btcmDecimals = btcmtToMinus.decimalPlaces();
 
     const deleteAmount =
       btcmDecimals >= 2
@@ -210,14 +206,13 @@ const Presale: React.FC = () => {
         ? 0.01
         : 0;
 
-    const btcmtMinus = btcmt.minus(+deleteAmount);
+    const btcmtMinus = btcmtToMinus.minus(+deleteAmount);
 
     clog(`btcmt decimals amount: ${btcmDecimals}`);
     clog(`value to minus from btcmt (look on btcmt decimals amount): ${deleteAmount}`);
     clog(`original btcmt (what user input): ${btcmt.toString()}`);
-    clog(`${btcmt.toString(10)} btcmt - ${deleteAmount} amount: ${btcmtMinus.toString()}`);
+    clog(`${btcmtToMinus.toString()} btcmt - ${deleteAmount} amount: ${btcmtMinus.toString()}`);
 
-    // const btcmtSend = deNormalizedValue(btcmt.decimalPlaces() > 18 ? +btcmtFix : +btcmt);
     const btcmtSend = deNormalizedValue(btcmtMinus.toString());
 
     store.contractService

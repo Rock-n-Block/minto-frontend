@@ -154,7 +154,7 @@ export class ContractService {
         clog(`getCurrentUserReward (availableToClaim): ${value}`);
         return {
           key: 'availableToClaim',
-          value: normalizedValue(value, true, 0), // .toLocaleString('fullwide', { useGrouping: false }),
+          value: normalizedValue(value), // .toLocaleString('fullwide', { useGrouping: false }),
         };
       });
 

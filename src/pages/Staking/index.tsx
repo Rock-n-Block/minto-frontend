@@ -19,23 +19,23 @@ import {
 } from '../../utils';
 
 import './Staking.scss';
+import BigNumber from 'bignumber.js/bignumber.js';
 
 const Staking: React.FC = () => {
   const store = useStore();
 
   const [stakingInfo, setStakingInfo] = React.useState({} as IData);
 
-  const [stLocked, setStLocked] = React.useState(0);
-  const [stUnlocked, setStUnlocked] = React.useState(0);
+  const [stLocked, setStLocked] = React.useState('0');
+  const [stUnlocked, setStUnlocked] = React.useState('0');
 
-  const [wdLocked, setWdLocked] = React.useState(0);
-  const [wdUnlocked, setWdUnlocked] = React.useState(0);
+  const [wdLocked, setWdLocked] = React.useState('0');
+  const [wdUnlocked, setWdUnlocked] = React.useState('0');
 
-  const [dailyReward, setDailyReward] = React.useState(0);
-  const [dailyShared, setDailyShared] = React.useState(0);
+  const [dailyReward, setDailyReward] = React.useState('0');
+  const [dailyShared, setDailyShared] = React.useState('0');
 
   const [balanceOfStaking, setBalanceOfStaking] = React.useState(0);
-  // const [dailyRewards, setDailyRewards] = React.useState(0);
 
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
@@ -46,7 +46,7 @@ const Staking: React.FC = () => {
     if (!store.is_contractService) store.setContractService();
 
     await getDailyRewards()
-      .then((v: number) => setDailyReward(v))
+      .then((v: number) => setDailyReward(new BigNumber(v).toString()))
       .catch((err: any) => clogData('daily reward error:', err));
 
     const balanceOfSum = await store.contractService.balanceOfSumStaking();
@@ -57,66 +57,83 @@ const Staking: React.FC = () => {
 
   // Functions ------------------------------------------------
 
-  // TODO: add daity rewards
-  const updateDailyData = (locked: number, unlocked: number) => {
-    const amount = +locked + +unlocked;
+  const updateDailyData = (locked: string, unlocked: string) => {
+    const amount = new BigNumber(locked).plus(unlocked);
 
-    const reward = amount === 0 ? 0 : dailyReward / amount;
-    const shares = (amount / (amount + balanceOfStaking)) * 100;
+    const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(dailyReward).div(amount);
+    const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
 
-    setDailyReward(Number.isNaN(reward) ? 0 : +reward.toFixed(4));
-    setDailyShared(Number.isNaN(shares) ? 0 : +shares.toFixed(4));
+    setDailyReward(reward.isNaN() ? '0' : reward.toString()); // reward.tofixed(4)
+    setDailyShared(shares.isNaN() ? '0' : shares.toString()); // shares.tofixed(4)
   };
 
   // Change amounts ------------------------------------------------
 
   const handleChangeStakingLockedAmount = (value: number) => {
-    setStLocked(value);
-    if (value < 0) setStLocked(0);
-    if (value > +stakingInfo.availableLocked) setStLocked(+stakingInfo.availableLocked);
-    updateDailyData(value, stUnlocked);
+    const { availableLocked } = stakingInfo;
+    const amountAvailable = new BigNumber(availableLocked);
+    const amount = new BigNumber(value);
+
+    setStLocked(amount.toString());
+    if (amount.isLessThan(0)) setStLocked('0');
+    if (amount.isGreaterThan(amountAvailable)) setStLocked(amountAvailable.toString());
+    updateDailyData(amount.toString(), stUnlocked);
   };
 
   const handleChangeStakingUnlockedAmount = (value: number) => {
-    setStUnlocked(value);
-    if (value < 0) setStUnlocked(0);
-    if (value > +stakingInfo.availableUnlocked) setStUnlocked(+stakingInfo.availableUnlocked);
-    updateDailyData(stLocked, value);
+    const { availableUnlocked } = stakingInfo;
+    const amountAvailable = new BigNumber(availableUnlocked);
+    const amount = new BigNumber(value);
+
+    setStUnlocked(amount.toString());
+    if (amount.isLessThan(0)) setStUnlocked('0');
+    if (amount.isGreaterThan(amountAvailable)) setStUnlocked(amountAvailable.toString());
+
+    updateDailyData(stLocked, amount.toString());
   };
 
   const handleChangeWithdrawLockedAmount = (value: number) => {
-    setWdLocked(value);
-    if (value < 0) setWdLocked(0);
-    if (value > +stakingInfo.userStakesLocked) setWdLocked(+stakingInfo.userStakesLocked);
+    const { userStakesLocked } = stakingInfo;
+    const amountAvailable = new BigNumber(userStakesLocked);
+    const amount = new BigNumber(value);
+
+    setWdLocked(amount.toString());
+    if (amount.isLessThan(0)) setWdLocked('0');
+    if (amount.isGreaterThan(amountAvailable)) setWdLocked(amountAvailable.toString());
   };
 
   const handleChangeWithdrawUnlockedAmount = (value: number) => {
-    setWdUnlocked(value);
-    if (value < 0) setWdUnlocked(0);
-    if (value > +stakingInfo.userStakesUnlocked) setWdUnlocked(+stakingInfo.userStakesUnlocked);
+    const { userStakesUnlocked } = stakingInfo;
+    const amountAvailable = new BigNumber(userStakesUnlocked);
+    const amount = new BigNumber(value);
+
+    setWdUnlocked(amount.toString());
+    if (amount.isLessThan(0)) setWdUnlocked('0');
+    if (amount.isGreaterThan(amountAvailable)) setWdUnlocked(amountAvailable.toString());
   };
 
   // Send Max ------------------------------------------------
 
   const handleFullButtonStakingLockedClick = () => {
-    setStLocked(+stakingInfo.availableLocked);
+    setStLocked(stakingInfo.availableLocked as string);
   };
 
   const handleFullButtonStakingUnlockedClick = () => {
-    setStUnlocked(+stakingInfo.availableUnlocked);
+    setStUnlocked(stakingInfo.availableUnlocked as string);
   };
 
   const handleFullButtonWithdrawLockedClick = () => {
-    setWdLocked(+stakingInfo.userStakesLocked);
+    setWdLocked(stakingInfo.userStakesLocked as string);
   };
 
   const handleFullButtonWithdrawUnlockedClick = () => {
-    setWdUnlocked(+stakingInfo.userStakesUnlocked);
+    setWdUnlocked(stakingInfo.userStakesUnlocked as string);
   };
 
   // Send Tx ------------------------------------------------
 
   const handleButtonStakingClick = () => {
+    // ! TODO: Use BigNumber
     if (+stLocked === 0 && +stLocked <= 0 && +stUnlocked === 0 && +stUnlocked <= 0) {
       notify(`${t('notifications.staking.inputError')}`, 'error');
       return;
@@ -124,11 +141,11 @@ const Staking: React.FC = () => {
 
     setStakingProgress(true);
 
-    const amount = +stUnlocked === 0 ? 0 : deNormalizedValue(stUnlocked);
-    const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
+    const unlocked = new BigNumber(stUnlocked);
+    const locked = new BigNumber(stLocked);
 
     store.contractService
-      .startStake(amount, lAmount)
+      .startStake(deNormalizedValue(unlocked.toString()), deNormalizedValue(locked.toString()))
       .then(
         (data: any) => {
           notify(
@@ -161,8 +178,8 @@ const Staking: React.FC = () => {
       )
       .finally(() => {
         setStakingProgress(false);
-        setStLocked(0);
-        setStUnlocked(0);
+        setStLocked('0');
+        setStUnlocked('0');
       });
   };
 
@@ -211,8 +228,8 @@ const Staking: React.FC = () => {
       )
       .finally(() => {
         setWithdrawProgress(false);
-        setWdLocked(0);
-        setWdUnlocked(0);
+        setWdLocked('0');
+        setWdUnlocked('0');
       });
   };
 
