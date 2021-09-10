@@ -8,8 +8,8 @@ export const customNotify = (data: ICustomNotifyData): any => {
     <div>
       {data.translate ? (
         <Trans
-          i18nKey={data.translate.key} // optional -> fallbacks to defaults if not provided
-          defaults='<p className="custom-notify-text">{text}</p>' // optional defaultValue
+          i18nKey={data.translate.key}
+          defaults='<p className="custom-notify-text">{text}</p>'
           values={{ text: data.text, data: data.translate.data }}
           components={{ italic: <i />, bold: <strong /> }}
         />

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/no-cycle */
-/* eslint-disable class-methods-use-this */
+
 import BigNumber from 'bignumber.js/bignumber';
 
 import { contracts } from '../../config';
@@ -173,8 +172,6 @@ export class ContractService {
     });
   }
 
-  // Presale Start
-
   public async getUsdtBalance(): Promise<IDataContract> {
     const data: IDataContract = await this.usdt
       .balanceOf(this.store.account.address)
@@ -220,43 +217,32 @@ export class ContractService {
     return data;
   }
 
-  // Presale Finish
-
-  // TODO: FIX Allowance for Unlocked Token
   public getAllowance(amount: string): Promise<number> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return new Promise((resolve) => {
-      if (+amount === 0) resolve(1);
-
-      resolve(-1);
-      // this.staking
-      //   .allowance(this.store.account.address, contracts.params.TOKEN[contracts.type].address)
-      //   .call()
-      //   .then((allowance: string) => {
-      //     const allow = new BigNumber(allowance);
-      //     const allowed = allow.minus(amount);
-      //     clog(`allowance: ${allowance}`);
-      //     allowed.isNegative() ? reject() : resolve(1);
-      //   });
+      this.token
+        .allowance(this.store.account.address, contracts.params.STAKING[contracts.type].address)
+        .call()
+        .then((allowance: string) => {
+          const allow = new BigNumber(allowance).isLessThan(amount);
+          clog(`allowance unlocked: ${allowance}, is negative? ${allow}`);
+          allow ? resolve(-1) : resolve(1);
+        });
     });
   }
 
-  // TODO: FIX Allowance for Locked Token
   public getAllowanceLocked(amount: string): Promise<number> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return new Promise((resolve) => {
-      if (+amount === 0) resolve(1);
-
-      resolve(-1);
-      //   this.staking
-      //     .allowance(this.store.account.address, contracts.params.TOKEN[contracts.type].address)
-      //     .call()
-      //     .then((allowance: string) => {
-      //       const allow = new BigNumber(allowance);
-      //       const allowed = allow.minus(amount);
-      //       clog(`allowanceLocked: ${allowance}`);
-      //       allowed.isNegative() ? reject() : resolve(1);
-      //     });
+      this.token
+        .lockedAllowances(
+          this.store.account.address,
+          contracts.params.STAKING[contracts.type].address,
+        )
+        .call()
+        .then((allowance: string) => {
+          const allow = new BigNumber(allowance).isLessThan(amount);
+          clog(`allowance locked: ${allowance}, is negative? ${allow}`);
+          allow ? resolve(-1) : resolve(1);
+        });
     });
   }
 
@@ -267,7 +253,7 @@ export class ContractService {
         from: this.store.account.address,
       })
       .then((tx: any) => {
-        clogData('stake: ', tx);
+        clogData('stake (sendToStaking): ', tx);
         return { 0: true, 1: tx.transactionHash };
       })
       .then(resolve, reject);
@@ -281,11 +267,11 @@ export class ContractService {
           from: this.store.account.address,
         })
         .then((tx: any) => {
-          clogData('approve (approve): ', tx);
+          clogData('approve (approveUnlocked): ', tx);
           resolve({ 0: true, 1: tx.transactionHash });
         })
         .catch((err: any) => {
-          clogData(`reject (approve): `, err);
+          clogData(`reject (approveUnlocked): `, err);
           reject(err);
         });
     });
@@ -315,25 +301,25 @@ export class ContractService {
     return new Promise((resolve, reject) => {
       const promises = [this.getAllowance(amount), this.getAllowanceLocked(lAmount)];
 
-      Promise.all(promises).then((res) => {
-        if (res[0] === 0 && res[1] === 0) {
+      Promise.all(promises).then(async (res): Promise<any> => {
+        if (res[0] === 1 && res[1] === 1) {
           return this.sendToStaking(resolve, reject, amount, lAmount);
         }
 
         const aprPromises = [] as Promise<any>[];
 
-        if (res[0] !== 0 && res[0] < 0) aprPromises.push(this.approveUnlocked(amount));
-        if (res[1] !== 0 && res[1] < 0) aprPromises.push(this.approveLocked(lAmount));
+        if (res[0] < 0) aprPromises.push(this.approveUnlocked(amount));
+        if (res[1] < 0) aprPromises.push(this.approveLocked(lAmount));
 
-        return Promise.all(aprPromises)
-          .then((result: any) => {
-            clogData(`approveUnlocked and approveLocked result: `, result);
-            return this.sendToStaking(resolve, reject, amount, lAmount);
-          })
-          .catch((err) => {
-            clogData(`approveUnlocked and approveLocked err: `, err);
-            reject(err);
-          });
+        try {
+          const result = await Promise.all(aprPromises);
+          clogData(`approveUnlocked and approveLocked result: `, result);
+          return await this.sendToStaking(resolve, reject, amount, lAmount);
+        } catch (err) {
+          clogData(`approveUnlocked and approveLocked err: `, err);
+          reject(err);
+          return err;
+        }
       });
     });
   }
