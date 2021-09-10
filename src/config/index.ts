@@ -528,7 +528,7 @@ export const contracts: IContracts = {
         ],
       },
       testnet: {
-        address: '0x809256E01DEF2A3A06868b1b6E1F0F0DB6726227',
+        address: '0x42Eb7Fc1feC1abe140A394253Cc3C36d711c6565',
         abi: [
           {
             inputs: [
@@ -1091,7 +1091,7 @@ export const contracts: IContracts = {
         ],
       },
       testnet: {
-        address: '0x80Ab7172998f8230113862cC0921513AFa26400D',
+        address: '0x498EC59D0c0E1A3290caAA191C7A8424B7bbC0A5',
         abi: [
           { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
           {
@@ -1842,7 +1842,7 @@ export const contracts: IContracts = {
         ],
       },
       testnet: {
-        address: '0x9D034575e083FfF178F5893003afb1E7e2C870F7',
+        address: '0xc6eCD7F4FcBcf49Fed1aCFEa5586ff8f7B916CDa',
         abi: [
           {
             inputs: [
