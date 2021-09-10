@@ -15,18 +15,11 @@ export const normalizedValue = (
   const amountDecimals = amount.decimalPlaces();
   const amountReturn = amount.toNumber();
 
-  // return number
-  //   ? fixed === 0
-  //     ? +amountReturn
-  //     : +amountReturn.toFixed(fixed || amountDecimals)
-  //   : amountReturn.toString();
-
   return number
     ? fixed === 0
       ? +amountReturn
       : +amount.toFixed(fixed || amountDecimals)
     : amount.toFixed(amountDecimals);
-  // : amountReturn.toString(amountDecimals <= 2 ? 2 : amountDecimals >= 18 ? 18 : amountDecimals);
 };
 
 export const deNormalizedValue = (value: string | number, fixed = false): string => {

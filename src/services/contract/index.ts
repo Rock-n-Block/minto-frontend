@@ -154,7 +154,7 @@ export class ContractService {
         clog(`getCurrentUserReward (availableToClaim): ${value}`);
         return {
           key: 'availableToClaim',
-          value: normalizedValue(value), // .toLocaleString('fullwide', { useGrouping: false }),
+          value: normalizedValue(value),
         };
       });
 
@@ -199,8 +199,6 @@ export class ContractService {
         return {
           key: 'totalSold',
           value: normalizedValue(value),
-          // value: 999999999999800000,
-          // value: 1000000000000000000,
         };
       });
 
@@ -277,7 +275,6 @@ export class ContractService {
 
   public async approveUnlocked(amount: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      // debugger;
       return this.token
         .approve(contracts.params.STAKING[contracts.type].address, amount)
         .send({

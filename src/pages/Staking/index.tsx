@@ -144,46 +144,6 @@ const Staking: React.FC = () => {
     const unlocked = +stUnlocked === 0 ? '0' : deNormalizedValue(stUnlocked, true);
     const locked = +stLocked === 0 ? '0' : deNormalizedValue(stLocked, true);
 
-    // console.log('ss', ss);
-
-    // const unlocked = new BigNumber(stUnlocked);
-    // const locked = new BigNumber(stLocked);
-    // const unlocked = deNormalizedValue(stUnlocked);
-    // const unlocked = '1.111e+21';
-    // const unlocked = new BigNumber('1111').times(10**21);
-
-    // const nUnlocked = new BigNumber(stUnlocked);
-    // let btcmtFix = stUnlocked;
-
-    // if (nUnlocked.decimalPlaces() > 18) {
-    //   const vToDelete = nUnlocked.decimalPlaces() - 18;
-    //   console.log(nUnlocked.decimalPlaces(), vToDelete);
-    //   btcmtFix = btcmtFix.substring(0, btcmtFix.length - vToDelete);
-    // }
-    // // console.log('btcmt slicce', btcmt.toString(), btcmtFix);
-
-    // const btcmtToMinus = new BigNumber(
-    //   nUnlocked.decimalPlaces() > 18 ? btcmtFix : nUnlocked,
-    // ).toString();
-
-    // const btcmDecimals = btcmtToMinus.decimalPlaces();
-
-    // const mUnlocked = stUnlocked.split('.');
-
-    // console.log('sadasdasdas', btcmtToMinus, stUnlocked);
-    // const mUnlocked = btcmtToMinus.split('.');
-    // const decimals = 18;
-    // console.log(mUnlocked);
-
-    // const mUnlockedDecimals = mUnlocked[1].length;
-    // const nDecimals = decimals - mUnlockedDecimals;
-
-    // console.log('nDecimals', nDecimals);
-
-    // // const unlocked = mUnlocked[0] + mUnlocked[1] + (10 ** (nDecimals - 1)).toString();
-    // const unlocked = mUnlocked[0] + (Number(mUnlocked[1]) * 10 ** nDecimals).toString();
-    // .startStake(deNormalizedValue(unlocked.toString()), deNormalizedValue(locked.toString()))
-
     clog(`staking unlocked: ${unlocked}, locked: ${locked}`);
     store.contractService
       .startStake(unlocked, locked)
