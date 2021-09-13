@@ -25,7 +25,7 @@ export const normalizedValue = (
 export const deNormalizedValue = (value: string | number, fixed = false): string => {
   const decimals = 10 ** contracts.decimals;
   const amount = new BigNumber(value).multipliedBy(decimals);
-  return fixed ? amount.toFixed(0) : amount.toString();
+  return fixed ? amount.toFixed(0, 1) : amount.toString();
 };
 
 export const dataToObject = (data: any, log?: boolean, logName?: string): IData => {
