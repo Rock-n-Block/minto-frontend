@@ -213,7 +213,7 @@ const Staking: React.FC = () => {
               },
               text: `Your Withdraw BTCMT ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked) complete!`,
               link: {
-                url: `${chain.tx.link}/${data[1]}`,
+                url: `${chain.tx.link}/${data.transactionHash}`,
                 text: `${t('notifications.withdraw.link')}`,
               },
             }),
