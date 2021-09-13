@@ -45,7 +45,7 @@ const Presale: React.FC = () => {
       info = t('notifications.presale.exedeed');
       setStopSell(true);
     } else if (cap.isLessThanOrEqualTo(200000)) {
-      info = `${cap.toString()} ${t('notifications.presale.left')}`;
+      info = `${cap.toFixed(0)} ${t('notifications.presale.left')}`;
     }
 
     setInfoText(info);
@@ -140,7 +140,7 @@ const Presale: React.FC = () => {
     const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
     if (cap.isLessThan(btcmtValue)) {
-      notify(`${t('notifications.presale.buy')} ${cap.toString()}`, 'warning');
+      notify(`${t('notifications.presale.buy')} ${cap.toFixed(0)}`, 'warning');
       return;
     }
 
