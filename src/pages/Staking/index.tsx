@@ -13,10 +13,12 @@ import { IData } from '../../types';
 import {
   clog,
   clogData,
+  clogGroup,
   customNotify,
   deNormalizedValue,
   errCode,
   getDailyRewards,
+  normalizedValue,
   notify,
 } from '../../utils';
 
@@ -47,11 +49,19 @@ const Staking: React.FC = () => {
     if (!store.is_contractService) store.setContractService();
 
     await getDailyRewards()
-      .then((v: number) => setDailyReward(new BigNumber(v).toString()))
+      .then((v: number) => {
+        // const dReward =new BigNumber(v).toString();
+        const dReward = new BigNumber(v).toFixed(4);
+        setDailyReward(dReward);
+
+        clog(`dailyReward: ${dReward}`);
+      })
       .catch((err: any) => clogData('daily reward error:', err));
 
     const balanceOfSum = await store.contractService.balanceOfSumStaking();
-    setBalanceOfStaking(new BigNumber(balanceOfSum.value).toString());
+    const nBalanceOfSum = normalizedValue(balanceOfSum);
+    clog(`balanceOfSum: ${balanceOfSum}, normalize: ${nBalanceOfSum}`);
+    setBalanceOfStaking(nBalanceOfSum as string);
 
     setStakingInfo(await store.contractService.stakingInfo());
   }, [store]);
@@ -59,13 +69,29 @@ const Staking: React.FC = () => {
   // Functions ------------------------------------------------
 
   const updateDailyData = (locked: string, unlocked: string) => {
-    const amount = new BigNumber(locked).plus(unlocked);
+    const setDecimals = (decimal: number): number => {
+      return decimal ? (decimal >= 4 ? 4 : decimal) : 0;
+    };
+
+    const amount = new BigNumber(Number.isNaN(+locked) ? 0 : locked).plus(
+      Number.isNaN(+unlocked) ? 0 : unlocked,
+    );
 
     const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(dailyReward).div(amount);
     const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
 
-    setDailyReward(reward.isNaN() ? '0' : reward.toString());
-    setDailyShared(shares.isNaN() ? '0' : shares.toString());
+    // const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(1.5).div(amount);
+    // const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
+
+    setDailyReward(reward.isNaN() ? '0' : reward.toFixed(setDecimals(+reward.decimalPlaces())));
+    setDailyShared(shares.isNaN() ? '0' : shares.toFixed(setDecimals(+shares.decimalPlaces())));
+
+    clogGroup('update DailyData (rewards and shares)');
+    clog(`balanceOfStaking: ${balanceOfStaking}`);
+    clog(`amount (locked + unlocked): ${amount.toString()}`);
+    clog(`update dailyReward: ${dailyReward}`);
+    clog(`update dailyShared: ${dailyShared}`);
+    clogGroup('end update DailyData (rewards and shares)', true);
   };
 
   // Change amounts ------------------------------------------------
