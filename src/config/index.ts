@@ -8,7 +8,7 @@ export const show_logs = true;
 export const update_after_tx_timeout = 5000;
 
 export const backend: IBackendConfig = {
-  url: is_production ? '/api' : '/api',
+  url: process.env.NODE_ENV === 'development' ? '/api' : 'https://dev-minto.rocknblock.io/api',
 };
 
 export const chain: IChainConfig = {

@@ -40,7 +40,7 @@
     "url": "https://github.com/Rock-n-Block/minto-frontend/issues"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --dev",
     "build": "react-scripts build",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",

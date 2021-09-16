@@ -50,13 +50,16 @@ const Staking: React.FC = () => {
 
     await getDailyRewards()
       .then((v: number) => {
-        // const dReward =new BigNumber(v).toString();
-        const dReward = new BigNumber(v).toFixed(4);
+        const dReward = new BigNumber(v).toString();
+        // const dReward = new BigNumber(v).toFixed();
         setDailyReward(dReward);
 
         clog(`dailyReward: ${dReward}`);
       })
-      .catch((err: any) => clogData('daily reward error:', err));
+      .catch((err: any) => {
+        clogData('daily reward error:', err);
+        setDailyReward('0');
+      });
 
     const balanceOfSum = await store.contractService.balanceOfSumStaking();
     const nBalanceOfSum = normalizedValue(balanceOfSum);
