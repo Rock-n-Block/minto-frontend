@@ -87,6 +87,8 @@ const Staking: React.FC = () => {
     setDailyShared(shares.isNaN() ? '0' : shares.toFixed(setDecimals(+shares.decimalPlaces())));
 
     clogGroup('update DailyData (rewards and shares)');
+    clog(`locked: ${balanceOfStaking}`);
+    clog(`unlocked: ${balanceOfStaking}`);
     clog(`balanceOfStaking: ${balanceOfStaking}`);
     clog(`amount (locked + unlocked): ${amount.toString()}`);
     clog(`update dailyReward: ${dailyReward}`);
@@ -115,7 +117,6 @@ const Staking: React.FC = () => {
     setStUnlocked(amount.toString());
     if (amount.isLessThan(0)) setStUnlocked('0');
     if (amount.isGreaterThan(amountAvailable)) setStUnlocked(amountAvailable.toString());
-
     updateDailyData(stLocked, amount.toString());
   };
 
