@@ -278,7 +278,6 @@ const Staking: React.FC = () => {
         <br />
         Withdraw modal is currently under development.
         <br />
-        <br />
         To trigger basic withdraw click on button below.
         <div>
           <br />
