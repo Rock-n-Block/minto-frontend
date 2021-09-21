@@ -80,7 +80,7 @@ export const contracts: IContracts = {
         abi: presaleABI,
       },
       testnet: {
-        address: '0x96D1759A3994BDC46dA1D41A3Dfc34264613b82f',
+        address: '0x6330d4DE28D1951a1E4F0bb24A4769fa73227eBF',
         abi: presaleABI,
       },
     },
@@ -90,7 +90,7 @@ export const contracts: IContracts = {
         abi: btcmtABI,
       },
       testnet: {
-        address: '0xCAD5071C92A0a1BE73EFCc10736456F7f3464B34',
+        address: '0x4490aD12dEd69C082902800C35eCCD8f717Faf98',
         abi: btcmtABI,
       },
     },
@@ -100,7 +100,7 @@ export const contracts: IContracts = {
         abi: stakingABI,
       },
       testnet: {
-        address: '0x892fdeaB3ca1b31d68bf03eeb5ef8AEB2f91D794',
+        address: '0x5bFCfc2Dbf29951808e79ff51E99f57bA1e8f429',
         abi: stakingABI,
       },
     },
