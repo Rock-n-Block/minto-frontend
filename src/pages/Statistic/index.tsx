@@ -202,8 +202,8 @@ const Statistic: React.FC = () => {
     }
 
     const promises = [
-      web3Contract.Staking.methods
-        .nowTotalMined()
+      web3Contract.Staking.methods // BTCMT
+        .allTimeTotalStaked()
         .call()
         .then((value: string) => {
           clogData('totalStaked (totalStaked): ', value);
@@ -224,7 +224,7 @@ const Statistic: React.FC = () => {
             // value: '-',
           };
         }),
-      web3Contract.Staking.methods
+      web3Contract.Staking.methods // HBTC
         .allTimeTotalMined()
         .call()
         .then((value: string) => {
