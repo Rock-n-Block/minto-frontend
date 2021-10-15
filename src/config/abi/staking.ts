@@ -96,6 +96,13 @@ export const stakingABI = [
   },
   {
     inputs: [],
+    name: 'allTimeTotalStaked',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'allTimeTotalStakers',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
