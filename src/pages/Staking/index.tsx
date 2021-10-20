@@ -1,13 +1,11 @@
 // import React from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal } from 'antd';
 import BigNumber from 'bignumber.js/bignumber.js';
 import { observer } from 'mobx-react-lite';
 
 import IconLocked from '../../assets/img/icons/lock.svg';
 import IconUnlock from '../../assets/img/icons/unlock.svg';
-import { Button } from '../../components/atoms';
 import { Procedure2 } from '../../components/organisms';
 import { chain, config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
@@ -44,8 +42,6 @@ const Staking: React.FC = () => {
 
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
-
-  const [showModal, setShowModal] = React.useState(false);
 
   const { t } = useTranslation();
 
@@ -270,30 +266,6 @@ const Staking: React.FC = () => {
       });
   };
 
-  // Modal ------------------------------------------------
-
-  function ModalWithdrawInfo() {
-    return (
-      <div>
-        <br />
-        Withdraw modal is currently under development.
-        <br />
-        To trigger basic withdraw click on button below.
-        <div>
-          <br />
-
-          <Button
-            onClick={() => handleButtonWithdrawClick()}
-            className="procedure__submit"
-            size="lmd"
-          >
-            <span className="text-upper text-slg">Withdraw</span>
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   // On Run ------------------------------------------------
 
   React.useEffect(() => {
@@ -411,20 +383,8 @@ const Staking: React.FC = () => {
             submitBtnText={t('page.staking.component.withdraw.button2')}
             btnProcessed={withdrawProgress}
             btnProcessedText={t('button.processing')}
-            buttonClick={() => setShowModal(true)}
+            buttonClick={() => handleButtonWithdrawClick()}
           />
-
-          <Modal
-            className="procedure__modal"
-            centered
-            visible={showModal}
-            onOk={() => handleButtonWithdrawClick()}
-            onCancel={() => setShowModal(false)}
-            footer={null}
-          >
-            <ModalWithdrawInfo />
-          </Modal>
-
           <div className="staking_withdraw-info">
             <span>{t('page.staking.component.withdraw.attention')}</span>
           </div>
