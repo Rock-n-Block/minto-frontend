@@ -336,12 +336,12 @@ const Staking: React.FC = () => {
             btnProcessed={stakingProgress}
             btnProcessedText={t('button.processing')}
             buttonClick={handleButtonStakingClick}
-            daily={{
-              dailyReward: `${dailyReward}`,
-              dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
-              dailyShare: `${dailyShared}`,
-              dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
-            }}
+            // daily={{
+            //   dailyReward: `${dailyReward}`,
+            //   dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
+            //   dailyShare: `${dailyShared}`,
+            //   dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
+            // }}
           />
           <Procedure2
             title={t('page.staking.component.withdraw.title')}

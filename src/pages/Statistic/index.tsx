@@ -11,7 +11,8 @@ import { observer } from 'mobx-react-lite';
 // import moment from 'moment';
 import Web3 from 'web3';
 
-import { Calculator, HistoryTable } from '../../components/organisms';
+// import { Calculator, HistoryTable } from '../../components/organisms';
+import { HistoryTable } from '../../components/organisms';
 import { chain, contracts } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
@@ -49,9 +50,9 @@ const Statistic: React.FC = () => {
   const [tdataTotal, settDataTotal] = React.useState(0);
   // const [chartButton, setChartButton] = React.useState(0);
 
-  const [rewardCalcValue, setRewardCalcValue] = React.useState(0);
-  const [dailyReward, setDailyReward] = React.useState(0);
-  const [dailyRewardUsd, setDailyRewardUsd] = React.useState(0);
+  // const [rewardCalcValue, setRewardCalcValue] = React.useState(0);
+  // const [dailyReward, setDailyReward] = React.useState(0);
+  // const [dailyRewardUsd, setDailyRewardUsd] = React.useState(0);
   const [BoostFactor, setBoostFactor] = React.useState(0);
 
   // const [chartButtons, setChartButtons] = React.useState([
@@ -354,23 +355,23 @@ const Statistic: React.FC = () => {
 
   // Change amounts ------------------------------------------------
 
-  const handleRewardCalcChange = (value: number) => {
-    setRewardCalcValue(value);
-    if (value <= 0) setRewardCalcValue(0);
+  // const handleRewardCalcChange = (value: number) => {
+  //   setRewardCalcValue(value);
+  //   if (value <= 0) setRewardCalcValue(0);
 
-    clogData('estimateDailyRewardsToday: ', +info.estimateDailyRewardsToday);
-    clogData('rewardPerTokenWithBoostUSD: ', +info.rewardPerTokenWithBoostUSD);
-    clogData('value: ', value);
+  //   clogData('estimateDailyRewardsToday: ', +info.estimateDailyRewardsToday);
+  //   clogData('rewardPerTokenWithBoostUSD: ', +info.rewardPerTokenWithBoostUSD);
+  //   clogData('value: ', value);
 
-    const dReward = value <= 0 ? 0 : +info.estimateDailyRewardsToday / value;
-    const dRewardUsd = dReward * +info.rewardPerTokenWithBoostUSD;
+  //   const dReward = value <= 0 ? 0 : +info.estimateDailyRewardsToday / value;
+  //   const dRewardUsd = dReward * +info.rewardPerTokenWithBoostUSD;
 
-    setDailyReward(+dReward.toFixed(2));
-    setDailyRewardUsd(+dRewardUsd.toFixed(2));
+  //   setDailyReward(+dReward.toFixed(2));
+  //   setDailyRewardUsd(+dRewardUsd.toFixed(2));
 
-    clogData('Calcularot Daily Reward : ', dReward);
-    clogData('Calcularot Daily Reward Usd: ', dRewardUsd);
-  };
+  //   clogData('Calcularot Daily Reward : ', dReward);
+  //   clogData('Calcularot Daily Reward Usd: ', dRewardUsd);
+  // };
 
   // On Run ------------------------------------------------
 
@@ -456,15 +457,15 @@ const Statistic: React.FC = () => {
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
           </div>
-          <div className="stats-data-info-item">
+          {/* <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.estimatedRewardsToday')}
             </span>
             <span className="stats-data-info-item-value">{info.estimateDailyRewardsToday}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
-          </div>
-          <div className="stats-data-info-item">
+          </div> */}
+          {/* <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.rewardPerTokenWithBoost')}
             </span>
@@ -475,8 +476,8 @@ const Statistic: React.FC = () => {
             </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">USD</span>
-          </div>
-          <div className="stats-data-info-item">
+          </div> */}
+          {/* <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.rewardPerTokenWithBoost')}
             </span>
@@ -485,9 +486,11 @@ const Statistic: React.FC = () => {
             </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
-          </div>
+          </div> */}
         </div>
       </div>
+
+      <div className="mt-50" />
 
       {tdataTotal > 0 ? (
         <HistoryTable
@@ -507,7 +510,7 @@ const Statistic: React.FC = () => {
         ''
       )}
 
-      <Calculator
+      {/* <Calculator
         title={t('page.statistic.component.calculator.title')}
         input={{
           title: `${t('page.statistic.component.calculator.input.title')} (BTCMT)`,
@@ -528,7 +531,7 @@ const Statistic: React.FC = () => {
             text: 'USD',
           },
         ]}
-      />
+      /> */}
     </div>
   );
 };
