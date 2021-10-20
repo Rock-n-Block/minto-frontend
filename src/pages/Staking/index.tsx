@@ -146,11 +146,11 @@ const Staking: React.FC = () => {
   // Send Max ------------------------------------------------
 
   const handleFullButtonStakingLockedClick = () => {
-    setStLocked(stakingInfo.availableLocked as string);
+    handleChangeStakingLockedAmount(+stakingInfo.availableLocked);
   };
 
   const handleFullButtonStakingUnlockedClick = () => {
-    setStUnlocked(stakingInfo.availableUnlocked as string);
+    handleChangeStakingUnlockedAmount(+stakingInfo.availableUnlocked);
   };
 
   const handleFullButtonWithdrawLockedClick = () => {
