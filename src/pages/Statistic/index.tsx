@@ -358,7 +358,9 @@ const Statistic: React.FC = () => {
     setRewardCalcValue(value);
     if (value <= 0) setRewardCalcValue(0);
 
-    console.log(+info.estimateDailyRewardsToday, +info.rewardPerTokenWithBoostUSD, value);
+    clogData('estimateDailyRewardsToday: ', +info.estimateDailyRewardsToday);
+    clogData('rewardPerTokenWithBoostUSD: ', +info.rewardPerTokenWithBoostUSD);
+    clogData('value: ', value);
 
     const dReward = value <= 0 ? 0 : +info.estimateDailyRewardsToday / value;
     const dRewardUsd = dReward * +info.rewardPerTokenWithBoostUSD;
