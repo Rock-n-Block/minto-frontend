@@ -6,7 +6,7 @@ import { btcmtABI, presaleABI, stakingABI, usdtABI } from './abi';
 export const is_production = true;
 
 // For production build, set flag to false
-export const show_logs = true;
+export const show_logs = false;
 export const update_after_tx_timeout = 5000;
 
 export const backend: IBackendConfig = {
