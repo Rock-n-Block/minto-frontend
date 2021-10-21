@@ -3,7 +3,7 @@ import { IAppConfig, IBackendConfig, IChainConfig, IConnectWallet, IContracts } 
 import { btcmtABI, presaleABI, stakingABI, usdtABI } from './abi';
 
 // For production build, set flag to true
-export const is_production = false;
+export const is_production = true;
 
 // For production build, set flag to false
 export const show_logs = true;

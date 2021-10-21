@@ -292,12 +292,12 @@ const Staking: React.FC = () => {
                 info: [
                   {
                     title: t('page.staking.component.staking.unlocked'),
-                    value: `${stakingInfo.availableUnlocked} BTCMT`,
+                    value: `${+(+stakingInfo.availableUnlocked || 0).toFixed(6)} BTCMT`,
                     src: IconUnlock,
                   },
                   {
                     title: t('page.staking.component.staking.text'),
-                    value: `${stakingInfo.userStakesUnlocked} BTCMT`,
+                    value: `${+(+stakingInfo.userStakesUnlocked || 0).toFixed(6)} BTCMT`,
                   },
                 ],
                 inputMiniButtonShow: true,
@@ -313,12 +313,12 @@ const Staking: React.FC = () => {
                 info: [
                   {
                     title: t('page.staking.component.staking.locked'),
-                    value: `${stakingInfo.availableLocked} BTCMT`,
+                    value: `${+(+stakingInfo.availableLocked || 0).toFixed(6)} BTCMT`,
                     src: IconLocked,
                   },
                   {
                     title: t('page.staking.component.staking.text'),
-                    value: `${stakingInfo.userStakesLocked} BTCMT`,
+                    value: `${+(+stakingInfo.userStakesLocked || 0).toFixed(6)} BTCMT`,
                   },
                 ],
                 inputMiniButtonShow: true,
@@ -350,7 +350,7 @@ const Staking: React.FC = () => {
                 info: [
                   {
                     title: t('page.staking.component.withdraw.unlocked'),
-                    value: `${stakingInfo.userStakesUnlocked} BTCMT`,
+                    value: `${+(+stakingInfo.userStakesUnlocked || 0).toFixed(6)} BTCMT`,
                   },
                 ],
                 inputMiniButtonShow: true,
@@ -366,7 +366,7 @@ const Staking: React.FC = () => {
                 info: [
                   {
                     title: t('page.staking.component.withdraw.locked'),
-                    value: `${stakingInfo.userStakesLocked} BTCMT`,
+                    value: `${+(+stakingInfo.userStakesLocked || 0).toFixed(6)} BTCMT`,
                   },
                 ],
                 inputMiniButtonShow: true,

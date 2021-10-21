@@ -188,7 +188,7 @@ const Mining: React.FC = () => {
             info={[
               {
                 title: t('page.mining.text.left'),
-                value: `${miningInfo.th} TH/s`,
+                value: `${+(+miningInfo.th || 0).toFixed(2)} TH/s`,
               },
               {
                 title: t('page.mining.text.right'),

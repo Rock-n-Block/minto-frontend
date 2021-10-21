@@ -220,13 +220,13 @@ const Statistic: React.FC = () => {
             .div(new BigNumber(+normalizedValue(value) || 0).multipliedBy(0.01))
             .toFixed(6);
 
-          setBoostFactor(+boostFactor || 0);
+          setBoostFactor(+(+boostFactor || 0).toFixed(2));
 
           clogData('boostFactor (boostFactor): ', boostFactor);
 
           return {
             key: 'totalStaked',
-            value: normalizedValue(value),
+            value: normalizedValue(value, true, 6),
             // value: '-',
           };
         }),
@@ -237,7 +237,7 @@ const Statistic: React.FC = () => {
           clogData('totalIssued (totalIssued): ', value);
           return {
             key: 'totalIssued',
-            value: normalizedValue(value),
+            value: normalizedValue(value, true, 6),
             // value: '-',
           };
         }),
@@ -248,7 +248,7 @@ const Statistic: React.FC = () => {
           clogData('allTimeMined (allTimeMined): ', value);
           return {
             key: 'allTimeMined',
-            value: normalizedValue(value),
+            value: normalizedValue(value, true, 6),
             // value: '-',
           };
         }),
@@ -455,7 +455,6 @@ const Statistic: React.FC = () => {
               {Number.isNaN(BoostFactor) ? '-' : BoostFactor}
             </span>
             <span className="stats-data-info-item-line" />
-            <span className="stats-data-info-item-subtitle">HBTC</span>
           </div>
           {/* <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
