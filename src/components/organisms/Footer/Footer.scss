@@ -20,10 +20,15 @@
     align-items: center;
 
     max-width: 1105px;
-    @include b('tablet') {
-      padding: 0;
 
-      background-image: url(../../../assets/img/sections/footer/footer-m.svg);
+    // @include b(1000) {
+    //   padding: 0;
+
+    //   background-image: url(../../../assets/img/sections/footer/footer-m.svg);
+    // }
+
+    @include b(500) {
+      background-image: none;
     }
   }
 

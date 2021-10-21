@@ -11,7 +11,8 @@ import { observer } from 'mobx-react-lite';
 // import moment from 'moment';
 import Web3 from 'web3';
 
-import { Calculator, HistoryTable } from '../../components/organisms';
+// import { Calculator, HistoryTable } from '../../components/organisms';
+import { HistoryTable } from '../../components/organisms';
 import { chain, contracts } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
@@ -34,6 +35,11 @@ import './Statistic.scss';
 //   active: boolean;
 // }
 
+interface ItDataTotal {
+  date: string;
+  value: number;
+}
+
 const Statistic: React.FC = () => {
   const store = useStore();
 
@@ -41,11 +47,13 @@ const Statistic: React.FC = () => {
 
   // const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
   const [tdata, settData] = React.useState([]);
+  const [tdataTotal, settDataTotal] = React.useState(0);
   // const [chartButton, setChartButton] = React.useState(0);
 
-  const [rewardCalcValue, setRewardCalcValue] = React.useState(0);
-  const [dailyReward, setDailyReward] = React.useState(0);
-  const [dailyRewardUsd, setDailyRewardUsd] = React.useState(0);
+  // const [rewardCalcValue, setRewardCalcValue] = React.useState(0);
+  // const [dailyReward, setDailyReward] = React.useState(0);
+  // const [dailyRewardUsd, setDailyRewardUsd] = React.useState(0);
+  const [BoostFactor, setBoostFactor] = React.useState(0);
 
   // const [chartButtons, setChartButtons] = React.useState([
   //   {
@@ -202,11 +210,20 @@ const Statistic: React.FC = () => {
     }
 
     const promises = [
-      web3Contract.Staking.methods
-        .nowTotalMined()
+      web3Contract.Staking.methods // BTCMT
+        .allTimeTotalStaked()
         .call()
         .then((value: string) => {
           clogData('totalStaked (totalStaked): ', value);
+
+          const boostFactor = new BigNumber(50000)
+            .div(new BigNumber(+normalizedValue(value) || 0).multipliedBy(0.01))
+            .toFixed(6);
+
+          setBoostFactor(+boostFactor || 0);
+
+          clogData('boostFactor (boostFactor): ', boostFactor);
+
           return {
             key: 'totalStaked',
             value: normalizedValue(value),
@@ -224,7 +241,7 @@ const Statistic: React.FC = () => {
             // value: '-',
           };
         }),
-      web3Contract.Staking.methods
+      web3Contract.Staking.methods // HBTC
         .allTimeTotalMined()
         .call()
         .then((value: string) => {
@@ -244,7 +261,7 @@ const Statistic: React.FC = () => {
             // value: '-',
           };
         })
-        .catch((err: any) => clogData('rewardPerTokenWithBoostHBTC error:', err)),
+        .catch((err: any) => clogData('estimateDailyRewardsToday error:', err)),
       await getDailyRewards()
         .then((value: number) => {
           clogData('rewardPerTokenWithBoostHBTC (rewardPerTokenWithBoostHBTC): ', value);
@@ -281,12 +298,22 @@ const Statistic: React.FC = () => {
       .then((res: any) => {
         clogData('Total history: ', res.data);
         settData(res.data);
+
+        const total = res.data.reduce(
+          (value: number, currentValue: ItDataTotal) => value + currentValue.value,
+          0,
+        );
+
+        clogData('Total: ', total);
+
+        settDataTotal(total);
       })
       .catch((error: any) => {
         if (error.response)
           clogData(`Total got error status ${error.response.status}: `, error.response.data);
 
         settData([]);
+        settDataTotal(0);
       });
 
     setInfo(uinfo);
@@ -328,16 +355,23 @@ const Statistic: React.FC = () => {
 
   // Change amounts ------------------------------------------------
 
-  const handleRewardCalcChange = (value: number) => {
-    setRewardCalcValue(value);
-    if (value < 0) setRewardCalcValue(0);
+  // const handleRewardCalcChange = (value: number) => {
+  //   setRewardCalcValue(value);
+  //   if (value <= 0) setRewardCalcValue(0);
 
-    const dReward = value <= 0 ? 0 : +info.estimateDailyRewardsToday / value;
-    const dRewardUsd = dReward * +info.rewardPerTokenWithBoostUSD;
+  //   clogData('estimateDailyRewardsToday: ', +info.estimateDailyRewardsToday);
+  //   clogData('rewardPerTokenWithBoostUSD: ', +info.rewardPerTokenWithBoostUSD);
+  //   clogData('value: ', value);
 
-    setDailyReward(+dReward.toFixed(2));
-    setDailyRewardUsd(+dRewardUsd.toFixed(2));
-  };
+  //   const dReward = value <= 0 ? 0 : +info.estimateDailyRewardsToday / value;
+  //   const dRewardUsd = dReward * +info.rewardPerTokenWithBoostUSD;
+
+  //   setDailyReward(+dReward.toFixed(2));
+  //   setDailyRewardUsd(+dRewardUsd.toFixed(2));
+
+  //   clogData('Calcularot Daily Reward : ', dReward);
+  //   clogData('Calcularot Daily Reward Usd: ', dRewardUsd);
+  // };
 
   // On Run ------------------------------------------------
 
@@ -418,68 +452,65 @@ const Statistic: React.FC = () => {
               {t('page.statistic.info.boostFactor')}
             </span>
             <span className="stats-data-info-item-value">
-              {new BigNumber(+info.totalStaked || 0).multipliedBy(0.1).div(50000).toFixed(6)}
-              {/* {((+info.totalStaked || 0) * 0.1) / 50000).toFixed(6)} */}
+              {Number.isNaN(BoostFactor) ? '-' : BoostFactor}
             </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
           </div>
-          <div className="stats-data-info-item">
+          {/* <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.estimatedRewardsToday')}
             </span>
             <span className="stats-data-info-item-value">{info.estimateDailyRewardsToday}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
-          </div>
-          <div className="stats-data-info-item">
+          </div> */}
+          {/* <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.rewardPerTokenWithBoost')}
             </span>
             <span className="stats-data-info-item-value">
-              {new BigNumber(info.rewardPerTokenWithBoostHBTC || 0)
-                .multipliedBy(info.rewardPerTokenWithBoostUSD || 0)
+              {new BigNumber(+info.rewardPerTokenWithBoostHBTC * BoostFactor)
+                .multipliedBy(+info.rewardPerTokenWithBoostUSD || 0)
                 .toFixed(2)}
-
-              {/* {Number.isNaN(
-                (
-                  +info.rewardPerTokenWithBoostHBTC * (+info.rewardPerTokenWithBoostUSD || 0)
-                ).toFixed(2),
-              )
-                ? (
-                    +info.rewardPerTokenWithBoostHBTC * (+info.rewardPerTokenWithBoostUSD || 0)
-                  ).toFixed(2)
-                : '-'} */}
             </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">USD</span>
-          </div>
-          <div className="stats-data-info-item">
+          </div> */}
+          {/* <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.rewardPerTokenWithBoost')}
             </span>
-            <span className="stats-data-info-item-value">{info.rewardPerTokenWithBoostHBTC}</span>
+            <span className="stats-data-info-item-value">
+              {+info.rewardPerTokenWithBoostHBTC * BoostFactor || 0}
+            </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <HistoryTable
-        title={t('page.statistic.table.title')}
-        head={{
-          date: `${t('page.statistic.table.col.0')}`,
-          revard: `${t('page.statistic.table.col.1')}`,
-        }}
-        body={tdata || []}
-        normalize
-        total={{
-          title: `${t('page.statistic.table.col.2')}`,
-          value: `${0}`,
-        }}
-      />
+      <div className="mt-50" />
 
-      <Calculator
+      {tdataTotal > 0 ? (
+        <HistoryTable
+          title={t('page.statistic.table.title')}
+          head={{
+            date: `${t('page.statistic.table.col.0')}`,
+            revard: `${t('page.statistic.table.col.1')}`,
+          }}
+          body={tdata || []}
+          normalize
+          total={{
+            title: `${t('page.statistic.table.col.2')}`,
+            value: `${tdataTotal}`,
+          }}
+        />
+      ) : (
+        ''
+      )}
+
+      {/* <Calculator
         title={t('page.statistic.component.calculator.title')}
         input={{
           title: `${t('page.statistic.component.calculator.input.title')} (BTCMT)`,
@@ -500,7 +531,7 @@ const Statistic: React.FC = () => {
             text: 'USD',
           },
         ]}
-      />
+      /> */}
     </div>
   );
 };

@@ -2,13 +2,20 @@ import { IAppConfig, IBackendConfig, IChainConfig, IConnectWallet, IContracts } 
 
 import { btcmtABI, presaleABI, stakingABI, usdtABI } from './abi';
 
-export const is_production = true;
+// For production build, set flag to true
+export const is_production = false;
 
+// For production build, set flag to false
 export const show_logs = true;
 export const update_after_tx_timeout = 5000;
 
 export const backend: IBackendConfig = {
-  url: process.env.NODE_ENV === 'development' ? '/api' : 'https://dev-minto.rocknblock.io/api',
+  url:
+    process.env.NODE_ENV === 'development'
+      ? '/api'
+      : is_production
+      ? 'https://minto.finance/api'
+      : 'https://dev-minto.rocknblock.io/api',
 };
 
 export const chain: IChainConfig = {
@@ -96,11 +103,11 @@ export const contracts: IContracts = {
     },
     STAKING: {
       mainnet: {
-        address: '0x9Cad4215FD0fc460B042eC86AbDe0130aA77069E',
+        address: '0x78ae303182FCA96A4629A78Ee13235e6525EbcFb',
         abi: stakingABI,
       },
       testnet: {
-        address: '0x5bFCfc2Dbf29951808e79ff51E99f57bA1e8f429',
+        address: '0xCc6f88b04436211CB72f3B46d3d541642d77465C',
         abi: stakingABI,
       },
     },

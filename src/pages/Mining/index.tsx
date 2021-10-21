@@ -206,19 +206,24 @@ const Mining: React.FC = () => {
             inputChange={handleChangeClaimAmount}
             inputValue={mnValue}
           />
-          <HistoryTable
-            title={t('page.mining.history.title')}
-            head={{
-              date: t('page.mining.history.table.col.0'),
-              revard: t('page.mining.history.table.col.1'),
-            }}
-            normalize={false}
-            body={tdata.history}
-            total={{
-              title: t('page.mining.history.table.col.2'),
-              value: `${tdata.total_reward}`,
-            }}
-          />
+
+          {tdata.total_reward > 0 ? (
+            <HistoryTable
+              title={t('page.mining.history.title')}
+              head={{
+                date: t('page.mining.history.table.col.0'),
+                revard: t('page.mining.history.table.col.1'),
+              }}
+              normalize={false}
+              body={tdata.history}
+              total={{
+                title: t('page.mining.history.table.col.2'),
+                value: `${tdata.total_reward}`,
+              }}
+            />
+          ) : (
+            ''
+          )}
         </div>
       ) : (
         <div className="no_login_data">
