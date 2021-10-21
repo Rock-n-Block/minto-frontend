@@ -12,6 +12,7 @@ import NewsImg3 from '../../../../assets/img/sections/home/news-3.png';
 import NewsImg4 from '../../../../assets/img/sections/home/news-4.png';
 import NewsImg5 from '../../../../assets/img/sections/home/news-5.png';
 import NewsImg6 from '../../../../assets/img/sections/home/news-6.png';
+import NewsImg7 from '../../../../assets/img/sections/home/news-7.png';
 
 import './HomeNews.scss';
 
@@ -27,6 +28,16 @@ const HomeNews: React.FC = () => {
 
   const slidesPerGroud = window.innerWidth > 768 ? 3 : 1;
   const slides = [
+    {
+      img: NewsImg7,
+      date: 'October 21, 2021',
+      title: `${t('page.home.component.news.slide.8.title')}`,
+      text: `${t('page.home.component.news.slide.8.text')}`,
+      link: {
+        text: `${t('page.home.component.news.slide.8.link.text')}`,
+        url: 'https://medium.com/@btcmtofficial/a-detailed-guide-on-staking-42646d817f70?postPublishedType=initial',
+      },
+    },
     {
       img: NewsImg6,
       date: 'August 19, 2021',
