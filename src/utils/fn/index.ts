@@ -5,16 +5,27 @@ import { contracts } from '../../config';
 import { IData, IDataContract } from '../../types';
 import { clog, clogGroup } from '../logger';
 
-export const normalizedValue = (value: string | number, fixed?: number): number => {
+export const normalizedValue = (
+  value: string | number,
+  number = false,
+  fixed?: number,
+): number | string => {
   const decimals = 10 ** contracts.decimals;
-  const amount = new BigNumber(value).div(decimals).toNumber();
-  return fixed === 0 ? +amount : +amount.toFixed(fixed || 4);
+  const amount = new BigNumber(value).div(decimals);
+  const amountDecimals = amount.decimalPlaces();
+  const amountReturn = amount.toNumber();
+
+  return number
+    ? fixed === 0
+      ? +amountReturn
+      : +amount.toFixed(fixed || amountDecimals)
+    : amount.toFixed(amountDecimals);
 };
 
-export const deNormalizedValue = (value: string | number): string => {
-  const decimals = new BigNumber(10).pow(contracts.decimals);
-  const amount = new BigNumber(value).multipliedBy(decimals).toString(10);
-  return amount;
+export const deNormalizedValue = (value: string | number, fixed = false): string => {
+  const decimals = 10 ** contracts.decimals;
+  const amount = new BigNumber(value).multipliedBy(decimals);
+  return fixed ? amount.toFixed(0, 1) : amount.toString();
 };
 
 export const dataToObject = (data: any, log?: boolean, logName?: string): IData => {

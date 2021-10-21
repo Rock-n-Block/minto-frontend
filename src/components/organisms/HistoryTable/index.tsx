@@ -12,7 +12,7 @@ interface ITableHead {
 
 interface ITableBody {
   date: string;
-  value: number;
+  value: number | string;
 }
 
 interface ITable {
@@ -23,9 +23,10 @@ interface ITable {
     title: string;
     value: string;
   };
+  normalize: boolean;
 }
 
-const HistoryTable: React.FC<ITable> = ({ title, head, body, total }) => {
+const HistoryTable: React.FC<ITable> = ({ title, head, body, total, normalize = true }) => {
   const [currentPage, setCurrentPage] = React.useState(0);
 
   const PER_PAGE = 10;
@@ -49,7 +50,9 @@ const HistoryTable: React.FC<ITable> = ({ title, head, body, total }) => {
             // eslint-disable-next-line react/no-array-index-key
             <div key={index} className="history-table-body-item history-table-col">
               <span className="history-table-body-item-text">{item.date}</span>
-              <span className="history-table-body-item-text">{normalizedValue(item.value, 0)}</span>
+              <span className="history-table-body-item-text">
+                {normalize ? normalizedValue(item.value, true, 0) : item.value}
+              </span>
             </div>
           ))}
         </div>

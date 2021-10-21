@@ -1,6 +1,7 @@
 // import React from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import BigNumber from 'bignumber.js/bignumber.js';
 import { observer } from 'mobx-react-lite';
 
 import IconLocked from '../../assets/img/icons/lock.svg';
@@ -10,11 +11,14 @@ import { chain, config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
 import {
+  clog,
   clogData,
+  clogGroup,
   customNotify,
   deNormalizedValue,
   errCode,
   getDailyRewards,
+  normalizedValue,
   notify,
 } from '../../utils';
 
@@ -25,17 +29,16 @@ const Staking: React.FC = () => {
 
   const [stakingInfo, setStakingInfo] = React.useState({} as IData);
 
-  const [stLocked, setStLocked] = React.useState(0);
-  const [stUnlocked, setStUnlocked] = React.useState(0);
+  const [stLocked, setStLocked] = React.useState('0');
+  const [stUnlocked, setStUnlocked] = React.useState('0');
 
-  const [wdLocked, setWdLocked] = React.useState(0);
-  const [wdUnlocked, setWdUnlocked] = React.useState(0);
+  const [wdLocked, setWdLocked] = React.useState('0');
+  const [wdUnlocked, setWdUnlocked] = React.useState('0');
 
-  const [dailyReward, setDailyReward] = React.useState(0);
-  const [dailyShared, setDailyShared] = React.useState(0);
+  const [dailyReward, setDailyReward] = React.useState('0');
+  const [dailyShared, setDailyShared] = React.useState('0');
 
-  const [balanceOfStaking, setBalanceOfStaking] = React.useState(0);
-  // const [dailyRewards, setDailyRewards] = React.useState(0);
+  const [balanceOfStaking, setBalanceOfStaking] = React.useState('0');
 
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
@@ -46,72 +49,116 @@ const Staking: React.FC = () => {
     if (!store.is_contractService) store.setContractService();
 
     await getDailyRewards()
-      .then((v: number) => setDailyReward(v))
-      .catch((err: any) => clogData('daily reward error:', err));
+      .then((v: number) => {
+        const dReward = new BigNumber(v).toString();
+        // const dReward = new BigNumber(v).toFixed();
+        setDailyReward(dReward);
+
+        clog(`dailyReward: ${dReward}`);
+      })
+      .catch((err: any) => {
+        clogData('daily reward error:', err);
+        setDailyReward('0');
+      });
 
     const balanceOfSum = await store.contractService.balanceOfSumStaking();
-    setBalanceOfStaking(balanceOfSum.value);
+    const nBalanceOfSum = normalizedValue(balanceOfSum);
+    clog(`balanceOfSum: ${balanceOfSum}, normalize: ${nBalanceOfSum}`);
+    setBalanceOfStaking(nBalanceOfSum as string);
 
     setStakingInfo(await store.contractService.stakingInfo());
   }, [store]);
 
   // Functions ------------------------------------------------
 
-  // TODO: add daity rewards
-  const updateDailyData = (locked: number, unlocked: number) => {
-    const amount = +locked + +unlocked;
+  const updateDailyData = (locked: string, unlocked: string) => {
+    const setDecimals = (decimal: number): number => {
+      return decimal ? (decimal >= 4 ? 4 : decimal) : 0;
+    };
 
-    const reward = amount === 0 ? 0 : dailyReward / amount;
-    const shares = (amount / (amount + balanceOfStaking)) * 100;
+    const amount = new BigNumber(Number.isNaN(+locked) ? 0 : locked).plus(
+      Number.isNaN(+unlocked) ? 0 : unlocked,
+    );
 
-    setDailyReward(Number.isNaN(reward) ? 0 : +reward.toFixed(4));
-    setDailyShared(Number.isNaN(shares) ? 0 : +shares.toFixed(4));
+    const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(dailyReward).div(amount);
+    const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
+
+    // const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(1.5).div(amount);
+    // const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
+
+    setDailyReward(reward.isNaN() ? '0' : reward.toFixed(setDecimals(+reward.decimalPlaces())));
+    setDailyShared(shares.isNaN() ? '0' : shares.toFixed(setDecimals(+shares.decimalPlaces())));
+
+    clogGroup('update DailyData (rewards and shares)');
+    clog(`locked: ${balanceOfStaking}`);
+    clog(`unlocked: ${balanceOfStaking}`);
+    clog(`balanceOfStaking: ${balanceOfStaking}`);
+    clog(`amount (locked + unlocked): ${amount.toString()}`);
+    clog(`update dailyReward: ${dailyReward}`);
+    clog(`update dailyShared: ${dailyShared}`);
+    clogGroup('end update DailyData (rewards and shares)', true);
   };
 
   // Change amounts ------------------------------------------------
 
   const handleChangeStakingLockedAmount = (value: number) => {
-    setStLocked(value);
-    if (value < 0) setStLocked(0);
-    if (value > +stakingInfo.availableLocked) setStLocked(+stakingInfo.availableLocked);
-    updateDailyData(value, stUnlocked);
+    const { availableLocked } = stakingInfo;
+    const amountAvailable = new BigNumber(availableLocked);
+    const amount = new BigNumber(value);
+
+    setStLocked(amount.toString());
+    if (amount.isLessThan(0)) setStLocked('0');
+    if (amount.isGreaterThan(amountAvailable)) setStLocked(amountAvailable.toString());
+    updateDailyData(amount.toString(), stUnlocked);
   };
 
   const handleChangeStakingUnlockedAmount = (value: number) => {
-    setStUnlocked(value);
-    if (value < 0) setStUnlocked(0);
-    if (value > +stakingInfo.availableUnlocked) setStUnlocked(+stakingInfo.availableUnlocked);
-    updateDailyData(stLocked, value);
+    const { availableUnlocked } = stakingInfo;
+    const amountAvailable = new BigNumber(availableUnlocked);
+    const amount = new BigNumber(value);
+
+    setStUnlocked(amount.toString());
+    if (amount.isLessThan(0)) setStUnlocked('0');
+    if (amount.isGreaterThan(amountAvailable)) setStUnlocked(amountAvailable.toString());
+    updateDailyData(stLocked, amount.toString());
   };
 
   const handleChangeWithdrawLockedAmount = (value: number) => {
-    setWdLocked(value);
-    if (value < 0) setWdLocked(0);
-    if (value > +stakingInfo.userStakesLocked) setWdLocked(+stakingInfo.userStakesLocked);
+    const { userStakesLocked } = stakingInfo;
+    const amountAvailable = new BigNumber(userStakesLocked);
+    const amount = new BigNumber(value);
+
+    setWdLocked(amount.toString());
+    if (amount.isLessThan(0)) setWdLocked('0');
+    if (amount.isGreaterThan(amountAvailable)) setWdLocked(amountAvailable.toString());
   };
 
   const handleChangeWithdrawUnlockedAmount = (value: number) => {
-    setWdUnlocked(value);
-    if (value < 0) setWdUnlocked(0);
-    if (value > +stakingInfo.userStakesUnlocked) setWdUnlocked(+stakingInfo.userStakesUnlocked);
+    const { userStakesUnlocked } = stakingInfo;
+    const amountAvailable = new BigNumber(userStakesUnlocked);
+    const amount = new BigNumber(value);
+
+    setWdUnlocked(amount.toString());
+    if (amount.isLessThan(0)) setWdUnlocked('0');
+    if (amount.isGreaterThan(amountAvailable)) setWdUnlocked(amountAvailable.toString());
   };
 
   // Send Max ------------------------------------------------
 
   const handleFullButtonStakingLockedClick = () => {
-    setStLocked(+stakingInfo.availableLocked);
+    handleChangeStakingLockedAmount(+stakingInfo.availableLocked);
   };
 
   const handleFullButtonStakingUnlockedClick = () => {
-    setStUnlocked(+stakingInfo.availableUnlocked);
+    handleChangeStakingUnlockedAmount(+stakingInfo.availableUnlocked);
   };
 
   const handleFullButtonWithdrawLockedClick = () => {
-    setWdLocked(+stakingInfo.userStakesLocked);
+    setWdLocked(stakingInfo.userStakesLocked as string);
   };
 
   const handleFullButtonWithdrawUnlockedClick = () => {
-    setWdUnlocked(+stakingInfo.userStakesUnlocked);
+    setWdUnlocked(stakingInfo.userStakesUnlocked as string);
   };
 
   // Send Tx ------------------------------------------------
@@ -124,11 +171,12 @@ const Staking: React.FC = () => {
 
     setStakingProgress(true);
 
-    const amount = +stUnlocked === 0 ? 0 : deNormalizedValue(stUnlocked);
-    const lAmount = +stLocked === 0 ? 0 : deNormalizedValue(stLocked);
+    const unlocked = +stUnlocked === 0 ? '0' : deNormalizedValue(stUnlocked, true);
+    const locked = +stLocked === 0 ? '0' : deNormalizedValue(stLocked, true);
 
+    clog(`staking unlocked: ${unlocked}, locked: ${locked}`);
     store.contractService
-      .startStake(amount, lAmount)
+      .startStake(unlocked, locked)
       .then(
         (data: any) => {
           notify(
@@ -161,8 +209,8 @@ const Staking: React.FC = () => {
       )
       .finally(() => {
         setStakingProgress(false);
-        setStLocked(0);
-        setStUnlocked(0);
+        setStLocked('0');
+        setStUnlocked('0');
       });
   };
 
@@ -172,13 +220,15 @@ const Staking: React.FC = () => {
       return;
     }
 
-    const amount = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked);
-    const lAmount = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked);
+    const unlocked = +wdUnlocked === 0 ? 0 : deNormalizedValue(wdUnlocked, true);
+    const locked = +wdLocked === 0 ? 0 : deNormalizedValue(wdLocked, true);
 
     setWithdrawProgress(true);
 
+    clog(`withdraw unlocked: ${unlocked}, locked: ${locked}`);
+
     store.contractService
-      .withdrawPartially(lAmount, amount)
+      .withdrawPartially(locked, unlocked)
       .then(
         (data: any) => {
           notify(
@@ -193,7 +243,7 @@ const Staking: React.FC = () => {
               },
               text: `Your Withdraw BTCMT ${wdLocked} (Locked) and ${wdUnlocked} (Unlocked) complete!`,
               link: {
-                url: `${chain.tx.link}/${data[1]}`,
+                url: `${chain.tx.link}/${data.transactionHash}`,
                 text: `${t('notifications.withdraw.link')}`,
               },
             }),
@@ -211,8 +261,8 @@ const Staking: React.FC = () => {
       )
       .finally(() => {
         setWithdrawProgress(false);
-        setWdLocked(0);
-        setWdUnlocked(0);
+        setWdLocked('0');
+        setWdUnlocked('0');
       });
   };
 
@@ -286,12 +336,12 @@ const Staking: React.FC = () => {
             btnProcessed={stakingProgress}
             btnProcessedText={t('button.processing')}
             buttonClick={handleButtonStakingClick}
-            daily={{
-              dailyReward: `${dailyReward}`,
-              dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
-              dailyShare: `${dailyShared}`,
-              dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
-            }}
+            // daily={{
+            //   dailyReward: `${dailyReward}`,
+            //   dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
+            //   dailyShare: `${dailyShared}`,
+            //   dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
+            // }}
           />
           <Procedure2
             title={t('page.staking.component.withdraw.title')}
@@ -333,8 +383,11 @@ const Staking: React.FC = () => {
             submitBtnText={t('page.staking.component.withdraw.button2')}
             btnProcessed={withdrawProgress}
             btnProcessedText={t('button.processing')}
-            buttonClick={handleButtonWithdrawClick}
+            buttonClick={() => handleButtonWithdrawClick()}
           />
+          <div className="staking_withdraw-info">
+            <span>{t('page.staking.component.withdraw.attention')}</span>
+          </div>
         </div>
       ) : (
         <div className="no_login_data">

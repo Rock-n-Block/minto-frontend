@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import BigNumber from 'bignumber.js/bignumber.js';
 import { observer } from 'mobx-react-lite';
 
 import { PresaleFrom } from '../../components/organisms';
@@ -16,8 +17,8 @@ const Presale: React.FC = () => {
   const { t } = useTranslation();
   const [presaleInfo, setPresaleInfo] = React.useState({} as IData);
 
-  const [usdtValue, setUsdtValue] = React.useState(0);
-  const [btcmtValue, setBtcmtValue] = React.useState(0);
+  const [usdtValue, setUsdtValue] = React.useState('0');
+  const [btcmtValue, setBtcmtValue] = React.useState('0');
   const [confitmProgress, setConfitmProgress] = React.useState(false);
   const [infoText, setInfoText] = React.useState('');
   const [stopSell, setStopSell] = React.useState(false);
@@ -36,17 +37,15 @@ const Presale: React.FC = () => {
 
   const checkSpendCap = useCallback(() => {
     let info = '';
-    const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
 
-    clog(
-      `capToSell: ${presaleInfo.capToSell}, totalSold: ${presaleInfo.totalSold}, capToSell-totalSold: ${cap}`,
-    );
+    const { capToSell, totalSold } = presaleInfo;
+    const cap = new BigNumber(capToSell).minus(totalSold);
 
-    if (cap <= 0) {
+    if (cap.isLessThanOrEqualTo(0)) {
       info = t('notifications.presale.exedeed');
       setStopSell(true);
-    } else if (cap <= 200000) {
-      info = `${cap} ${t('notifications.presale.left')}`;
+    } else if (cap.isLessThanOrEqualTo(200000)) {
+      info = `${cap.toFixed(0)} ${t('notifications.presale.left')}`;
     }
 
     setInfoText(info);
@@ -64,48 +63,54 @@ const Presale: React.FC = () => {
       { accent: '', days: 365, daysName: t('page.presale.days'), percent: 10, active: false },
       { accent: '', days: 730, daysName: `${t('page.presale.days')}`, percent: 15, active: false },
     ]);
-  }, [presaleInfo.capToSell, presaleInfo.totalSold, t]);
+  }, [presaleInfo, t]);
 
   // Change amounts ------------------------------------------------
   const handleChangeBtcmtAmount = (value: any): void => {
-    setBtcmtValue(value);
-    setUsdtValue(value * 1.5);
+    const btcmt = new BigNumber(value);
+    const usdt = btcmt.multipliedBy(1.5);
 
-    if (+value < 0 || +usdtValue < 0) {
-      setUsdtValue(0);
-      setBtcmtValue(0);
+    setBtcmtValue(btcmt.toString());
+    setUsdtValue(usdt.toString());
+
+    if (btcmt.isLessThan(0) || usdt.isLessThan(0)) {
+      setUsdtValue('0');
+      setBtcmtValue('0');
     }
 
-    const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
+    const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
-    if (+value > cap) {
-      const usdt = cap * 1.5;
+    if (cap.isLessThan(btcmt)) {
+      const usdtCap = cap.multipliedBy(1.5);
 
-      setUsdtValue(usdt);
-      setBtcmtValue(cap);
+      setUsdtValue(usdtCap.toString());
+      setBtcmtValue(cap.toString());
 
-      notify(`${t('notifications.presale.buy')} ${cap}`, 'warning');
+      notify(`${t('notifications.presale.buy')} ${cap.toString()}`, 'warning');
     }
   };
 
   const handleChangeUsdtAmount = (value: any): void => {
-    setUsdtValue(value);
-    setBtcmtValue(value / 1.5);
+    const usdt = new BigNumber(value);
+    const btcmt = usdt.div(1.5);
 
-    if (value < 0 || btcmtValue < 0) {
-      setUsdtValue(0);
-      setBtcmtValue(0);
+    setUsdtValue(usdt.toString());
+    setBtcmtValue(btcmt.toString());
+
+    if (usdt.isLessThan(0) || btcmt.isLessThan(0)) {
+      setUsdtValue('0');
+      setBtcmtValue('0');
     }
 
-    const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
+    const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
-    if (+(value / 1.5) > cap) {
-      const usdt = cap * 1.5;
+    if (cap.isLessThan(btcmt)) {
+      const usdtCap = cap.multipliedBy(1.5);
 
-      setUsdtValue(usdt);
-      setBtcmtValue(cap);
+      setUsdtValue(usdtCap.toString());
+      setBtcmtValue(cap.toString());
 
-      notify(`${t('notifications.presale.buy')} ${cap}`, 'warning');
+      notify(`${t('notifications.presale.buy')} ${cap.toString()}`, 'warning');
     }
   };
 
@@ -132,10 +137,10 @@ const Presale: React.FC = () => {
   // Send Tx ------------------------------------------------
 
   const handleButtonClaimClick = (): void => {
-    const cap = +presaleInfo.capToSell - +presaleInfo.totalSold;
+    const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
-    if (btcmtValue > cap) {
-      notify(`${t('notifications.presale.buy')} ${cap}`, 'warning');
+    if (cap.isLessThan(btcmtValue)) {
+      notify(`${t('notifications.presale.buy')} ${cap.toFixed(0)}`, 'warning');
       return;
     }
 
@@ -144,19 +149,36 @@ const Presale: React.FC = () => {
       return;
     }
 
-    if (+usdtValue === 0 && +usdtValue <= 0) {
+    if (new BigNumber(usdtValue).isLessThanOrEqualTo(0)) {
       notify(`${t('notifications.presale.inputError')}`, 'error');
       return;
     }
 
     setConfitmProgress(true);
 
-    const usdt = deNormalizedValue(+usdtValue + 1);
-    const btcmt = deNormalizedValue(btcmtValue);
-    // const btcmt = ((btcmtValue * 1.5 * 10 ** 18) / 1.5).toString();
+    const usdt = deNormalizedValue(+usdtValue + 1, true);
+    const btcmt = new BigNumber(btcmtValue);
+
+    const btcmDecimals = btcmt.decimalPlaces();
+
+    const deleteAmount =
+      btcmDecimals >= 2
+        ? (1 / 10 ** btcmDecimals).toFixed(btcmDecimals)
+        : btcmDecimals === 1
+        ? 0.01
+        : 0;
+
+    const btcmtMinus = btcmt.minus(+deleteAmount);
+    const btcmtSend = deNormalizedValue(btcmtMinus.toString(), true);
+
+    clog(`btcmt decimals amount: ${btcmDecimals}`);
+    clog(`value to minus from btcmt (look on btcmt decimals amount): ${deleteAmount}`);
+    clog(`original btcmt (what user input): ${btcmt.toString()}`);
+    clog(`${btcmt.toString()} btcmt - ${deleteAmount} amount: ${btcmtMinus.toString()}`);
+    clog(`send btcmt: ${btcmtSend}`);
 
     store.contractService
-      .presaleBuy(btcmt, usdt, percentValue)
+      .presaleBuy(btcmtSend, usdt, percentValue)
       .then(
         (data: any) => {
           notify(
@@ -185,8 +207,8 @@ const Presale: React.FC = () => {
       )
       .finally(() => {
         setConfitmProgress(false);
-        setUsdtValue(0);
-        setBtcmtValue(0);
+        setUsdtValue('0');
+        setBtcmtValue('0');
 
         setTimeout(() => {
           getPresaleInfo();

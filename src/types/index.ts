@@ -37,11 +37,12 @@ export interface IData {
 export interface IUserHistory {
   total: string;
   history: ITableData[];
+  total_reward: string | number;
 }
 
 export interface ITableData {
   date: string;
-  value: number;
+  value: number | string;
   status: boolean;
 }
 

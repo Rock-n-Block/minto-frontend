@@ -1,7 +1,7 @@
 {
   "name": "minto-frontend",
   "description": "Mine Bitcoin by staking BTCMT tokens.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "repository": {
     "type": "git",
@@ -39,12 +39,8 @@
   "bugs": {
     "url": "https://github.com/Rock-n-Block/minto-frontend/issues"
   },
-  "engines": {
-    "node": "15.14.0",
-    "npm": "~7.17.0"
-  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --dev",
     "build": "react-scripts build",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",

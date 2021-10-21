@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 // import React from 'react';
 import { useTranslation } from 'react-i18next';
+import BigNumber from 'bignumber.js/bignumber.js';
 import { observer } from 'mobx-react-lite';
 
 import { HistoryTable, Procedure } from '../../components/organisms';
@@ -15,9 +16,13 @@ const Mining: React.FC = () => {
   const store = useStore();
 
   const [miningInfo, setMiningInfo] = React.useState({} as IData);
-  const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
+  const [tdata, settData] = React.useState({
+    total: '0',
+    history: [],
+    total_reward: '0',
+  } as IUserHistory);
 
-  const [mnValue, setMnValue] = React.useState(0);
+  const [mnValue, setMnValue] = React.useState('0');
   const [miningProgress, setMiningProgress] = React.useState(false);
 
   const { t } = useTranslation();
@@ -30,8 +35,15 @@ const Mining: React.FC = () => {
     await API.post('/user/history/', {
       address: store.account.address,
     })
-      .then((res: any) => {
-        clogData('User history: ', res);
+      .then((res: { data: IUserHistory }) => {
+        clogData('User history: ', res.data);
+
+        if (res.data.history) {
+          res.data.history.map((h) => {
+            h.value = new BigNumber(h.value).toString();
+            return h;
+          });
+        }
         settData(res.data);
       })
       .catch((error: any) => {
@@ -48,27 +60,34 @@ const Mining: React.FC = () => {
   // Change amounts ------------------------------------------------
 
   const handleChangeClaimAmount = (value: any): void => {
-    setMnValue(value);
-    if (value < 0) setMnValue(0);
-    if (value > +miningInfo.availableToClaim) setMnValue(+miningInfo.availableToClaim);
+    const { availableToClaim } = miningInfo;
+    const amountAvailable = new BigNumber(availableToClaim);
+    const amount = new BigNumber(value);
+
+    setMnValue(amount.toString());
+    if (amount.isLessThan(0)) setMnValue('0');
+    if (amount.isGreaterThan(amountAvailable)) setMnValue(amountAvailable.toString());
   };
 
   // Send Max ------------------------------------------------
 
   const handleButtonClick = (): void => {
-    setMnValue(+miningInfo.availableToClaim);
+    setMnValue(miningInfo.availableToClaim as string);
   };
 
   // Send Tx ------------------------------------------------
 
   const handleButtonClaimClick = (): void => {
-    if (+mnValue === 0 && +mnValue <= 0) {
+    const { availableToClaim } = miningInfo;
+    const minningAmount = new BigNumber(mnValue);
+
+    if (minningAmount.isLessThanOrEqualTo(0)) {
       notify(`${t('notifications.claim.inputError')}`, 'error');
       return;
     }
 
     setMiningProgress(true);
-    if (mnValue === +miningInfo.availableToClaim) {
+    if (minningAmount.isEqualTo(availableToClaim)) {
       store.contractService
         .claimAllReward()
         .then(
@@ -79,10 +98,10 @@ const Mining: React.FC = () => {
                   key: 'notifications.claim.complete',
                   data: {
                     token: 'HBTC',
-                    value: +miningInfo.availableToClaim,
+                    value: +availableToClaim,
                   },
                 },
-                text: `Your Claim ${+miningInfo.availableToClaim} HBTC complete!`,
+                text: `Your Claim ${availableToClaim} HBTC complete!`,
                 link: {
                   url: `${chain.tx.link}/${data[1]}`,
                   text: `${t('notifications.claim.link')}`,
@@ -99,13 +118,13 @@ const Mining: React.FC = () => {
         )
         .finally(() => {
           setMiningProgress(false);
-          setMnValue(0);
+          setMnValue('0');
         });
 
       return;
     }
 
-    const amount = deNormalizedValue(mnValue);
+    const amount = deNormalizedValue(mnValue, true);
 
     store.contractService
       .claimReward(amount)
@@ -139,7 +158,7 @@ const Mining: React.FC = () => {
       )
       .finally(() => {
         setMiningProgress(false);
-        setMnValue(0);
+        setMnValue('0');
       });
   };
 
@@ -187,18 +206,24 @@ const Mining: React.FC = () => {
             inputChange={handleChangeClaimAmount}
             inputValue={mnValue}
           />
-          <HistoryTable
-            title={t('page.mining.history.title')}
-            head={{
-              date: t('page.mining.history.table.col.0'),
-              revard: t('page.mining.history.table.col.1'),
-            }}
-            body={tdata.history}
-            total={{
-              title: t('page.mining.history.table.col.2'),
-              value: `${0}`,
-            }}
-          />
+
+          {tdata.total_reward > 0 ? (
+            <HistoryTable
+              title={t('page.mining.history.title')}
+              head={{
+                date: t('page.mining.history.table.col.0'),
+                revard: t('page.mining.history.table.col.1'),
+              }}
+              normalize={false}
+              body={tdata.history}
+              total={{
+                title: t('page.mining.history.table.col.2'),
+                value: `${tdata.total_reward}`,
+              }}
+            />
+          ) : (
+            ''
+          )}
         </div>
       ) : (
         <div className="no_login_data">
