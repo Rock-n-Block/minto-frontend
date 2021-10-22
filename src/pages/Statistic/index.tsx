@@ -8,7 +8,7 @@ import axios from 'axios';
 import BigNumber from 'bignumber.js/bignumber.js';
 // import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
-// import moment from 'moment';
+import moment from 'moment';
 import Web3 from 'web3';
 
 // import { Calculator, HistoryTable } from '../../components/organisms';
@@ -297,7 +297,13 @@ const Statistic: React.FC = () => {
     await API.get('/total/history/')
       .then((res: any) => {
         clogData('Total history: ', res.data);
-        settData(res.data);
+
+        const data = res.data.filter((item: any) => {
+          const dateTimestamp = +(moment.utc(item.date).format('X'));
+          return dateTimestamp >= 1634860800;
+        });
+
+        settData(data);
 
         const total = res.data.reduce(
           (value: number, currentValue: ItDataTotal) => value + currentValue.value,
