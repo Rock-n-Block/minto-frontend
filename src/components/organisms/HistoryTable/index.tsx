@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 
-import { normalizedValue } from '../../../utils';
-
 import './HistoryTable.scss';
 
 interface ITableHead {
@@ -26,7 +24,7 @@ interface ITable {
   normalize: boolean;
 }
 
-const HistoryTable: React.FC<ITable> = ({ title, head, body, total, normalize = true }) => {
+const HistoryTable: React.FC<ITable> = ({ title, head, body, total }) => {
   const [currentPage, setCurrentPage] = React.useState(0);
 
   const PER_PAGE = 10;
@@ -51,7 +49,7 @@ const HistoryTable: React.FC<ITable> = ({ title, head, body, total, normalize = 
             <div key={index} className="history-table-body-item history-table-col">
               <span className="history-table-body-item-text">{item.date}</span>
               <span className="history-table-body-item-text">
-                {normalize ? normalizedValue(item.value, true, 0) : item.value}
+                {item.value}
               </span>
             </div>
           ))}
