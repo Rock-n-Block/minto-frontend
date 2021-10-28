@@ -137,12 +137,18 @@
       "attention": "注意力！購買由HECO USDT進行，您還需要HT支付氣體。",
       "buttons": {
         "stake": "抵押",
-        "buy": "预售"
+        "buy": "预售",
+        "buy2": "购买"
+      },
+      "timer": {
+        "title": "预售结束时间"
       },
       "links": {
         "1": "如何参与 BTCMT 预售的完整指南",
         "2": "如何为 HECO 设置 MetaMask",
-        "3": "您需要购买 HT 的方式和原因"
+        "3": "您需要购买 HT 的方式和原因",
+        "4": "如何购买BTCMT",
+        "5": "如何抵押 BTCMT 并领取奖励"
       },
       "tokenPrice": "预售代币价格",
       "totalSupply": "总供应量",

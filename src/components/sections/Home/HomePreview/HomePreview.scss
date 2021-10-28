@@ -14,6 +14,10 @@
     background-image: url(../../../../assets/img/sections/home/preview-m.svg);
   }
 
+  &-box {
+    flex-direction: column;
+  }
+
   &-title {
     max-width: 490px;
   }
@@ -27,53 +31,58 @@
     }
   }
 
-  &-text {
-    margin-bottom: 30px;
-
-    max-width: 650px;
-
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 1.2;
-  }
-
   &-links {
-    padding-left: 25px;
-
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+    align-items: center;
+    flex-wrap: wrap;
     width: 100%;
+    margin-bottom: -15px;
 
-    @include b('tablet') {
-      margin-top: 25px;
-      padding-left: 0;
-
-      align-items: center;
+    @include b('mobile') {
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     a {
-      margin-bottom: 5px;
-
       max-width: max-content;
-
-      text-decoration: underline;
-
+      line-height: 18px;
+      padding: 8px 12px;
+      border-radius: 60px;
+      background-color: #fff;
+      box-shadow: 5px 10px 20px rgba(109, 218, 192, 0.2);
       color: #000;
+      margin-right: 15px;
+      white-space: nowrap;
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &-btnGroup {
+    display: flex;
+
+    .btn {
+      @include b('mobile') {
+        flex: 1;
+      }
     }
   }
 
   &-btn {
+    margin-bottom: 40px;
     @include b('tablet') {
-      width: 100%;
+      margin-bottom: 30px;
+      font-size: 20px !important;
+      line-height: 26px !important;
+      padding-top: 15px !important;
+      padding-bottom: 15px !important;
     }
 
     & + & {
-      margin-left: 10px;
-      @include b('tablet') {
-        margin: 20px 0 0;
-      }
+      margin-left: 15px;
     }
   }
 
@@ -103,6 +112,50 @@
   &-box {
     @include b('tablet') {
       flex-direction: column;
+    }
+  }
+
+  .presale-timer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+
+    .text {
+      font-size: 28px;
+      line-height: 36px;
+      font-weight: 800;
+      margin-right: 15px;
+    }
+
+    .timer {
+      display: flex;
+      align-items: center;
+
+      .block {
+        padding: 4px 8px;
+        font-size: 28px;
+        line-height: 36px;
+        font-weight: 800;
+        background-color: #6DDAC0;
+        border-radius: 12px;
+        min-width: 50px;
+        margin-right: 21px;
+        text-align: center;
+        position: relative;
+
+        &:after {
+          content: ":";
+          position: absolute;
+          right: -15px;
+          margin-top: -2px;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+        &:last-child:after {
+          display: none;
+        }
+      }
     }
   }
 }
