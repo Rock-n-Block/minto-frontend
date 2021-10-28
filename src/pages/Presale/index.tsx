@@ -76,7 +76,7 @@ const Presale: React.FC = () => {
   // Change amounts ------------------------------------------------
   const handleChangeBtcmtAmount = (value: any): void => {
     const btcmt = new BigNumber(value);
-    const usdt = btcmt.multipliedBy(1.72);
+    const usdt = btcmt.multipliedBy(priceRatio);
 
     setBtcmtValue(btcmt.toString());
     setUsdtValue(usdt.toString());
