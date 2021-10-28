@@ -329,11 +329,11 @@ export class ContractService {
 
     const weeks: { [index: number]: string } = {
       0: '0',
-      2: '4',
-      4: '13',
-      8: '26',
-      10: '52',
-      15: '104',
+      // 2: '4',
+      1: '13',
+      3: '26',
+      4: '52',
+      // 15: '104',
     };
 
     const getAllowance = (amount: string): Promise<any> => {

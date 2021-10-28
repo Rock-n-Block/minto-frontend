@@ -3,8 +3,8 @@ export const presaleABI = [
     inputs: [
       { internalType: 'address', name: '_BTCMT', type: 'address' },
       { internalType: 'address', name: '_USDT', type: 'address' },
+      { internalType: 'uint256', name: '_price', type: 'uint256' },
       { internalType: 'uint256', name: '_capToSell', type: 'uint256' },
-      { internalType: 'uint256', name: '_USDT_DECIMALS', type: 'uint256' },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -47,13 +47,6 @@ export const presaleABI = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'USDT_DECIMALS_MINUS_ONE',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
       { internalType: 'uint256', name: 'timeInWeeks', type: 'uint256' },
@@ -79,6 +72,13 @@ export const presaleABI = [
   },
   {
     inputs: [],
+    name: 'price',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'renounceOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -87,6 +87,13 @@ export const presaleABI = [
   {
     inputs: [{ internalType: 'uint256', name: '_capToSell', type: 'uint256' }],
     name: 'setCapToSell',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '_price', type: 'uint256' }],
+    name: 'setPrice',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

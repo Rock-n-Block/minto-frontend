@@ -87,7 +87,7 @@ export const contracts: IContracts = {
         abi: presaleABI,
       },
       testnet: {
-        address: '0x6330d4DE28D1951a1E4F0bb24A4769fa73227eBF',
+        address: '0xF236E11BcA8480b360F1Ff21F45644d481379a14',
         abi: presaleABI,
       },
     },

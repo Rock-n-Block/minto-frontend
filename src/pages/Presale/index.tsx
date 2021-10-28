@@ -28,6 +28,8 @@ const Presale: React.FC = () => {
 
   const [percentValue, setPercentValue] = React.useState(4);
 
+  const priceRatio = 1.75;
+
   // Get Presale Info
   const getPresaleInfo = useCallback(async () => {
     if (!store.is_contractService) store.setContractService();
@@ -51,24 +53,30 @@ const Presale: React.FC = () => {
     setInfoText(info);
     setDataSlider([
       { accent: '', days: 0, daysName: `${t('page.presale.days')}`, percent: 0, active: false },
-      { accent: '', days: 31, daysName: `${t('page.presale.days')}`, percent: 2, active: false },
+      // { accent: '', days: 31, daysName: `${t('page.presale.days')}`, percent: 2, active: false },
       {
-        accent: t('page.presale.recommended'),
+        accent: '',
         days: 90,
         daysName: t('page.presale.days'),
-        percent: 4,
-        active: true,
+        percent: 1,
+        active: false,
       },
-      { accent: '', days: 180, daysName: `${t('page.presale.days')}`, percent: 8, active: false },
-      { accent: '', days: 365, daysName: t('page.presale.days'), percent: 10, active: false },
-      { accent: '', days: 730, daysName: `${t('page.presale.days')}`, percent: 15, active: false },
+      {
+        accent: `${t('page.presale.recommended')}`,
+        days: 180,
+        daysName: `${t('page.presale.days')}`,
+        percent: 3,
+        active: false,
+      },
+      { accent: '', days: 360, daysName: t('page.presale.days'), percent: 4, active: false },
+      // { accent: '', days: 730, daysName: `${t('page.presale.days')}`, percent: 15, active: false },
     ]);
   }, [presaleInfo, t]);
 
   // Change amounts ------------------------------------------------
   const handleChangeBtcmtAmount = (value: any): void => {
     const btcmt = new BigNumber(value);
-    const usdt = btcmt.multipliedBy(1.5);
+    const usdt = btcmt.multipliedBy(1.72);
 
     setBtcmtValue(btcmt.toString());
     setUsdtValue(usdt.toString());
@@ -81,7 +89,7 @@ const Presale: React.FC = () => {
     const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
     if (cap.isLessThan(btcmt)) {
-      const usdtCap = cap.multipliedBy(1.5);
+      const usdtCap = cap.multipliedBy(priceRatio);
 
       setUsdtValue(usdtCap.toString());
       setBtcmtValue(cap.toString());
@@ -92,7 +100,7 @@ const Presale: React.FC = () => {
 
   const handleChangeUsdtAmount = (value: any): void => {
     const usdt = new BigNumber(value);
-    const btcmt = usdt.div(1.5);
+    const btcmt = usdt.div(priceRatio);
 
     setUsdtValue(usdt.toString());
     setBtcmtValue(btcmt.toString());
@@ -105,7 +113,7 @@ const Presale: React.FC = () => {
     const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
     if (cap.isLessThan(btcmt)) {
-      const usdtCap = cap.multipliedBy(1.5);
+      const usdtCap = cap.multipliedBy(priceRatio);
 
       setUsdtValue(usdtCap.toString());
       setBtcmtValue(cap.toString());
@@ -253,7 +261,7 @@ const Presale: React.FC = () => {
               },
               second: {
                 title: 'USDT',
-                value: '1.5',
+                value: `${priceRatio}`,
               },
             }}
             underHoldText={{
