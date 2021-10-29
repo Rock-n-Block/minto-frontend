@@ -216,10 +216,11 @@ const Mining: React.FC = () => {
               }}
               normalize={false}
               body={tdata.history}
-              total={{
+              total={{ title: '', value: '' }}
+              /* total={{
                 title: t('page.mining.history.table.col.2'),
-                value: `${tdata.total_reward}`,
-              }}
+                value: `${tdata.history.reduce((acc, curr) => acc + +curr.value, 0)}`,
+              }} */
             />
           ) : (
             ''
