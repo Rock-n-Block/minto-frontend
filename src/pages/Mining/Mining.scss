@@ -1,6 +1,8 @@
 @import 'src/styles/mixins/media';
 
 .mining {
+  background-color: #f3f8f6;
+
   .procedure {
     padding-top: 190px;
     @include b('tablet') {
