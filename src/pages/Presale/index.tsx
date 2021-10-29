@@ -26,7 +26,7 @@ const Presale: React.FC = () => {
 
   const [dataSlider, setDataSlider] = React.useState([] as IInfoSliderData[]);
 
-  const [percentValue, setPercentValue] = React.useState(4);
+  const [percentValue, setPercentValue] = React.useState(0);
 
   const priceRatio = 1.75;
 
@@ -50,10 +50,8 @@ const Presale: React.FC = () => {
       info = `${cap.toFixed(0)} ${t('notifications.presale.left')}`;
     }
 
-    setInfoText(info);
-    setDataSlider([
+    const sliderData: IInfoSliderData[] = [
       { accent: '', days: 0, daysName: `${t('page.presale.days')}`, percent: 0, active: false },
-      // { accent: '', days: 31, daysName: `${t('page.presale.days')}`, percent: 2, active: false },
       {
         accent: '',
         days: 90,
@@ -66,11 +64,14 @@ const Presale: React.FC = () => {
         days: 180,
         daysName: `${t('page.presale.days')}`,
         percent: 3,
-        active: false,
+        active: true,
       },
       { accent: '', days: 360, daysName: t('page.presale.days'), percent: 4, active: false },
-      // { accent: '', days: 730, daysName: `${t('page.presale.days')}`, percent: 15, active: false },
-    ]);
+    ];
+
+    setInfoText(info);
+    setDataSlider(sliderData);
+    setPercentValue(3);
   }, [presaleInfo, t]);
 
   // Change amounts ------------------------------------------------
