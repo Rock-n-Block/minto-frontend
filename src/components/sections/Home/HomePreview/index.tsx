@@ -17,8 +17,8 @@ const HomePreview: React.FC = () => {
   const { t } = useTranslation();
 
   const currentTime = +(moment.utc().format('X')); // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
-  // const eventTime = +(moment.utc("2021-10-29T12:00:00").format('X')); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
-  const eventTime = +(moment.utc().add(15, 'seconds').format('X')); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
+  const eventTime = +(moment.utc("2021-11-01T12:00:00").format('X')); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
+  // const eventTime = +(moment.utc().add(15, 'seconds').format('X')); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
   const diffTime = eventTime - currentTime;
   const Duration: any = moment.duration(diffTime * 1000, 'milliseconds');
   const [timeLeft, setTimeLeft] = useState({ seconds: Duration.seconds(), minutes: Duration.minutes(), hours: Duration.hours(), days: Duration.days()});
@@ -181,8 +181,9 @@ const HomePreview: React.FC = () => {
             {t('page.home.timer.title')}
           </span>
             <div className="timer">
-              <span className="block">{timeLeft.days * 24 + timeLeft.hours} </span>
-              <span className="block">{timeLeft.minutes} </span>
+              <span className="block">{timeLeft.days}{t('page.home.timer.d')}</span>
+              <span className="block">{timeLeft.hours}</span>
+              <span className="block">{timeLeft.minutes}</span>
               <span className="block">{timeLeft.seconds}</span>
             </div>
           </div>

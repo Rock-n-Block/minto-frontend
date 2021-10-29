@@ -141,7 +141,8 @@
         "buy2": "buy"
       },
       "timer": {
-        "title": "Presale ends in"
+        "title": "Presale ends in",
+        "d": "d"
       },
       "links": {
         "1": "Complete guide how to take part in BTCMT presale",
