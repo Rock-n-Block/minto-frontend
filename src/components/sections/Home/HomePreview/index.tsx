@@ -23,6 +23,11 @@ const HomePreview: React.FC = () => {
   const Duration: any = moment.duration(diffTime * 1000, 'milliseconds');
   const [timeLeft, setTimeLeft] = useState({ seconds: Duration.seconds(), minutes: Duration.minutes(), hours: Duration.hours(), days: Duration.days()});
   const [diffTimestamp, setDiffTimestamp] = useState(999999);
+  const [timeHasCome, setTimeHasCome] = useState(diffTimestamp <= 0);
+
+  useEffect(() => {
+    if (diffTimestamp <= 0 && !timeHasCome) setTimeHasCome(true);
+  }, [diffTimestamp, timeHasCome]);
 
   useEffect(() => {
     let timerInterval: any;
@@ -88,7 +93,7 @@ const HomePreview: React.FC = () => {
           value: (
             <>
               <div className="box-f-ai-c">
-                {diffTimestamp > 0 ? (
+                {!timeHasCome ? (
                   <>
                     <span className="text-line-through">1,72</span>
                     <span>&nbsp;&nbsp;</span>
@@ -160,7 +165,7 @@ const HomePreview: React.FC = () => {
     });
 
     setInfo(uinfo);
-  }, [store, diffTimestamp]);
+  }, [store, timeHasCome]);
 
   // On Run ------------------------------------------------
 
