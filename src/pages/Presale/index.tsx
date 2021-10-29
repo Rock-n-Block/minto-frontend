@@ -23,12 +23,13 @@ const Presale: React.FC = () => {
   const [infoText, setInfoText] = React.useState('');
   const [stopSell, setStopSell] = React.useState(false);
   const [modal, setModal] = React.useState(false);
+  const [priceRatio, SetPriceRatio] = React.useState(0);
 
   const [dataSlider, setDataSlider] = React.useState([] as IInfoSliderData[]);
 
   const [percentValue, setPercentValue] = React.useState(0);
 
-  const priceRatio = 1.75;
+  // const priceRatio = 1.72;
 
   // Get Presale Info
   const getPresaleInfo = useCallback(async () => {
@@ -72,6 +73,7 @@ const Presale: React.FC = () => {
     setInfoText(info);
     setDataSlider(sliderData);
     setPercentValue(3);
+    SetPriceRatio(+presaleInfo.priceRatio);
   }, [presaleInfo, t]);
 
   // Change amounts ------------------------------------------------
