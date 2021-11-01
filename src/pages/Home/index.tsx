@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { About } from '../../components/organisms';
-import { HomeNews, HomePartners, HomePreview, StakingBlock } from '../../components/sections';
+import { HomeNews, HomePartners, HomePreview, /* StakingBlock */ } from '../../components/sections';
 
 import 'swiper/swiper.scss';
 
@@ -10,7 +10,7 @@ const Home: React.FC = () => {
     <main className="home">
       <HomePreview />
       <About />
-      <StakingBlock />
+      {/* <StakingBlock /> */}
       {/* <Subscribe /> */}
       <HomePartners />
       {/* <HomeRoadmap /> */}

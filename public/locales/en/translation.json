@@ -29,9 +29,9 @@
   "component": {
     "aboutUs": {
       "title": "About",
-      "text": "The Bitcoin mining token (BTCMT) brings liquidity to Bitcoin mining. Each BTCMT is collateralized by 0.01 TH/s of real Bitcoin mining power. By staking BTCMT, holders will earn daily staking rewards in Bitcoin that correspond to the mining power staked.",
-      "text2": "Get transparent farming rewards as if you had an ASIC-setup or make a profit by buying and selling any amount of mining power without dealing with traditional mining.",
-      "text3": "The economy of the BTCMT token allows you to get significantly more income than from traditional mining. Yield farming on HECO Chain offers one of the highest APRs in DeFi.",
+      "text": "Simply put - mining is expensive. Keeping it profitable is another part of the story. Minto aims to lower both the risks and the entry threshold by tokenizing mining power in the form of the BTCMT token.",
+      "text2": "Receive transparent mining rewards as if you had an ASIC-setup or make profits by buying and selling any amount of mining power without dealing with the problems of traditional mining.",
+      "text3": "Bitcoin mining has never been easier. Learn more about the future of the mining industry",
       "auditLink": "Hacken.io",
       "auditText": "rated MINTO Contract infrastructure on the highest security level",
       "buttons": {
@@ -137,8 +137,8 @@
       }
     },
     "home": {
-      "title": "Farm Bitcoin on Huobi ECO Chain by staking BTCMT tokens",
-      "subtitle": "We removed all the unnecessary steps and made yield farming in DeFi easier than getting a BTC wallet",
+      "title": "Mine Bitcoin by staking BTCMT tokens",
+      "subtitle": "We've removed all the unnecessary steps and made mining easier than getting a BTC wallet",
       "participate1": "THE ACTIVE STAGE OF THE PRESALE IS IN PROGRESS NOW.",
       "participate2": "TO PARTICIPATE CLICK THE PRESALE BUTTON AND CHECK OUT THE GUIDES.",
       "attention": "Attention! The purchase is made by HECO USDT, you also need HT to pay for the gas.",
