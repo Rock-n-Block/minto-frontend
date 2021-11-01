@@ -151,7 +151,7 @@
         "4": "How to buy BTCMT",
         "5": "How to stake BTCMT and claim reward"
       },
-      "tokenPrice": "PRESALE token price",
+      "tokenPrice": "token price",
       "totalSupply": "total supply",
       "component": {
         "datacenters": {
