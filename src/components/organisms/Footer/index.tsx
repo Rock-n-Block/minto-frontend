@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Facebook from '../../../assets/img/icons/facebook-white.svg';
 import Logo from '../../../assets/img/icons/logo.svg';
-import Github from '../../../assets/img/sections/footer/github.svg';
+/* import Github from '../../../assets/img/sections/footer/github.svg'; */
 import Medium from '../../../assets/img/sections/footer/medium.svg';
 import Telegram from '../../../assets/img/sections/footer/telegram.svg';
 import Twitter from '../../../assets/img/sections/footer/twitter.svg';
@@ -80,11 +80,11 @@ const Footer: React.FC = () => {
                 <img src={Medium} alt="medium" />
               </a>
             </li>
-            <li className="footer__socials-item">
+            {/* <li className="footer__socials-item">
               <a href="/#" target="_blank" className="footer__social circle">
                 <img src={Github} alt="github" />
               </a>
-            </li>
+            </li> */}
             <li className="footer__socials-item">
               {lang === 'en' ? (
                 <a
