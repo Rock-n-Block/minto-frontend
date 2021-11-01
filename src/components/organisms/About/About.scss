@@ -21,8 +21,10 @@
 
   &__description {
     margin-top: 33px;
-
-    max-width: 574px;
+    max-width: 605px;
+    line-height: 37px;
+    font-weight: 400;
+    font-size: 27px;
 
     @include b('tablet') {
       margin-top: 30px;
@@ -31,7 +33,7 @@
     &-secondary {
       margin-top: 55px;
 
-      max-width: 399px;
+      max-width: 597px;
       @include b('tablet') {
         margin-top: 30px;
       }
@@ -86,8 +88,11 @@
 
     &-text {
       margin-left: 30px;
+      max-width: 300px;
+      font-size: 22px;
+      line-height: 30px;
+      font-weight: 400;
 
-      max-width: 380px;
       @include b('mobile') {
         margin-top: 15px;
         margin-left: 0;

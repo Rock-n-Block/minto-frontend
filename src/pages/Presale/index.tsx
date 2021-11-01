@@ -9,6 +9,9 @@ import { chain, config, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
 import { clog, clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
+import arrow from '../../assets/img/arrow.png';
+import warning from '../../assets/img/warning.png';
+import book from '../../assets/img/book.png';
 
 import './Presale.scss';
 
@@ -292,7 +295,14 @@ const Presale: React.FC = () => {
         <div className="no_login_data">
           <span className="links__title text-center text text-black text-bold-e">
             {t('info.connectWallet')}
+            <span className="no_login_data_arrowWrapper">
+              <img alt={t('info.connectWallet')} src={arrow} className="no_login_data_arrow" />
+            </span>
           </span>
+
+          <div className="no_login_data-attention">
+            <img alt={t('info.attention')} src={warning} className="no_login_data-attention-icon" />{t('info.attention')}
+          </div>
 
           <div className="no_login_data-links">
             <a
@@ -300,21 +310,28 @@ const Presale: React.FC = () => {
               target="_blank"
               rel="nofollow noreferrer"
             >
-              {t('page.home.links.1')}
+              <img alt="Info" src={book} className="no_login_data-links-icon" />{t('page.home.links.4')}
+            </a>
+            <a
+              href="https://medium.com/@btcmtofficial/a-detailed-guide-on-staking-42646d817f70"
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              <img alt="Info" src={book} className="no_login_data-links-icon" />{t('page.home.links.5')}
             </a>
             <a
               href="https://medium.com/@btcmtofficial/how-to-configure-a-metamask-wallet-to-heco-mainnet-39c5d1f3ee23"
               target="_blank"
               rel="nofollow noreferrer"
             >
-              {t('page.home.links.2')}
+              <img alt="Info" src={book} className="no_login_data-links-icon" />{t('page.home.links.2')}
             </a>
             <a
-              href="https://medium.com/@btcmtofficial/a-guide-on-how-and-why-to-buy-ht-19b3b024f77d "
+              href="https://medium.com/@btcmtofficial/a-detailed-guide-on-staking-42646d817f70"
               target="_blank"
               rel="nofollow noreferrer"
             >
-              {t('page.home.links.3')}
+              <img alt="Info" src={book} className="no_login_data-links-icon" />{t('page.home.links.3')}
             </a>
           </div>
         </div>

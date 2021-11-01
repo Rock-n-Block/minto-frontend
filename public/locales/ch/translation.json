@@ -20,6 +20,7 @@
   },
   "info": {
     "connectWallet": "請連接錢包以查看信息。",
+    "attention": "注意力！購買由HECO USDT進行，您還需要HT支付氣體。",
     "inDev": "該網站部分目前正在開發中，即將推出。"
   },
   "button": {
@@ -28,9 +29,9 @@
   "component": {
     "aboutUs": {
       "title": "关于Minto",
-      "text": "简而言之 - 挖矿很昂贵。 保持盈利就不用说了。 Minto 旨在通过以 BTCMT 代币的形式对挖矿能力进行代币化来降低风险和入门门槛。",
+      "text": "比特币挖矿令牌(BTCMT)为比特币挖矿带来了流动性。每个以0.01 TH/s的真实比特币挖矿能力作为抵押品。通过质押BTCMT，持有者每天将获得与所质押的挖矿能力相对应的比特币奖励。",
       "text2": "获得透明的挖矿奖励，就像您拥有 ASIC 设置一样，或者通过买卖任意数量的挖矿算力赚取利润，而无需处理传统挖矿的问题。",
-      "text3": "比特币挖矿从未如此简单。 了解有关挖矿行业未来的更多信息",
+      "text3": "BTCMT令牌的经济效益使您能够获得比传统挖矿多得多的收入。在HECO链上的产量农业提供了DeFi中最高的apr之一。",
       "auditLink": "Hacken.io",
       "auditText": "将 MINTO 合约基础设施评为最高安全级别",
       "buttons": {
@@ -41,6 +42,12 @@
         "presentation": "PPT",
         "audit": "审计报告"
       }
+    },
+    "stacking": {
+      "title": "抵押",
+      "text1": "DeFi空间每天都在发展。去中心化的协议和项目努力改善投资者的经验，吸引更多的流动性。",
+      "text2": "BTCMT是一个资产协议，将比特币哈希率资产带到DeFi。",
+      "text3": "质押你的BTCMT，每年最高达236%的年化收益，在DeFi进行Yield farming远比比特币挖矿或购买更有利可图。在一个不断增长的市场中赚得更多，即使下跌70%也不损失任何东西。"
     }
   },
   "notifications": {
@@ -151,7 +158,7 @@
         "4": "如何购买BTCMT",
         "5": "如何抵押 BTCMT 并领取奖励"
       },
-      "tokenPrice": "预售代币价格",
+      "tokenPrice": "代币价格",
       "totalSupply": "总供应量",
       "component": {
         "datacenters": {

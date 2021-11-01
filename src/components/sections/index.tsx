@@ -4,5 +4,6 @@ export { default as HomeRoadmap } from './Home/HomeRoadmap';
 export { default as HomePartners } from './Home/HomePartners';
 export { default as HomeNews } from './Home/HomeNews';
 export { default as StakingInfo } from './Staking/StakingInfo';
+export { default as StakingBlock } from './Staking/StakingBlock';
 export { default as AboutContacts } from './About/AboutContacts';
 export { default as AboutTeam } from './About/AboutTeam';

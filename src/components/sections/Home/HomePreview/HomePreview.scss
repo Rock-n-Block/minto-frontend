@@ -19,13 +19,13 @@
   }
 
   &-title {
-    max-width: 490px;
+    max-width: 800px;
   }
 
   &-subtitle {
     margin: 27px 0 57px;
 
-    max-width: 640px;
+    max-width: 660px;
     @include b('tablet') {
       margin: 20px 0 30px;
     }

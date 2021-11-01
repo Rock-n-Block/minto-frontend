@@ -20,7 +20,7 @@ const About: React.FC = () => {
       <div className="row ">
         <section className="about__left">
           <h2 className="about__title h2 text-white text-bold">{t('component.aboutUs.title')}</h2>
-          <p className="about__description text text-white">{t('component.aboutUs.text')}</p>
+          <p className="about__description text-white">{t('component.aboutUs.text')}</p>
 
           <div className="about__btns">
             <a
@@ -64,7 +64,7 @@ const About: React.FC = () => {
                 </span>
               </Button>
             </a>
-            <div className="about__audit-text text text-white">
+            <div className="about__audit-text text-white">
               <a href="https://hacken.io/" className="text-green text">
                 {t('component.aboutUs.auditLink')}
               </a>{' '}

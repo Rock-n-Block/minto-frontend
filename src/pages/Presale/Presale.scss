@@ -1,6 +1,53 @@
 @import 'src/styles/mixins/media';
 
 .presale {
+  background-color: #f3f8f6;
+
+  .no_login_data-attention {
+    margin-top: 17px;
+    font-size: 16px;
+    line-height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .no_login_data_arrow {
+    max-width: 72px;
+    position: absolute;
+    left: 13px;
+    top: -27px;
+  }
+
+  .no_login_data_arrowWrapper {
+    position: relative;
+  }
+
+  .no_login_data-attention-icon {
+    margin-right: 12px;
+  }
+
+  .no_login_data-links {
+    max-width: 500px;
+    margin: 22px auto 0;
+
+    a {
+      width: 100%;
+      background-color: #fff;
+      padding: 12px 0;
+      text-decoration: none;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      border-radius: 30px;
+      margin-bottom: 15px;
+
+      img {
+        margin-right: 9px;
+      }
+    }
+  }
+
   .procedure {
     padding-top: 190px;
     @include b('tablet') {
