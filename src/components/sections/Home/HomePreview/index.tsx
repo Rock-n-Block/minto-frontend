@@ -222,11 +222,11 @@ const HomePreview: React.FC = () => {
                   <div className="text-upper text-slg">{t('page.home.buttons.stake')}</div>
                 </NavLink>
               </Button>
-              <Button size="md" colorScheme="outline" className="home__preview-btn">
+              {/* <Button size="md" colorScheme="outline" className="home__preview-btn">
                 <NavLink exact to="/purchase" className="text-upper text-slg">
                   <div className="text-upper text-slg">{t('page.home.buttons.buy2')}</div>
                 </NavLink>
-              </Button>
+              </Button> */}
             </div>
           )}
           {/* </a> */}
