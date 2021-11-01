@@ -1,5 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import moment from 'moment';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import Web3 from 'web3';
@@ -15,51 +14,6 @@ import './HomePreview.scss';
 const HomePreview: React.FC = () => {
   const store = useStore();
   const { t } = useTranslation();
-
-  const currentTime = +(moment.utc().format('X')); // Timestamp - Sun, 21 Apr 2013 12:30:00 GMT
-  const eventTime = +(moment.utc("2021-11-01T12:00:00").format('X')); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
-  // const eventTime = +(moment.utc().add(15, 'seconds').format('X')); // Timestamp - Sun, 21 Apr 2013 13:00:00 GMT
-  const diffTime = eventTime - currentTime;
-  const Duration: any = moment.duration(diffTime * 1000, 'milliseconds');
-  const [timeLeft, setTimeLeft] = useState({ seconds: Duration.seconds(), minutes: Duration.minutes(), hours: Duration.hours(), days: Duration.days()});
-  const [diffTimestamp, setDiffTimestamp] = useState(999999);
-  const [timeHasCome, setTimeHasCome] = useState(diffTimestamp <= 0);
-
-  useEffect(() => {
-    if (diffTimestamp <= 0 && !timeHasCome) setTimeHasCome(true);
-  }, [diffTimestamp, timeHasCome]);
-
-  useEffect(() => {
-    let timerInterval: any;
-    let duration: any = Duration;
-
-    const startTimer = () => {
-      const interval = 1000;
-
-      if (duration.asSeconds() > 0) {
-        timerInterval = setInterval(() => {
-          if (duration.asSeconds() <= 1) {
-            const links = document.querySelector('.links');
-            links?.setAttribute("style", "display: block;");
-          }
-          duration = moment.duration(duration - interval, 'milliseconds');
-          setDiffTimestamp(duration.asSeconds());
-          setTimeLeft({ seconds: duration.seconds(), minutes: duration.minutes(), hours: duration.hours(), days: duration.days()});
-        }, interval);
-      } else {
-        if (duration.asSeconds() <= 1) {
-          // const links = document.querySelector('.links');
-          // links?.setAttribute("style", "display: block;");
-        }
-        clearInterval(timerInterval);
-        setDiffTimestamp(0);
-      };
-
-    };
-    startTimer();
-    return () => clearInterval(timerInterval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const [info, setInfo] = React.useState({
     available: '-',
@@ -93,15 +47,7 @@ const HomePreview: React.FC = () => {
           value: (
             <>
               <div className="box-f-ai-c">
-                {!timeHasCome ? (
-                  <>
-                    <span className="text-line-through">1,72</span>
-                    <span>&nbsp;&nbsp;</span>
-                    <span>1,5</span>
-                  </>
-                ) : (
-                  <span>1,7</span>
-                )}
+                <span>1,72</span>
               </div>
             </>
           ),
@@ -165,7 +111,7 @@ const HomePreview: React.FC = () => {
     });
 
     setInfo(uinfo);
-  }, [store, timeHasCome]);
+  }, [store]);
 
   // On Run ------------------------------------------------
 
@@ -180,19 +126,6 @@ const HomePreview: React.FC = () => {
       <div className="row">
         <h1 className="h1 text-bold home__preview-title">{t('page.home.title')}</h1>
         <div className="text-lg home__preview-subtitle">{t('page.home.subtitle')}</div>
-        {diffTimestamp > 0 ? (
-          <div className="presale-timer">
-          <span className="text">
-            {t('page.home.timer.title')}
-          </span>
-            <div className="timer">
-              <span className="block">{timeLeft.days}{t('page.home.timer.d')}</span>
-              <span className="block">{timeLeft.hours}</span>
-              <span className="block">{timeLeft.minutes}</span>
-              <span className="block">{timeLeft.seconds}</span>
-            </div>
-          </div>
-        ) : null}
         <div className="home__preview-box">
           {/* <Button size="lmd" className="home__preview-btn">
             <NavLink exact to="/staking" className="text-upper text-slg">
@@ -209,26 +142,18 @@ const HomePreview: React.FC = () => {
                 : 'https://btcmt.typeform.com/to/m2E3RYwP'
             }
           > */}
-          {diffTimestamp > 0 ? (
+          <div className="home__preview-btnGroup">
             <Button size="md" colorScheme="green" className="home__preview-btn">
-              <NavLink exact to="/presale" className="text-upper text-slg">
-                <div className="text-upper text-slg">{t('page.home.buttons.buy')}</div>
+              <NavLink exact to="/staking" className="text-upper text-slg">
+                <div className="text-upper text-slg">{t('page.home.buttons.stake')}</div>
               </NavLink>
             </Button>
-          ) : (
-            <div className="home__preview-btnGroup">
-              <Button size="md" colorScheme="green" className="home__preview-btn">
-                <NavLink exact to="/staking" className="text-upper text-slg">
-                  <div className="text-upper text-slg">{t('page.home.buttons.stake')}</div>
-                </NavLink>
-              </Button>
-              <Button size="md" colorScheme="outline" className="home__preview-btn">
-                <NavLink exact to="/purchase" className="text-upper text-slg">
-                  <div className="text-upper text-slg">{t('page.home.buttons.buy2')}</div>
-                </NavLink>
-              </Button>
-            </div>
-          )}
+            <Button size="md" colorScheme="outline" className="home__preview-btn">
+              <NavLink exact to="/purchase" className="text-upper text-slg">
+                <div className="text-upper text-slg">{t('page.home.buttons.buy2')}</div>
+              </NavLink>
+            </Button>
+          </div>
           {/* </a> */}
 
           <div className="home__preview-links">

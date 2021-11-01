@@ -130,7 +130,7 @@ const Header: React.FC = observer(() => {
             })}
           >
             <div
-              className="header__wallets-item box-f-ai-c"
+              className="header__wallets-item header__wallets-item-metamask box-f-ai-c"
               onClick={() => handleWalletClick('MetaMask')}
               onKeyDown={() => handleWalletClick('MetaMask')}
               role="button"
@@ -140,7 +140,7 @@ const Header: React.FC = observer(() => {
               <span className="text-bold text-md">MetaMask</span>
             </div>
             <div
-              className="header__wallets-item box-f-ai-c"
+              className="header__wallets-item header__wallets-item-walletConnect box-f-ai-c"
               onClick={() => handleWalletClick('WalletConnect')}
               onKeyDown={() => handleWalletClick('WalletConnect')}
               role="button"
@@ -249,7 +249,7 @@ const Header: React.FC = observer(() => {
               })}
             >
               <div
-                className="header__wallets-item box-f-c"
+                className="header__wallets-item header__wallets-item-metamask box-f-c"
                 onClick={() => handleWalletClick('MetaMask')}
                 onKeyDown={() => handleWalletClick('MetaMask')}
                 role="button"
@@ -259,7 +259,7 @@ const Header: React.FC = observer(() => {
                 <span className="text-bold text-lmd">MetaMask</span>
               </div>
               <div
-                className="header__wallets-item box-f-c"
+                className="header__wallets-item header__wallets-item-walletConnect box-f-c"
                 onClick={() => handleWalletClick('WalletConnect')}
                 onKeyDown={() => handleWalletClick('WalletConnect')}
                 role="button"

@@ -3,13 +3,51 @@
 .presale {
   background-color: #f3f8f6;
 
+  .no_login_data {
+    @include b('tablet') {
+      margin-top: 100px;
+    }
+  }
+  .no_login_data-wallets {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      width: 310px;
+      height: 101px;
+      border-radius: 50px;
+      border: 1px solid #6DDAC0;
+      margin-bottom: 20px;
+      box-shadow: rgba(109, 218, 192, 0.15);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      img {
+        margin-right: 27px;
+      }
+    }
+
+    @include b('tablet') {
+      display: flex;
+    }
+  }
+
   .no_login_data-attention {
     margin-top: 17px;
     font-size: 16px;
     line-height: 26px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include b('tablet') {
+      margin-top: 30px;
+    }
   }
 
   .no_login_data_arrow {
@@ -21,15 +59,23 @@
 
   .no_login_data_arrowWrapper {
     position: relative;
+    @include b('tablet') {
+      display: none;
+    }
   }
 
   .no_login_data-attention-icon {
     margin-right: 12px;
+    top: 5px;
+    position: relative;
   }
 
   .no_login_data-links {
     max-width: 500px;
     margin: 22px auto 0;
+    @include b('tablet') {
+      margin: 30px auto 0;
+    }
 
     a {
       width: 100%;
@@ -41,6 +87,11 @@
       justify-content: center;
       border-radius: 30px;
       margin-bottom: 15px;
+      @include b('tablet') {
+        font-size: 12px;
+        line-height: 18px;
+        padding: 8px 0;
+      }
 
       img {
         margin-right: 9px;

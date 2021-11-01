@@ -83,11 +83,11 @@ export const contracts: IContracts = {
     },
     PRESALE: {
       mainnet: {
-        address: '0xc0643C8a5E16981F88Cde1518a377445aED9498D',
+        address: '0x2b775b778f84b10877a41b78d6724634c7741827',
         abi: presaleABI,
       },
       testnet: {
-        address: '0x6330d4DE28D1951a1E4F0bb24A4769fa73227eBF',
+        address: '0xF236E11BcA8480b360F1Ff21F45644d481379a14',
         abi: presaleABI,
       },
     },

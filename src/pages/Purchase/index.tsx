@@ -5,17 +5,19 @@ import { observer } from 'mobx-react-lite';
 
 import { PresaleFrom } from '../../components/organisms';
 import { IInfoSliderData } from '../../components/organisms/PresaleForm';
-import { chain, config, update_after_tx_timeout } from '../../config';
+import { chain, update_after_tx_timeout } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
 import { clog, clogData, customNotify, deNormalizedValue, errCode, notify } from '../../utils';
 import arrow from '../../assets/img/arrow.png';
 import warning from '../../assets/img/warning.png';
 import book from '../../assets/img/book.png';
+import MetamaskImg from '../../assets/img/icons/metamask.svg';
+import TokenPocketImg from '../../assets/img/icons/token-pocket.svg';
 
-import './Presale.scss';
+import './Purchase.scss';
 
-const Presale: React.FC = () => {
+const Purchase: React.FC = () => {
   const store = useStore();
   const { t } = useTranslation();
   const [presaleInfo, setPresaleInfo] = React.useState({} as IData);
@@ -26,10 +28,13 @@ const Presale: React.FC = () => {
   const [infoText, setInfoText] = React.useState('');
   const [stopSell, setStopSell] = React.useState(false);
   const [modal, setModal] = React.useState(false);
+  const [priceRatio, SetPriceRatio] = React.useState(0);
 
   const [dataSlider, setDataSlider] = React.useState([] as IInfoSliderData[]);
 
-  const [percentValue, setPercentValue] = React.useState(4);
+  const [percentValue, setPercentValue] = React.useState(0);
+
+  // const priceRatio = 1.72;
 
   // Get Presale Info
   const getPresaleInfo = useCallback(async () => {
@@ -51,27 +56,35 @@ const Presale: React.FC = () => {
       info = `${cap.toFixed(0)} ${t('notifications.presale.left')}`;
     }
 
-    setInfoText(info);
-    setDataSlider([
+    const sliderData: IInfoSliderData[] = [
       { accent: '', days: 0, daysName: `${t('page.presale.days')}`, percent: 0, active: false },
-      { accent: '', days: 31, daysName: `${t('page.presale.days')}`, percent: 2, active: false },
       {
-        accent: t('page.presale.recommended'),
+        accent: '',
         days: 90,
         daysName: t('page.presale.days'),
-        percent: 4,
+        percent: 1,
+        active: false,
+      },
+      {
+        accent: `${t('page.presale.recommended')}`,
+        days: 180,
+        daysName: `${t('page.presale.days')}`,
+        percent: 3,
         active: true,
       },
-      { accent: '', days: 180, daysName: `${t('page.presale.days')}`, percent: 8, active: false },
-      { accent: '', days: 365, daysName: t('page.presale.days'), percent: 10, active: false },
-      { accent: '', days: 730, daysName: `${t('page.presale.days')}`, percent: 15, active: false },
-    ]);
+      { accent: '', days: 360, daysName: t('page.presale.days'), percent: 4, active: false },
+    ];
+
+    setInfoText(info);
+    setDataSlider(sliderData);
+    setPercentValue(3);
+    SetPriceRatio(+presaleInfo.priceRatio);
   }, [presaleInfo, t]);
 
   // Change amounts ------------------------------------------------
   const handleChangeBtcmtAmount = (value: any): void => {
     const btcmt = new BigNumber(value);
-    const usdt = btcmt.multipliedBy(1.5);
+    const usdt = btcmt.multipliedBy(priceRatio);
 
     setBtcmtValue(btcmt.toString());
     setUsdtValue(usdt.toString());
@@ -84,7 +97,7 @@ const Presale: React.FC = () => {
     const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
     if (cap.isLessThan(btcmt)) {
-      const usdtCap = cap.multipliedBy(1.5);
+      const usdtCap = cap.multipliedBy(priceRatio);
 
       setUsdtValue(usdtCap.toString());
       setBtcmtValue(cap.toString());
@@ -93,9 +106,14 @@ const Presale: React.FC = () => {
     }
   };
 
+  const handleWalletClick = (name: string) => {
+    const el = document.querySelector(`.header__wallets-item-${name}`) as any;
+    el.click();
+  };
+
   const handleChangeUsdtAmount = (value: any): void => {
     const usdt = new BigNumber(value);
-    const btcmt = usdt.div(1.5);
+    const btcmt = usdt.div(priceRatio);
 
     setUsdtValue(usdt.toString());
     setBtcmtValue(btcmt.toString());
@@ -108,7 +126,7 @@ const Presale: React.FC = () => {
     const cap = new BigNumber(presaleInfo.capToSell).minus(presaleInfo.totalSold);
 
     if (cap.isLessThan(btcmt)) {
-      const usdtCap = cap.multipliedBy(1.5);
+      const usdtCap = cap.multipliedBy(priceRatio);
 
       setUsdtValue(usdtCap.toString());
       setBtcmtValue(cap.toString());
@@ -222,9 +240,6 @@ const Presale: React.FC = () => {
   // On Run ------------------------------------------------
 
   React.useEffect(() => {
-    if (!store.account.address && config.menu.onlyForAuth) {
-      store.toggleWalletMenu(true);
-    }
     if (!store.account.address) return;
     getPresaleInfo();
   }, [getPresaleInfo, store.account.address, store]);
@@ -256,7 +271,7 @@ const Presale: React.FC = () => {
               },
               second: {
                 title: 'USDT',
-                value: '1.5',
+                value: `${priceRatio}`,
               },
             }}
             underHoldText={{
@@ -299,6 +314,29 @@ const Presale: React.FC = () => {
               <img alt={t('info.connectWallet')} src={arrow} className="no_login_data_arrow" />
             </span>
           </span>
+
+          <div className="no_login_data-wallets">
+            <div
+              className="no_login_data-wallets-item"
+              onClick={() => handleWalletClick('metamask')}
+              onKeyDown={() => handleWalletClick('metamask')}
+              role="button"
+              tabIndex={0}
+            >
+              <img src={MetamaskImg} alt="metamask" className="no_login_data-wallets-item-img" />
+              <span className="text-bold text-lg">MetaMask</span>
+            </div>
+            <div
+              className="no_login_data-wallets-item"
+              onClick={() => handleWalletClick('walletConnect')}
+              onKeyDown={() => handleWalletClick('walletConnect')}
+              role="button"
+              tabIndex={0}
+            >
+              <img src={TokenPocketImg} alt="metamask" className="no_login_data-wallets-item-img" />
+              <span className="text-bold text-lg">TokenPocket</span>
+            </div>
+          </div>
 
           <div className="no_login_data-attention">
             <img alt={t('info.attention')} src={warning} className="no_login_data-attention-icon" />{t('info.attention')}
@@ -369,4 +407,4 @@ const Presale: React.FC = () => {
   );
 };
 
-export default observer(Presale);
+export default observer(Purchase);

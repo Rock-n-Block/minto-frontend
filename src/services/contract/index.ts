@@ -217,6 +217,21 @@ export class ContractService {
     return data;
   }
 
+  public async getPresalePrice(): Promise<IDataContract> {
+    const data: IDataContract = await this.presale
+      .price()
+      .call()
+      .then((value: string) => {
+        clog(`presale price (price): ${value}`);
+        return {
+          key: 'priceRatio',
+          value: normalizedValue(value),
+        };
+      });
+
+    return data;
+  }
+
   public getAllowance(amount: string): Promise<number> {
     return new Promise((resolve) => {
       this.token
@@ -329,11 +344,11 @@ export class ContractService {
 
     const weeks: { [index: number]: string } = {
       0: '0',
-      2: '4',
-      4: '13',
-      8: '26',
-      10: '52',
-      15: '104',
+      // 2: '4',
+      1: '13',
+      3: '26',
+      4: '52',
+      // 15: '104',
     };
 
     const getAllowance = (amount: string): Promise<any> => {
@@ -513,7 +528,12 @@ export class ContractService {
   public presaleInfo = async (): Promise<IData> => {
     clogGroup('Presale contract values: contract method (template data): contract value');
 
-    const promises = [this.getUsdtBalance(), this.getCapToSell(), this.getTotalSold()];
+    const promises = [
+      this.getUsdtBalance(),
+      this.getCapToSell(),
+      this.getTotalSold(),
+      this.getPresalePrice(),
+    ];
 
     return Promise.all(promises)
       .then((res) => {

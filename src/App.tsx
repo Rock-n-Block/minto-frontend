@@ -8,7 +8,7 @@ import {
   AmdinPage,
   HomePage,
   MiningPage,
-  PresalePage,
+  PurchasePage,
   StakingPage,
   StatisticPage,
 } from './pages';
@@ -38,7 +38,7 @@ export const App: React.FC = () => {
         <Route path="/staking" component={StakingPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/mining" component={MiningPage} />
-        <Route path="/presale" component={PresalePage} />
+        <Route path="/purchase" component={PurchasePage} />
         <Route path="/stats" component={StatisticPage} />
         <Route path="/admin" component={AmdinPage} />
       </Switch>

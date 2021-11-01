@@ -421,8 +421,11 @@ const Procedure: React.FC<IProcedure> = ({
 
           <div className="procedure__text m-30 op-5">
             <span>
-              {withBonusText} {percentBonus}%:{' '}
-              {parseFloat((+getValue + +getValue * (+percentBonus / 100)).toFixed(4))} BTCMT
+              {withBonusText} {percentBonus}%:
+              {Number.isNaN(+getValue)
+                ? 0
+                : parseFloat((+getValue + +getValue * (+percentBonus / 100)).toFixed(4))}{' '}
+              BTCMT
             </span>
           </div>
 
