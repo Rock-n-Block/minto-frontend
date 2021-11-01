@@ -3,7 +3,7 @@ import { IAppConfig, IBackendConfig, IChainConfig, IConnectWallet, IContracts } 
 import { btcmtABI, presaleABI, stakingABI, usdtABI } from './abi';
 
 // For production build, set flag to true
-export const is_production = false;
+export const is_production = true;
 
 // For production build, set flag to false
 export const show_logs = true;
@@ -83,7 +83,7 @@ export const contracts: IContracts = {
     },
     PRESALE: {
       mainnet: {
-        address: '0xc0643C8a5E16981F88Cde1518a377445aED9498D',
+        address: '0x2b775b778f84b10877a41b78d6724634c7741827',
         abi: presaleABI,
       },
       testnet: {
