@@ -24,7 +24,7 @@ const About: React.FC = () => {
 
           <div className="about__btns">
             <a
-              href="https://pool.huobi.com/pow/miners?signature=01834c444c9944ad8ade4cfea1a0f698"
+              href="https://www.huobipool.com/pow/miners?signature=01834c444c9944ad8ade4cfea1a0f698"
               target="_blank"
               rel="noreferrer"
             >
