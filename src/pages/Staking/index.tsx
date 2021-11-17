@@ -83,9 +83,6 @@ const Staking: React.FC = () => {
     const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(dailyReward).div(amount);
     const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
 
-    // const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(1.5).div(amount);
-    // const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
-
     setDailyReward(reward.isNaN() ? '0' : reward.toFixed(setDecimals(+reward.decimalPlaces())));
     setDailyShared(shares.isNaN() ? '0' : shares.toFixed(setDecimals(+shares.decimalPlaces())));
 
@@ -336,12 +333,12 @@ const Staking: React.FC = () => {
             btnProcessed={stakingProgress}
             btnProcessedText={t('button.processing')}
             buttonClick={handleButtonStakingClick}
-            // daily={{
-            //   dailyReward: `${dailyReward}`,
-            //   dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
-            //   dailyShare: `${dailyShared}`,
-            //   dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
-            // }}
+            daily={{
+              dailyReward: `${dailyReward}`,
+              dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
+              dailyShare: `${dailyShared}`,
+              dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
+            }}
           />
           <Procedure2
             title={t('page.staking.component.withdraw.title')}

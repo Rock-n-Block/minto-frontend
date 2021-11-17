@@ -54,7 +54,7 @@ interface IProcedure {
   inputButtonShow?: boolean;
   btnProcessed?: boolean;
   btnProcessedText?: string;
-  inputMax?: number;
+  // inputMax?: number;
   getValue: any;
   getInputTitle: string;
   soldOutText: string;

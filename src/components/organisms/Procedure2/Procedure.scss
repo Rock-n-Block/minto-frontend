@@ -49,8 +49,6 @@
 
       box-sizing: border-box;
 
-      background-color: #000;
-
       border: 1px solid rgba(109, 218, 192, 0.6);
       border-radius: 12px;
     }
@@ -218,7 +216,7 @@
   color: #fff;
   background-color: $black;
   background-image: url(../../../assets/img/procedure-b.svg);
-  background-position: center center;
+  background-position: center top;
   background-size: 105% auto;
   @include b('tablet') {
     background-image: none;

@@ -34,8 +34,10 @@ export const dataToObject = (data: any, log?: boolean, logName?: string): IData 
   if (log) clogGroup(logName || 'Object');
 
   data.forEach((v: IDataContract) => {
-    if (log) clog(`${v.key}: ${v.value}`);
-    values[v.key] = v.value;
+    if (v) {
+      if (log) clog(`${v.key}: ${v.value}`);
+      values[v.key] = v.value;
+    }
   });
 
   if (log) clogGroup('End', true);
