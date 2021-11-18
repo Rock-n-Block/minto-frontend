@@ -1,13 +1,14 @@
 // import React from 'react';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import BigNumber from 'bignumber.js/bignumber.js';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
+import Web3 from 'web3';
 
 import IconLocked from '../../assets/img/icons/lock.svg';
 import IconUnlock from '../../assets/img/icons/unlock.svg';
 import { Procedure2 } from '../../components/organisms';
-import { chain, config, update_after_tx_timeout } from '../../config';
+import { chain, config, update_after_tx_timeout, contracts } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
 import {
@@ -43,6 +44,8 @@ const Staking: React.FC = () => {
   const [stakingProgress, setStakingProgress] = React.useState(false);
   const [withdrawProgress, setWithdrawProgress] = React.useState(false);
 
+  const [totalStacked, setTotalStacked] = React.useState('0');
+
   const { t } = useTranslation();
 
   const getStakingInfo = useCallback(async () => {
@@ -51,7 +54,6 @@ const Staking: React.FC = () => {
     await getDailyRewards()
       .then((v: number) => {
         const dReward = new BigNumber(v).toString();
-        // const dReward = new BigNumber(v).toFixed();
         setDailyReward(dReward);
 
         clog(`dailyReward: ${dReward}`);
@@ -80,13 +82,11 @@ const Staking: React.FC = () => {
       Number.isNaN(+unlocked) ? 0 : unlocked,
     );
 
-    const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(dailyReward).div(amount);
     const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
 
     // const reward = amount.isEqualTo(0) ? new BigNumber(0) : new BigNumber(1.5).div(amount);
     // const shares = amount.div(amount.plus(balanceOfStaking)).multipliedBy(100);
 
-    setDailyReward(reward.isNaN() ? '0' : reward.toFixed(setDecimals(+reward.decimalPlaces())));
     setDailyShared(shares.isNaN() ? '0' : shares.toFixed(setDecimals(+shares.decimalPlaces())));
 
     clogGroup('update DailyData (rewards and shares)');
@@ -107,8 +107,12 @@ const Staking: React.FC = () => {
     const amount = new BigNumber(value);
 
     setStLocked(amount.toString());
-    if (amount.isLessThan(0)) setStLocked('0');
-    if (amount.isGreaterThan(amountAvailable)) setStLocked(amountAvailable.toString());
+    if (amount.isLessThan(0)) {
+      setStLocked('0');
+    }
+    if (amount.isGreaterThan(amountAvailable)) {
+      setStLocked(amountAvailable.toString());
+    }
     updateDailyData(amount.toString(), stUnlocked);
   };
 
@@ -266,6 +270,28 @@ const Staking: React.FC = () => {
       });
   };
 
+  const handleGetAllStaked = React.useCallback(() => {
+    const { address } = store.account;
+
+    address ? (!store.is_contractService ? store.setContractService() : null) : null;
+    const web3Contract = address ? store.contracts : ([] as any);
+
+    if (!address) {
+      const w3 = new Web3(chain.rpc);
+      contracts.names.forEach((name: string) => {
+        const contractData = contracts.params[name.toUpperCase()][contracts.type];
+        web3Contract[name] = new w3.eth.Contract(contractData.abi, contractData.address);
+      });
+    }
+
+    web3Contract.Staking.methods // BTCMT
+      .nowTotalMined()
+      .call()
+      .then((value: string) => {
+        setTotalStacked(normalizedValue(value, false, 6).toString());
+      });
+  }, [store]);
+
   // On Run ------------------------------------------------
 
   React.useEffect(() => {
@@ -274,7 +300,40 @@ const Staking: React.FC = () => {
     getStakingInfo();
   }, [getStakingInfo, store.account.address, store]);
 
+  React.useEffect(() => {
+    handleGetAllStaked();
+  }, [handleGetAllStaked]);
+
   // Template ------------------------------------------------
+
+  const estimatedDailyReward = React.useMemo(() => {
+    if (
+      (+stUnlocked || +stLocked) &&
+      (new BigNumber(stUnlocked).isGreaterThan(0) || new BigNumber(stLocked).isGreaterThan(0)) &&
+      new BigNumber(dailyReward).isGreaterThan(0)
+    ) {
+      const userValue = new BigNumber(+stUnlocked ? stUnlocked : 0)
+        .plus(+stLocked ? stLocked : 0)
+        .minus(stakingInfo.userStakesLocked)
+        .minus(stakingInfo.userStakesUnlocked);
+      const totalS = new BigNumber(totalStacked)
+        .minus(stakingInfo.userStakesLocked)
+        .minus(stakingInfo.userStakesUnlocked);
+      const result = new BigNumber(userValue)
+        .dividedBy(new BigNumber(userValue).plus(totalS))
+        .multipliedBy(dailyReward);
+
+      return result.toFixed(8);
+    }
+    return 0;
+  }, [
+    dailyReward,
+    stUnlocked,
+    stLocked,
+    totalStacked,
+    stakingInfo.userStakesLocked,
+    stakingInfo.userStakesUnlocked,
+  ]);
 
   return (
     <div className="staking">
@@ -335,12 +394,12 @@ const Staking: React.FC = () => {
             btnProcessed={stakingProgress}
             btnProcessedText={t('button.processing')}
             buttonClick={handleButtonStakingClick}
-            // daily={{
-            //   dailyReward: `${dailyReward}`,
-            //   dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
-            //   dailyShare: `${dailyShared}`,
-            //   dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
-            // }}
+            daily={{
+              dailyReward: `${estimatedDailyReward}`,
+              dailyRewardTitle: t('page.staking.component.staking.daily.estimatedDailyReward'),
+              dailyShare: `${dailyShared}`,
+              dailyShareTitle: t('page.staking.component.staking.daily.estimatedDailyShare'),
+            }}
           />
           <Procedure2
             title={t('page.staking.component.withdraw.title')}

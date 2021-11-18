@@ -5,13 +5,12 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 // import nextId from 'react-id-generator';
 import axios from 'axios';
-import BigNumber from 'bignumber.js/bignumber.js';
+import BigNumber from 'bignumber.js/bignumber';
 // import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import Web3 from 'web3';
 
-// import { Calculator, HistoryTable } from '../../components/organisms';
-import { HistoryTable } from '../../components/organisms';
+import { HistoryTable, Calculator } from '../../components/organisms';
 import { chain, contracts } from '../../config';
 import { useStore } from '../../store';
 import { IData } from '../../types';
@@ -49,9 +48,7 @@ const Statistic: React.FC = () => {
   const [tdataTotal, settDataTotal] = React.useState(0);
   // const [chartButton, setChartButton] = React.useState(0);
 
-  // const [rewardCalcValue, setRewardCalcValue] = React.useState(0);
-  // const [dailyReward, setDailyReward] = React.useState(0);
-  // const [dailyRewardUsd, setDailyRewardUsd] = React.useState(0);
+  const [rewardCalcValue, setRewardCalcValue] = React.useState('0');
   const [BoostFactor, setBoostFactor] = React.useState(0);
 
   // const [chartButtons, setChartButtons] = React.useState([
@@ -256,7 +253,7 @@ const Statistic: React.FC = () => {
           clogData('estimateDailyRewardsToday (estimateDailyRewardsToday): ', value);
           return {
             key: 'estimateDailyRewardsToday',
-            value: normalizedValue(value),
+            value,
             // value: '-',
           };
         })
@@ -359,29 +356,80 @@ const Statistic: React.FC = () => {
 
   // Change amounts ------------------------------------------------
 
-  // const handleRewardCalcChange = (value: number) => {
-  //   setRewardCalcValue(value);
-  //   if (value <= 0) setRewardCalcValue(0);
-
-  //   clogData('estimateDailyRewardsToday: ', +info.estimateDailyRewardsToday);
-  //   clogData('rewardPerTokenWithBoostUSD: ', +info.rewardPerTokenWithBoostUSD);
-  //   clogData('value: ', value);
-
-  //   const dReward = value <= 0 ? 0 : +info.estimateDailyRewardsToday / value;
-  //   const dRewardUsd = dReward * +info.rewardPerTokenWithBoostUSD;
-
-  //   setDailyReward(+dReward.toFixed(2));
-  //   setDailyRewardUsd(+dRewardUsd.toFixed(2));
-
-  //   clogData('Calcularot Daily Reward : ', dReward);
-  //   clogData('Calcularot Daily Reward Usd: ', dRewardUsd);
-  // };
+  const handleRewardCalcChange = (value: string) => {
+    setRewardCalcValue(value);
+    if (+value <= 0) setRewardCalcValue('');
+  };
 
   // On Run ------------------------------------------------
 
   React.useEffect(() => {
     getInfo();
   }, [getInfo, store.account.address, store]);
+
+  const estimatedDailyReward = React.useMemo(() => {
+    if (
+      +rewardCalcValue &&
+      new BigNumber(rewardCalcValue).isGreaterThan(0) &&
+      new BigNumber(info.estimateDailyRewardsToday).isGreaterThan(0)
+    ) {
+      const userValue = new BigNumber(+rewardCalcValue ? rewardCalcValue : 0);
+
+      const totalS = new BigNumber(info.totalStaked);
+
+      const result = new BigNumber(userValue)
+        .dividedBy(new BigNumber(userValue).plus(totalS))
+        .multipliedBy(info.estimateDailyRewardsToday);
+
+      return result.toFixed(8);
+    }
+    return 0;
+  }, [info.estimateDailyRewardsToday, rewardCalcValue, info.totalStaked]);
+
+  const estimatedDailyRewardUSD = React.useMemo(() => {
+    if (
+      new BigNumber(estimatedDailyReward).isGreaterThan(0) &&
+      new BigNumber(info.rewardPerTokenWithBoostUSD).isGreaterThan(0)
+    ) {
+      const result = new BigNumber(estimatedDailyReward)
+        .multipliedBy(info.rewardPerTokenWithBoostUSD)
+        .toFixed(8);
+      console.log(result, 'result');
+      return result;
+    }
+    return 0;
+  }, [estimatedDailyReward, info.rewardPerTokenWithBoostUSD]);
+
+  const rewardPerTokenWithBoostHBTC = React.useMemo(() => {
+    if (
+      new BigNumber(info.estimateDailyRewardsToday).isGreaterThan(0) &&
+      new BigNumber(BoostFactor).isGreaterThan(0)
+    ) {
+      const userValue = 1;
+      const totalS = new BigNumber(info.totalStaked);
+      const result = new BigNumber(userValue)
+        .dividedBy(new BigNumber(userValue).plus(totalS))
+        .multipliedBy(info.estimateDailyRewardsToday)
+        .multipliedBy(BoostFactor);
+
+      return result;
+    }
+    return 0;
+  }, [info.estimateDailyRewardsToday, info.totalStaked, BoostFactor]);
+
+  const rewardPerTokenWithBoostUSD = React.useMemo(() => {
+    if (
+      new BigNumber(rewardPerTokenWithBoostHBTC).isGreaterThan(0) &&
+      new BigNumber(info.rewardPerTokenWithBoostUSD).isGreaterThan(0)
+    ) {
+      const result = new BigNumber(rewardPerTokenWithBoostHBTC).multipliedBy(
+        info.rewardPerTokenWithBoostUSD,
+      );
+      console.log(result.toFixed(10), 'result');
+      return result;
+    }
+    return 0;
+  }, [rewardPerTokenWithBoostHBTC, info.rewardPerTokenWithBoostUSD]);
 
   // Template ------------------------------------------------
 
@@ -460,36 +508,34 @@ const Statistic: React.FC = () => {
             </span>
             <span className="stats-data-info-item-line" />
           </div>
-          {/* <div className="stats-data-info-item">
+          <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.estimatedRewardsToday')}
             </span>
             <span className="stats-data-info-item-value">{info.estimateDailyRewardsToday}</span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
-          </div> */}
-          {/* <div className="stats-data-info-item">
+          </div>
+          <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.rewardPerTokenWithBoost')}
             </span>
             <span className="stats-data-info-item-value">
-              {new BigNumber(+info.rewardPerTokenWithBoostHBTC * BoostFactor)
-                .multipliedBy(+info.rewardPerTokenWithBoostUSD || 0)
-                .toFixed(2)}
+              {+rewardPerTokenWithBoostUSD ? rewardPerTokenWithBoostUSD.toFixed(10) : 0}
             </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">USD</span>
-          </div> */}
-          {/* <div className="stats-data-info-item">
+          </div>
+          <div className="stats-data-info-item">
             <span className="stats-data-info-item-title">
               {t('page.statistic.info.rewardPerTokenWithBoost')}
             </span>
             <span className="stats-data-info-item-value">
-              {+info.rewardPerTokenWithBoostHBTC * BoostFactor || 0}
+              {+rewardPerTokenWithBoostHBTC ? rewardPerTokenWithBoostHBTC.toFixed(10) : 0}
             </span>
             <span className="stats-data-info-item-line" />
             <span className="stats-data-info-item-subtitle">HBTC</span>
-          </div> */}
+          </div>
         </div>
       </div>
 
@@ -514,7 +560,7 @@ const Statistic: React.FC = () => {
         ''
       )}
 
-      {/* <Calculator
+      <Calculator
         title={t('page.statistic.component.calculator.title')}
         input={{
           title: `${t('page.statistic.component.calculator.input.title')} (BTCMT)`,
@@ -526,16 +572,16 @@ const Statistic: React.FC = () => {
         info={[
           {
             title: t('page.statistic.component.calculator.estimatedDailyReward'),
-            value: `${dailyReward || 0}`,
+            value: `${estimatedDailyReward || 0}`,
             text: 'HBTC',
           },
           {
             title: t('page.statistic.component.calculator.estimatedDailyReward'),
-            value: `${dailyRewardUsd || 0}`,
+            value: `${estimatedDailyRewardUSD || 0}`,
             text: 'USD',
           },
         ]}
-      /> */}
+      />
     </div>
   );
 };

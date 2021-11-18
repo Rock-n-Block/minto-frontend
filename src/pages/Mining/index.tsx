@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 // import React from 'react';
 import { useTranslation } from 'react-i18next';
-import BigNumber from 'bignumber.js/bignumber.js';
+import BigNumber from 'bignumber.js/bignumber';
 import { observer } from 'mobx-react-lite';
 
 import { HistoryTable, Procedure } from '../../components/organisms';
