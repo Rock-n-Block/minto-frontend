@@ -207,7 +207,8 @@ const Mining: React.FC = () => {
             inputValue={mnValue}
           />
 
-          {tdata.total_reward > 0 ? (
+          {/* {tdata.total_reward > 0 ? ( */}
+          {tdata.total_reward < 0 ? (
             <HistoryTable
               title={t('page.mining.history.title')}
               head={{

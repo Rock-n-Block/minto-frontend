@@ -495,7 +495,8 @@ const Statistic: React.FC = () => {
 
       <div className="mt-50" />
 
-      {tdataTotal > 0 ? (
+      {/* {tdataTotal > 0 ? ( */}
+      {tdataTotal < 0 ? (
         <HistoryTable
           title={t('page.statistic.table.title')}
           head={{
