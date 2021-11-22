@@ -104,14 +104,16 @@ const Staking: React.FC = () => {
   const handleChangeStakingLockedAmount = (value: number) => {
     const { availableLocked } = stakingInfo;
     const amountAvailable = new BigNumber(availableLocked);
-    const amount = new BigNumber(value);
+    let amount: any = new BigNumber(value);
 
     setStLocked(amount.toString());
     if (amount.isLessThan(0)) {
       setStLocked('0');
+      amount = '0';
     }
     if (amount.isGreaterThan(amountAvailable)) {
       setStLocked(amountAvailable.toString());
+      amount = amountAvailable.toString();
     }
     updateDailyData(amount.toString(), stUnlocked);
   };
@@ -119,11 +121,17 @@ const Staking: React.FC = () => {
   const handleChangeStakingUnlockedAmount = (value: number) => {
     const { availableUnlocked } = stakingInfo;
     const amountAvailable = new BigNumber(availableUnlocked);
-    const amount = new BigNumber(value);
+    let amount: any = new BigNumber(value);
 
     setStUnlocked(amount.toString());
-    if (amount.isLessThan(0)) setStUnlocked('0');
-    if (amount.isGreaterThan(amountAvailable)) setStUnlocked(amountAvailable.toString());
+    if (amount.isLessThan(0)) {
+      setStUnlocked('0');
+      amount = '0';
+    }
+    if (amount.isGreaterThan(amountAvailable)) {
+      setStUnlocked(amountAvailable.toString());
+      amount = amountAvailable.toString();
+    }
     updateDailyData(stLocked, amount.toString());
   };
 
@@ -323,7 +331,7 @@ const Staking: React.FC = () => {
         .dividedBy(new BigNumber(userValue).plus(totalS))
         .multipliedBy(dailyReward);
 
-      return result.toFixed(8);
+      return result.toFixed(7);
     }
     return 0;
   }, [

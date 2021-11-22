@@ -401,21 +401,17 @@ const Statistic: React.FC = () => {
   }, [estimatedDailyReward, info.rewardPerTokenWithBoostUSD]);
 
   const rewardPerTokenWithBoostHBTC = React.useMemo(() => {
-    if (
-      new BigNumber(info.estimateDailyRewardsToday).isGreaterThan(0) &&
-      new BigNumber(BoostFactor).isGreaterThan(0)
-    ) {
+    if (new BigNumber(info.estimateDailyRewardsToday).isGreaterThan(0)) {
       const userValue = 1;
       const totalS = new BigNumber(info.totalStaked);
       const result = new BigNumber(userValue)
         .dividedBy(new BigNumber(userValue).plus(totalS))
-        .multipliedBy(info.estimateDailyRewardsToday)
-        .multipliedBy(BoostFactor);
+        .multipliedBy(info.estimateDailyRewardsToday);
 
       return result;
     }
     return 0;
-  }, [info.estimateDailyRewardsToday, info.totalStaked, BoostFactor]);
+  }, [info.estimateDailyRewardsToday, info.totalStaked]);
 
   const rewardPerTokenWithBoostUSD = React.useMemo(() => {
     if (
