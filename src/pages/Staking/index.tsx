@@ -322,11 +322,13 @@ const Staking: React.FC = () => {
     ) {
       const userValue = new BigNumber(+stUnlocked ? stUnlocked : 0)
         .plus(+stLocked ? stLocked : 0)
-        .minus(stakingInfo.userStakesLocked)
-        .minus(stakingInfo.userStakesUnlocked);
+        .plus(stakingInfo.userStakesLocked)
+        .plus(stakingInfo.userStakesUnlocked);
+
       const totalS = new BigNumber(totalStacked)
         .minus(stakingInfo.userStakesLocked)
         .minus(stakingInfo.userStakesUnlocked);
+
       const result = new BigNumber(userValue)
         .dividedBy(new BigNumber(userValue).plus(totalS))
         .multipliedBy(dailyReward);
