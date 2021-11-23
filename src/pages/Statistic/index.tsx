@@ -9,6 +9,7 @@ import BigNumber from 'bignumber.js/bignumber';
 // import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import Web3 from 'web3';
+import { useWallet } from 'use-wallet';
 
 import { HistoryTable, Calculator } from '../../components/organisms';
 import { chain, contracts } from '../../config';
@@ -40,8 +41,16 @@ interface ItDataTotal {
 
 const Statistic: React.FC = () => {
   const store = useStore();
+  const { connect, account } = useWallet();
 
+  if (account) {
+    alert(account);
+  }
   const { t } = useTranslation();
+
+  const handleConnect = () => {
+    connect('injected');
+  };
 
   // const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
   const [tdata, settData] = React.useState([]);
@@ -431,6 +440,9 @@ const Statistic: React.FC = () => {
 
   return (
     <div className="stats">
+      <button type="button" onClick={handleConnect}>
+        123
+      </button>
       <div className="stats-data">
         {/* <div className="stats-data-chart">
           <div className="stats-data-chart-head">
