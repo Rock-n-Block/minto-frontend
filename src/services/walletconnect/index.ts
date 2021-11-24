@@ -1,12 +1,12 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
 import Web3 from 'web3';
 
-import { chain, connectWallet, contracts } from '../../config';
+import { connectWallet, contracts } from '../../config';
 import { clogData, notify } from '../../utils';
 import i18n from '../../utils/i18n';
 
 export class WalletConnect {
-  private connectWallet: any;
+  private connectWallet: ConnectWallet;
 
   constructor() {
     this.connectWallet = new ConnectWallet();
@@ -17,7 +17,7 @@ export class WalletConnect {
 
     const connecting = this.connectWallet
       .connect(provider[name], network, settings)
-      .then((connected: boolean) => {
+      .then((connected: any | boolean) => {
         if (connected) {
           this.initializeContracts();
         }
@@ -41,7 +41,7 @@ export class WalletConnect {
   }
 
   public Web3(): Web3 {
-    return this.connectWallet.Web3Provider;
+    return this.connectWallet.currentWeb3() as any as Web3;
   }
 
   private initializeContracts(): void {
@@ -69,106 +69,53 @@ export class WalletConnect {
       });
   }
 
-  private async checkHekoNet() {
-    const { connector, providerName } = this.connectWallet;
-    if (providerName === 'MetaMask') {
-      try {
-        const resChain = await connector.connector.request({ method: 'eth_chainId' });
-
-        if (connectWallet.network.chainID !== parseInt(resChain, 16)) {
-          try {
-            await connector.connector.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: `0x${connectWallet.network.chainID.toString(16)}` }],
-            });
-            return true;
-          } catch (error: any) {
-            // This error code indicates that the chain has not been added to MetaMask.
-            if (error.code === 4902) {
-              try {
-                await connector.connector.request({
-                  method: 'wallet_addEthereumChain',
-                  params: [
-                    {
-                      chainId: `0x${connectWallet.network.chainID.toString(16)}`,
-                      chainName: connectWallet.network.name,
-                      nativeCurrency: chain.nativeCurrency,
-                      rpcUrls: [chain.rpc],
-                      blockExplorerUrls: [chain.blockExp],
-                    },
-                  ],
-                });
-                try {
-                  const newChain = await connector.connector.request({ method: 'eth_chainId' });
-
-                  if (connectWallet.network.chainID !== parseInt(newChain, 16)) {
-                    throw new Error('User reject switch network');
-                  }
-                } catch (err) {
-                  throw new Error('get user chain');
-                }
-
-                return true;
-              } catch (err) {
-                throw new Error(`User reject add ${chain.name}`);
-              }
-            } else {
-              throw new Error('User reject switch network');
-            }
-          }
+  public eventSubscribe(): void {
+    this.connectWallet.eventSubscriber().subscribe(
+      (data) => {
+        clogData('EVENT DATA: ', data);
+        if (data.address) {
+          notify(
+            `${i18n.t('notifications.wallet.connected')}: ${data.address.substring(
+              0,
+              4,
+            )}...${data.address.slice(data.address.length - 4, data.address.length)}`,
+            'success',
+          );
         }
-      } catch (err: any) {
-        clogData('getAccount wallet connect - get user account err: ', err);
-        throw new Error(err);
-      }
-    }
-    return true;
+      },
+      (error) => {
+        clogData('EVENT ERROR: ', error);
+
+        if (error.code === 4) {
+          notify(`⚠️ Error: ${error.message.message}`, 'error');
+        }
+
+        if (error.code === 6) {
+          notify(`⚠️ Error: ${error.message.message}`, 'error');
+          setTimeout(() => window.location.reload(), 2000);
+        }
+        this.eventSubscribe();
+      },
+    );
   }
 
   public async getAccount(account: { address?: string; balance?: string }): Promise<any> {
     return new Promise((resolve: any, reject: any) => {
-      this.checkHekoNet()
-        .then(() => {
-          this.connectWallet.getAccounts().subscribe(
-            (userAccount: any) => {
-              clogData('user account: ', userAccount);
-              if (!account || userAccount.address !== account.address) {
-                resolve(userAccount);
-                notify(
-                  `${i18n.t('notifications.wallet.connected')}: ${userAccount.address.substring(
-                    0,
-                    4,
-                  )}...${userAccount.address.slice(
-                    userAccount.address.length - 4,
-                    userAccount.address.length,
-                  )}`,
-                  'success',
-                );
-              }
-            },
-            (err: any) => {
-              clogData('getAccount wallet connect - get user account err: ', err);
-              if (err.code && err.code === 6) {
-                notify(`⚠️ User account disconnected!`, 'success');
-                setTimeout(() => {
-                  window.location.reload();
-                }, 3000);
-              } else {
-                notify(
-                  `⚠️ ${i18n.t('notifications.wallet.connected')}: $${err.message.text}`,
-                  'error',
-                );
-              }
-              reject(err);
-            },
-          );
-        })
-        .catch((err) => {
-          notify(
-            `⚠️ ${i18n.t('notifications.wallet.connected')}: $${err.message.text || err.message}`,
-            'error',
-          );
-        });
+      this.connectWallet
+        .getAccounts()
+        .then(
+          (userAccount: any) => {
+            clogData('user account: ', userAccount);
+            if (!account || userAccount.address !== account.address) {
+              resolve(userAccount);
+            }
+          },
+          (err: any) => {
+            clogData('getAccount wallet connect - get user account err: ', err);
+            reject(err);
+          },
+        )
+        .finally(() => this.eventSubscribe());
     });
   }
 }

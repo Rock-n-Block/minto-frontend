@@ -3,7 +3,7 @@ import { IAppConfig, IBackendConfig, IChainConfig, IConnectWallet, IContracts } 
 import { btcmtABI, presaleABI, stakingABI, usdtABI } from './abi';
 
 // For production build, set flag to true
-export const is_production = true;
+export const is_production = false;
 
 // For production build, set flag to false
 export const show_logs = true;
@@ -36,7 +36,7 @@ export const chain: IChainConfig = {
 export const connectWallet: IConnectWallet = {
   wallets: ['MetaMask', 'WalletConnect'],
   network: {
-    name: chain.name,
+    chainName: chain.name,
     chainID: chain.id,
   },
   provider: {
