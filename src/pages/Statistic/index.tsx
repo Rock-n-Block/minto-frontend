@@ -51,6 +51,9 @@ const Statistic: React.FC = () => {
   const handleConnect = () => {
     connect('injected');
   };
+  React.useEffect(() => {
+    alert(JSON.stringify(window));
+  }, []);
 
   // const [tdata, settData] = React.useState({ total: '0', history: [] } as IUserHistory);
   const [tdata, settData] = React.useState([]);
