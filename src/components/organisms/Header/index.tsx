@@ -318,12 +318,7 @@ const Header: React.FC = observer(() => {
               <Button
                 className="header__menu-btn"
                 size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMobileMenuOpen(false);
-                  setWalletsMenuOpen(true);
-                  toggleWalletMenu(true);
-                }}
+                onClick={() => handleWalletClick('MetaMask')}
               >
                 {t('header.menu.connectWallet')}
               </Button>
@@ -438,10 +433,7 @@ const Header: React.FC = observer(() => {
               <Button
                 className="header__wallets-open"
                 size="sm"
-                onClick={() => {
-                  setWalletsMenuOpen(true);
-                  toggleWalletMenu(true);
-                }}
+                onClick={() => handleWalletClick('MetaMask')}
               >
                 <div className="text-upper text-smd">{t('header.menu.connectWallet')}</div>
               </Button>
