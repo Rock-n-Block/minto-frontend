@@ -239,8 +239,15 @@ const Staking: React.FC = () => {
 
     clog(`withdraw unlocked: ${unlocked}, locked: ${locked}`);
 
-    store.contractService
-      .withdrawPartially(locked, unlocked)
+    let method = 'withdrawPartially';
+    if (
+      new BigNumber(wdUnlocked).isEqualTo(stakingInfo.availableUnlocked) &&
+      new BigNumber(wdLocked).isEqualTo(stakingInfo.availableLocked)
+    ) {
+      method = 'withdrawAll';
+    }
+
+    store.contractService[method](locked, unlocked)
       .then(
         (data: any) => {
           notify(

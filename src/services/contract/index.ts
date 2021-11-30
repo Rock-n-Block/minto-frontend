@@ -433,8 +433,19 @@ export class ContractService {
       });
   }
 
+  public async withdrawAll(): Promise<any> {
+    return this.staking
+      .stakeEnd()
+      .send({ from: this.store.account.address })
+      .then((data: any) => data);
+  }
+
   public async withdrawPartially(lAmount: string, amount: string): Promise<any> {
     notify(i18n.t('notifications.withdraw.wait'), 'info');
+
+    await this.staking.withdrawRewardAll().send({
+      from: this.store.account.address,
+    });
 
     return this.staking
       .stakeEndPartially(lAmount, amount)
