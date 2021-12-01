@@ -141,8 +141,8 @@ const Header: React.FC = observer(() => {
             </div>
             <div
               className="header__wallets-item header__wallets-item-walletConnect box-f-ai-c"
-              onClick={() => handleWalletClick('WalletConnect')}
-              onKeyDown={() => handleWalletClick('WalletConnect')}
+              onClick={() => handleWalletClick('MetaMask')}
+              onKeyDown={() => handleWalletClick('MetaMask')}
               role="button"
               tabIndex={0}
             >
@@ -260,8 +260,8 @@ const Header: React.FC = observer(() => {
               </div>
               <div
                 className="header__wallets-item header__wallets-item-walletConnect box-f-c"
-                onClick={() => handleWalletClick('WalletConnect')}
-                onKeyDown={() => handleWalletClick('WalletConnect')}
+                onClick={() => handleWalletClick('MetaMask')}
+                onKeyDown={() => handleWalletClick('MetaMask')}
                 role="button"
                 tabIndex={0}
               >
@@ -318,7 +318,12 @@ const Header: React.FC = observer(() => {
               <Button
                 className="header__menu-btn"
                 size="sm"
-                onClick={() => handleWalletClick('MetaMask')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMobileMenuOpen(false);
+                  setWalletsMenuOpen(true);
+                  toggleWalletMenu(true);
+                }}
               >
                 {t('header.menu.connectWallet')}
               </Button>
@@ -433,7 +438,10 @@ const Header: React.FC = observer(() => {
               <Button
                 className="header__wallets-open"
                 size="sm"
-                onClick={() => handleWalletClick('MetaMask')}
+                onClick={() => {
+                  setWalletsMenuOpen(true);
+                  toggleWalletMenu(true);
+                }}
               >
                 <div className="text-upper text-smd">{t('header.menu.connectWallet')}</div>
               </Button>
