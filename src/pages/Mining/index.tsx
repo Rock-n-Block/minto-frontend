@@ -207,8 +207,7 @@ const Mining: React.FC = () => {
             inputValue={mnValue}
           />
 
-          {/* {tdata.total_reward > 0 ? ( */}
-          {tdata.total_reward < 0 ? (
+          {tdata.total_reward > 0 ? (
             <HistoryTable
               title={t('page.mining.history.title')}
               head={{
@@ -217,11 +216,10 @@ const Mining: React.FC = () => {
               }}
               normalize={false}
               body={tdata.history}
-              total={{ title: '', value: '' }}
-              /* total={{
+              total={{
                 title: t('page.mining.history.table.col.2'),
                 value: `${tdata.history.reduce((acc, curr) => acc + +curr.value, 0)}`,
-              }} */
+              }}
             />
           ) : (
             ''
